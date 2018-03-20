@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="DemandeCleaningEditDlg" widgetVar="DemandeCleaningEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditDemandeCleaningTitle}">
+            <h:form id="DemandeCleaningEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{demandeCleaningController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditDemandeCleaningLabel_nbrCleaner}" for="nbrCleaner" />
+                        <p:inputText id="nbrCleaner" value="#{demandeCleaningController.selected.nbrCleaner}" title="#{bundle.EditDemandeCleaningTitle_nbrCleaner}" />
+                        <p:outputLabel value="#{bundle.EditDemandeCleaningLabel_demandeService}" for="demandeService" />
+                        <p:selectOneMenu id="demandeService" value="#{demandeCleaningController.selected.demandeService}" >
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{demandeServiceController.itemsAvailableSelectOne}"
+                                           var="demandeServiceItem"
+                                           itemValue="#{demandeServiceItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditDemandeCleaningLabel_nbrHeures}" for="nbrHeures" />
+                        <p:inputText id="nbrHeures" value="#{demandeCleaningController.selected.nbrHeures}" title="#{bundle.EditDemandeCleaningTitle_nbrHeures}" />
+                        <p:outputLabel value="#{bundle.EditDemandeCleaningLabel_bringEquipement}" for="bringEquipement" />
+                        <p:selectBooleanCheckbox id="bringEquipement" value="#{demandeCleaningController.selected.bringEquipement}" />
+                        <p:outputLabel value="#{bundle.EditDemandeCleaningLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{demandeCleaningController.selected.id}" title="#{bundle.EditDemandeCleaningTitle_id}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{demandeCleaningController.update}" value="#{bundle.Save}" update="display,:DemandeCleaningListForm:datalist,:growl" oncomplete="handleSubmit(args, 'DemandeCleaningEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="DemandeCleaningEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

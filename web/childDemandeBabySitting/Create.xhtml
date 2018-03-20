@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ChildDemandeBabySittingCreateDlg" widgetVar="ChildDemandeBabySittingCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateChildDemandeBabySittingTitle}">
+            <h:form id="ChildDemandeBabySittingCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{childDemandeBabySittingController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateChildDemandeBabySittingLabel_demandeBabySitting}" for="demandeBabySitting" />
+                        <p:selectOneMenu id="demandeBabySitting" value="#{childDemandeBabySittingController.selected.demandeBabySitting}" >
+                            <f:selectItems value="#{demandeBabySittingController.itemsAvailableSelectOne}"
+                                           var="demandeBabySittingItem"
+                                           itemValue="#{demandeBabySittingItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateChildDemandeBabySittingLabel_age}" for="age" />
+                        <p:inputText id="age" value="#{childDemandeBabySittingController.selected.age}" title="#{bundle.CreateChildDemandeBabySittingTitle_age}" />
+                        <p:outputLabel value="#{bundle.CreateChildDemandeBabySittingLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{childDemandeBabySittingController.selected.id}" title="#{bundle.CreateChildDemandeBabySittingTitle_id}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{childDemandeBabySittingController.create}" value="#{bundle.Save}" update="display,:ChildDemandeBabySittingListForm:datalist,:growl" oncomplete="handleSubmit(args,'ChildDemandeBabySittingCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="ChildDemandeBabySittingCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

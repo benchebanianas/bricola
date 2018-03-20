@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="DemandeServiceViewDlg" widgetVar="DemandeServiceViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewDemandeServiceTitle}">
+            <h:form id="DemandeServiceViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{demandeServiceController.selected != null}">
+                        <h:outputText value="#{bundle.ViewDemandeServiceLabel_datedemande}"/>
+                        <h:outputText value="#{demandeServiceController.selected.datedemande}" title="#{bundle.ViewDemandeServiceTitle_datedemande}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewDemandeServiceLabel_typeDemande}"/>
+                        <h:outputText value="#{demandeServiceController.selected.typeDemande}" title="#{bundle.ViewDemandeServiceTitle_typeDemande}"/>
+                        <h:outputText value="#{bundle.ViewDemandeServiceLabel_client}"/>
+                        <h:outputText value="#{demandeServiceController.selected.client}" title="#{bundle.ViewDemandeServiceTitle_client}"/>
+                        <h:outputText value="#{bundle.ViewDemandeServiceLabel_detail}"/>
+                        <h:outputText value="#{demandeServiceController.selected.detail}" title="#{bundle.ViewDemandeServiceTitle_detail}"/>
+                        <h:outputText value="#{bundle.ViewDemandeServiceLabel_secteur}"/>
+                        <h:outputText value="#{demandeServiceController.selected.secteur}" title="#{bundle.ViewDemandeServiceTitle_secteur}"/>
+                        <h:outputText value="#{bundle.ViewDemandeServiceLabel_societe}"/>
+                        <h:outputText value="#{demandeServiceController.selected.societe}" title="#{bundle.ViewDemandeServiceTitle_societe}"/>
+                        <h:outputText value="#{bundle.ViewDemandeServiceLabel_prixHt}"/>
+                        <h:outputText value="#{demandeServiceController.selected.prixHt}" title="#{bundle.ViewDemandeServiceTitle_prixHt}"/>
+                        <h:outputText value="#{bundle.ViewDemandeServiceLabel_prixTtc}"/>
+                        <h:outputText value="#{demandeServiceController.selected.prixTtc}" title="#{bundle.ViewDemandeServiceTitle_prixTtc}"/>
+                        <h:outputText value="#{bundle.ViewDemandeServiceLabel_servicePricing}"/>
+                        <h:outputText value="#{demandeServiceController.selected.servicePricing}" title="#{bundle.ViewDemandeServiceTitle_servicePricing}"/>
+                        <h:outputText value="#{bundle.ViewDemandeServiceLabel_service}"/>
+                        <h:outputText value="#{demandeServiceController.selected.service}" title="#{bundle.ViewDemandeServiceTitle_service}"/>
+                        <h:outputText value="#{bundle.ViewDemandeServiceLabel_planning}"/>
+                        <h:outputText value="#{demandeServiceController.selected.planning}" title="#{bundle.ViewDemandeServiceTitle_planning}"/>
+                        <h:outputText value="#{bundle.ViewDemandeServiceLabel_managerConfirmation}"/>
+                        <h:outputText value="#{demandeServiceController.selected.managerConfirmation}" title="#{bundle.ViewDemandeServiceTitle_managerConfirmation}"/>
+                        <h:outputText value="#{bundle.ViewDemandeServiceLabel_dateConfirmation}"/>
+                        <h:outputText value="#{demandeServiceController.selected.dateConfirmation}" title="#{bundle.ViewDemandeServiceTitle_dateConfirmation}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewDemandeServiceLabel_dateDernierModif}"/>
+                        <h:outputText value="#{demandeServiceController.selected.dateDernierModif}" title="#{bundle.ViewDemandeServiceTitle_dateDernierModif}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewDemandeServiceLabel_dateSuppression}"/>
+                        <h:outputText value="#{demandeServiceController.selected.dateSuppression}" title="#{bundle.ViewDemandeServiceTitle_dateSuppression}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewDemandeServiceLabel_id}"/>
+                        <h:outputText value="#{demandeServiceController.selected.id}" title="#{bundle.ViewDemandeServiceTitle_id}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="DemandeServiceViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

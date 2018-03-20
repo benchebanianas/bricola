@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="VoitureViewDlg" widgetVar="VoitureViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewVoitureTitle}">
+            <h:form id="VoitureViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{voitureController.selected != null}">
+                        <h:outputText value="#{bundle.ViewVoitureLabel_id}"/>
+                        <h:outputText value="#{voitureController.selected.id}" title="#{bundle.ViewVoitureTitle_id}"/>
+                        <h:outputText value="#{bundle.ViewVoitureLabel_matricule}"/>
+                        <h:outputText value="#{voitureController.selected.matricule}" title="#{bundle.ViewVoitureTitle_matricule}"/>
+                        <h:outputText value="#{bundle.ViewVoitureLabel_couleur}"/>
+                        <h:outputText value="#{voitureController.selected.couleur}" title="#{bundle.ViewVoitureTitle_couleur}"/>
+                        <h:outputText value="#{bundle.ViewVoitureLabel_carburant}"/>
+                        <h:outputText value="#{voitureController.selected.carburant}" title="#{bundle.ViewVoitureTitle_carburant}"/>
+                        <h:outputText value="#{bundle.ViewVoitureLabel_kilometrage}"/>
+                        <h:outputText value="#{voitureController.selected.kilometrage}" title="#{bundle.ViewVoitureTitle_kilometrage}"/>
+                        <h:outputText value="#{bundle.ViewVoitureLabel_modele}"/>
+                        <h:outputText value="#{voitureController.selected.modele}" title="#{bundle.ViewVoitureTitle_modele}"/>
+                        <h:outputText value="#{bundle.ViewVoitureLabel_societe}"/>
+                        <h:outputText value="#{voitureController.selected.societe}" title="#{bundle.ViewVoitureTitle_societe}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="VoitureViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

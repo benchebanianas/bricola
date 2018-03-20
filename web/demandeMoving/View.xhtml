@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="DemandeMovingViewDlg" widgetVar="DemandeMovingViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewDemandeMovingTitle}">
+            <h:form id="DemandeMovingViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{demandeMovingController.selected != null}">
+                        <h:outputText value="#{bundle.ViewDemandeMovingLabel_demandeService}"/>
+                        <h:outputText value="#{demandeMovingController.selected.demandeService}" title="#{bundle.ViewDemandeMovingTitle_demandeService}"/>
+                        <h:outputText value="#{bundle.ViewDemandeMovingLabel_villeDepart}"/>
+                        <h:outputText value="#{demandeMovingController.selected.villeDepart}" title="#{bundle.ViewDemandeMovingTitle_villeDepart}"/>
+                        <h:outputText value="#{bundle.ViewDemandeMovingLabel_adresseDepart}"/>
+                        <h:outputText value="#{demandeMovingController.selected.adresseDepart}" title="#{bundle.ViewDemandeMovingTitle_adresseDepart}"/>
+                        <h:outputText value="#{bundle.ViewDemandeMovingLabel_villeArrive}"/>
+                        <h:outputText value="#{demandeMovingController.selected.villeArrive}" title="#{bundle.ViewDemandeMovingTitle_villeArrive}"/>
+                        <h:outputText value="#{bundle.ViewDemandeMovingLabel_adresseArrive}"/>
+                        <h:outputText value="#{demandeMovingController.selected.adresseArrive}" title="#{bundle.ViewDemandeMovingTitle_adresseArrive}"/>
+                        <h:outputText value="#{bundle.ViewDemandeMovingLabel_storage}"/>
+                        <p:selectBooleanCheckbox value="#{demandeMovingController.selected.storage}" disabled="true"/>
+                        <h:outputText value="#{bundle.ViewDemandeMovingLabel_handyman}"/>
+                        <p:selectBooleanCheckbox value="#{demandeMovingController.selected.handyman}" disabled="true"/>
+                        <h:outputText value="#{bundle.ViewDemandeMovingLabel_id}"/>
+                        <h:outputText value="#{demandeMovingController.selected.id}" title="#{bundle.ViewDemandeMovingTitle_id}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="DemandeMovingViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

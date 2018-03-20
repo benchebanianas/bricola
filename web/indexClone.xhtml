@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+
+
+
+
+    <ui:composition template="/template.xhtml">
+
+
+
+        <ui:define name="body">
+            <link rel="stylesheet" href="../resources/css/modern-business.css" type="text/css"/>
+            <h:form id="mainForm">
+                <div style="background:url('../resources/images/#{managerController.city}.jpg') no-repeat center center">
+                    <header class="masthead text-white text-center" >
+                        <div class="overlay"></div>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-xl-12">
+                                    <h1 class="mb-1">Sit back, we'll take it from here.</h1>
+                                    <h3 class="mb-5">Book from trusted companies in your city.</h3>
+                                </div>
+                                <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
+                                    <div class="form-row">
+                                        <div class="form-group col-md-3">
+                                            <p:selectOneMenu class="form-control" id="city" value="#{managerController.city}">
+                                                <p:ajax listener="#{managerController.doAction}" update="mainForm" />
+                                                <f:selectItem itemLabel="Select City" itemValue="" noSelectionOption="true" />
+                                                <f:selectItems value="#{managerController.generateCities()}" />
+                                            </p:selectOneMenu>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <select id="inputState" class="form-control">
+
+                                                <option >Choose a service ...</option>
+                                                <option>Home Cleaning</option>
+                                                <option>Office Cleaning</option>
+                                                <option>Deep Cleaning</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            <a href="booking.html" class="btn " role="button">GET STRATED</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </header>
+                </div>
+            </h:form>
+
+
+            <!-- Page Content -->
+            <div class="container">
+
+                <h1 class="my-4">Our services</h1>
+
+                <!-- Marketing Icons Section -->
+                <div class="row">
+                    <div class="col-lg-4 mb-4">
+                        <div class="card h-100">
+                            <h4 class="card-header">Card Title</h4>
+                            <div class="card-body">
+                                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente esse necessitatibus neque.</p>
+                            </div>
+                            <div class="card-footer">
+                                <a href="#" class="btn btn-primary">Learn More</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 mb-4">
+                        <div class="card h-100">
+                            <h4 class="card-header">Card Title</h4>
+                            <div class="card-body">
+                                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis ipsam eos, nam perspiciatis natus commodi similique totam consectetur praesentium molestiae atque exercitationem ut consequuntur, sed eveniet, magni nostrum sint fuga.</p>
+                            </div>
+                            <div class="card-footer">
+                                <a href="#" class="btn btn-primary">Learn More</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 mb-4">
+                        <div class="card h-100">
+                            <h4 class="card-header">Card Title</h4>
+                            <div class="card-body">
+                                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente esse necessitatibus neque.</p>
+                            </div>
+                            <div class="card-footer">
+                                <a href="#" class="btn btn-primary">Learn More</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-4 mb-4">
+                        <div class="card h-100">
+                            <h4 class="card-header">Card Title</h4>
+                            <div class="card-body">
+                                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente esse necessitatibus neque.</p>
+                            </div>
+                            <div class="card-footer">
+                                <a href="#" class="btn btn-primary">Learn More</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 mb-4">
+                        <div class="card h-100">
+                            <h4 class="card-header">Card Title</h4>
+                            <div class="card-body">
+                                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis ipsam eos, nam perspiciatis natus commodi similique totam consectetur praesentium molestiae atque exercitationem ut consequuntur, sed eveniet, magni nostrum sint fuga.</p>
+                            </div>
+                            <div class="card-footer">
+                                <a href="#" class="btn btn-primary">Learn More</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 mb-4">
+                        <div class="card h-100">
+                            <h4 class="card-header">Card Title</h4>
+                            <div class="card-body">
+                                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente esse necessitatibus neque.</p>
+                            </div>
+                            <div class="card-footer">
+                                <a href="#" class="btn btn-primary">Learn More</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </ui:define>
+    </ui:composition>
+
+</html>

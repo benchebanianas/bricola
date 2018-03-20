@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="VoitureCreateDlg" widgetVar="VoitureCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateVoitureTitle}">
+            <h:form id="VoitureCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{voitureController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateVoitureLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{voitureController.selected.id}" title="#{bundle.CreateVoitureTitle_id}" />
+                        <p:outputLabel value="#{bundle.CreateVoitureLabel_matricule}" for="matricule" />
+                        <p:inputText id="matricule" value="#{voitureController.selected.matricule}" title="#{bundle.CreateVoitureTitle_matricule}" />
+                        <p:outputLabel value="#{bundle.CreateVoitureLabel_couleur}" for="couleur" />
+                        <p:inputText id="couleur" value="#{voitureController.selected.couleur}" title="#{bundle.CreateVoitureTitle_couleur}" />
+                        <p:outputLabel value="#{bundle.CreateVoitureLabel_carburant}" for="carburant" />
+                        <p:inputText id="carburant" value="#{voitureController.selected.carburant}" title="#{bundle.CreateVoitureTitle_carburant}" />
+                        <p:outputLabel value="#{bundle.CreateVoitureLabel_kilometrage}" for="kilometrage" />
+                        <p:inputText id="kilometrage" value="#{voitureController.selected.kilometrage}" title="#{bundle.CreateVoitureTitle_kilometrage}" />
+                        <p:outputLabel value="#{bundle.CreateVoitureLabel_modele}" for="modele" />
+                        <p:selectOneMenu id="modele" value="#{voitureController.selected.modele}" >
+                            <f:selectItems value="#{voitureModeleController.itemsAvailableSelectOne}"
+                                           var="modeleItem"
+                                           itemValue="#{modeleItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateVoitureLabel_societe}" for="societe" />
+                        <p:selectOneMenu id="societe" value="#{voitureController.selected.societe}" >
+                            <f:selectItems value="#{societeController.itemsAvailableSelectOne}"
+                                           var="societeItem"
+                                           itemValue="#{societeItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{voitureController.create}" value="#{bundle.Save}" update="display,:VoitureListForm:datalist,:growl" oncomplete="handleSubmit(args,'VoitureCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="VoitureCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

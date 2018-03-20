@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="SocieteEditDlg" widgetVar="SocieteEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditSocieteTitle}">
+            <h:form id="SocieteEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{societeController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditSocieteLabel_nom}" for="nom" />
+                        <p:inputText id="nom" value="#{societeController.selected.nom}" title="#{bundle.EditSocieteTitle_nom}" />
+                        <p:outputLabel value="#{bundle.EditSocieteLabel_owner}" for="owner" />
+                        <p:selectOneMenu id="owner" value="#{societeController.selected.owner}" >
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{ownerController.itemsAvailableSelectOne}"
+                                           var="ownerItem"
+                                           itemValue="#{ownerItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditSocieteLabel_nombreEmploye}" for="nombreEmploye" />
+                        <p:inputText id="nombreEmploye" value="#{societeController.selected.nombreEmploye}" title="#{bundle.EditSocieteTitle_nombreEmploye}" />
+                        <p:outputLabel value="#{bundle.EditSocieteLabel_siteWeb}" for="siteWeb" />
+                        <p:inputText id="siteWeb" value="#{societeController.selected.siteWeb}" title="#{bundle.EditSocieteTitle_siteWeb}" />
+                        <p:outputLabel value="#{bundle.EditSocieteLabel_phone}" for="phone" />
+                        <p:inputText id="phone" value="#{societeController.selected.phone}" title="#{bundle.EditSocieteTitle_phone}" />
+                        <p:outputLabel value="#{bundle.EditSocieteLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{societeController.selected.id}" title="#{bundle.EditSocieteTitle_id}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{societeController.update}" value="#{bundle.Save}" update="display,:SocieteListForm:datalist,:growl" oncomplete="handleSubmit(args, 'SocieteEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="SocieteEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

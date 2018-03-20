@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="NetoyagePlusieursFoisDlg" widgetVar="NetoyagePlusieursFoisDialog" modal="true" resizable="false" appendTo="@(body)" width="700" header="Selectionner les dates">
+
+
+
+            <h:form id="NetoyagePlusieursFoisForm">
+
+                <p:panelGrid columns="5" styleClass="ui-noborder" style="margin: 0 auto">
+
+                    <p:outputLabel for="dateOnce" value="Date :" />
+                    <p:calendar id="dateOnce" value="#{demandeCleaningController.demandeCleaning.demandeService.planning.dateOnce}" inputStyle="width: 150px;height: 40px" pattern="MM/dd/yyyy" />
+                    
+                    <p:commandButton value="Ajouter" style="width: 100px;height: 40px;margin: 8px" actionListener="#{demandeCleaningController.addNetoyageDate()}" update=":NetoyagePlusieursFoisListForm,:growl" />
+
+
+                </p:panelGrid>
+
+
+            </h:form>
+
+
+
+            <h:form id="NetoyagePlusieursFoisListForm">
+
+                <p:panel header="Liste des dates">
+                    <p:dataTable id="datalist" value="#{demandeCleaningController.dates}" var="item"
+
+                                 paginator="true"
+                                 rows="10"
+                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 >
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Date"/>
+                            </f:facet>
+                            <h:outputText value="#{item}"/>
+                        </p:column>
+
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Action"/>
+                            </f:facet>
+                            <p:commandButton value="DELETE" actionListener="#{demandeCleaningController.removeDate(item)}" update="datalist"/>
+                        </p:column>
+
+                    </p:dataTable>
+
+                    <p:commandButton value="Confirmer" style="width: 100px;height: 40px;margin: 8px" update=":cleaningInfoForm:infoGrid" oncomplete="handleSubmit(args,'NetoyagePlusieursFoisDialog');" />
+
+                </p:panel>
+
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

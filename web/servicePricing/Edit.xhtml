@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ServicePricingEditDlg" widgetVar="ServicePricingEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditServicePricingTitle}">
+            <h:form id="ServicePricingEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{servicePricingController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditServicePricingLabel_unite}" for="unite" />
+                        <p:selectOneMenu id="unite" value="#{servicePricingController.selected.unite}" >
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{uniteController.itemsAvailableSelectOne}"
+                                           var="uniteItem"
+                                           itemValue="#{uniteItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditServicePricingLabel_dateApplication}" for="dateApplication" />
+                        <p:calendar id="dateApplication" pattern="MM/dd/yyyy" value="#{servicePricingController.selected.dateApplication}" title="#{bundle.EditServicePricingTitle_dateApplication}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.EditServicePricingLabel_service}" for="service" />
+                        <p:selectOneMenu id="service" value="#{servicePricingController.selected.service}" >
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{serviceController.itemsAvailableSelectOne}"
+                                           var="serviceItem"
+                                           itemValue="#{serviceItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditServicePricingLabel_prix}" for="prix" />
+                        <p:inputText id="prix" value="#{servicePricingController.selected.prix}" title="#{bundle.EditServicePricingTitle_prix}" />
+                        <p:outputLabel value="#{bundle.EditServicePricingLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{servicePricingController.selected.id}" title="#{bundle.EditServicePricingTitle_id}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{servicePricingController.update}" value="#{bundle.Save}" update="display,:ServicePricingListForm:datalist,:growl" oncomplete="handleSubmit(args, 'ServicePricingEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="ServicePricingEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="DemandeGardeningViewDlg" widgetVar="DemandeGardeningViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewDemandeGardeningTitle}">
+            <h:form id="DemandeGardeningViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{demandeGardeningController.selected != null}">
+                        <h:outputText value="#{bundle.ViewDemandeGardeningLabel_id}"/>
+                        <h:outputText value="#{demandeGardeningController.selected.id}" title="#{bundle.ViewDemandeGardeningTitle_id}"/>
+                        <h:outputText value="#{bundle.ViewDemandeGardeningLabel_demandeService}"/>
+                        <h:outputText value="#{demandeGardeningController.selected.demandeService}" title="#{bundle.ViewDemandeGardeningTitle_demandeService}"/>
+                        <h:outputText value="#{bundle.ViewDemandeGardeningLabel_gardeningType}"/>
+                        <h:outputText value="#{demandeGardeningController.selected.gardeningType}" title="#{bundle.ViewDemandeGardeningTitle_gardeningType}"/>
+                        <h:outputText value="#{bundle.ViewDemandeGardeningLabel_home}"/>
+                        <h:outputText value="#{demandeGardeningController.selected.home}" title="#{bundle.ViewDemandeGardeningTitle_home}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="DemandeGardeningViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

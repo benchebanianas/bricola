@@ -1,0 +1,183 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <f:view contentType="text/html" locale="fr">
+        <h:head>
+            <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+            <meta name="viewport" content="width=device-width" />
+            <link rel="shortcut icon" href="resources/images/symbol.png" type="image/png"/>
+            <h:outputStylesheet library="css" name="jsfcrud.css"/>
+            <h:outputScript library="js" name="jsfcrud.js"/>
+            <h:outputStylesheet name="bootstrap-3.3.6/css/bootstrap.min.css"/>
+            <h:outputStylesheet name="css/modern-business.css"/>
+
+
+        </h:head>
+
+        <h:body>
+            <p:growl id="growl" life="5000" showDetail="true"/>
+
+
+            <h:form id="menuForm" style="margin: 0px">
+
+               <div class="aboveNav" style="padding: 0px; margin: 0px">
+               
+                    
+                
+                <div class="row" style="padding: 0px; margin: 0px" >
+                    <div class="col-md-3">
+                        <i class="fa fa-map-marker"><h4>11 Résidence BAB Al Manar Marrakech</h4></i>
+                    </div>
+                    <div class="col-md-3">
+                        <i class="fa fa-clock-o"><h4>Mon – Sat: 9:00am–18:00pm</h4> </i>
+                    </div>
+                   
+                    <div class="col-md-2">
+                        <i class="fa fa-envelope"><h4>clients@bricola.ma</h4> </i>
+                    </div>
+                    <div class="col-md-2">
+                        <i class="fa fa-phone"><h4>+212 5 24059716 </h4> </i>
+                    </div>
+                    <div class="col-md-2">
+                        
+                        <div class="aboveNavSocial">
+                            <a href="#" class="twitter"><i class="fa fa-twitter"></i></a>
+                            <a href="#" class="facebook"><i class="fa fa-facebook"></i></a>
+                            <a href="#" class="google"><i class="fa fa-google-plus"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                <nav class="navbar" role="navigation">
+
+
+
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="navbar-header">
+
+                        <a class="navbar-brand" href="/bricolage/faces/index.xhtml"> <img src="../resources/images/logo.png" style="width:120px;vertical-align: middle;margin: 0px;" alt="EDE logo"/></a>
+
+                    </div>
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav navbar-right">
+                          <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Service Nettoyage<b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="../serviceNettoyage/NettoyageMaison.xhtml">Nettoyage Maison</a>
+                                    </li>
+                                    <li>
+                                        <a href="../serviceNettoyage/NettoyageComplet.xhtml">Nettoyage Complet</a>
+                                    </li>
+                                    <li>
+                                        <a href="../serviceNettoyage/NettoyagePiscine.xhtml">Nettoyage Piscine</a>
+                                    </li>
+                                    <li>
+                                        <a href="../serviceNettoyage/NettoyageDivers.xhtml">Nettoyage Divers</a>
+                                    </li>
+                                   
+                                </ul>
+                            </li>
+                          <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Demenagement / Stock<b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="../demenagement/DemenagementNational.xhtml">Demenagement National</a>
+                                    </li>
+                                    <li>
+                                        <a href="../demenagement/DemenagementInternational.xhtml">Demenagement International</a>
+                                    </li>
+                                    <li>
+                                        <a href="../demenagement/Stockage.xhtml">Stockage</a>
+                                    </li>
+                                </ul>
+                            </li>
+                          <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Travaux de maison<b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="../traveauxMaison/Peinture.xhtml">Peinture</a>
+                                    </li>
+                                    <li>
+                                        <a href="../traveauxMaison/Handyman.xhtml">Handyman</a>
+                                    </li>
+                                    <li>
+                                        <a href="../traveauxMaison/Electricite.xhtml">Electricite</a>
+                                    </li>
+                                    <li>
+                                        <a href="../traveauxMaison/Plomberie.xhtml">Plomberie</a>
+                                    </li>
+                                    <li>
+                                        <a href="../traveauxMaison/Menuiserie.xhtml">Menuiserie</a>
+                                    </li>
+                                    <li>
+                                        <a href="../traveauxMaison/Climatisation.xhtml">Climatisation</a>
+                                    </li>
+                                </ul>
+                            </li>
+                          <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Gardiennage / Deratisation<b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="../gardiennage/DeratisationComplete.xhtml">Deratisation complete</a>
+                                    </li>
+                                    <li>
+                                        <a href="../gardiennage/Gardiennage.xhtml">Gardiennage</a>
+                                    </li>
+                                    
+                                </ul>
+                            </li>
+                          <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Evenmentiel<b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="../evenmentiel/Restauration.xhtml">Restauration</a>
+                                    </li>
+                                    <li>
+                                        <a href="../evenmentiel/Traiteur.xhtml">Traiteur</a>
+                                    </li>
+                                    
+                                </ul>
+                            </li>
+                          <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Photographie<b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="../photographie/Photographie.xhtml">Photographie</a>
+                                    </li>
+                                    <li>
+                                        <a href="../photographie/Videographie.xhtml">Videographie</a>
+                                    </li>
+                                    
+                                </ul>
+                            </li>
+                          <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Voitures<b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="../voiture/LocationVoiture.xhtml">Location Voiture</a>
+                                    </li>
+                                    
+                                </ul>
+                            </li>
+                            
+                        </ul>
+                    </div>
+                    <!-- /.navbar-collapse -->
+
+                    <!-- /.container -->
+                </nav>
+            </h:form>
+
+            <p:layoutUnit position="center" id="pageLayout" >
+                <ui:insert name="body"/>
+            </p:layoutUnit>
+
+        </h:body>
+    </f:view>
+</html>

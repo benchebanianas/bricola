@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="PlanningViewDlg" widgetVar="PlanningViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewPlanningTitle}">
+            <h:form id="PlanningViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{planningController.selected != null}">
+                        <h:outputText value="#{bundle.ViewPlanningLabel_timing}"/>
+                        <h:outputText value="#{planningController.selected.timing}" title="#{bundle.ViewPlanningTitle_timing}"/>
+                        <h:outputText value="#{bundle.ViewPlanningLabel_dateDebut}"/>
+                        <h:outputText value="#{planningController.selected.dateDebut}" title="#{bundle.ViewPlanningTitle_dateDebut}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewPlanningLabel_dateFin}"/>
+                        <h:outputText value="#{planningController.selected.dateFin}" title="#{bundle.ViewPlanningTitle_dateFin}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewPlanningLabel_dateOnce}"/>
+                        <h:outputText value="#{planningController.selected.dateOnce}" title="#{bundle.ViewPlanningTitle_dateOnce}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewPlanningLabel_id}"/>
+                        <h:outputText value="#{planningController.selected.id}" title="#{bundle.ViewPlanningTitle_id}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="PlanningViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

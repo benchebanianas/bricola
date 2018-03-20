@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="DeviceViewDlg" widgetVar="DeviceViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewDeviceTitle}">
+            <h:form id="DeviceViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{deviceController.selected != null}">
+                        <h:outputText value="#{bundle.ViewDeviceLabel_macAdresss}"/>
+                        <h:outputText value="#{deviceController.selected.macAdresss}" title="#{bundle.ViewDeviceTitle_macAdresss}"/>
+                        <h:outputText value="#{bundle.ViewDeviceLabel_ip}"/>
+                        <h:outputText value="#{deviceController.selected.ip}" title="#{bundle.ViewDeviceTitle_ip}"/>
+                        <h:outputText value="#{bundle.ViewDeviceLabel_os}"/>
+                        <h:outputText value="#{deviceController.selected.os}" title="#{bundle.ViewDeviceTitle_os}"/>
+                        <h:outputText value="#{bundle.ViewDeviceLabel_navigateur}"/>
+                        <h:outputText value="#{deviceController.selected.navigateur}" title="#{bundle.ViewDeviceTitle_navigateur}"/>
+                        <h:outputText value="#{bundle.ViewDeviceLabel_owner}"/>
+                        <h:outputText value="#{deviceController.selected.owner}" title="#{bundle.ViewDeviceTitle_owner}"/>
+                        <h:outputText value="#{bundle.ViewDeviceLabel_manager}"/>
+                        <h:outputText value="#{deviceController.selected.manager}" title="#{bundle.ViewDeviceTitle_manager}"/>
+                        <h:outputText value="#{bundle.ViewDeviceLabel_dateConnection}"/>
+                        <h:outputText value="#{deviceController.selected.dateConnection}" title="#{bundle.ViewDeviceTitle_dateConnection}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewDeviceLabel_id}"/>
+                        <h:outputText value="#{deviceController.selected.id}" title="#{bundle.ViewDeviceTitle_id}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="DeviceViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

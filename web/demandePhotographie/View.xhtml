@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="DemandePhotographieViewDlg" widgetVar="DemandePhotographieViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewDemandePhotographieTitle}">
+            <h:form id="DemandePhotographieViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{demandePhotographieController.selected != null}">
+                        <h:outputText value="#{bundle.ViewDemandePhotographieLabel_demandeService}"/>
+                        <h:outputText value="#{demandePhotographieController.selected.demandeService}" title="#{bundle.ViewDemandePhotographieTitle_demandeService}"/>
+                        <h:outputText value="#{bundle.ViewDemandePhotographieLabel_typePhotographie}"/>
+                        <h:outputText value="#{demandePhotographieController.selected.typePhotographie}" title="#{bundle.ViewDemandePhotographieTitle_typePhotographie}"/>
+                        <h:outputText value="#{bundle.ViewDemandePhotographieLabel_videographie}"/>
+                        <p:selectBooleanCheckbox value="#{demandePhotographieController.selected.videographie}" disabled="true"/>
+                        <h:outputText value="#{bundle.ViewDemandePhotographieLabel_id}"/>
+                        <h:outputText value="#{demandePhotographieController.selected.id}" title="#{bundle.ViewDemandePhotographieTitle_id}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="DemandePhotographieViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

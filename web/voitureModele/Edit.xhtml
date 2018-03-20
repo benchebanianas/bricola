@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="VoitureModeleEditDlg" widgetVar="VoitureModeleEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditVoitureModeleTitle}">
+            <h:form id="VoitureModeleEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{voitureModeleController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditVoitureModeleLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{voitureModeleController.selected.id}" title="#{bundle.EditVoitureModeleTitle_id}" />
+                        <p:outputLabel value="#{bundle.EditVoitureModeleLabel_nom}" for="nom" />
+                        <p:inputText id="nom" value="#{voitureModeleController.selected.nom}" title="#{bundle.EditVoitureModeleTitle_nom}" />
+                        <p:outputLabel value="#{bundle.EditVoitureModeleLabel_annee}" for="annee" />
+                        <p:inputText id="annee" value="#{voitureModeleController.selected.annee}" title="#{bundle.EditVoitureModeleTitle_annee}" />
+                        <p:outputLabel value="#{bundle.EditVoitureModeleLabel_marque}" for="marque" />
+                        <p:selectOneMenu id="marque" value="#{voitureModeleController.selected.marque}" >
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{voitureMarqueController.itemsAvailableSelectOne}"
+                                           var="marqueItem"
+                                           itemValue="#{marqueItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{voitureModeleController.update}" value="#{bundle.Save}" update="display,:VoitureModeleListForm:datalist,:growl" oncomplete="handleSubmit(args, 'VoitureModeleEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="VoitureModeleEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="OwnerViewDlg" widgetVar="OwnerViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewOwnerTitle}">
+            <h:form id="OwnerViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{ownerController.selected != null}">
+                        <h:outputText value="#{bundle.ViewOwnerLabel_nom}"/>
+                        <h:outputText value="#{ownerController.selected.nom}" title="#{bundle.ViewOwnerTitle_nom}"/>
+                        <h:outputText value="#{bundle.ViewOwnerLabel_phone}"/>
+                        <h:outputText value="#{ownerController.selected.phone}" title="#{bundle.ViewOwnerTitle_phone}"/>
+                        <h:outputText value="#{bundle.ViewOwnerLabel_email}"/>
+                        <h:outputText value="#{ownerController.selected.email}" title="#{bundle.ViewOwnerTitle_email}"/>
+                        <h:outputText value="#{bundle.ViewOwnerLabel_id}"/>
+                        <h:outputText value="#{ownerController.selected.id}" title="#{bundle.ViewOwnerTitle_id}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="OwnerViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

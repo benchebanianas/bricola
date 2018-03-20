@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="DemandeBabySittingEditDlg" widgetVar="DemandeBabySittingEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditDemandeBabySittingTitle}">
+            <h:form id="DemandeBabySittingEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{demandeBabySittingController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditDemandeBabySittingLabel_fulltime}" for="fulltime" />
+                        <p:selectBooleanCheckbox id="fulltime" value="#{demandeBabySittingController.selected.fulltime}" />
+                        <p:outputLabel value="#{bundle.EditDemandeBabySittingLabel_detail}" for="detail" />
+                        <p:inputText id="detail" value="#{demandeBabySittingController.selected.detail}" title="#{bundle.EditDemandeBabySittingTitle_detail}" />
+                        <p:outputLabel value="#{bundle.EditDemandeBabySittingLabel_demandeService}" for="demandeService" />
+                        <p:selectOneMenu id="demandeService" value="#{demandeBabySittingController.selected.demandeService}" >
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{demandeServiceController.itemsAvailableSelectOne}"
+                                           var="demandeServiceItem"
+                                           itemValue="#{demandeServiceItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditDemandeBabySittingLabel_nbrHeures}" for="nbrHeures" />
+                        <p:inputText id="nbrHeures" value="#{demandeBabySittingController.selected.nbrHeures}" title="#{bundle.EditDemandeBabySittingTitle_nbrHeures}" />
+                        <p:outputLabel value="#{bundle.EditDemandeBabySittingLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{demandeBabySittingController.selected.id}" title="#{bundle.EditDemandeBabySittingTitle_id}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{demandeBabySittingController.update}" value="#{bundle.Save}" update="display,:DemandeBabySittingListForm:datalist,:growl" oncomplete="handleSubmit(args, 'DemandeBabySittingEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="DemandeBabySittingEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="PaintingTypeViewDlg" widgetVar="PaintingTypeViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewPaintingTypeTitle}">
+            <h:form id="PaintingTypeViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{paintingTypeController.selected != null}">
+                        <h:outputText value="#{bundle.ViewPaintingTypeLabel_nom}"/>
+                        <h:outputText value="#{paintingTypeController.selected.nom}" title="#{bundle.ViewPaintingTypeTitle_nom}"/>
+                        <h:outputText value="#{bundle.ViewPaintingTypeLabel_id}"/>
+                        <h:outputText value="#{paintingTypeController.selected.id}" title="#{bundle.ViewPaintingTypeTitle_id}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="PaintingTypeViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

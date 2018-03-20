@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="PlanningCreateDlg" widgetVar="PlanningCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreatePlanningTitle}">
+            <h:form id="PlanningCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{planningController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreatePlanningLabel_timing}" for="timing" />
+                        <p:selectOneMenu id="timing" value="#{planningController.selected.timing}" >
+                            <f:selectItems value="#{timingController.itemsAvailableSelectOne}"
+                                           var="timingItem"
+                                           itemValue="#{timingItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreatePlanningLabel_dateDebut}" for="dateDebut" />
+                        <p:calendar id="dateDebut" pattern="MM/dd/yyyy" value="#{planningController.selected.dateDebut}" title="#{bundle.EditPlanningTitle_dateDebut}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.CreatePlanningLabel_dateFin}" for="dateFin" />
+                        <p:calendar id="dateFin" pattern="MM/dd/yyyy" value="#{planningController.selected.dateFin}" title="#{bundle.EditPlanningTitle_dateFin}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.CreatePlanningLabel_dateOnce}" for="dateOnce" />
+                        <p:calendar id="dateOnce" pattern="MM/dd/yyyy" value="#{planningController.selected.dateOnce}" title="#{bundle.EditPlanningTitle_dateOnce}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.CreatePlanningLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{planningController.selected.id}" title="#{bundle.CreatePlanningTitle_id}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{planningController.create}" value="#{bundle.Save}" update="display,:PlanningListForm:datalist,:growl" oncomplete="handleSubmit(args,'PlanningCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="PlanningCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

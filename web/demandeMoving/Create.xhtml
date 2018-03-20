@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="DemandeMovingCreateDlg" widgetVar="DemandeMovingCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateDemandeMovingTitle}">
+            <h:form id="DemandeMovingCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{demandeMovingController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateDemandeMovingLabel_demandeService}" for="demandeService" />
+                        <p:selectOneMenu id="demandeService" value="#{demandeMovingController.selected.demandeService}" >
+                            <f:selectItems value="#{demandeServiceController.itemsAvailableSelectOne}"
+                                           var="demandeServiceItem"
+                                           itemValue="#{demandeServiceItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateDemandeMovingLabel_villeDepart}" for="villeDepart" />
+                        <p:selectOneMenu id="villeDepart" value="#{demandeMovingController.selected.villeDepart}" >
+                            <f:selectItems value="#{villeController.itemsAvailableSelectOne}"
+                                           var="villeDepartItem"
+                                           itemValue="#{villeDepartItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateDemandeMovingLabel_adresseDepart}" for="adresseDepart" />
+                        <p:inputText id="adresseDepart" value="#{demandeMovingController.selected.adresseDepart}" title="#{bundle.CreateDemandeMovingTitle_adresseDepart}" />
+                        <p:outputLabel value="#{bundle.CreateDemandeMovingLabel_villeArrive}" for="villeArrive" />
+                        <p:selectOneMenu id="villeArrive" value="#{demandeMovingController.selected.villeArrive}" >
+                            <f:selectItems value="#{villeController.itemsAvailableSelectOne}"
+                                           var="villeArriveItem"
+                                           itemValue="#{villeArriveItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateDemandeMovingLabel_adresseArrive}" for="adresseArrive" />
+                        <p:inputText id="adresseArrive" value="#{demandeMovingController.selected.adresseArrive}" title="#{bundle.CreateDemandeMovingTitle_adresseArrive}" />
+                        <p:outputLabel value="#{bundle.CreateDemandeMovingLabel_storage}" for="storage" />
+                        <p:selectBooleanCheckbox id="storage" value="#{demandeMovingController.selected.storage}" />
+                        <p:outputLabel value="#{bundle.CreateDemandeMovingLabel_handyman}" for="handyman" />
+                        <p:selectBooleanCheckbox id="handyman" value="#{demandeMovingController.selected.handyman}" />
+                        <p:outputLabel value="#{bundle.CreateDemandeMovingLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{demandeMovingController.selected.id}" title="#{bundle.CreateDemandeMovingTitle_id}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{demandeMovingController.create}" value="#{bundle.Save}" update="display,:DemandeMovingListForm:datalist,:growl" oncomplete="handleSubmit(args,'DemandeMovingCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="DemandeMovingCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

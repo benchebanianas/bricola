@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ServiceVilleEditDlg" widgetVar="ServiceVilleEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditServiceVilleTitle}">
+            <h:form id="ServiceVilleEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{serviceVilleController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditServiceVilleLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{serviceVilleController.selected.id}" title="#{bundle.EditServiceVilleTitle_id}" />
+                        <p:outputLabel value="#{bundle.EditServiceVilleLabel_ville}" for="ville" />
+                        <p:selectOneMenu id="ville" value="#{serviceVilleController.selected.ville}" >
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{villeController.itemsAvailableSelectOne}"
+                                           var="villeItem"
+                                           itemValue="#{villeItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditServiceVilleLabel_service}" for="service" />
+                        <p:selectOneMenu id="service" value="#{serviceVilleController.selected.service}" >
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{serviceController.itemsAvailableSelectOne}"
+                                           var="serviceItem"
+                                           itemValue="#{serviceItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{serviceVilleController.update}" value="#{bundle.Save}" update="display,:ServiceVilleListForm:datalist,:growl" oncomplete="handleSubmit(args, 'ServiceVilleEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="ServiceVilleEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

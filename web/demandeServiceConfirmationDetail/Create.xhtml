@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="DemandeServiceConfirmationDetailCreateDlg" widgetVar="DemandeServiceConfirmationDetailCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateDemandeServiceConfirmationDetailTitle}">
+            <h:form id="DemandeServiceConfirmationDetailCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{demandeServiceConfirmationDetailController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateDemandeServiceConfirmationDetailLabel_manager}" for="manager" />
+                        <p:selectOneMenu id="manager" value="#{demandeServiceConfirmationDetailController.selected.manager}" >
+                            <f:selectItems value="#{managerController.itemsAvailableSelectOne}"
+                                           var="managerItem"
+                                           itemValue="#{managerItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateDemandeServiceConfirmationDetailLabel_typeAction}" for="typeAction" />
+                        <p:selectOneMenu id="typeAction" value="#{demandeServiceConfirmationDetailController.selected.typeAction}" >
+                            <f:selectItems value="#{typeActionController.itemsAvailableSelectOne}"
+                                           var="typeActionItem"
+                                           itemValue="#{typeActionItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateDemandeServiceConfirmationDetailLabel_dateAction}" for="dateAction" />
+                        <p:calendar id="dateAction" pattern="MM/dd/yyyy" value="#{demandeServiceConfirmationDetailController.selected.dateAction}" title="#{bundle.EditDemandeServiceConfirmationDetailTitle_dateAction}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.CreateDemandeServiceConfirmationDetailLabel_demandeService}" for="demandeService" />
+                        <p:selectOneMenu id="demandeService" value="#{demandeServiceConfirmationDetailController.selected.demandeService}" >
+                            <f:selectItems value="#{demandeServiceController.itemsAvailableSelectOne}"
+                                           var="demandeServiceItem"
+                                           itemValue="#{demandeServiceItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateDemandeServiceConfirmationDetailLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{demandeServiceConfirmationDetailController.selected.id}" title="#{bundle.CreateDemandeServiceConfirmationDetailTitle_id}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{demandeServiceConfirmationDetailController.create}" value="#{bundle.Save}" update="display,:DemandeServiceConfirmationDetailListForm:datalist,:growl" oncomplete="handleSubmit(args,'DemandeServiceConfirmationDetailCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="DemandeServiceConfirmationDetailCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>
