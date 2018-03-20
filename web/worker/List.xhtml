@@ -10,14 +10,14 @@
 
 
         <ui:define name="title">
-            <h:outputText value="#{bundle.ListSocieteTitle}"></h:outputText>
+            <h:outputText value="#{bundle.ListWorkerTitle}"></h:outputText>
         </ui:define>
 
         <ui:define name="body">
-            <h:form id="SocieteListForm">
-                <p:panel header="#{bundle.ListSocieteTitle}">
-                    <p:dataTable id="datalist" value="#{societeController.items}" var="item"
-                                 selectionMode="single" selection="#{societeController.selected}"
+            <h:form id="WorkerListForm">
+                <p:panel header="#{bundle.ListWorkerTitle}">
+                    <p:dataTable id="datalist" value="#{workerController.items}" var="item"
+                                 selectionMode="single" selection="#{workerController.selected}"
                                  paginator="true"
                                  rowKey="#{item.id}"
                                  rows="10"
@@ -29,45 +29,57 @@
 
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListSocieteTitle_nom}"/>
+                                <h:outputText value="#{bundle.ListWorkerTitle_email}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.email}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListWorkerTitle_password}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.password}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListWorkerTitle_nom}"/>
                             </f:facet>
                             <h:outputText value="#{item.nom}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListSocieteTitle_owner}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.owner}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListSocieteTitle_nombreEmploye}"/>
+                                <h:outputText value="#{bundle.ListWorkerTitle_nombreEmploye}"/>
                             </f:facet>
                             <h:outputText value="#{item.nombreEmploye}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListSocieteTitle_siteWeb}"/>
+                                <h:outputText value="#{bundle.ListWorkerTitle_siteWeb}"/>
                             </f:facet>
                             <h:outputText value="#{item.siteWeb}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListSocieteTitle_phone}"/>
+                                <h:outputText value="#{bundle.ListWorkerTitle_phone}"/>
                             </f:facet>
                             <h:outputText value="#{item.phone}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListSocieteTitle_id}"/>
+                                <h:outputText value="#{bundle.ListWorkerTitle_description}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.description}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListWorkerTitle_id}"/>
                             </f:facet>
                             <h:outputText value="#{item.id}"/>
                         </p:column>
                         <f:facet name="footer">
-                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{societeController.prepareCreate}" update=":SocieteCreateForm" oncomplete="PF('SocieteCreateDialog').show()"/>
-                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":SocieteViewForm" oncomplete="PF('SocieteViewDialog').show()" disabled="#{empty societeController.selected}"/>
-                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":SocieteEditForm" oncomplete="PF('SocieteEditDialog').show()" disabled="#{empty societeController.selected}"/>
-                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{societeController.destroy}" update=":growl,datalist" disabled="#{empty societeController.selected}"/>
+                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{workerController.prepareCreate}" update=":WorkerCreateForm" oncomplete="PF('WorkerCreateDialog').show()"/>
+                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":WorkerViewForm" oncomplete="PF('WorkerViewDialog').show()" disabled="#{empty workerController.selected}"/>
+                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":WorkerEditForm" oncomplete="PF('WorkerEditDialog').show()" disabled="#{empty workerController.selected}"/>
+                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{workerController.destroy}" update=":growl,datalist" disabled="#{empty workerController.selected}"/>
                         </f:facet>
                     </p:dataTable>
                 </p:panel>

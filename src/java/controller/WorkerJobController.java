@@ -1,9 +1,9 @@
 package controller;
 
-import bean.Owner;
+import bean.WorkerJob;
 import controller.util.JsfUtil;
 import controller.util.JsfUtil.PersistAction;
-import service.OwnerFacade;
+import service.WorkerJobFacade;
 
 import java.io.Serializable;
 import java.util.List;
@@ -19,23 +19,23 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-@Named("ownerController")
+@Named("workerJobController")
 @SessionScoped
-public class OwnerController implements Serializable {
+public class WorkerJobController implements Serializable {
 
     @EJB
-    private service.OwnerFacade ejbFacade;
-    private List<Owner> items = null;
-    private Owner selected;
+    private service.WorkerJobFacade ejbFacade;
+    private List<WorkerJob> items = null;
+    private WorkerJob selected;
 
-    public OwnerController() {
+    public WorkerJobController() {
     }
 
-    public Owner getSelected() {
+    public WorkerJob getSelected() {
         return selected;
     }
 
-    public void setSelected(Owner selected) {
+    public void setSelected(WorkerJob selected) {
         this.selected = selected;
     }
 
@@ -45,36 +45,36 @@ public class OwnerController implements Serializable {
     protected void initializeEmbeddableKey() {
     }
 
-    private OwnerFacade getFacade() {
+    private WorkerJobFacade getFacade() {
         return ejbFacade;
     }
 
-    public Owner prepareCreate() {
-        selected = new Owner();
+    public WorkerJob prepareCreate() {
+        selected = new WorkerJob();
         initializeEmbeddableKey();
         return selected;
     }
 
     public void create() {
-        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("OwnerCreated"));
+        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("WorkerJobCreated"));
         if (!JsfUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
 
     public void update() {
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("OwnerUpdated"));
+        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("WorkerJobUpdated"));
     }
 
     public void destroy() {
-        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("OwnerDeleted"));
+        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("WorkerJobDeleted"));
         if (!JsfUtil.isValidationFailed()) {
             selected = null; // Remove selection
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
 
-    public List<Owner> getItems() {
+    public List<WorkerJob> getItems() {
         if (items == null) {
             items = getFacade().findAll();
         }
@@ -109,38 +109,38 @@ public class OwnerController implements Serializable {
         }
     }
 
-    public Owner getOwner(java.lang.String id) {
+    public WorkerJob getWorkerJob(java.lang.Long id) {
         return getFacade().find(id);
     }
 
-    public List<Owner> getItemsAvailableSelectMany() {
+    public List<WorkerJob> getItemsAvailableSelectMany() {
         return getFacade().findAll();
     }
 
-    public List<Owner> getItemsAvailableSelectOne() {
+    public List<WorkerJob> getItemsAvailableSelectOne() {
         return getFacade().findAll();
     }
 
-    @FacesConverter(forClass = Owner.class)
-    public static class OwnerControllerConverter implements Converter {
+    @FacesConverter(forClass = WorkerJob.class)
+    public static class WorkerJobControllerConverter implements Converter {
 
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            OwnerController controller = (OwnerController) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "ownerController");
-            return controller.getOwner(getKey(value));
+            WorkerJobController controller = (WorkerJobController) facesContext.getApplication().getELResolver().
+                    getValue(facesContext.getELContext(), null, "workerJobController");
+            return controller.getWorkerJob(getKey(value));
         }
 
-        java.lang.String getKey(String value) {
-            java.lang.String key;
-            key = value;
+        java.lang.Long getKey(String value) {
+            java.lang.Long key;
+            key = Long.valueOf(value);
             return key;
         }
 
-        String getStringKey(java.lang.String value) {
+        String getStringKey(java.lang.Long value) {
             StringBuilder sb = new StringBuilder();
             sb.append(value);
             return sb.toString();
@@ -151,11 +151,11 @@ public class OwnerController implements Serializable {
             if (object == null) {
                 return null;
             }
-            if (object instanceof Owner) {
-                Owner o = (Owner) object;
+            if (object instanceof WorkerJob) {
+                WorkerJob o = (WorkerJob) object;
                 return getStringKey(o.getId());
             } else {
-                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), Owner.class.getName()});
+                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), WorkerJob.class.getName()});
                 return null;
             }
         }

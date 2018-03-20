@@ -1,9 +1,9 @@
 package controller;
 
-import bean.SocieteJob;
+import bean.Worker;
 import controller.util.JsfUtil;
 import controller.util.JsfUtil.PersistAction;
-import service.SocieteJobFacade;
+import service.WorkerFacade;
 
 import java.io.Serializable;
 import java.util.List;
@@ -19,23 +19,23 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-@Named("societeJobController")
+@Named("workerController")
 @SessionScoped
-public class SocieteJobController implements Serializable {
+public class WorkerController implements Serializable {
 
     @EJB
-    private service.SocieteJobFacade ejbFacade;
-    private List<SocieteJob> items = null;
-    private SocieteJob selected;
+    private service.WorkerFacade ejbFacade;
+    private List<Worker> items = null;
+    private Worker selected;
 
-    public SocieteJobController() {
+    public WorkerController() {
     }
 
-    public SocieteJob getSelected() {
+    public Worker getSelected() {
         return selected;
     }
 
-    public void setSelected(SocieteJob selected) {
+    public void setSelected(Worker selected) {
         this.selected = selected;
     }
 
@@ -45,36 +45,36 @@ public class SocieteJobController implements Serializable {
     protected void initializeEmbeddableKey() {
     }
 
-    private SocieteJobFacade getFacade() {
+    private WorkerFacade getFacade() {
         return ejbFacade;
     }
 
-    public SocieteJob prepareCreate() {
-        selected = new SocieteJob();
+    public Worker prepareCreate() {
+        selected = new Worker();
         initializeEmbeddableKey();
         return selected;
     }
 
     public void create() {
-        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("SocieteJobCreated"));
+        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("WorkerCreated"));
         if (!JsfUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
 
     public void update() {
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("SocieteJobUpdated"));
+        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("WorkerUpdated"));
     }
 
     public void destroy() {
-        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("SocieteJobDeleted"));
+        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("WorkerDeleted"));
         if (!JsfUtil.isValidationFailed()) {
             selected = null; // Remove selection
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
 
-    public List<SocieteJob> getItems() {
+    public List<Worker> getItems() {
         if (items == null) {
             items = getFacade().findAll();
         }
@@ -109,29 +109,29 @@ public class SocieteJobController implements Serializable {
         }
     }
 
-    public SocieteJob getSocieteJob(java.lang.Long id) {
+    public Worker getWorker(java.lang.Long id) {
         return getFacade().find(id);
     }
 
-    public List<SocieteJob> getItemsAvailableSelectMany() {
+    public List<Worker> getItemsAvailableSelectMany() {
         return getFacade().findAll();
     }
 
-    public List<SocieteJob> getItemsAvailableSelectOne() {
+    public List<Worker> getItemsAvailableSelectOne() {
         return getFacade().findAll();
     }
 
-    @FacesConverter(forClass = SocieteJob.class)
-    public static class SocieteJobControllerConverter implements Converter {
+    @FacesConverter(forClass = Worker.class)
+    public static class WorkerControllerConverter implements Converter {
 
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            SocieteJobController controller = (SocieteJobController) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "societeJobController");
-            return controller.getSocieteJob(getKey(value));
+            WorkerController controller = (WorkerController) facesContext.getApplication().getELResolver().
+                    getValue(facesContext.getELContext(), null, "workerController");
+            return controller.getWorker(getKey(value));
         }
 
         java.lang.Long getKey(String value) {
@@ -151,11 +151,11 @@ public class SocieteJobController implements Serializable {
             if (object == null) {
                 return null;
             }
-            if (object instanceof SocieteJob) {
-                SocieteJob o = (SocieteJob) object;
+            if (object instanceof Worker) {
+                Worker o = (Worker) object;
                 return getStringKey(o.getId());
             } else {
-                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), SocieteJob.class.getName()});
+                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), Worker.class.getName()});
                 return null;
             }
         }

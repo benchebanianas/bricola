@@ -12,6 +12,8 @@
             <h:form id="CategorieViewForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{categorieController.selected != null}">
+                        <h:outputText value="#{bundle.ViewCategorieLabel_id}"/>
+                        <h:outputText value="#{categorieController.selected.id}" title="#{bundle.ViewCategorieTitle_id}"/>
                         <h:outputText value="#{bundle.ViewCategorieLabel_nom}"/>
                         <h:outputText value="#{categorieController.selected.nom}" title="#{bundle.ViewCategorieTitle_nom}"/>
                     </p:panelGrid>

@@ -11,16 +11,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 
 /**
  *
  * @author Boss
  */
 @Entity
-public class Societe implements Serializable {
+public class Worker implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -31,12 +29,38 @@ public class Societe implements Serializable {
     private String siteWeb;
     private String phone;
     private String description;
-    @ManyToOne
-    private Owner owner;
-    @OneToMany(mappedBy = "societe")
+    @OneToMany(mappedBy = "worker")
     private List<Review> reviews;
+    private String email;
+    private String password;
+    private boolean blocked;
+    //private List<Device> devices; hta nchof apres wach nkhliwha ola la 
 
-    public Societe() {
+    public Worker() {
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public boolean isBlocked() {
+        return blocked;
+    }
+
+    public void setBlocked(boolean blocked) {
+        this.blocked = blocked;
     }
 
     public List<Review> getReviews() {
@@ -53,14 +77,6 @@ public class Societe implements Serializable {
 
     public void setNom(String nom) {
         this.nom = nom;
-    }
-
-    public Owner getOwner() {
-        return owner;
-    }
-
-    public void setOwner(Owner owner) {
-        this.owner = owner;
     }
 
     public int getNombreEmploye() {
@@ -94,7 +110,7 @@ public class Societe implements Serializable {
     public void setDescription(String description) {
         this.description = description;
     }
-    
+
     public Long getId() {
         return id;
     }
@@ -113,10 +129,10 @@ public class Societe implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Societe)) {
+        if (!(object instanceof Worker)) {
             return false;
         }
-        Societe other = (Societe) object;
+        Worker other = (Worker) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }

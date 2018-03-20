@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="WorkerJobCreateDlg" widgetVar="WorkerJobCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateWorkerJobTitle}">
+            <h:form id="WorkerJobCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{workerJobController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateWorkerJobLabel_worker}" for="worker" />
+                        <p:selectOneMenu id="worker" value="#{workerJobController.selected.worker}" >
+                            <f:selectItems value="#{workerController.itemsAvailableSelectOne}"
+                                           var="workerItem"
+                                           itemValue="#{workerItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateWorkerJobLabel_secteur}" for="secteur" />
+                        <p:selectOneMenu id="secteur" value="#{workerJobController.selected.secteur}" >
+                            <f:selectItems value="#{secteurController.itemsAvailableSelectOne}"
+                                           var="secteurItem"
+                                           itemValue="#{secteurItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateWorkerJobLabel_service}" for="service" />
+                        <p:selectOneMenu id="service" value="#{workerJobController.selected.service}" >
+                            <f:selectItems value="#{serviceController.itemsAvailableSelectOne}"
+                                           var="serviceItem"
+                                           itemValue="#{serviceItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateWorkerJobLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{workerJobController.selected.id}" title="#{bundle.CreateWorkerJobTitle_id}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{workerJobController.create}" value="#{bundle.Save}" update="display,:WorkerJobListForm:datalist,:growl" oncomplete="handleSubmit(args,'WorkerJobCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="WorkerJobCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>
