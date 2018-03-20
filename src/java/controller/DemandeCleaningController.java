@@ -41,13 +41,7 @@ public class DemandeCleaningController implements Serializable {
     private List<DemandeCleaning> items = null;
     private DemandeCleaning selected;
     private boolean cleaningOnce = true;
-    private boolean emailValidation;
-    private boolean passwordValidation;
     private boolean cleaningMnayTimes;
-    private boolean materialsYes;
-    private boolean materialsNo = true;
-    private boolean ironing = false;
-    private boolean windowsCleaning = false;
     private Client loadedClient;
     private Date date;
     private Date dateOnce;
@@ -66,50 +60,51 @@ public class DemandeCleaningController implements Serializable {
         return villeFacade.findAll();
     }
 
-    public void displayChoice() {
-        System.out.println("hahowa choice : " + choice);
+    public void checkChoice() {
+
         if (choice == 2) {
             RequestContext context = RequestContext.getCurrentInstance();
             context.execute("PF('SocieteDialog').show()");
-
         }
     }
 
     public void doAction() {
-        loadSeectors();
+        loadSectors();
     }
 
     public void checkEmail() {
-        System.out.println("hahowa dkhl l check email");
-        List<Client> clients = clientFacade.checkEmail(demandeCleaning.getDemandeService().getClient());
+
+        List<Client> clients = clientFacade.checkEmail(demandeCleaning.getDemandeService().getClient().getEmail());
 
         if (clients.isEmpty()) {
-            emailValidation = false;
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Adresse email non enregister, veuillez remplir les champs !"));
 
         } else {
-            emailValidation = true;
+            RequestContext context = RequestContext.getCurrentInstance();
+            context.execute("PF('ConnexionDialog').show()");
             loadedClient = clients.get(0);
         }
     }
 
     public void checkPassword() {
         if (demandeCleaning.getDemandeService().getClient().getPassword().equals(loadedClient.getPassword())) {
-            passwordValidation = true;
             demandeCleaning.getDemandeService().setClient(loadedClient);
             ville = loadedClient.getSecteur().getVille();
             doAction();
             demandeCleaning.getDemandeService().getClient().setSecteur(loadedClient.getSecteur());
+            RequestContext context = RequestContext.getCurrentInstance();
+            context.execute("PF('ConnexionDialog').hide()");
 
         } else {
-            passwordValidation = false;
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Password incorrect"));
+            
+            RequestContext context = RequestContext.getCurrentInstance();
+            context.execute("PF('ConnexionDialog').jq.effect('shake', {times:5}, 100)");
+            
 
         }
-        System.out.println("hahowa pass valid : " + passwordValidation);
     }
 
-    public void loadSeectors() {
+    public void loadSectors() {
         secteurs = secteurFacade.findByVille(ville);
     }
 
@@ -120,9 +115,6 @@ public class DemandeCleaningController implements Serializable {
         if (cleaningOnce == false) {
             cleaningOnce = true;
         }
-
-        System.out.println("hahowa cleaning once : " + cleaningOnce);
-        System.out.println("hahowa cleaning many : " + cleaningMnayTimes);
     }
 
     public void checkMany() {
@@ -132,29 +124,6 @@ public class DemandeCleaningController implements Serializable {
         if (cleaningMnayTimes == false) {
             cleaningMnayTimes = true;
         }
-        System.out.println("hahowa cleaning once : " + cleaningOnce);
-        System.out.println("hahowa cleaning many : " + cleaningMnayTimes);
-
-    }
-
-    public void checkMaterialsYes() {
-        if (materialsYes == true) {
-            materialsNo = false;
-        }
-        if (materialsYes == false) {
-            materialsYes = true;
-        }
-
-    }
-
-    public void checkMaterialsNo() {
-        if (materialsNo == true) {
-            materialsYes = false;
-        }
-        if (materialsNo == false) {
-            materialsNo = true;
-        }
-
     }
 
     public void addNetoyageDate() {
@@ -211,30 +180,6 @@ public class DemandeCleaningController implements Serializable {
         this.secteurs = secteurs;
     }
 
-    public boolean isIroning() {
-        return ironing;
-    }
-
-    public boolean isPasswordValidation() {
-        return passwordValidation;
-    }
-
-    public void setPasswordValidation(boolean passwordValidation) {
-        this.passwordValidation = passwordValidation;
-    }
-
-    public void setIroning(boolean ironing) {
-        this.ironing = ironing;
-    }
-
-    public boolean isWindowsCleaning() {
-        return windowsCleaning;
-    }
-
-    public void setWindowsCleaning(boolean windowsCleaning) {
-        this.windowsCleaning = windowsCleaning;
-    }
-
     public Date getDateOnce() {
         return dateOnce;
     }
@@ -249,30 +194,6 @@ public class DemandeCleaningController implements Serializable {
 
     public void setCleaningMnayTimes(boolean cleaningMnayTimes) {
         this.cleaningMnayTimes = cleaningMnayTimes;
-    }
-
-    public boolean isEmailValidation() {
-        return emailValidation;
-    }
-
-    public void setEmailValidation(boolean emailValidation) {
-        this.emailValidation = emailValidation;
-    }
-
-    public boolean isMaterialsYes() {
-        return materialsYes;
-    }
-
-    public void setMaterialsYes(boolean materialsYes) {
-        this.materialsYes = materialsYes;
-    }
-
-    public boolean isMaterialsNo() {
-        return materialsNo;
-    }
-
-    public void setMaterialsNo(boolean materialsNo) {
-        this.materialsNo = materialsNo;
     }
 
     public List<Date> getDates() {

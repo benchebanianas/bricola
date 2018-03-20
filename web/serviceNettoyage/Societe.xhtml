@@ -8,11 +8,21 @@
 
     <ui:composition>
 
-        <p:dialog id="SocieteDlg" widgetVar="SocieteDialog" modal="true" resizable="false" appendTo="@(body)" width="900" height="500" header="Selectionner une societe / idividue">
+        <p:dialog id="SocieteDlg" widgetVar="SocieteDialog" modal="true" resizable="false" appendTo="@(body)" width="900" height="500">
 
-            <h:form id="SocieteForm" style="margin-top: 30px">
+            <h:form id="SocieteForm">
 
-                
+                <p:tabView >
+                    <p:tab title="Companies" titleStyle="float:left">
+                        
+                        
+                        
+                        
+                    </p:tab>
+                    <p:tab title="Individuals" titleStyle="float:left">
+                        
+                    </p:tab>
+                </p:tabView>
 
 
             </h:form>

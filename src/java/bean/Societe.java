@@ -31,6 +31,7 @@ public class Societe implements Serializable {
     private String siteWeb;
     private String phone;
     private String description;
+    private int type; //1: societe, 2: individu
     @ManyToOne
     private Owner owner;
     @OneToMany(mappedBy = "societe")
@@ -93,6 +94,14 @@ public class Societe implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
     
     public Long getId() {

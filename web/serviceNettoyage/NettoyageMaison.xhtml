@@ -18,7 +18,7 @@
 
             <h:outputStylesheet name="bootstrap-3.3.6/css/bootstrap.min.css"/>
             <h:outputStylesheet name="css/paper-bootstrap-wizard.css"/>
-
+            <h:outputStylesheet name="css/loginStyle.css"/>
             <h:outputStylesheet name="css/themify-icons.css"/>
 
 
@@ -198,7 +198,7 @@
                                                                         <f:selectItem itemValue="#{null}" itemLabel="-- SELECT A CHOICE --"/>
                                                                         <f:selectItem itemValue="#{1}" itemLabel="Choose a company for me"/>
                                                                         <f:selectItem itemValue="#{2}" itemLabel="Let me choose"/>
-                                                                        <p:ajax listener="#{demandeCleaningController.displayChoice()}" update=":SocieteDlg"/>
+                                                                        <p:ajax listener="#{demandeCleaningController.checkChoice()}" update=":SocieteDlg"/>
 
                                                                     </p:selectOneMenu>
                                                                 </p:column>
@@ -233,7 +233,7 @@
 
                                                                     <p:inputText id="email" value="#{demandeCleaningController.demandeCleaning.demandeService.client.email}"  style="width:200px;height: 40px;" />
 
-                                                                    <p:commandButton icon="fa fa-search"  styleClass="white-button" style="width:50px;height: 40px;" actionListener="#{demandeCleaningController.checkEmail()}" update=":ConnexionDlg,:growl,detailGrid" oncomplete="if (#{demandeCleaningController.emailValidation}) { PF('ConnexionDialog').show() }"/>  
+                                                                    <p:commandButton icon="fa fa-search" process="detailGrid"  styleClass="white-button" style="width:50px;height: 40px;" actionListener="#{demandeCleaningController.checkEmail()}" update=":ConnexionDlg,:growl,detailGrid"/>  
 
                                                                 </p:column>
 

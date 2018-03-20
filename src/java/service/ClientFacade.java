@@ -30,9 +30,9 @@ public class ClientFacade extends AbstractFacade<Client> {
         super(Client.class);
     }
 
-    public List<Client> checkEmail(Client client) {
+    public List<Client> checkEmail(String email) {
     
-        String requette = "Select c from Client c where c.email = '"+client.getEmail()+"'";
+        String requette = "Select c from Client c where c.email = '"+email+"'";
          return em.createQuery(requette).getResultList();
      }
     
