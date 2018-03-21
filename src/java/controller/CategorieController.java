@@ -31,7 +31,14 @@ public class CategorieController implements Serializable {
     public CategorieController() {
     }
 
+    public void save() {
+        ejbFacade.save(selected);
+    }
+
     public Categorie getSelected() {
+        if (selected == null) {
+            selected = new Categorie();
+        }
         return selected;
     }
 

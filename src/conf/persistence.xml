@@ -2,7 +2,57 @@
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
   <persistence-unit name="bricolagePU" transaction-type="JTA">
     <jta-data-source>java:app/bricolageJNDI</jta-data-source>
-    <exclude-unlisted-classes>false</exclude-unlisted-classes>
+    <class>bean.Categorie</class>
+    <class>bean.ChildDemandeBabySitting</class>
+    <class>bean.Client</class>
+    <class>bean.CuisineDemandeEvent</class>
+    <class>bean.CuisineType</class>
+    <class>bean.Day</class>
+    <class>bean.DemandeBabySitting</class>
+    <class>bean.DemandeCleaning</class>
+    <class>bean.DemandeEvent</class>
+    <class>bean.DemandeGardening</class>
+    <class>bean.DemandeHandyMan</class>
+    <class>bean.DemandeMoving</class>
+    <class>bean.DemandePainting</class>
+    <class>bean.DemandePestControl</class>
+    <class>bean.DemandePhotographie</class>
+    <class>bean.DemandeService</class>
+    <class>bean.DemandeServiceConfirmationDetail</class>
+    <class>bean.DemandeVoiture</class>
+    <class>bean.Device</class>
+    <class>bean.EventType</class>
+    <class>bean.Faq</class>
+    <class>bean.GardeningType</class>
+    <class>bean.Home</class>
+    <class>bean.HomeType</class>
+    <class>bean.Manager</class>
+    <class>bean.Packaging</class>
+    <class>bean.PaintingType</class>
+    <class>bean.Pays</class>
+    <class>bean.PestControlType</class>
+    <class>bean.PhotographieType</class>
+    <class>bean.Planning</class>
+    <class>bean.PlanningItem</class>
+    <class>bean.Review</class>
+    <class>bean.Secteur</class>
+    <class>bean.Service</class>
+    <class>bean.ServicePricing</class>
+    <class>bean.ServiceVille</class>
+    <class>bean.SupplementDemandeEvent</class>
+    <class>bean.SupplementEvent</class>
+    <class>bean.Timing</class>
+    <class>bean.TypeAction</class>
+    <class>bean.TypeDemande</class>
+    <class>bean.Unite</class>
+    <class>bean.Ville</class>
+    <class>bean.Voiture</class>
+    <class>bean.VoitureImage</class>
+    <class>bean.VoitureMarque</class>
+    <class>bean.VoitureModele</class>
+    <class>bean.Worker</class>
+    <class>bean.WorkerJob</class>
+    <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.schema-generation.database.action" value="create"/>
     </properties>

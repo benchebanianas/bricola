@@ -17,34 +17,34 @@ import javax.persistence.ManyToOne;
  * @author Boss
  */
 @Entity
-public class SocieteJob implements Serializable {
+public class WorkerJob implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @ManyToOne
-    private Societe societe;
+    private Worker worker;
     @ManyToOne
     private Secteur secteur;
     @ManyToOne
     private Service service;
 
-    public SocieteJob() {
+    public WorkerJob() {
     }
 
-    public SocieteJob(Societe societe, Secteur secteur, Service service) {
-        this.societe = societe;
+    public WorkerJob(Worker societe, Secteur secteur, Service service) {
+        this.worker = societe;
         this.secteur = secteur;
         this.service = service;
     }
 
-    public Societe getSociete() {
-        return societe;
+    public Worker getWorker() {
+        return worker;
     }
 
-    public void setSociete(Societe societe) {
-        this.societe = societe;
+    public void setWorker(Worker worker) {
+        this.worker = worker;
     }
 
     public Secteur getSecteur() {
@@ -81,10 +81,10 @@ public class SocieteJob implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof SocieteJob)) {
+        if (!(object instanceof WorkerJob)) {
             return false;
         }
-        SocieteJob other = (SocieteJob) object;
+        WorkerJob other = (WorkerJob) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }

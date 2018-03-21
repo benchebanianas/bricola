@@ -191,13 +191,14 @@
                                                                     <p:outputLabel value="Choice :" for="choice" style="padding-top: 10px" />
                                                                 </p:column>
 
-                                                                <p:column style="width: 200px">
-                                                                    <p:selectOneMenu class="form-control" id="choice" widgetVar="choice" value="#{demandeCleaningController.choice}" style="width: 170px;height: 40px" >
+                                                                <p:column style="width: 260px">
+                                                                    <p:selectOneMenu class="form-control" id="choice" widgetVar="choice" value="#{demandeCleaningController.choice}" style="width: 250px;height: 40px" >
 
 
                                                                         <f:selectItem itemValue="#{null}" itemLabel="-- SELECT A CHOICE --"/>
-                                                                        <f:selectItem itemValue="#{1}" itemLabel="Choose a company for me"/>
-                                                                        <f:selectItem itemValue="#{2}" itemLabel="Let me choose"/>
+                                                                        <f:selectItem itemValue="#{1}" itemLabel="Choose a company / individual for me"/>
+                                                                        <f:selectItem itemValue="#{2}" itemLabel="Let me choose a company"/>
+                                                                        <f:selectItem itemValue="#{3}" itemLabel="Let me choose an individual"/>
                                                                         <p:ajax listener="#{demandeCleaningController.checkChoice()}" update=":SocieteDlg"/>
 
                                                                     </p:selectOneMenu>
@@ -366,6 +367,8 @@
             <ui:include src="NetoyageUneFois.xhtml"/>
             <ui:include src="Connexion.xhtml"/>
             <ui:include src="Societe.xhtml"/>
+            <ui:include src="Individual.xhtml"/>
+            
 
 
         </ui:define>

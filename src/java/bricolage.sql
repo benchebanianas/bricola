@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 20, 2018 at 12:57 AM
+-- Generation Time: Mar 21, 2018 at 02:49 AM
 -- Server version: 10.1.30-MariaDB
 -- PHP Version: 5.6.33
 
@@ -260,7 +260,7 @@ CREATE TABLE `demandeservice` (
   `SECTEUR_ID` bigint(20) DEFAULT NULL,
   `SERVICE_ID` bigint(20) DEFAULT NULL,
   `SERVICEPRICING_ID` bigint(20) DEFAULT NULL,
-  `SOCIETE_ID` bigint(20) DEFAULT NULL,
+  `WORKER_EMAIL` varchar(255) DEFAULT NULL,
   `TYPEDEMANDE_ID` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -301,11 +301,9 @@ CREATE TABLE `device` (
   `BLOCKED` tinyint(1) DEFAULT '0',
   `DATECONNECTION` date DEFAULT NULL,
   `IP` varchar(255) DEFAULT NULL,
-  `MACADRESSS` varchar(255) DEFAULT NULL,
   `NAVIGATEUR` varchar(255) DEFAULT NULL,
   `OS` varchar(255) DEFAULT NULL,
-  `MANAGER_ID` varchar(255) DEFAULT NULL,
-  `OWNER_ID` varchar(255) DEFAULT NULL
+  `MANAGER_ID` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -373,20 +371,6 @@ CREATE TABLE `manager` (
   `ID` varchar(255) NOT NULL,
   `PASSWORD` varchar(255) DEFAULT NULL,
   `BLOCKED` tinyint(1) DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `owner`
---
-
-CREATE TABLE `owner` (
-  `ID` varchar(255) NOT NULL,
-  `BLOCKED` tinyint(1) DEFAULT '0',
-  `EMAIL` varchar(255) DEFAULT NULL,
-  `NOM` varchar(255) DEFAULT NULL,
-  `PHONE` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -495,7 +479,7 @@ CREATE TABLE `review` (
   `DATEREVIEW` date DEFAULT NULL,
   `STARS` int(11) DEFAULT NULL,
   `TEXT` varchar(255) DEFAULT NULL,
-  `SOCIETE_ID` bigint(20) DEFAULT NULL,
+  `WORKER_EMAIL` varchar(255) DEFAULT NULL,
   `CLIENT_EMAIL` varchar(255) DEFAULT NULL,
   `SERVICE_ID` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -639,35 +623,6 @@ INSERT INTO `serviceville` (`ID`, `SERVICE_ID`, `VILLE_ID`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `societe`
---
-
-CREATE TABLE `societe` (
-  `ID` bigint(20) NOT NULL,
-  `NOM` varchar(255) DEFAULT NULL,
-  `NOMBREEMPLOYE` int(11) DEFAULT NULL,
-  `PHONE` varchar(255) DEFAULT NULL,
-  `SITEWEB` varchar(255) DEFAULT NULL,
-  `DESCRIPTION` varchar(255) NOT NULL,
-  `OWNER_ID` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `societejob`
---
-
-CREATE TABLE `societejob` (
-  `ID` bigint(20) NOT NULL,
-  `SECTEUR_ID` bigint(20) DEFAULT NULL,
-  `SERVICE_ID` bigint(20) DEFAULT NULL,
-  `SOCIETE_ID` bigint(20) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `supplementdemandeevent`
 --
 
@@ -766,7 +721,7 @@ CREATE TABLE `voiture` (
   `COULEUR` varchar(255) DEFAULT NULL,
   `KILOMETRAGE` varchar(255) DEFAULT NULL,
   `MATRICULE` varchar(255) DEFAULT NULL,
-  `SOCIETE_ID` bigint(20) DEFAULT NULL,
+  `WORKER_EMAIL` varchar(255) DEFAULT NULL,
   `MODELE_ID` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -805,6 +760,57 @@ CREATE TABLE `voituremodele` (
   `NOM` varchar(255) DEFAULT NULL,
   `MARQUE_ID` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `worker`
+--
+
+CREATE TABLE `worker` (
+  `EMAIL` varchar(255) NOT NULL,
+  `BLOCKED` tinyint(1) DEFAULT '0',
+  `DESCRIPTION` varchar(255) DEFAULT NULL,
+  `NOM` varchar(255) DEFAULT NULL,
+  `NOMBREEMPLOYE` int(11) DEFAULT NULL,
+  `PASSWORD` varchar(255) DEFAULT NULL,
+  `PHONE` varchar(255) DEFAULT NULL,
+  `SITEWEB` varchar(255) DEFAULT NULL,
+  `TYPE` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `worker`
+--
+
+INSERT INTO `worker` (`EMAIL`, `BLOCKED`, `DESCRIPTION`, `NOM`, `NOMBREEMPLOYE`, `PASSWORD`, `PHONE`, `SITEWEB`, `TYPE`) VALUES
+('cleanharbors@gmail.com', 0, 'you probably heard of us, the leading company for cleaning services in over 26 countries', 'Clean Harbors', 32, 'cleanharbors@gmail.com', '0679120435', 'www.cleanharbors.com', 1),
+('coitcleaners@gmail.com', 0, 'An inspiring individual with many years of experiences in cleaning', 'Coit Cleaners ', 5, 'coitcleaners@gmail.com', '0613467982', 'www.coitcleaners.com', 2),
+('merrymaids@gmail.com', 0, 'we can guarantee that our services are the best in the cleaning industry', 'Merry Maids', 54, 'merrymaids@gmail.com', '0687125903', 'www.merrymaids.com', 1),
+('taskrabbit@gmail.com', 0, 'we hire specialist from all around the globe so that you can have the best services', 'TaskRabbit ', 78, 'taskrabbit@gmail.com', '0612064367', 'www.taskrabbit.com', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `workerjob`
+--
+
+CREATE TABLE `workerjob` (
+  `ID` bigint(20) NOT NULL,
+  `SECTEUR_ID` bigint(20) DEFAULT NULL,
+  `SERVICE_ID` bigint(20) DEFAULT NULL,
+  `WORKER_EMAIL` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `workerjob`
+--
+
+INSERT INTO `workerjob` (`ID`, `SECTEUR_ID`, `SERVICE_ID`, `WORKER_EMAIL`) VALUES
+(1, 1, 1, 'cleanharbors@gmail.com'),
+(2, 2, 1, 'merrymaids@gmail.com'),
+(3, 4, 4, 'taskrabbit@gmail.com'),
+(4, 5, 1, 'coitcleaners@gmail.com');
 
 --
 -- Indexes for dumped tables
@@ -925,11 +931,11 @@ ALTER TABLE `demandephotographie`
 --
 ALTER TABLE `demandeservice`
   ADD PRIMARY KEY (`ID`),
-  ADD KEY `FK_DEMANDESERVICE_SOCIETE_ID` (`SOCIETE_ID`),
   ADD KEY `FK_DEMANDESERVICE_TYPEDEMANDE_ID` (`TYPEDEMANDE_ID`),
   ADD KEY `FK_DEMANDESERVICE_MANAGERCONFIRMATION_ID` (`MANAGERCONFIRMATION_ID`),
   ADD KEY `FK_DEMANDESERVICE_PLANNING_ID` (`PLANNING_ID`),
   ADD KEY `FK_DEMANDESERVICE_SERVICE_ID` (`SERVICE_ID`),
+  ADD KEY `FK_DEMANDESERVICE_WORKER_EMAIL` (`WORKER_EMAIL`),
   ADD KEY `FK_DEMANDESERVICE_CLIENT_EMAIL` (`CLIENT_EMAIL`),
   ADD KEY `FK_DEMANDESERVICE_SECTEUR_ID` (`SECTEUR_ID`),
   ADD KEY `FK_DEMANDESERVICE_SERVICEPRICING_ID` (`SERVICEPRICING_ID`);
@@ -956,8 +962,7 @@ ALTER TABLE `demandevoiture`
 --
 ALTER TABLE `device`
   ADD PRIMARY KEY (`ID`),
-  ADD KEY `FK_DEVICE_MANAGER_ID` (`MANAGER_ID`),
-  ADD KEY `FK_DEVICE_OWNER_ID` (`OWNER_ID`);
+  ADD KEY `FK_DEVICE_MANAGER_ID` (`MANAGER_ID`);
 
 --
 -- Indexes for table `eventtype`
@@ -994,12 +999,6 @@ ALTER TABLE `hometype`
 -- Indexes for table `manager`
 --
 ALTER TABLE `manager`
-  ADD PRIMARY KEY (`ID`);
-
---
--- Indexes for table `owner`
---
-ALTER TABLE `owner`
   ADD PRIMARY KEY (`ID`);
 
 --
@@ -1056,7 +1055,7 @@ ALTER TABLE `planningitem`
 ALTER TABLE `review`
   ADD PRIMARY KEY (`ID`),
   ADD KEY `FK_REVIEW_SERVICE_ID` (`SERVICE_ID`),
-  ADD KEY `FK_REVIEW_SOCIETE_ID` (`SOCIETE_ID`),
+  ADD KEY `FK_REVIEW_WORKER_EMAIL` (`WORKER_EMAIL`),
   ADD KEY `FK_REVIEW_CLIENT_EMAIL` (`CLIENT_EMAIL`);
 
 --
@@ -1094,22 +1093,6 @@ ALTER TABLE `serviceville`
   ADD PRIMARY KEY (`ID`),
   ADD KEY `FK_SERVICEVILLE_SERVICE_ID` (`SERVICE_ID`),
   ADD KEY `FK_SERVICEVILLE_VILLE_ID` (`VILLE_ID`);
-
---
--- Indexes for table `societe`
---
-ALTER TABLE `societe`
-  ADD PRIMARY KEY (`ID`),
-  ADD KEY `FK_SOCIETE_OWNER_ID` (`OWNER_ID`);
-
---
--- Indexes for table `societejob`
---
-ALTER TABLE `societejob`
-  ADD PRIMARY KEY (`ID`),
-  ADD KEY `FK_SOCIETEJOB_SOCIETE_ID` (`SOCIETE_ID`),
-  ADD KEY `FK_SOCIETEJOB_SECTEUR_ID` (`SECTEUR_ID`),
-  ADD KEY `FK_SOCIETEJOB_SERVICE_ID` (`SERVICE_ID`);
 
 --
 -- Indexes for table `supplementdemandeevent`
@@ -1161,8 +1144,8 @@ ALTER TABLE `ville`
 --
 ALTER TABLE `voiture`
   ADD PRIMARY KEY (`ID`),
-  ADD KEY `FK_VOITURE_SOCIETE_ID` (`SOCIETE_ID`),
-  ADD KEY `FK_VOITURE_MODELE_ID` (`MODELE_ID`);
+  ADD KEY `FK_VOITURE_MODELE_ID` (`MODELE_ID`),
+  ADD KEY `FK_VOITURE_WORKER_EMAIL` (`WORKER_EMAIL`);
 
 --
 -- Indexes for table `voitureimage`
@@ -1183,6 +1166,21 @@ ALTER TABLE `voituremarque`
 ALTER TABLE `voituremodele`
   ADD PRIMARY KEY (`ID`),
   ADD KEY `FK_VOITUREMODELE_MARQUE_ID` (`MARQUE_ID`);
+
+--
+-- Indexes for table `worker`
+--
+ALTER TABLE `worker`
+  ADD PRIMARY KEY (`EMAIL`);
+
+--
+-- Indexes for table `workerjob`
+--
+ALTER TABLE `workerjob`
+  ADD PRIMARY KEY (`ID`),
+  ADD KEY `FK_WORKERJOB_SERVICE_ID` (`SERVICE_ID`),
+  ADD KEY `FK_WORKERJOB_SECTEUR_ID` (`SECTEUR_ID`),
+  ADD KEY `FK_WORKERJOB_WORKER_EMAIL` (`WORKER_EMAIL`);
 
 --
 -- Constraints for dumped tables
@@ -1279,8 +1277,8 @@ ALTER TABLE `demandeservice`
   ADD CONSTRAINT `FK_DEMANDESERVICE_SECTEUR_ID` FOREIGN KEY (`SECTEUR_ID`) REFERENCES `secteur` (`ID`),
   ADD CONSTRAINT `FK_DEMANDESERVICE_SERVICEPRICING_ID` FOREIGN KEY (`SERVICEPRICING_ID`) REFERENCES `servicepricing` (`ID`),
   ADD CONSTRAINT `FK_DEMANDESERVICE_SERVICE_ID` FOREIGN KEY (`SERVICE_ID`) REFERENCES `service` (`ID`),
-  ADD CONSTRAINT `FK_DEMANDESERVICE_SOCIETE_ID` FOREIGN KEY (`SOCIETE_ID`) REFERENCES `societe` (`ID`),
-  ADD CONSTRAINT `FK_DEMANDESERVICE_TYPEDEMANDE_ID` FOREIGN KEY (`TYPEDEMANDE_ID`) REFERENCES `typedemande` (`ID`);
+  ADD CONSTRAINT `FK_DEMANDESERVICE_TYPEDEMANDE_ID` FOREIGN KEY (`TYPEDEMANDE_ID`) REFERENCES `typedemande` (`ID`),
+  ADD CONSTRAINT `FK_DEMANDESERVICE_WORKER_EMAIL` FOREIGN KEY (`WORKER_EMAIL`) REFERENCES `worker` (`EMAIL`);
 
 --
 -- Constraints for table `demandeserviceconfirmationdetail`
@@ -1301,8 +1299,7 @@ ALTER TABLE `demandevoiture`
 -- Constraints for table `device`
 --
 ALTER TABLE `device`
-  ADD CONSTRAINT `FK_DEVICE_MANAGER_ID` FOREIGN KEY (`MANAGER_ID`) REFERENCES `manager` (`ID`),
-  ADD CONSTRAINT `FK_DEVICE_OWNER_ID` FOREIGN KEY (`OWNER_ID`) REFERENCES `owner` (`ID`);
+  ADD CONSTRAINT `FK_DEVICE_MANAGER_ID` FOREIGN KEY (`MANAGER_ID`) REFERENCES `manager` (`ID`);
 
 --
 -- Constraints for table `home`
@@ -1337,7 +1334,7 @@ ALTER TABLE `planningitem`
 ALTER TABLE `review`
   ADD CONSTRAINT `FK_REVIEW_CLIENT_EMAIL` FOREIGN KEY (`CLIENT_EMAIL`) REFERENCES `client` (`EMAIL`),
   ADD CONSTRAINT `FK_REVIEW_SERVICE_ID` FOREIGN KEY (`SERVICE_ID`) REFERENCES `service` (`ID`),
-  ADD CONSTRAINT `FK_REVIEW_SOCIETE_ID` FOREIGN KEY (`SOCIETE_ID`) REFERENCES `societe` (`ID`);
+  ADD CONSTRAINT `FK_REVIEW_WORKER_EMAIL` FOREIGN KEY (`WORKER_EMAIL`) REFERENCES `worker` (`EMAIL`);
 
 --
 -- Constraints for table `secteur`
@@ -1366,20 +1363,6 @@ ALTER TABLE `serviceville`
   ADD CONSTRAINT `FK_SERVICEVILLE_VILLE_ID` FOREIGN KEY (`VILLE_ID`) REFERENCES `ville` (`ID`);
 
 --
--- Constraints for table `societe`
---
-ALTER TABLE `societe`
-  ADD CONSTRAINT `FK_SOCIETE_OWNER_ID` FOREIGN KEY (`OWNER_ID`) REFERENCES `owner` (`ID`);
-
---
--- Constraints for table `societejob`
---
-ALTER TABLE `societejob`
-  ADD CONSTRAINT `FK_SOCIETEJOB_SECTEUR_ID` FOREIGN KEY (`SECTEUR_ID`) REFERENCES `secteur` (`ID`),
-  ADD CONSTRAINT `FK_SOCIETEJOB_SERVICE_ID` FOREIGN KEY (`SERVICE_ID`) REFERENCES `service` (`ID`),
-  ADD CONSTRAINT `FK_SOCIETEJOB_SOCIETE_ID` FOREIGN KEY (`SOCIETE_ID`) REFERENCES `societe` (`ID`);
-
---
 -- Constraints for table `supplementdemandeevent`
 --
 ALTER TABLE `supplementdemandeevent`
@@ -1397,7 +1380,7 @@ ALTER TABLE `ville`
 --
 ALTER TABLE `voiture`
   ADD CONSTRAINT `FK_VOITURE_MODELE_ID` FOREIGN KEY (`MODELE_ID`) REFERENCES `voituremodele` (`ID`),
-  ADD CONSTRAINT `FK_VOITURE_SOCIETE_ID` FOREIGN KEY (`SOCIETE_ID`) REFERENCES `societe` (`ID`);
+  ADD CONSTRAINT `FK_VOITURE_WORKER_EMAIL` FOREIGN KEY (`WORKER_EMAIL`) REFERENCES `worker` (`EMAIL`);
 
 --
 -- Constraints for table `voitureimage`
@@ -1410,6 +1393,14 @@ ALTER TABLE `voitureimage`
 --
 ALTER TABLE `voituremodele`
   ADD CONSTRAINT `FK_VOITUREMODELE_MARQUE_ID` FOREIGN KEY (`MARQUE_ID`) REFERENCES `voituremarque` (`ID`);
+
+--
+-- Constraints for table `workerjob`
+--
+ALTER TABLE `workerjob`
+  ADD CONSTRAINT `FK_WORKERJOB_SECTEUR_ID` FOREIGN KEY (`SECTEUR_ID`) REFERENCES `secteur` (`ID`),
+  ADD CONSTRAINT `FK_WORKERJOB_SERVICE_ID` FOREIGN KEY (`SERVICE_ID`) REFERENCES `service` (`ID`),
+  ADD CONSTRAINT `FK_WORKERJOB_WORKER_EMAIL` FOREIGN KEY (`WORKER_EMAIL`) REFERENCES `worker` (`EMAIL`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

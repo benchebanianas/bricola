@@ -33,7 +33,7 @@ public class Voiture implements Serializable {
     @OneToOne
     private VoitureModele modele;
     @ManyToOne
-    private Societe societe;
+    private Worker worker;
 
     @OneToMany(mappedBy = "voiture")
     private List<VoitureImage> imageVoitures;
@@ -89,12 +89,12 @@ public class Voiture implements Serializable {
         this.modele = modele;
     }
 
-    public Societe getSociete() {
-        return societe;
+    public Worker getWorker() {
+        return worker;
     }
 
-    public void setSociete(Societe societe) {
-        this.societe = societe;
+    public void setWorker(Worker worker) {
+        this.worker = worker;
     }
 
     public List<VoitureImage> getImageVoitures() {

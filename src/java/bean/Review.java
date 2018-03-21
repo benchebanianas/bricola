@@ -33,19 +33,19 @@ public class Review implements Serializable {
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date dateReview;
     @ManyToOne
-    private Societe societe;
+    private Worker worker;
     @OneToOne
     private Service service;
 
     public Review() {
     }
 
-    public Review(int stars, String text, Client client, Date dateReview, Societe societe, Service service) {
+    public Review(int stars, String text, Client client, Date dateReview, Worker worker, Service service) {
         this.stars = stars;
         this.text = text;
         this.client = client;
         this.dateReview = dateReview;
-        this.societe = societe;
+        this.worker = worker;
         this.service = service;
     }
 
@@ -89,12 +89,12 @@ public class Review implements Serializable {
         this.dateReview = dateReview;
     }
 
-    public Societe getSociete() {
-        return societe;
+    public Worker getWorker() {
+        return worker;
     }
 
-    public void setSociete(Societe societe) {
-        this.societe = societe;
+    public void setWorker(Worker worker) {
+        this.worker = worker;
     }
 
     public Long getId() {

@@ -12,6 +12,8 @@
             <h:form id="CategorieEditForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{categorieController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditCategorieLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{categorieController.selected.id}" title="#{bundle.EditCategorieTitle_id}" />
                         <p:outputLabel value="#{bundle.EditCategorieLabel_nom}" for="nom" />
                         <p:inputText id="nom" value="#{categorieController.selected.nom}" title="#{bundle.EditCategorieTitle_nom}" />
                     </p:panelGrid>

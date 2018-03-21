@@ -4,6 +4,7 @@ import bean.Client;
 import bean.DemandeCleaning;
 import bean.Secteur;
 import bean.Ville;
+import bean.Worker;
 import controller.util.JsfUtil;
 import controller.util.JsfUtil.PersistAction;
 import service.DemandeCleaningFacade;
@@ -38,6 +39,8 @@ public class DemandeCleaningController implements Serializable {
     private service.SecteurFacade secteurFacade;
     @EJB
     private service.ClientFacade clientFacade;
+    @EJB
+    private service.WorkerJobFacade workerJobFacade;
     private List<DemandeCleaning> items = null;
     private DemandeCleaning selected;
     private boolean cleaningOnce = true;
@@ -49,11 +52,23 @@ public class DemandeCleaningController implements Serializable {
     private Ville ville;
     private Secteur secteur;
     private List<Secteur> secteurs;
+    private List<Worker> companies;
+    private List<Worker> individuals;
     private int choice;
+    private Worker company;
+    private Worker individual;
 
     private DemandeCleaning demandeCleaning;
 
     public DemandeCleaningController() {
+    }
+
+    public void confirmCompany() {
+        System.out.println("hahiya company selected : " + company);
+    }
+
+    public void confirmIndividual() {
+        System.out.println("hahowa individual selected : " + individual);
     }
 
     public List<Ville> loadVilles() {
@@ -61,10 +76,13 @@ public class DemandeCleaningController implements Serializable {
     }
 
     public void checkChoice() {
-
+        
+        RequestContext context = RequestContext.getCurrentInstance();
         if (choice == 2) {
-            RequestContext context = RequestContext.getCurrentInstance();
+
             context.execute("PF('SocieteDialog').show()");
+        } else if (choice == 3) {
+            context.execute("PF('IndividualDialog').show()");
         }
     }
 
@@ -96,10 +114,9 @@ public class DemandeCleaningController implements Serializable {
             context.execute("PF('ConnexionDialog').hide()");
 
         } else {
-            
+
             RequestContext context = RequestContext.getCurrentInstance();
             context.execute("PF('ConnexionDialog').jq.effect('shake', {times:5}, 100)");
-            
 
         }
     }
@@ -230,6 +247,50 @@ public class DemandeCleaningController implements Serializable {
 
     public void setSelected(DemandeCleaning selected) {
         this.selected = selected;
+    }
+
+    public Worker getCompany() {
+        if (company == null) {
+            company = new Worker();
+        }
+        return company;
+    }
+
+    public void setCompany(Worker company) {
+        this.company = company;
+    }
+
+    public Worker getIndividual() {
+        if (individual == null) {
+            individual = new Worker();
+        }
+        return individual;
+    }
+
+    public void setIndividual(Worker individual) {
+        this.individual = individual;
+    }
+
+    public List<Worker> getCompanies() {
+        if (companies == null) {
+            companies = workerJobFacade.findWorkerByServiceAndType("Nettoyage Maison", 1);
+        }
+        return companies;
+    }
+
+    public void setCompanies(List<Worker> companies) {
+        this.companies = companies;
+    }
+
+    public List<Worker> getIndividuals() {
+        if (individuals == null) {
+            individuals = workerJobFacade.findWorkerByServiceAndType("Nettoyage Maison", 2);
+        }
+        return individuals;
+    }
+
+    public void setIndividuals(List<Worker> individuals) {
+        this.individuals = individuals;
     }
 
     protected void setEmbeddableKeys() {

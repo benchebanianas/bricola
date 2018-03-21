@@ -36,7 +36,7 @@ public class DemandeService implements Serializable {
     private String detail;
     
     @ManyToOne
-    private Societe societe;
+    private Worker worker;
     private BigDecimal prixHt;
     private BigDecimal prixTtc;
     @ManyToOne
@@ -67,10 +67,10 @@ public class DemandeService implements Serializable {
         this.datedemande = datedemande;
     }
 
-    public DemandeService(Client client, String detail, Societe societe, BigDecimal prixHt, BigDecimal prixTtc, ServicePricing servicePricing, Service service, Planning planning, TypeDemande typeDemande) {
+    public DemandeService(Client client, String detail, Worker worker, BigDecimal prixHt, BigDecimal prixTtc, ServicePricing servicePricing, Service service, Planning planning, TypeDemande typeDemande) {
         this.client = client;
         this.detail = detail;
-        this.societe = societe;
+        this.worker = worker;
         this.prixHt = prixHt;
         this.prixTtc = prixTtc;
         this.servicePricing = servicePricing;
@@ -124,15 +124,15 @@ public class DemandeService implements Serializable {
     }
 
    
-    public Societe getSociete() {
-        if(societe == null){
-            societe = new Societe();
+    public Worker getWorker() {
+        if(worker == null){
+            worker = new Worker();
         }
-        return societe;
+        return worker;
     }
 
-    public void setSociete(Societe societe) {
-        this.societe = societe;
+    public void setWorker(Worker worker) {
+        this.worker = worker;
     }
 
     public BigDecimal getPrixHt() {

@@ -5,17 +5,17 @@
  */
 package service;
 
-import bean.Owner;
+import bean.Worker;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 /**
  *
- * @author Ashen One
+ * @author Boss
  */
 @Stateless
-public class OwnerFacade extends AbstractFacade<Owner> {
+public class WorkerFacade extends AbstractFacade<Worker> {
 
     @PersistenceContext(unitName = "bricolagePU")
     private EntityManager em;
@@ -25,8 +25,8 @@ public class OwnerFacade extends AbstractFacade<Owner> {
         return em;
     }
 
-    public OwnerFacade() {
-        super(Owner.class);
+    public WorkerFacade() {
+        super(Worker.class);
     }
     
 }

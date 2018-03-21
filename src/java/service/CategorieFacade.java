@@ -12,7 +12,7 @@ import javax.persistence.PersistenceContext;
 
 /**
  *
- * @author Ashen One
+ * @author Boss
  */
 @Stateless
 public class CategorieFacade extends AbstractFacade<Categorie> {
@@ -25,6 +25,10 @@ public class CategorieFacade extends AbstractFacade<Categorie> {
         return em;
     }
 
+    public void save(Categorie categorie){
+        categorie.setId(generateId("Categorie", "id"));
+        create(categorie);
+    }
     public CategorieFacade() {
         super(Categorie.class);
     }

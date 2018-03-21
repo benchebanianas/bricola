@@ -25,12 +25,9 @@ public class Device implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String macAdresss;
     private String ip;
     private String os;
     private String navigateur;
-    @ManyToOne
-    private Owner owner;
     @ManyToOne
     private Manager manager;
     @Temporal(javax.persistence.TemporalType.DATE)
@@ -38,16 +35,6 @@ public class Device implements Serializable {
     private boolean blocked;
 
     public Device() {
-    }
-
-    
-    
-    public String getMacAdresss() {
-        return macAdresss;
-    }
-
-    public void setMacAdresss(String macAdresss) {
-        this.macAdresss = macAdresss;
     }
 
     public String getIp() {
@@ -74,14 +61,6 @@ public class Device implements Serializable {
         this.navigateur = navigateur;
     }
 
-    public Owner getOwner() {
-        return owner;
-    }
-
-    public void setOwner(Owner owner) {
-        this.owner = owner;
-    }
-
     public Manager getManager() {
         return manager;
     }
@@ -105,9 +84,7 @@ public class Device implements Serializable {
     public void setBlocked(boolean blocked) {
         this.blocked = blocked;
     }
-    
-    
-    
+
     public Long getId() {
         return id;
     }
@@ -140,5 +117,5 @@ public class Device implements Serializable {
     public String toString() {
         return "bean.Device[ id=" + id + " ]";
     }
-    
+
 }
