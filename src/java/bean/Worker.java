@@ -7,6 +7,7 @@ package bean;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,8 +23,7 @@ public class Worker implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private String email;
     private String nom;
     private int nombreEmploye;
     private String siteWeb;
@@ -31,9 +31,9 @@ public class Worker implements Serializable {
     private String description;
     @OneToMany(mappedBy = "worker")
     private List<Review> reviews;
-    private String email;
     private String password;
     private boolean blocked;
+    private int type; //1: company, 2: individu
     //private List<Device> devices; hta nchof apres wach nkhliwha ola la 
 
     public Worker() {
@@ -111,37 +111,45 @@ public class Worker implements Serializable {
         this.description = description;
     }
 
-    public Long getId() {
-        return id;
+    public int getType() {
+        return type;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setType(int type) {
+        this.type = type;
     }
+    
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        int hash = 3;
+        hash = 23 * hash + Objects.hashCode(this.email);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Worker)) {
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
             return false;
         }
-        Worker other = (Worker) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Worker other = (Worker) obj;
+        if (!Objects.equals(this.email, other.email)) {
             return false;
         }
         return true;
     }
 
+    
+
     @Override
     public String toString() {
-        return "bean.Societe[ id=" + id + " ]";
+        return email;
     }
 
 }

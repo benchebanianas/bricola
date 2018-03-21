@@ -8,24 +8,39 @@
 
     <ui:composition>
 
-        <p:dialog id="ConnexionDlg" widgetVar="ConnexionDialog" modal="true" visible="#{demandeCleaningController.emailValidation and !demandeCleaningController.passwordValidation}" resizable="false" appendTo="@(body)" width="500" height="150" header="Connexion">
+        <p:dialog id="ConnexionDlg" widgetVar="ConnexionDialog" modal="true"  resizable="false" height="400" appendTo="@(body)">
 
-            <h:form id="ConnexionForm" style="margin-top: 30px" >
+            <h:form id="ConnexionForm">
 
-                <p:panelGrid columns="5" styleClass="ui-noborder" style="margin: 0 auto">
+                <h1 style="color:#68b3c8;text-align: center">Log in</h1>
+                <h5 style="color: #cfcfcf;text-align: center;width: 400px">Please enter your password in order to log in the platform</h5>
 
-                    <p:outputLabel for="password" value="Password :" />
-                    <p:password id="password" value="#{demandeCleaningController.demandeCleaning.demandeService.client.password}" style="width: 200px;height: 40px"/>
-                    
+                <p:panelGrid styleClass="ui-noborder" style="margin: 0 auto">
 
-                    <p:commandButton value="Verifier" style="width: 100px;height: 40px;margin: 8px" update="ConnexionDlg,ConnexionForm, :growl,:cleaningInfoForm:detailGrid" actionListener="#{demandeCleaningController.checkPassword()}" oncomplete="if(#{demandeCleaningController.passwordValidation}) {handleSubmit(args,'ConnexionDialog');}" />
+                    <p:row style="text-align: center;">
+                    <p:column >
+                        <img src="../resources/images/user.png" style="border-radius: 100%; width: 100px; height: auto;margin-bottom:20px "/><br/>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        
+                        <p:column style="text-align: center">
+                            <p:password id="password" value="#{demandeCleaningController.demandeCleaning.demandeService.client.password}" placeholder="Enter your password" style="width: 400px;height: 40px;text-align: center"/>
+
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column style="text-align: center">
+                            <p:commandButton value="Verifier" style="width: 400px;height: 40px;background-color:#68b3c8" update=":growl,:cleaningInfoForm:detailGrid" actionListener="#{demandeCleaningController.checkPassword()}"/>
+
+                        </p:column>
+                    </p:row>
 
                 </p:panelGrid>
 
 
             </h:form>
-
-
         </p:dialog>
 
     </ui:composition>

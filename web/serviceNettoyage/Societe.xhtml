@@ -8,14 +8,53 @@
 
     <ui:composition>
 
-        <p:dialog id="SocieteDlg" widgetVar="SocieteDialog" modal="true" resizable="false" appendTo="@(body)" width="900" height="500" header="Selectionner une societe / idividue">
+        <p:dialog id="SocieteDlg" widgetVar="SocieteDialog" modal="true" resizable="false" appendTo="@(body)" width="900" height="500">
 
-            <h:form id="SocieteForm" style="margin-top: 30px">
+                    <h:form id="CompanyListForm">
 
-                
+                        <p:dataTable id="companyList" var="company" value="#{demandeCleaningController.companies}"
+                                     selectionMode="single" selection="#{demandeCleaningController.company}" 
+                                     rowKey="#{company.email}"
+                                     paginatorPosition="bottom"
+                                     paginator="true"
+                                     rows="10"
+                                     rowsPerPageTemplate="10,20,30,40,50" style="margin-top: 30px">
+
+                            <f:facet name="header">
+                                <h5>Select a company</h5>
+                            </f:facet>
+                            <p:column>
+
+                                <span class="row" style="display:block;margin-top: 10px" >
+                                    <span class="col-sm-3" style="display:block">
+                                        <img src="http://dummyimage.com/60x60/666/ffffff&amp;text=No+Image" class="img-rounded"/>
+                                        <span class="review-block-name" style="display:block">#{company.nom} </span>
+
+                                    </span>
+                                    <span class="col-sm-9" style="display:block">
+                                        <span class="review-block-rate" style="display:block">
+                                            <span class="fa fa-star starChecked"></span>
+                                            <span class="fa fa-star starChecked"></span>
+                                            <span class="fa fa-star starChecked"></span>
+                                            <span class="fa fa-star"></span>
+                                            <span class="fa fa-star"></span>
+                                        </span>
+                                        <span class="review-block-title" style="display:block">Company description</span>
+                                        <span class="review-block-description" style="display:block">#{company.description}</span>
+
+                                    </span>
+                                </span>
 
 
-            </h:form>
+
+
+                            </p:column>
+
+                            <f:facet name="footer" >
+                                <p:commandButton value="CONFIRM" actionListener="#{demandeCleaningController.confirmCompany()}" oncomplete="PF('SocieteDialog').hide()" style="text-align: center;width: 100%;height: 50px"/>
+                            </f:facet>
+                        </p:dataTable>
+                    </h:form>
 
 
         </p:dialog>

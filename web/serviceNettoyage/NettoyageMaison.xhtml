@@ -18,7 +18,7 @@
 
             <h:outputStylesheet name="bootstrap-3.3.6/css/bootstrap.min.css"/>
             <h:outputStylesheet name="css/paper-bootstrap-wizard.css"/>
-
+            <h:outputStylesheet name="css/loginStyle.css"/>
             <h:outputStylesheet name="css/themify-icons.css"/>
 
 
@@ -191,14 +191,15 @@
                                                                     <p:outputLabel value="Choice :" for="choice" style="padding-top: 10px" />
                                                                 </p:column>
 
-                                                                <p:column style="width: 200px">
-                                                                    <p:selectOneMenu class="form-control" id="choice" widgetVar="choice" value="#{demandeCleaningController.choice}" style="width: 170px;height: 40px" >
+                                                                <p:column style="width: 260px">
+                                                                    <p:selectOneMenu class="form-control" id="choice" widgetVar="choice" value="#{demandeCleaningController.choice}" style="width: 250px;height: 40px" >
 
 
                                                                         <f:selectItem itemValue="#{null}" itemLabel="-- SELECT A CHOICE --"/>
-                                                                        <f:selectItem itemValue="#{1}" itemLabel="Choose a company for me"/>
-                                                                        <f:selectItem itemValue="#{2}" itemLabel="Let me choose"/>
-                                                                        <p:ajax listener="#{demandeCleaningController.displayChoice()}" update=":SocieteDlg"/>
+                                                                        <f:selectItem itemValue="#{1}" itemLabel="Choose a company / individual for me"/>
+                                                                        <f:selectItem itemValue="#{2}" itemLabel="Let me choose a company"/>
+                                                                        <f:selectItem itemValue="#{3}" itemLabel="Let me choose an individual"/>
+                                                                        <p:ajax listener="#{demandeCleaningController.checkChoice()}" update=":SocieteDlg"/>
 
                                                                     </p:selectOneMenu>
                                                                 </p:column>
@@ -233,7 +234,7 @@
 
                                                                     <p:inputText id="email" value="#{demandeCleaningController.demandeCleaning.demandeService.client.email}"  style="width:200px;height: 40px;" />
 
-                                                                    <p:commandButton icon="fa fa-search"  styleClass="white-button" style="width:50px;height: 40px;" actionListener="#{demandeCleaningController.checkEmail()}" update=":ConnexionDlg,:growl,detailGrid" oncomplete="if (#{demandeCleaningController.emailValidation}) { PF('ConnexionDialog').show() }"/>  
+                                                                    <p:commandButton icon="fa fa-search" process="detailGrid"  styleClass="white-button" style="width:50px;height: 40px;" actionListener="#{demandeCleaningController.checkEmail()}" update=":ConnexionDlg,:growl,detailGrid"/>  
 
                                                                 </p:column>
 
@@ -366,6 +367,8 @@
             <ui:include src="NetoyageUneFois.xhtml"/>
             <ui:include src="Connexion.xhtml"/>
             <ui:include src="Societe.xhtml"/>
+            <ui:include src="Individual.xhtml"/>
+            
 
 
         </ui:define>
