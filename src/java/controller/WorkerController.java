@@ -31,7 +31,14 @@ public class WorkerController implements Serializable {
     public WorkerController() {
     }
 
+    public String login(){
+        
+        return null;
+    }
     public Worker getSelected() {
+        if (selected == null) {
+            selected = new Worker();
+        }
         return selected;
     }
 
