@@ -8,59 +8,111 @@
 
     <ui:composition>
 
-        <p:dialog id="NetoyagePlusieursFoisDlg" widgetVar="NetoyagePlusieursFoisDialog" modal="true" resizable="false" appendTo="@(body)" width="700" header="Selectionner les dates">
+        <p:dialog id="NetoyagePlusieursFoisDlg" widgetVar="NetoyagePlusieursFoisDialog" modal="true" resizable="false" appendTo="@(body)" width="800" header="Selectionner les dates">
 
 
 
-            <h:form id="NetoyagePlusieursFoisForm">
+            <h:form id="NetoyagePlusieursFoisForm" style="margin-top: 20px;margin-bottom: 20px">
 
-                <p:panelGrid columns="5" styleClass="ui-noborder" style="margin: 0 auto">
+                <p:panelGrid id="nettoyageGrid" styleClass="ui-noborder" style="margin: 0 auto">
 
-                    <p:outputLabel for="dateOnce" value="Date :" />
-                    <p:calendar id="dateOnce" value="#{demandeCleaningController.demandeCleaning.demandeService.planning.dateOnce}" inputStyle="width: 150px;height: 40px" pattern="MM/dd/yyyy" />
-                    
-                    <p:commandButton value="Ajouter" style="width: 100px;height: 40px;margin: 8px" actionListener="#{demandeCleaningController.addNetoyageDate()}" update=":NetoyagePlusieursFoisListForm,:growl" />
+                    <p:row>
+                        <p:column>
 
+                            <p:outputLabel for="dateDebut" value="Date Debut :" style="width: 120px" />
+                        </p:column>
+
+
+                        <p:column>
+                            <p:calendar id="dateDebut" value="#{demandeCleaningController.demandeCleaning.demandeService.planning.dateDebut}" inputStyle="width: 170px;height: 40px" pattern="MM/dd/yyyy" />
+                        </p:column>
+                        <p:column>
+                            <p:outputLabel for="dateFin" value="Date Fin :" style="width: 120px"/>
+                        </p:column>
+                        <p:column>
+                            <p:calendar id="dateFin" value="#{demandeCleaningController.demandeCleaning.demandeService.planning.dateFin}" inputStyle="width: 170px;height: 40px" pattern="MM/dd/yyyy" />
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+
+                        <p:column>
+                            <p:outputLabel for="timing" value="Timing :"  style="width: 120px" />
+
+                        </p:column>
+
+                        <p:column>
+                            <p:selectOneMenu class="form-control" id="timing" style="width: 170px;height: 40px">
+                                <f:selectItem itemValue="#{null}" itemLabel="--SELECT TIMING--"/>
+                                <f:selectItems value="#{demandeCleaningController.loadTimings()}" 
+                                               var="timing"
+                                               itemValue="#{timing}" itemLabel="#{timing.name}"
+                                               />
+                            </p:selectOneMenu>
+                        </p:column>
+
+                        <p:column>
+                            <p:outputLabel for="repetition" value="Repitition:" style="width: 120px" />
+                        </p:column>
+
+                        <p:column>
+                            <p:selectOneMenu class="form-control" id="repetition" value="#{demandeCleaningController.repetition}" style="width: 170px;height: 40px">
+                                <f:selectItem itemValue="#{null}" itemLabel="--REPETITION MODE--"/>
+                                <f:selectItem itemValue="#{1}" itemLabel="Par semaine"/>
+                                <f:selectItem itemValue="#{2}" itemLabel="Par mois"/>
+                                <p:ajax process="nettoyageGrid"  update="nettoyageGrid" />
+                            </p:selectOneMenu>
+                        </p:column>
+
+                    </p:row>
+
+                    <p:row>
+
+                        <p:column  rendered="#{demandeCleaningController.repetition == 1}" style="width: 120px">
+                            <p:outputLabel  id="jourLabel" for="jour" value="Quel jour :"/>
+                        </p:column>
+
+                        <p:column  rendered="#{demandeCleaningController.repetition == 1}" style="width: 120px">
+                            <p:selectOneMenu class="form-control" id="jour"  style="width: 170px;height: 40px" >
+                                <f:selectItem itemValue="#{null}" itemLabel="--SELECT JOUR--"/>
+                                <f:selectItems value="#{demandeCleaningController.loadDays()}" 
+                                               var="day"
+                                               itemValue="#{day}" itemLabel="#{day.nom}"
+                                               />
+                            </p:selectOneMenu>
+                        </p:column>
+
+                        <p:column rendered="#{demandeCleaningController.repetition == 2}">
+                            <p:outputLabel id="numeroJourLabel" for="numeroJour" value="Quel jour du mois :"  style="width: 120px"/>
+                        </p:column>
+
+                        <p:column rendered="#{demandeCleaningController.repetition == 2}">
+                            <p:selectOneMenu class="form-control" id="numeroJour" style="width: 170px;height: 40px">
+                                <f:selectItem itemValue="#{null}" itemLabel="--NUMERO JOUR--"/>
+                                <f:selectItems value="#{demandeCleaningController.loadNumeroJour()}" 
+                                               var="numeroJour"
+                                               itemValue="#{numeroJour}"
+                                               />
+                            </p:selectOneMenu>
+                        </p:column>
+
+                    </p:row>
+
+                    <p:row>
+                        <p:column colspan="4" style="text-align: center;margin: 0 auto">
+                            <p:commandButton value="Confirmer" style="width: 50%;height: 40px;text-align: center" update=":growl" />
+                        </p:column>
+
+                    </p:row>    
 
                 </p:panelGrid>
 
 
+
+
             </h:form>
 
 
-
-            <h:form id="NetoyagePlusieursFoisListForm">
-
-                <p:panel header="Liste des dates">
-                    <p:dataTable id="datalist" value="#{demandeCleaningController.dates}" var="item"
-
-                                 paginator="true"
-                                 rows="10"
-                                 rowsPerPageTemplate="10,20,30,40,50"
-                                 >
-
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="Date"/>
-                            </f:facet>
-                            <h:outputText value="#{item}"/>
-                        </p:column>
-
-
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="Action"/>
-                            </f:facet>
-                            <p:commandButton value="DELETE" actionListener="#{demandeCleaningController.removeDate(item)}" update="datalist"/>
-                        </p:column>
-
-                    </p:dataTable>
-
-                    <p:commandButton value="Confirmer" style="width: 100px;height: 40px;margin: 8px" update=":cleaningInfoForm:infoGrid" oncomplete="handleSubmit(args,'NetoyagePlusieursFoisDialog');" />
-
-                </p:panel>
-
-            </h:form>
         </p:dialog>
 
     </ui:composition>

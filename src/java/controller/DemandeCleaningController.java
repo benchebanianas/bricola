@@ -1,8 +1,10 @@
 package controller;
 
 import bean.Client;
+import bean.Day;
 import bean.DemandeCleaning;
 import bean.Secteur;
+import bean.Timing;
 import bean.Ville;
 import bean.Worker;
 import controller.util.JsfUtil;
@@ -34,11 +36,15 @@ public class DemandeCleaningController implements Serializable {
     @EJB
     private service.DemandeCleaningFacade ejbFacade;
     @EJB
+    private service.DayFacade dayFacade;
+    @EJB
     private service.VilleFacade villeFacade;
     @EJB
     private service.SecteurFacade secteurFacade;
     @EJB
     private service.ClientFacade clientFacade;
+    @EJB
+    private service.TimingFacade timingFacade;
     @EJB
     private service.WorkerJobFacade workerJobFacade;
     private List<DemandeCleaning> items = null;
@@ -55,12 +61,31 @@ public class DemandeCleaningController implements Serializable {
     private List<Worker> companies;
     private List<Worker> individuals;
     private int choice;
+    private int repetition;
     private Worker company;
     private Worker individual;
 
     private DemandeCleaning demandeCleaning;
 
     public DemandeCleaningController() {
+    }
+    
+    
+    
+    public List<Integer> loadNumeroJour(){
+        List<Integer> numeroJours = new ArrayList<>();
+        for (int i = 0; i < 31; i++) {
+            numeroJours.add(i+1);
+        }
+        return numeroJours;
+    }
+    
+    public List<Timing> loadTimings(){
+        return timingFacade.findAll();
+    }
+    
+    public List<Day> loadDays(){
+        return dayFacade.findAll();
     }
 
     public void confirmCompany() {
@@ -321,6 +346,15 @@ public class DemandeCleaningController implements Serializable {
     public void setChoice(int choice) {
         this.choice = choice;
     }
+
+    public int getRepetition() {
+        return repetition;
+    }
+
+    public void setRepetition(int repetition) {
+        this.repetition = repetition;
+    }
+    
 
     public DemandeCleaning prepareCreate() {
         selected = new DemandeCleaning();

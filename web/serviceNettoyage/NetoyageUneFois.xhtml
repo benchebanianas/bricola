@@ -8,17 +8,45 @@
 
     <ui:composition>
 
-        <p:dialog id="NetoyageUneFoisDlg" widgetVar="NetoyageUneFoisDialog" modal="true" resizable="false" appendTo="@(body)" width="500" height="150" header="Selectionner la date">
+        <p:dialog id="NetoyageUneFoisDlg" widgetVar="NetoyageUneFoisDialog" modal="true" resizable="false" appendTo="@(body)" width="600" height="200" header="Selectionner la date">
 
-            <h:form id="NetoyageUneFoisForm" style="margin-top: 30px">
+            <h:form id="NetoyageUneFoisForm" style="margin-top: 30px;margin-bottom: 30px">
 
-                <p:panelGrid columns="5" styleClass="ui-noborder" style="margin: 0 auto">
+                <p:panelGrid  styleClass="ui-noborder" style="margin: 0 auto">
 
-                    <p:outputLabel for="dateOnce" value="Date :" />
-                    <p:calendar id="dateOnce" value="#{demandeCleaningController.demandeCleaning.demandeService.planning.dateOnce}" inputStyle="width: 150px;height: 40px" pattern="MM/dd/yyyy" />
-                    
+                    <p:row>
 
-                    <p:commandButton value="Confirmer" style="width: 100px;height: 40px;margin: 8px" oncomplete="handleSubmit(args,'NetoyageUneFoisDialog');" />
+                        <p:column>
+                            <p:outputLabel for="dateOnce" value="Date :" />
+                        </p:column>
+
+                        <p:column>
+                            <p:calendar id="dateOnce" value="#{demandeCleaningController.demandeCleaning.demandeService.planning.dateOnce}" inputStyle="width: 150px;height: 40px" pattern="MM/dd/yyyy" />
+                        </p:column>
+
+                        <p:column>
+                            <p:outputLabel for="timing" value="Timing :" />
+                        </p:column>
+
+                        <p:column>
+                            <p:selectOneMenu class="form-control" id="timing" value="#{demandeCleaningController.demandeCleaning.demandeService.planning.timing}" style="width: 170px;height: 40px">
+                                <f:selectItem itemValue="#{null}" itemLabel="--SELECT TIMING"/>
+                                <f:selectItems value="#{demandeCleaningController.loadTimings()}" 
+                                               var="timing"
+                                               itemValue="#{timing}" itemLabel="#{timing.name}"
+                                               />
+                            </p:selectOneMenu>
+                        </p:column>
+
+                    </p:row>
+
+                    <p:row>
+
+                        <p:column colspan="4" style="text-align: center">
+                            <p:commandButton value="Confirmer" style="width: 50%;height: 40px" oncomplete="handleSubmit(args,'NetoyageUneFoisDialog');" />
+                        </p:column>
+
+                    </p:row>
 
                 </p:panelGrid>
 

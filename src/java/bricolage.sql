@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 21, 2018 at 02:49 AM
+-- Generation Time: Mar 21, 2018 at 06:11 PM
 -- Server version: 10.1.30-MariaDB
 -- PHP Version: 5.6.33
 
@@ -116,6 +116,19 @@ CREATE TABLE `day` (
   `ID` bigint(20) NOT NULL,
   `NOM` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `day`
+--
+
+INSERT INTO `day` (`ID`, `NOM`) VALUES
+(1, 'Lundi'),
+(2, 'Mardi'),
+(3, 'Mercredi'),
+(4, 'Jeudi'),
+(5, 'Vendredi'),
+(6, 'Samedi'),
+(7, 'Dimanche');
 
 -- --------------------------------------------------------
 
@@ -652,8 +665,33 @@ CREATE TABLE `supplementevent` (
 CREATE TABLE `timing` (
   `ID` bigint(20) NOT NULL,
   `NAME` varchar(255) DEFAULT NULL,
-  `VALEUR` decimal(38,0) DEFAULT NULL
+  `VALEUR` decimal(38,2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `timing`
+--
+
+INSERT INTO `timing` (`ID`, `NAME`, `VALEUR`) VALUES
+(1, '08:00', '8.00'),
+(2, '08:30', '8.30'),
+(3, '09:00', '9.00'),
+(4, '09:30', '9.30'),
+(5, '10:00', '10.00'),
+(6, '10:30', '10.30'),
+(7, '11:00', '11.00'),
+(8, '11:30', '11.30'),
+(9, '12:00', '12.00'),
+(10, '12:30', '12.30'),
+(11, '13:00', '13.00'),
+(12, '13:30', '13.30'),
+(13, '14:00', '14.00'),
+(14, '14:30', '14.30'),
+(15, '15:00', '15.00'),
+(16, '15:30', '15.30'),
+(17, '16:00', '16.00'),
+(18, '16:30', '16.30'),
+(19, '17:00', '17.00');
 
 -- --------------------------------------------------------
 

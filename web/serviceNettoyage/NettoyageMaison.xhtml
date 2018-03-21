@@ -140,11 +140,11 @@
 
                                                                 <p:column>
                                                                     <p:selectBooleanButton id="oftenOnce" class="myBtn" value="#{demandeCleaningController.cleaningOnce}" onLabel="ONCE" offLabel="ONCE" style="width:120px;height: 40px;text-align: center;padding: 8px 0;" onchange="PF('NetoyageUneFoisDialog').show()" >
-                                                                        <p:ajax listener="#{demandeCleaningController.checkOnce()}" update="oftenOnce oftenManyTimes :NetoyageUneFoisForm :NetoyagePlusieursFoisForm :NetoyagePlusieursFoisListForm"/>
+                                                                        <p:ajax listener="#{demandeCleaningController.checkOnce()}" update="oftenOnce oftenManyTimes :NetoyageUneFoisForm :NetoyagePlusieursFoisForm"/>
                                                                     </p:selectBooleanButton>
 
                                                                     <p:selectBooleanButton id="oftenManyTimes" class="myBtn" value="#{demandeCleaningController.cleaningMnayTimes}" onLabel="MANY TIMES" offLabel="MANY TIMES" style="width:120px;height: 40px;text-align: center;padding: 8px 0;" onchange="PF('NetoyagePlusieursFoisDialog').show()">
-                                                                        <p:ajax listener="#{demandeCleaningController.checkMany()}" update="oftenOnce oftenManyTimes :NetoyageUneFoisForm :NetoyagePlusieursFoisForm :NetoyagePlusieursFoisListForm"/>
+                                                                        <p:ajax listener="#{demandeCleaningController.checkMany()}" update="oftenOnce oftenManyTimes :NetoyageUneFoisForm :NetoyagePlusieursFoisForm"/>
                                                                     </p:selectBooleanButton>
                                                                 </p:column>
 
