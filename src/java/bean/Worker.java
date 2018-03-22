@@ -12,6 +12,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 /**
@@ -31,9 +32,10 @@ public class Worker implements Serializable {
     private String description;
     @OneToMany(mappedBy = "worker")
     private List<Review> reviews;
+    @ManyToOne
+    private WorkerType workerType;
     private String password;
     private boolean blocked;
-    private int type; //1: company, 2: individu
     //private List<Device> devices; hta nchof apres wach nkhliwha ola la 
 
     public Worker() {
@@ -111,12 +113,15 @@ public class Worker implements Serializable {
         this.description = description;
     }
 
-    public int getType() {
-        return type;
+    public WorkerType getWorkerType() {
+        if(workerType == null){
+            workerType = new WorkerType();
+        }
+        return workerType;
     }
 
-    public void setType(int type) {
-        this.type = type;
+    public void setWorkerType(WorkerType workerType) {
+        this.workerType = workerType;
     }
     
 

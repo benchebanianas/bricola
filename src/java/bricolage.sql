@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 21, 2018 at 06:11 PM
+-- Generation Time: Mar 22, 2018 at 09:18 PM
 -- Server version: 10.1.30-MariaDB
 -- PHP Version: 5.6.33
 
@@ -274,6 +274,7 @@ CREATE TABLE `demandeservice` (
   `SERVICE_ID` bigint(20) DEFAULT NULL,
   `SERVICEPRICING_ID` bigint(20) DEFAULT NULL,
   `WORKER_EMAIL` varchar(255) DEFAULT NULL,
+  `WORKERTYPE_ID` bigint(20) DEFAULT NULL,
   `TYPEDEMANDE_ID` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -596,6 +597,13 @@ CREATE TABLE `servicepricing` (
   `UNITE_ID` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `servicepricing`
+--
+
+INSERT INTO `servicepricing` (`ID`, `DATEAPPLICATION`, `PRIX`, `SERVICE_ID`, `UNITE_ID`) VALUES
+(1, '2015-03-03', '50', 1, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -665,7 +673,7 @@ CREATE TABLE `supplementevent` (
 CREATE TABLE `timing` (
   `ID` bigint(20) NOT NULL,
   `NAME` varchar(255) DEFAULT NULL,
-  `VALEUR` decimal(38,2) DEFAULT NULL
+  `VALEUR` decimal(38,0) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -673,25 +681,25 @@ CREATE TABLE `timing` (
 --
 
 INSERT INTO `timing` (`ID`, `NAME`, `VALEUR`) VALUES
-(1, '08:00', '8.00'),
-(2, '08:30', '8.30'),
-(3, '09:00', '9.00'),
-(4, '09:30', '9.30'),
-(5, '10:00', '10.00'),
-(6, '10:30', '10.30'),
-(7, '11:00', '11.00'),
-(8, '11:30', '11.30'),
-(9, '12:00', '12.00'),
-(10, '12:30', '12.30'),
-(11, '13:00', '13.00'),
-(12, '13:30', '13.30'),
-(13, '14:00', '14.00'),
-(14, '14:30', '14.30'),
-(15, '15:00', '15.00'),
-(16, '15:30', '15.30'),
-(17, '16:00', '16.00'),
-(18, '16:30', '16.30'),
-(19, '17:00', '17.00');
+(1, '08:00', '8'),
+(2, '08:30', '8'),
+(3, '09:00', '9'),
+(4, '09:30', '9'),
+(5, '10:00', '10'),
+(6, '10:30', '10'),
+(7, '11:00', '11'),
+(8, '11:30', '11'),
+(9, '12:00', '12'),
+(10, '12:30', '12'),
+(11, '13:00', '13'),
+(12, '13:30', '13'),
+(13, '14:00', '14'),
+(14, '14:30', '14'),
+(15, '15:00', '15'),
+(16, '15:30', '15'),
+(17, '16:00', '16'),
+(18, '16:30', '16'),
+(19, '17:00', '17');
 
 -- --------------------------------------------------------
 
@@ -724,6 +732,13 @@ CREATE TABLE `unite` (
   `ID` bigint(20) NOT NULL,
   `NAME` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `unite`
+--
+
+INSERT INTO `unite` (`ID`, `NAME`) VALUES
+(1, 'CleanerPerHour');
 
 -- --------------------------------------------------------
 
@@ -814,18 +829,18 @@ CREATE TABLE `worker` (
   `PASSWORD` varchar(255) DEFAULT NULL,
   `PHONE` varchar(255) DEFAULT NULL,
   `SITEWEB` varchar(255) DEFAULT NULL,
-  `TYPE` int(11) DEFAULT NULL
+  `WORKERTYPE_ID` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `worker`
 --
 
-INSERT INTO `worker` (`EMAIL`, `BLOCKED`, `DESCRIPTION`, `NOM`, `NOMBREEMPLOYE`, `PASSWORD`, `PHONE`, `SITEWEB`, `TYPE`) VALUES
-('cleanharbors@gmail.com', 0, 'you probably heard of us, the leading company for cleaning services in over 26 countries', 'Clean Harbors', 32, 'cleanharbors@gmail.com', '0679120435', 'www.cleanharbors.com', 1),
-('coitcleaners@gmail.com', 0, 'An inspiring individual with many years of experiences in cleaning', 'Coit Cleaners ', 5, 'coitcleaners@gmail.com', '0613467982', 'www.coitcleaners.com', 2),
-('merrymaids@gmail.com', 0, 'we can guarantee that our services are the best in the cleaning industry', 'Merry Maids', 54, 'merrymaids@gmail.com', '0687125903', 'www.merrymaids.com', 1),
-('taskrabbit@gmail.com', 0, 'we hire specialist from all around the globe so that you can have the best services', 'TaskRabbit ', 78, 'taskrabbit@gmail.com', '0612064367', 'www.taskrabbit.com', 1);
+INSERT INTO `worker` (`EMAIL`, `BLOCKED`, `DESCRIPTION`, `NOM`, `NOMBREEMPLOYE`, `PASSWORD`, `PHONE`, `SITEWEB`, `WORKERTYPE_ID`) VALUES
+('cleanharbors@gmail.com', 0, 'you probably heard of us, the leading company for cleaning services in over 26 countries', 'Clean Harbors', 32, 'cleanharbors@gmail.com', '0679120435', 'www.cleanharbors.com', 2),
+('coitcleaners@gmail.com', 0, 'An inspiring individual with many years of experiences in cleaning', 'Coit Cleaners ', 5, 'coitcleaners@gmail.com', '0613467982', 'www.coitcleaners.com', 1),
+('merrymaids@gmail.com', 0, 'we can guarantee that our services are the best in the cleaning industry', 'Merry Maids', 54, 'merrymaids@gmail.com', '0687125903', 'www.merrymaids.com', 2),
+('taskrabbit@gmail.com', 0, 'we hire specialist from all around the globe so that you can have the best services', 'TaskRabbit ', 78, 'taskrabbit@gmail.com', '0612064367', 'www.taskrabbit.com', 2);
 
 -- --------------------------------------------------------
 
@@ -849,6 +864,25 @@ INSERT INTO `workerjob` (`ID`, `SECTEUR_ID`, `SERVICE_ID`, `WORKER_EMAIL`) VALUE
 (2, 2, 1, 'merrymaids@gmail.com'),
 (3, 4, 4, 'taskrabbit@gmail.com'),
 (4, 5, 1, 'coitcleaners@gmail.com');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `workertype`
+--
+
+CREATE TABLE `workertype` (
+  `ID` bigint(20) NOT NULL,
+  `NAME` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `workertype`
+--
+
+INSERT INTO `workertype` (`ID`, `NAME`) VALUES
+(1, 'Personne Physique'),
+(2, 'Personne Morale');
 
 --
 -- Indexes for dumped tables
@@ -976,6 +1010,7 @@ ALTER TABLE `demandeservice`
   ADD KEY `FK_DEMANDESERVICE_WORKER_EMAIL` (`WORKER_EMAIL`),
   ADD KEY `FK_DEMANDESERVICE_CLIENT_EMAIL` (`CLIENT_EMAIL`),
   ADD KEY `FK_DEMANDESERVICE_SECTEUR_ID` (`SECTEUR_ID`),
+  ADD KEY `FK_DEMANDESERVICE_WORKERTYPE_ID` (`WORKERTYPE_ID`),
   ADD KEY `FK_DEMANDESERVICE_SERVICEPRICING_ID` (`SERVICEPRICING_ID`);
 
 --
@@ -1209,7 +1244,8 @@ ALTER TABLE `voituremodele`
 -- Indexes for table `worker`
 --
 ALTER TABLE `worker`
-  ADD PRIMARY KEY (`EMAIL`);
+  ADD PRIMARY KEY (`EMAIL`),
+  ADD KEY `FK_WORKER_WORKERTYPE_ID` (`WORKERTYPE_ID`);
 
 --
 -- Indexes for table `workerjob`
@@ -1219,6 +1255,12 @@ ALTER TABLE `workerjob`
   ADD KEY `FK_WORKERJOB_SERVICE_ID` (`SERVICE_ID`),
   ADD KEY `FK_WORKERJOB_SECTEUR_ID` (`SECTEUR_ID`),
   ADD KEY `FK_WORKERJOB_WORKER_EMAIL` (`WORKER_EMAIL`);
+
+--
+-- Indexes for table `workertype`
+--
+ALTER TABLE `workertype`
+  ADD PRIMARY KEY (`ID`);
 
 --
 -- Constraints for dumped tables
@@ -1316,6 +1358,7 @@ ALTER TABLE `demandeservice`
   ADD CONSTRAINT `FK_DEMANDESERVICE_SERVICEPRICING_ID` FOREIGN KEY (`SERVICEPRICING_ID`) REFERENCES `servicepricing` (`ID`),
   ADD CONSTRAINT `FK_DEMANDESERVICE_SERVICE_ID` FOREIGN KEY (`SERVICE_ID`) REFERENCES `service` (`ID`),
   ADD CONSTRAINT `FK_DEMANDESERVICE_TYPEDEMANDE_ID` FOREIGN KEY (`TYPEDEMANDE_ID`) REFERENCES `typedemande` (`ID`),
+  ADD CONSTRAINT `FK_DEMANDESERVICE_WORKERTYPE_ID` FOREIGN KEY (`WORKERTYPE_ID`) REFERENCES `workertype` (`ID`),
   ADD CONSTRAINT `FK_DEMANDESERVICE_WORKER_EMAIL` FOREIGN KEY (`WORKER_EMAIL`) REFERENCES `worker` (`EMAIL`);
 
 --
@@ -1431,6 +1474,12 @@ ALTER TABLE `voitureimage`
 --
 ALTER TABLE `voituremodele`
   ADD CONSTRAINT `FK_VOITUREMODELE_MARQUE_ID` FOREIGN KEY (`MARQUE_ID`) REFERENCES `voituremarque` (`ID`);
+
+--
+-- Constraints for table `worker`
+--
+ALTER TABLE `worker`
+  ADD CONSTRAINT `FK_WORKER_WORKERTYPE_ID` FOREIGN KEY (`WORKERTYPE_ID`) REFERENCES `workertype` (`ID`);
 
 --
 -- Constraints for table `workerjob`

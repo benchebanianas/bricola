@@ -8,6 +8,7 @@ import bean.Secteur;
 import bean.Timing;
 import bean.Ville;
 import bean.Worker;
+import bean.WorkerType;
 import controller.util.JsfUtil;
 import controller.util.JsfUtil.PersistAction;
 import service.DemandeCleaningFacade;
@@ -37,6 +38,8 @@ public class DemandeCleaningController implements Serializable {
     @EJB
     private service.DemandeCleaningFacade ejbFacade;
     @EJB
+    private service.WorkerTypeFacade workerTypeFacade;
+    @EJB
     private service.DayFacade dayFacade;
     @EJB
     private service.VilleFacade villeFacade;
@@ -64,6 +67,7 @@ public class DemandeCleaningController implements Serializable {
     private int choice;
     private int repetition;
     private Worker company;
+    private WorkerType workerType;
     private Worker individual;
     private PlanningItem planningItem;
 
@@ -72,8 +76,16 @@ public class DemandeCleaningController implements Serializable {
     public DemandeCleaningController() {
     }
 
+    public List<WorkerType> loadWorkerType() {
+        return workerTypeFacade.findAll();
+    }
+
+    public void saveDemandeCleaning() {
+
+    }
+
     public void deletePlanningItem(PlanningItem item) {
-         
+
         demandeCleaning.getDemandeService().getPlanning().getPlanningItems().remove(item);
     }
 
@@ -113,12 +125,16 @@ public class DemandeCleaningController implements Serializable {
     }
 
     public void checkChoice() {
-
+        System.out.println("hahowa id li khtar : " + demandeCleaning.getDemandeService().getWorkerType().getId());
+        System.out.println("\nhahowa nom li khtar : " + demandeCleaning.getDemandeService().getWorkerType().getName());
+        
         RequestContext context = RequestContext.getCurrentInstance();
-        if (choice == 2) {
-
+        if (demandeCleaning.getDemandeService().getWorkerType().getId() == 2) {
+            companies = workerJobFacade.findWorkerByServiceAndType("Nettoyage Maison", demandeCleaning.getDemandeService().getWorkerType().getId());
             context.execute("PF('SocieteDialog').show()");
-        } else if (choice == 3) {
+        } else if (demandeCleaning.getDemandeService().getWorkerType().getId() == 1) {
+            individuals = workerJobFacade.findWorkerByServiceAndType("Nettoyage Maison", demandeCleaning.getDemandeService().getWorkerType().getId());
+
             context.execute("PF('IndividualDialog').show()");
         }
     }
@@ -310,7 +326,7 @@ public class DemandeCleaningController implements Serializable {
 
     public List<Worker> getCompanies() {
         if (companies == null) {
-            companies = workerJobFacade.findWorkerByServiceAndType("Nettoyage Maison", 1);
+        companies = new ArrayList<>();
         }
         return companies;
     }
@@ -321,7 +337,7 @@ public class DemandeCleaningController implements Serializable {
 
     public List<Worker> getIndividuals() {
         if (individuals == null) {
-            individuals = workerJobFacade.findWorkerByServiceAndType("Nettoyage Maison", 2);
+        individuals = new ArrayList<>();
         }
         return individuals;
     }
@@ -376,6 +392,18 @@ public class DemandeCleaningController implements Serializable {
 
     public void setPlanningItem(PlanningItem planningItem) {
         this.planningItem = planningItem;
+    }
+
+    public WorkerType getWorkerType() {
+        if (workerType == null) {
+            workerType = new WorkerType();
+        }
+        return workerType;
+    }
+
+    public void setWorkerType(WorkerType workerType) {
+
+        this.workerType = workerType;
     }
 
     public DemandeCleaning prepareCreate() {
@@ -458,8 +486,8 @@ public class DemandeCleaningController implements Serializable {
             id = list.get(list.size() - 1).getId().intValue() + 1;
         } catch (Exception e) {
         }
-        
-        item.setId(new Long(id) );
+
+        item.setId(new Long(id));
         item.setDay(myPlanning.getDay());
         item.setNumeroJour(myPlanning.getNumeroJour());
         item.setRepetition(myPlanning.getRepetition());

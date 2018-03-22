@@ -34,7 +34,8 @@ public class DemandeService implements Serializable {
     @ManyToOne
     private Secteur secteur;
     private String detail;
-    
+    @ManyToOne
+    private WorkerType workerType;
     @ManyToOne
     private Worker worker;
     private BigDecimal prixHt;
@@ -223,6 +224,17 @@ public class DemandeService implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+    
+    public WorkerType getWorkerType() {
+        if(workerType == null){
+            workerType = new WorkerType();
+        }
+        return workerType;
+    }
+
+    public void setWorkerType(WorkerType workerType) {
+        this.workerType = workerType;
     }
 
     @Override

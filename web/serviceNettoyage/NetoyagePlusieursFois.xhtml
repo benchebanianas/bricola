@@ -149,6 +149,11 @@
                             <p:commandButton value="Delete" actionListener="#{demandeCleaningController.deletePlanningItem(item)}" style="width: 50%;text-align: center" update="planningListFrom,:growl" />
 
                         </p:column>
+                        <f:facet name="footer">
+                            <p:commandButton value="Comfirmer"  style="width: 25%;height: 30px;text-align: center" oncomplete="PF('NetoyagePlusieursFoisDialog').hide()" />
+
+                        </f:facet>
+
 
                     </p:dataTable>
                 </p:panel>

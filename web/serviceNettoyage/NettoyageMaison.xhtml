@@ -85,7 +85,7 @@
                                                     </a>
                                                 </li>
                                                 <li>
-                                                    <a href="#payement" data-toggle="tab">
+                                                    <a href="#payment" data-toggle="tab">
                                                         <div class="icon-circle">
                                                             <i class="ti-money"></i>
                                                         </div>
@@ -192,14 +192,16 @@
                                                                 </p:column>
 
                                                                 <p:column style="width: 260px">
-                                                                    <p:selectOneMenu class="form-control" id="choice" widgetVar="choice" value="#{demandeCleaningController.choice}" style="width: 250px;height: 40px" >
+                                                                    <p:selectOneMenu class="form-control" id="choice" widgetVar="choice" value="#{demandeCleaningController.demandeCleaning.demandeService.workerType}" style="width: 250px;height: 40px" >
 
 
                                                                         <f:selectItem itemValue="#{null}" itemLabel="-- SELECT A CHOICE --"/>
-                                                                        <f:selectItem itemValue="#{1}" itemLabel="Choose a company / individual for me"/>
-                                                                        <f:selectItem itemValue="#{2}" itemLabel="Let me choose a company"/>
-                                                                        <f:selectItem itemValue="#{3}" itemLabel="Let me choose an individual"/>
-                                                                        <p:ajax listener="#{demandeCleaningController.checkChoice()}" update=":SocieteDlg"/>
+                                                                        <f:selectItem itemValue="#{demandeCleaningController.workerType}" itemLabel="Choose a company / individual for me"/>
+                                                                        <f:selectItems value="#{demandeCleaningController.loadWorkerType()}" 
+                                                                                       var="workerType"
+                                                                                       itemValue="#{workerType}"
+                                                                                       />
+                                                                        <p:ajax listener="#{demandeCleaningController.checkChoice()}" update=":SocieteDlg, :IndividualDlg"/>
 
                                                                     </p:selectOneMenu>
                                                                 </p:column>
@@ -324,15 +326,18 @@
                                                 </div>
                                             </div>
                                             <div class="tab-pane" id="summary">
-                                                <h5 class="info-text">Tell us more about facilities. </h5>
+                                                <h5 class="info-text">A summary of your booking. </h5>
                                                 <div class="row">
 
                                                 </div>
                                             </div>
                                             <div class="tab-pane" id="payment">
-                                                <h5 class="info-text"> Drop us a small description. </h5>
+                                                <h5 class="info-text">Let's discuss money. </h5>
                                                 <div class="row">
 
+                                                    <div class="col-sm-2 col-md-offset-5">
+                                                        <p:commandButton value="Save" styleClass="white-button" style="width:100%;height: 40px;text-align: center" actionListener="#{demandeCleaningController.saveDemandeCleaning()}" update=":growl"/>  
+                                                    </div>
 
                                                 </div>
                                             </div>
@@ -368,7 +373,7 @@
             <ui:include src="Connexion.xhtml"/>
             <ui:include src="Societe.xhtml"/>
             <ui:include src="Individual.xhtml"/>
-            
+
 
 
         </ui:define>

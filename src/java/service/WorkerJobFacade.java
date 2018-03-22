@@ -7,6 +7,7 @@ package service;
 
 import bean.Worker;
 import bean.WorkerJob;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -31,13 +32,18 @@ public class WorkerJobFacade extends AbstractFacade<WorkerJob> {
         super(WorkerJob.class);
     }
 
-    public List<Worker> findWorkerByServiceAndType(String service, int type) {
+    public List<Worker> findWorkerByServiceAndType(String service, Long type) {
 
-        String requette = "select w.worker from WorkerJob w where w.service.nom = '"+service+"' and w.worker.type = '"+type+"'";
+        String requette = "select w.worker from WorkerJob w where w.service.nom = '"+service+"' and w.worker.workerType.id = '"+type+"'";
         System.out.println("hahiya requette : "+requette);
         List<Worker> workers = em.createQuery(requette).getResultList();
         System.out.println("hahiya list workers : " + workers);
-        return workers;
+        if(!workers.isEmpty()){
+          return workers;  
+        }else{
+        return new ArrayList<>();
+    }
+        
     }
 
 }
