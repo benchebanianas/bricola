@@ -30,6 +30,8 @@ public class Device implements Serializable {
     private String navigateur;
     @ManyToOne
     private Manager manager;
+    @ManyToOne
+    private Worker worker;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date dateConnection;
     private boolean blocked;
@@ -47,6 +49,14 @@ public class Device implements Serializable {
 
     public String getOs() {
         return os;
+    }
+
+    public Worker getWorker() {
+        return worker;
+    }
+
+    public void setWorker(Worker worker) {
+        this.worker = worker;
     }
 
     public void setOs(String os) {

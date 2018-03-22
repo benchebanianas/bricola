@@ -1,0 +1,153 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <meta charset="utf-8"></meta>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"></meta>
+
+        <link rel="stylesheet" href="../resources/bootstrap-4.0.0/css/bootstrap.min.css"></link>
+        <link rel="stylesheet" href="../resources/css/workerProfilecss.css"></link>
+    </h:head>
+    <h:body>
+        <nav class="navbar navbar-expand navbar-dark bg-info">
+            <a class="sidebar-toggle text-light mr-3"><i class="fa fa-bars"></i></a>
+
+            <a class="navbar-brand" href="#"><i class="fa fa-group"></i> Worker</a>
+
+            <div class="navbar-collapse collapse">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <span class="fa fa-envelope fa-lg" style="color: white"></span>
+                             <p:outputLabel value="1" class="badge badge-notify"></p:outputLabel>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <span class="fa fa-calendar fa-lg" style="color: white"></span>
+                            <p:outputLabel value="3" class="badge badge-notify"></p:outputLabel>
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown" style="color: white">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown">
+                            <i class="fa fa-user" style="color: white"></i> <p:outputLabel value="#{workerController.selected.nom}"></p:outputLabel>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="#">Action</a>
+                            <a class="dropdown-item" href="#">Another</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <div class="d-flex">
+            <nav class="sidebar bg-dark">
+                <p style="text-align: center;"><a href="#"><img src="../resources/images/workerLogo.jpg" style="border-radius: 70%;" width="200" class="img-rounded" ></img></a></p>
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">
+                            <span data-feather="home"></span>
+                            Dashboard <span class="sr-only">(current)</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <span data-feather="file"></span>
+                            Orders
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <span data-feather="shopping-cart"></span>
+                            Products
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <span data-feather="users"></span>
+                            Customers
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <span data-feather="bar-chart-2"></span>
+                            Reports
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <span data-feather="layers"></span>
+                            Integrations
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="content p-4">
+                <h1 class="display-5 mb-4">Hello!</h1>
+
+                <div class="card-deck">
+                    <div class="card">
+                        <div class="card-body">
+                            <span style="float: left" class="fa fa-file fa-3x"></span>
+                            <h5 class="card-title" style="margin-left: 50px">Demandes</h5>
+                            <div class="card-text" style="margin-left: 50px;">
+                                <p:outputLabel value="10"></p:outputLabel>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <small class="text-muted">Last updated 3 mins ago</small>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <span style="float: left" class="fa fa-align-center fa-3x"></span>
+                            <h5 class="card-title" style="float: right">Reviews</h5>
+
+                            <div style="float: right">
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <small class="text-muted">Last updated 3 mins ago</small>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <span style="float: left" class="fa fa-star fa-3x"></span>
+                            <h5 class="card-title" style="float: right">Rating</h5>
+
+                            <div style="float: right">
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <small class="text-muted">Last updated 3 mins ago</small>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <span style="float: left" class="fa fa-cart-plus fa-3x"></span>
+                            <h5 class="card-title" style="float: right">Services</h5>
+
+                            <div style="float: right">
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <small class="text-muted">Last updated 3 mins ago</small>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <script src="../resources/js/jquery.min.js"></script>
+        <script src="../resources/js/popper.min.js"></script>
+        <script src="../resources/bootstrap-4.0.0/js/bootstrap.min.js"></script>
+        <script src="../resources/js/workerProfileJs.js"></script>
+
+    </h:body>
+</html>
+

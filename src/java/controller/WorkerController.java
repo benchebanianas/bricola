@@ -3,6 +3,7 @@ package controller;
 import bean.Worker;
 import controller.util.JsfUtil;
 import controller.util.JsfUtil.PersistAction;
+import controller.util.SessionUtil;
 import service.WorkerFacade;
 
 import java.io.Serializable;
@@ -14,10 +15,12 @@ import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import org.primefaces.context.RequestContext;
 
 @Named("workerController")
 @SessionScoped
@@ -31,10 +34,30 @@ public class WorkerController implements Serializable {
     public WorkerController() {
     }
 
-    public String login(){
-        
-        return null;
+    public String login() {
+        int connected = ejbFacade.login(selected);
+        if (connected == -1) {
+            showMessage("Compte introuvable", "Verifiez votre email et mot de passe");
+            return null;
+        } else if (connected == -2) {
+            showMessage("Compte introuvable", "Verifiez votre email et mot de passe");
+            return null;
+        } else if (connected == -3) {
+            showMessage("Votre compte est blocké", "Veuillez contacter un manager");
+            return null;
+        } else if (connected == -4) {
+            showMessage("Compte Introuvable", "Verifiez votre email et mot de passe");
+            return null;
+        }
+        setSelected((Worker) SessionUtil.getAttribute("connectedWorker"));
+        return "/worker/ProfileTemplate";
     }
+
+    public void showMessage(String titre, String contenu) {
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, titre, contenu);
+        RequestContext.getCurrentInstance().showMessageInDialog(message);
+    }
+
     public Worker getSelected() {
         if (selected == null) {
             selected = new Worker();
