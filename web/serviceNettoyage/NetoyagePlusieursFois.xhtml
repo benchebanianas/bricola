@@ -24,13 +24,13 @@
 
 
                         <p:column>
-                            <p:calendar id="dateDebut" value="#{demandeCleaningController.demandeCleaning.demandeService.planning.dateDebut}" inputStyle="width: 170px;height: 40px" pattern="MM/dd/yyyy" />
+                            <p:calendar id="dateDebut" value="#{demandeCleaningController.demandeCleaning.demandeService.planning.dateDebut}" inputStyle="width: 170px;height: 40px" pattern="dd/MM/yyyy" />
                         </p:column>
                         <p:column>
                             <p:outputLabel for="dateFin" value="Date Fin :" style="width: 120px"/>
                         </p:column>
                         <p:column>
-                            <p:calendar id="dateFin" value="#{demandeCleaningController.demandeCleaning.demandeService.planning.dateFin}" inputStyle="width: 170px;height: 40px" pattern="MM/dd/yyyy" />
+                            <p:calendar id="dateFin" value="#{demandeCleaningController.demandeCleaning.demandeService.planning.dateFin}" inputStyle="width: 170px;height: 40px" pattern="dd/MM/yyyy" />
                         </p:column>
                     </p:row>
 
@@ -42,7 +42,7 @@
                         </p:column>
 
                         <p:column>
-                            <p:selectOneMenu class="form-control" id="timing" style="width: 170px;height: 40px">
+                            <p:selectOneMenu class="form-control" id="timing" value="#{demandeCleaningController.planningItem.timing}" style="width: 170px;height: 40px">
                                 <f:selectItem itemValue="#{null}" itemLabel="--SELECT TIMING--"/>
                                 <f:selectItems value="#{demandeCleaningController.loadTimings()}" 
                                                var="timing"
@@ -56,7 +56,7 @@
                         </p:column>
 
                         <p:column>
-                            <p:selectOneMenu class="form-control" id="repetition" value="#{demandeCleaningController.repetition}" style="width: 170px;height: 40px">
+                            <p:selectOneMenu class="form-control" id="repetition" value="#{demandeCleaningController.planningItem.repetition}" style="width: 170px;height: 40px">
                                 <f:selectItem itemValue="#{null}" itemLabel="--REPETITION MODE--"/>
                                 <f:selectItem itemValue="#{1}" itemLabel="Par semaine"/>
                                 <f:selectItem itemValue="#{2}" itemLabel="Par mois"/>
@@ -68,12 +68,12 @@
 
                     <p:row>
 
-                        <p:column  rendered="#{demandeCleaningController.repetition == 1}" style="width: 120px">
+                        <p:column  rendered="#{demandeCleaningController.planningItem.repetition == 1}" style="width: 120px">
                             <p:outputLabel  id="jourLabel" for="jour" value="Quel jour :"/>
                         </p:column>
 
-                        <p:column  rendered="#{demandeCleaningController.repetition == 1}" style="width: 120px">
-                            <p:selectOneMenu class="form-control" id="jour"  style="width: 170px;height: 40px" >
+                        <p:column  rendered="#{demandeCleaningController.planningItem.repetition == 1}" style="width: 120px">
+                            <p:selectOneMenu class="form-control" id="jour" value="#{demandeCleaningController.planningItem.day}" style="width: 170px;height: 40px" >
                                 <f:selectItem itemValue="#{null}" itemLabel="--SELECT JOUR--"/>
                                 <f:selectItems value="#{demandeCleaningController.loadDays()}" 
                                                var="day"
@@ -82,12 +82,12 @@
                             </p:selectOneMenu>
                         </p:column>
 
-                        <p:column rendered="#{demandeCleaningController.repetition == 2}">
+                        <p:column rendered="#{demandeCleaningController.planningItem.repetition == 2}">
                             <p:outputLabel id="numeroJourLabel" for="numeroJour" value="Quel jour du mois :"  style="width: 120px"/>
                         </p:column>
 
-                        <p:column rendered="#{demandeCleaningController.repetition == 2}">
-                            <p:selectOneMenu class="form-control" id="numeroJour" style="width: 170px;height: 40px">
+                        <p:column rendered="#{demandeCleaningController.planningItem.repetition == 2}">
+                            <p:selectOneMenu class="form-control" id="numeroJour" value="#{demandeCleaningController.planningItem.numeroJour}" style="width: 170px;height: 40px">
                                 <f:selectItem itemValue="#{null}" itemLabel="--NUMERO JOUR--"/>
                                 <f:selectItems value="#{demandeCleaningController.loadNumeroJour()}" 
                                                var="numeroJour"
@@ -100,7 +100,7 @@
 
                     <p:row>
                         <p:column colspan="4" style="text-align: center;margin: 0 auto">
-                            <p:commandButton value="Confirmer" style="width: 50%;height: 40px;text-align: center" update=":growl" />
+                            <p:commandButton value="Ajouter" actionListener="#{demandeCleaningController.addPlanningItem()}" style="width: 50%;height: 40px;text-align: center" update=":planningListFrom,:growl" />
                         </p:column>
 
                     </p:row>    
@@ -109,6 +109,49 @@
 
 
 
+
+            </h:form>
+
+
+
+            <h:form id="planningListFrom" style="margin-top: 20px">
+
+                <p:panel header="#{bundle.ListPlanningItemTitle}">
+                    <p:dataTable id="datalist" value="#{demandeCleaningController.demandeCleaning.demandeService.planning.planningItems}" var="item"
+                                 paginator="true"
+                                 rowKey="#{item.id}"
+                                 rows="10"
+                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 >
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Jour"/>
+                            </f:facet>
+                            <h:outputText value="#{item.repetition==1? item.day.nom:'-------'}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Numero Jour"/>
+                            </f:facet>
+                            <h:outputText value="#{item.repetition==2? item.numeroJour:'-------'}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Timing"/>
+                            </f:facet>
+                            <h:outputText value="#{item.timing.name}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Action"/>
+                            </f:facet>
+                            <p:commandButton value="Delete" actionListener="#{demandeCleaningController.deletePlanningItem(item)}" style="width: 50%;text-align: center" update="planningListFrom,:growl" />
+
+                        </p:column>
+
+                    </p:dataTable>
+                </p:panel>
 
             </h:form>
 

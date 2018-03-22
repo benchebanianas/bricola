@@ -6,6 +6,7 @@
 package bean;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Entity;
@@ -57,6 +58,9 @@ public class Planning implements Serializable {
     }
 
     public List<PlanningItem> getPlanningItems() {
+        if(planningItems == null){
+            planningItems = new ArrayList<>();
+        }
         return planningItems;
     }
 

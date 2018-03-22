@@ -3,6 +3,7 @@ package controller;
 import bean.Client;
 import bean.Day;
 import bean.DemandeCleaning;
+import bean.PlanningItem;
 import bean.Secteur;
 import bean.Timing;
 import bean.Ville;
@@ -64,27 +65,38 @@ public class DemandeCleaningController implements Serializable {
     private int repetition;
     private Worker company;
     private Worker individual;
+    private PlanningItem planningItem;
 
     private DemandeCleaning demandeCleaning;
 
     public DemandeCleaningController() {
     }
-    
-    
-    
-    public List<Integer> loadNumeroJour(){
+
+    public void deletePlanningItem(PlanningItem item) {
+         
+        demandeCleaning.getDemandeService().getPlanning().getPlanningItems().remove(item);
+    }
+
+    public void addPlanningItem() {
+
+        PlanningItem item = clone(planningItem, demandeCleaning.getDemandeService().getPlanning().getPlanningItems());
+        demandeCleaning.getDemandeService().getPlanning().getPlanningItems().add(item);
+
+    }
+
+    public List<Integer> loadNumeroJour() {
         List<Integer> numeroJours = new ArrayList<>();
         for (int i = 0; i < 31; i++) {
-            numeroJours.add(i+1);
+            numeroJours.add(i + 1);
         }
         return numeroJours;
     }
-    
-    public List<Timing> loadTimings(){
+
+    public List<Timing> loadTimings() {
         return timingFacade.findAll();
     }
-    
-    public List<Day> loadDays(){
+
+    public List<Day> loadDays() {
         return dayFacade.findAll();
     }
 
@@ -101,7 +113,7 @@ public class DemandeCleaningController implements Serializable {
     }
 
     public void checkChoice() {
-        
+
         RequestContext context = RequestContext.getCurrentInstance();
         if (choice == 2) {
 
@@ -354,7 +366,17 @@ public class DemandeCleaningController implements Serializable {
     public void setRepetition(int repetition) {
         this.repetition = repetition;
     }
-    
+
+    public PlanningItem getPlanningItem() {
+        if (planningItem == null) {
+            planningItem = new PlanningItem();
+        }
+        return planningItem;
+    }
+
+    public void setPlanningItem(PlanningItem planningItem) {
+        this.planningItem = planningItem;
+    }
 
     public DemandeCleaning prepareCreate() {
         selected = new DemandeCleaning();
@@ -426,6 +448,24 @@ public class DemandeCleaningController implements Serializable {
 
     public List<DemandeCleaning> getItemsAvailableSelectOne() {
         return getFacade().findAll();
+    }
+
+    public PlanningItem clone(PlanningItem myPlanning, List<PlanningItem> list) {
+
+        PlanningItem item = new PlanningItem();
+        int id = 0;
+        try {
+            id = list.get(list.size() - 1).getId().intValue() + 1;
+        } catch (Exception e) {
+        }
+        
+        item.setId(new Long(id) );
+        item.setDay(myPlanning.getDay());
+        item.setNumeroJour(myPlanning.getNumeroJour());
+        item.setRepetition(myPlanning.getRepetition());
+        item.setTiming(myPlanning.getTiming());
+
+        return item;
     }
 
     @FacesConverter(forClass = DemandeCleaning.class)
