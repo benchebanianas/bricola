@@ -6,6 +6,8 @@
 package service;
 
 import bean.DemandeService;
+import bean.Worker;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -23,6 +25,14 @@ public class DemandeServiceFacade extends AbstractFacade<DemandeService> {
     @Override
     protected EntityManager getEntityManager() {
         return em;
+    }
+    
+    public int findNumberOfDemandesByWorker(Worker worker){
+        List<DemandeService> demandes= getMultipleResult("SELECT ds FROM DemandeService ds WHERE ds.worker.email='"+worker.getEmail()+"'");
+        if(demandes == null){
+            return 0;
+        }
+        return demandes.size();
     }
 
     public DemandeServiceFacade() {

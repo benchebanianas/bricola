@@ -34,6 +34,19 @@ public class WorkerController implements Serializable {
     public WorkerController() {
     }
 
+    public double showRating(){
+        return ejbFacade.showRating(selected);
+    }
+    public int numberReviews(){
+        return ejbFacade.numberReviews(selected);
+    }
+    public int numberServices(){
+        return ejbFacade.numberServices(selected);
+    }
+    public int numberDemandes(){
+        return ejbFacade.numberDemandes(selected);
+    }
+    
     public String login() {
         int connected = ejbFacade.login(selected);
         if (connected == -1) {
@@ -50,7 +63,7 @@ public class WorkerController implements Serializable {
             return null;
         }
         setSelected((Worker) SessionUtil.getAttribute("connectedWorker"));
-        return "/worker/ProfileTemplate";
+        return "/worker/WorkerProfile";
     }
 
     public void showMessage(String titre, String contenu) {

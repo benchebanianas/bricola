@@ -8,6 +8,7 @@ package service;
 import bean.Worker;
 import controller.util.EmailUtil;
 import controller.util.SessionUtil;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -19,6 +20,13 @@ import javax.persistence.PersistenceContext;
 @Stateless
 public class WorkerFacade extends AbstractFacade<Worker> {
 
+    @EJB
+    ReviewFacade reviewFacade;
+    @EJB
+    WorkerJobFacade workerJobFacade;
+    @EJB
+    DemandeServiceFacade demandeServiceFacade;
+
     @PersistenceContext(unitName = "bricolagePU")
     private EntityManager em;
 
@@ -27,6 +35,18 @@ public class WorkerFacade extends AbstractFacade<Worker> {
         return em;
     }
 
+    public double showRating(Worker worker) {
+        return reviewFacade.calculRating(worker);
+    }
+    public int numberReviews(Worker worker){
+        return reviewFacade.numberReviews(worker);
+    }
+    public int numberServices(Worker worker){
+        return workerJobFacade.findNumberofServicesByWorker(worker);
+    }
+    public int numberDemandes(Worker worker){
+        return demandeServiceFacade.findNumberOfDemandesByWorker(worker);
+    }
     public int login(Worker worker) {
         boolean valid = EmailUtil.emailValidate(worker.getEmail());
         if (!valid) {

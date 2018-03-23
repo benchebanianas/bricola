@@ -14,14 +14,14 @@
         <nav class="navbar navbar-expand navbar-dark bg-info">
             <a class="sidebar-toggle text-light mr-3"><i class="fa fa-bars"></i></a>
 
-            <a class="navbar-brand" href="#"><i class="fa fa-group"></i> Worker</a>
+            <a class="navbar-brand" href="#"><i class="fa fa-group"></i> <p:outputLabel value="#{workerController.selected.workerType.name}"></p:outputLabel></a>
 
             <div class="navbar-collapse collapse">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
                         <a class="nav-link" href="#">
                             <span class="fa fa-envelope fa-lg" style="color: white"></span>
-                             <p:outputLabel value="1" class="badge badge-notify"></p:outputLabel>
+                            <p:outputLabel value="1" class="badge badge-notify"></p:outputLabel>
                         </a>
                     </li>
                     <li class="nav-item">
@@ -56,31 +56,31 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#">
                             <span data-feather="file"></span>
-                            Orders
+                            Demandes
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">
                             <span data-feather="shopping-cart"></span>
-                            Products
+                            Reviews
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">
                             <span data-feather="users"></span>
-                            Customers
+                            Informations
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">
                             <span data-feather="bar-chart-2"></span>
-                            Reports
+                            Services
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">
                             <span data-feather="layers"></span>
-                            Integrations
+                            chi haja khra
                         </a>
                     </li>
                 </ul>
@@ -95,7 +95,7 @@
                             <span style="float: left" class="fa fa-file fa-3x"></span>
                             <h5 class="card-title" style="margin-left: 50px">Demandes</h5>
                             <div class="card-text" style="margin-left: 50px;">
-                                <p:outputLabel value="10"></p:outputLabel>
+                                <p:outputLabel value="#{workerController.numberDemandes()}"></p:outputLabel>
                             </div>
                         </div>
                         <div class="card-footer">
@@ -105,9 +105,9 @@
                     <div class="card">
                         <div class="card-body">
                             <span style="float: left" class="fa fa-align-center fa-3x"></span>
-                            <h5 class="card-title" style="float: right">Reviews</h5>
-
-                            <div style="float: right">
+                            <h5 class="card-title" style="margin-left: 50px">Reviews</h5>
+                            <div class="card-text" style="margin-left: 60px;">
+                                <p:outputLabel value="#{workerController.numberReviews()}"></p:outputLabel>
                             </div>
                         </div>
                         <div class="card-footer">
@@ -117,9 +117,9 @@
                     <div class="card">
                         <div class="card-body">
                             <span style="float: left" class="fa fa-star fa-3x"></span>
-                            <h5 class="card-title" style="float: right">Rating</h5>
-
-                            <div style="float: right">
+                            <h5 class="card-title" style="margin-left: 50px">Rating</h5>
+                            <div class="card-text" style="margin-left: 60px;">
+                                <p:outputLabel value="#{workerController.showRating()}"></p:outputLabel>
                             </div>
                         </div>
                         <div class="card-footer">
@@ -129,9 +129,9 @@
                     <div class="card">
                         <div class="card-body">
                             <span style="float: left" class="fa fa-cart-plus fa-3x"></span>
-                            <h5 class="card-title" style="float: right">Services</h5>
-
-                            <div style="float: right">
+                            <h5 class="card-title" style="margin-left: 50px">Services</h5>
+                            <div class="card-text" style="margin-left: 60px;">
+                                <p:outputLabel value="#{workerController.numberServices()}"></p:outputLabel>
                             </div>
                         </div>
                         <div class="card-footer">

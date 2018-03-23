@@ -32,18 +32,26 @@ public class WorkerJobFacade extends AbstractFacade<WorkerJob> {
         super(WorkerJob.class);
     }
 
+    public int findNumberofServicesByWorker(Worker worker) {
+        List<WorkerJob> jobs = getMultipleResult("SELECT wj FROM WorkerJob wj WHERE wj.worker.email='" + worker.getEmail() + "'");
+        if (jobs == null) {
+            return 0;
+        }
+        return jobs.size();
+    }
+
     public List<Worker> findWorkerByServiceAndType(String service, Long type) {
 
-        String requette = "select w.worker from WorkerJob w where w.service.nom = '"+service+"' and w.worker.workerType.id = '"+type+"'";
-        System.out.println("hahiya requette : "+requette);
+        String requette = "select w.worker from WorkerJob w where w.service.nom = '" + service + "' and w.worker.workerType.id = '" + type + "'";
+        System.out.println("hahiya requette : " + requette);
         List<Worker> workers = em.createQuery(requette).getResultList();
         System.out.println("hahiya list workers : " + workers);
-        if(!workers.isEmpty()){
-          return workers;  
-        }else{
-        return new ArrayList<>();
-    }
-        
+        if (!workers.isEmpty()) {
+            return workers;
+        } else {
+            return new ArrayList<>();
+        }
+
     }
 
 }
