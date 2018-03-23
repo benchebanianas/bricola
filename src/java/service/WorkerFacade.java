@@ -5,6 +5,7 @@
  */
 package service;
 
+import bean.Secteur;
 import bean.Worker;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -27,6 +28,10 @@ public class WorkerFacade extends AbstractFacade<Worker> {
 
     public WorkerFacade() {
         super(Worker.class);
+    }
+
+    Worker findBestWorkerBySector(Secteur secteur) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

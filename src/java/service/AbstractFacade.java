@@ -19,7 +19,7 @@ public abstract class AbstractFacade<T> {
     public AbstractFacade(Class<T> entityClass) {
         this.entityClass = entityClass;
     }
-
+    
     public T getUniqueResult(String query) {
         List<T> list = getEntityManager().createQuery(query).getResultList();
         if (list != null && list.size() > 0) {

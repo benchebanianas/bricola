@@ -28,20 +28,20 @@ public class DemandeCleaning implements Serializable {
     private DemandeService demandeService;
     private BigDecimal nbrHeures;
     private Boolean bringEquipement = false;
-    private int nbrCleaner;
+    private BigDecimal nbrCleaner;
 
-    public int getNbrCleaner() {
+    public BigDecimal getNbrCleaner() {
         return nbrCleaner;
     }
 
-    public void setNbrCleaner(int nbrCleaner) {
+    public void setNbrCleaner(BigDecimal nbrCleaner) {
         this.nbrCleaner = nbrCleaner;
     }
 
     public DemandeCleaning() {
     }
 
-    public DemandeCleaning(DemandeService demandeService, BigDecimal nbrHeures, Boolean bringEquipement, int nbrCleaners) {
+    public DemandeCleaning(DemandeService demandeService, BigDecimal nbrHeures, Boolean bringEquipement, BigDecimal nbrCleaners) {
         this.demandeService = demandeService;
         this.nbrHeures = nbrHeures;
         this.bringEquipement = bringEquipement;
