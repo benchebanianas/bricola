@@ -10,8 +10,127 @@
 }
 .ui-widget-header {
     text-align: center;
-    text-transform: uppercase;
 }
 .ui-button {
     margin-top: 10px !important;
+}
+
+.sizeInput {
+    width: 100px !important;
+}
+
+.sizeInput2 {
+    width: 200px !important;
+}
+.sizeInput150 {
+    width: 150px !important;
+}
+.sizeInput122 {
+    width: 122px !important;
+}
+.sizeInput143 {
+    width: 134px !important;
+}
+.text-font {
+    font-weight: bold;
+}
+.text-font-bold15{
+    font-size: 15px !important;
+    font-weight: bold;
+}
+.text-size15{
+    font-size: 15px !important;  
+}
+.align-center{
+    text-align: center;
+}
+.btn-big{
+    height:45px;
+    width:140px;
+    font-size: 4em;
+}
+
+.colored {
+    background-color: #a4c6d8;
+    color: #FFFFFF;
+}
+
+.hide{
+    display: none;
+}
+
+.icon-login {
+    font-size: 26px;
+    margin-left: 54px;
+
+
+}
+
+.danger{
+    color:red;
+}
+
+img-center {
+    display: block;
+    margin: auto;
+    width: 50%;
+}
+
+img-polaroid {
+    width: 80%;
+    background-color: white;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    margin-bottom: 25px;
+}
+
+img-container {
+    text-align: center;
+    padding: 10px 20px;
+}
+
+img-border {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 5px;
+    width: 150px;
+}
+
+.worker-color{
+    color: #01b1b0;
+}
+
+.ui-button, button.ui-button.ui-state-default, .ui-button.ui-state-default {
+    border: 1px solid #01b1b0;
+    color: #fff;
+    background: #01b1b0;
+}
+
+.ui-state-hover,.ui-widget-content .ui-state-hover,.ui-widget-header .ui-state-hover,.ui-state-focus,.ui-widget-content .ui-state-focus,.ui-widget-header .ui-state-focus
+{border:1px solid #01549c;
+ font-weight:normal;
+ color:#212121}
+
+ui-button, button.ui-button.ui-state-hover, button.ui-button.ui-state-focus, .ui-button.ui-state-focus{
+    border:1px solid #01549c;
+    background:#01549c;   
+    outline: 0 none;
+} 
+
+.ui-paginator .ui-paginator-page.ui-state-active {
+    background: #006f73;
+    color: #fff;
+    border-color: #156090;
+}
+
+ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight {
+    border: 1px solid #01549c;
+    background: #01549c;
+    color: #fff;
+}
+
+
+.ui-chkbox-box.ui-widget.ui-corner-all.ui-state-default.ui-state-active.ui-chkbox-box.ui-state-active, .ui-chkbox-box.ui-state-focus.ui-state-active, .ui-radiobutton-box.ui-state-active, .ui-radiobutton-box.ui-state-focus.ui-state-active {
+    border: 1px solid #01549c;
+    background: #01549c;
+    color: #fff;
 }

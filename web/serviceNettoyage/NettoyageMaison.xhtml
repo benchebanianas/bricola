@@ -280,7 +280,7 @@
 
                                                                 <p:column>
                                                                     <p:selectOneMenu class="form-control" id="city" value="#{demandeCleaningController.ville}" style="width:250px;height: 40px;">
-                                                                        <p:ajax listener="#{demandeCleaningController.doAction}" update="detailGrid " />
+                                                                        <p:ajax listener="#{demandeCleaningController.doAction}" process="detailGrid" update="detailGrid " />
                                                                         <f:selectItem itemValue="#{null}" itemLabel="--SELECT CITY--"/>
                                                                         <f:selectItems value="#{demandeCleaningController.loadVilles()}" 
                                                                                        var="ville"

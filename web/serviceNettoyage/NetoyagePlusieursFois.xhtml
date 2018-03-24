@@ -8,7 +8,7 @@
 
     <ui:composition>
 
-        <p:dialog id="NetoyagePlusieursFoisDlg" widgetVar="NetoyagePlusieursFoisDialog" modal="true" resizable="false" appendTo="@(body)" width="800" header="Selectionner les dates">
+        <p:dialog id="NetoyagePlusieursFoisDlg" widgetVar="NetoyagePlusieursFoisDialog" modal="true" resizable="false" appendTo="@(body)" width="800" height="600" header="Selectionner les dates">
 
 
 
@@ -119,8 +119,7 @@
                 <p:panel header="#{bundle.ListPlanningItemTitle}">
                     <p:dataTable id="datalist" value="#{demandeCleaningController.demandeCleaning.demandeService.planning.planningItems}" var="item"
                                  paginator="true"
-                                 rows="10"
-                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 rows="3"
                                  >
 
                         <p:column>
