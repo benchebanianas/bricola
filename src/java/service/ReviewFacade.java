@@ -26,8 +26,12 @@ public class ReviewFacade extends AbstractFacade<Review> {
         double stars = 0;
 //        List stars = em.createQuery("SELECT r.stars FROM Review r WHERE r.worker.email='"+worker.getEmail()+"'").getResultList();
         List<Review> reviews = getMultipleResult("SELECT r FROM Review r WHERE r.worker.email='" + worker.getEmail() + "'");
-        for (Review review : reviews) {
-            stars += review.getStars();
+        if (reviews == null) {
+            return stars;
+        } else {
+            for (Review review : reviews) {
+                stars += review.getStars();
+            }
         }
         stars = stars / reviews.size();
         return stars;
