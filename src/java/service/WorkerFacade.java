@@ -5,6 +5,7 @@
  */
 package service;
 
+import bean.Secteur;
 import bean.Service;
 import bean.Worker;
 import controller.util.EmailUtil;
@@ -40,18 +41,27 @@ public class WorkerFacade extends AbstractFacade<Worker> {
     public double showRating(Worker worker) {
         return reviewFacade.calculRating(worker);
     }
-    public int numberReviews(Worker worker){
+
+    public int numberReviews(Worker worker) {
         return reviewFacade.numberReviews(worker);
     }
-    public int numberServices(Worker worker){
+
+    public int numberServices(Worker worker) {
         return workerJobFacade.findNumberofServicesByWorker(worker);
     }
-    public int numberDemandes(Worker worker){
+
+    public int numberDemandes(Worker worker) {
         return demandeServiceFacade.findNumberOfDemandesByWorker(worker);
     }
-    public List<Service> findServiceByWorker(Worker worker){
+
+    public List<Service> findServiceByWorker(Worker worker) {
         return workerJobFacade.findServiceByWorker(worker);
     }
+
+    Worker findBestWorkerBySector(Secteur secteur) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     public int login(Worker worker) {
         boolean valid = EmailUtil.emailValidate(worker.getEmail());
         if (!valid) {

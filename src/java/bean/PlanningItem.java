@@ -37,8 +37,6 @@ public class PlanningItem implements Serializable {
         return timing;
     }
     
-    
-
     public void setTiming(Timing timing) {
         this.timing = timing;
     }
@@ -86,6 +84,9 @@ public class PlanningItem implements Serializable {
     }
 
     public Long getId() {
+        if(id == null){
+            id = new Long(0);
+        }
         return id;
     }
 
@@ -115,7 +116,8 @@ public class PlanningItem implements Serializable {
 
     @Override
     public String toString() {
-        return "bean.PlanningItem[ id=" + id + " ]";
+        return "PlanningItem{" + "id=" + id + ", day=" + day + ", numeroJour=" + numeroJour + ", planning=" + planning + ", timing=" + timing + ", repetition=" + repetition + '}';
     }
 
+    
 }

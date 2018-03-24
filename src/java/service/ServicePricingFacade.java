@@ -5,6 +5,7 @@
  */
 package service;
 
+import bean.Service;
 import bean.ServicePricing;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -27,6 +28,14 @@ public class ServicePricingFacade extends AbstractFacade<ServicePricing> {
 
     public ServicePricingFacade() {
         super(ServicePricing.class);
+    }
+
+    public ServicePricing findByService(Service service) {
+    
+        String requette = "select sp from ServicePricing sp where sp.service.id = '"+service.getId()+"'";
+        
+        return (ServicePricing) em.createQuery(requette).getSingleResult();
+    
     }
     
 }
