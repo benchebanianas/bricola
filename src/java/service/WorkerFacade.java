@@ -5,9 +5,11 @@
  */
 package service;
 
+import bean.Service;
 import bean.Worker;
 import controller.util.EmailUtil;
 import controller.util.SessionUtil;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -46,6 +48,9 @@ public class WorkerFacade extends AbstractFacade<Worker> {
     }
     public int numberDemandes(Worker worker){
         return demandeServiceFacade.findNumberOfDemandesByWorker(worker);
+    }
+    public List<Service> findServiceByWorker(Worker worker){
+        return workerJobFacade.findServiceByWorker(worker);
     }
     public int login(Worker worker) {
         boolean valid = EmailUtil.emailValidate(worker.getEmail());

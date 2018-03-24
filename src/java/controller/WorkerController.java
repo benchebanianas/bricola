@@ -1,5 +1,6 @@
 package controller;
 
+import bean.Service;
 import bean.Worker;
 import controller.util.JsfUtil;
 import controller.util.JsfUtil.PersistAction;
@@ -45,6 +46,9 @@ public class WorkerController implements Serializable {
     }
     public int numberDemandes(){
         return ejbFacade.numberDemandes(selected);
+    }
+    public List<Service> serviceByWorker(){
+        return ejbFacade.findServiceByWorker(selected);
     }
     
     public String login() {

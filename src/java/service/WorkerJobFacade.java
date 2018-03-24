@@ -5,6 +5,7 @@
  */
 package service;
 
+import bean.Service;
 import bean.Worker;
 import bean.WorkerJob;
 import java.util.ArrayList;
@@ -38,6 +39,19 @@ public class WorkerJobFacade extends AbstractFacade<WorkerJob> {
             return 0;
         }
         return jobs.size();
+    }
+
+    public List<Service> findServiceByWorker(Worker worker) {
+//        return getMultipleResult("SELECT wj.service FROM WorkerJob wj WHERE wj.worker.email='"+worker.getEmail()+"'");
+//        return em.createQuery("SELECT wj.service FROM WorkerJob wj WHERE wj.worker.email='"+worker.getEmail()+"'").getResultList();
+
+////////////////tariqa mdl7a for testing
+        List<Service> services = new ArrayList();
+        List<WorkerJob> jobs = getMultipleResult("SELECT wj FROM WorkerJob wj WHERE wj.worker.email='" + worker.getEmail() + "'");
+        for (WorkerJob job : jobs) {
+            services.add(job.getService());
+        }
+        return services;
     }
 
     public List<Worker> findWorkerByServiceAndType(String service, Long type) {
