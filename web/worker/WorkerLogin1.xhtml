@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <meta charset="utf-8"/>
+        <link href="../resources/bootstrap-4.0.0/css/bootstrap.min.css" rel="stylesheet"></link>
+        <link rel="stylesheet" type="text/css" href="../resources/css/workerloginStyle.css"/>
+        <!--        <link rel="stylesheet" type="text/css" href="../ressources/css/modern-business.css"/>-->
+        <link rel="stylesheet" type="text/css" href="../resources/css/load.css"/>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <p:growl id="msgs" showDetail="true" />
+        <div class="loginBox">
+            <a href="index.html"><img src="../resources/images/workerLoginUserLogo.png" class="user"/></a>
+            <h2>Se connecter</h2>
+            <div class="container" style="text-align: center">
+                <h:form style="padding-top: 20px;">
+
+                    <p>Email</p>
+                    <p:inputText value="#{workerController.selected.email}" title="Email" class="input"/>
+                    <p>Mot de passe</p>
+                    <p:inputText type="password" value="#{workerController.selected.password}" class="input" title="Password"  />
+                    <p:commandButton class="btn-login " action="#{workerController.login()}" value="se connecter"  ></p:commandButton>
+                    <br></br>
+                    <h:commandLink  value="mot de passe oublié"/>
+                </h:form>
+            </div>
+        </div>
+
+
+    </h:body>
+</html>
