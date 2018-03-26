@@ -11,6 +11,13 @@ public class SessionUtil {
 
     private SessionUtil() {
     }
+    
+    public static void remove(String cle) {
+        FacesContext fc = FacesContext.getCurrentInstance();
+        if (fc != null && fc.getExternalContext() != null) {
+            getSession(fc).removeAttribute(cle);
+        }
+    }
 
     public static void registerClient(Client user) {
         //clone user before

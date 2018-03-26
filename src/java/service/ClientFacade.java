@@ -30,19 +30,62 @@ public class ClientFacade extends AbstractFacade<Client> {
         super(Client.class);
     }
 
+    public int creerCompte(Client client) {
+        Client c = find(client.getEmail());
+        if (c == null) {
+            Client c1 = new Client();
+            c1.setAdresseComplement(client.getAdresseComplement());
+            c1.setBlocked(false);
+            c1.setEmail(client.getEmail());
+            c1.setNom(client.getNom());
+            c1.setPassword(client.getPassword());
+            c1.setPhone(client.getPassword());
+            c1.setPhone(client.getPhone());
+            c1.setSecteur(client.getSecteur());
+            create(c1);
+            return 1;
+        } else {
+            return -1;
+        }
+    }
+
+    public int seConnecter(Client client) {
+        Client test = findByEmail(client.getEmail());
+        if (test != null) {
+            if (!test.getPassword().equals(client.getPassword())) {
+                return -2;
+            } else if (test.isBlocked()) {
+                return -1;
+            } else {
+                return 1;
+            }
+        } else {
+            return -3;
+        }
+    }
+
+    public Client findByEmail(String em) {
+        List<Client> clients = getEntityManager().createQuery("SELECT c FROM Client c WHERE c.email='" + em + "'").getResultList();
+        if (clients.isEmpty()) {
+            return null;
+        } else {
+            return clients.get(0);
+        }
+    }
+
     public List<Client> checkEmail(String email) {
-    
-        String requette = "Select c from Client c where c.email = '"+email+"'";
-         return em.createQuery(requette).getResultList();
-     }
+
+        String requette = "Select c from Client c where c.email = '" + email + "'";
+        return em.createQuery(requette).getResultList();
+    }
 
     public void checkClientInfo(Client client) {
-    
+
         List<Client> clients = checkEmail(client.getEmail());
-        if(clients.isEmpty()){
+        if (clients.isEmpty()) {
             client.setPassword(client.getEmail());
         }
         edit(client);
     }
-    
+
 }

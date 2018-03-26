@@ -1,8 +1,10 @@
 package controller;
 
 import bean.Client;
+import controller.util.EmailUtil;
 import controller.util.JsfUtil;
 import controller.util.JsfUtil.PersistAction;
+import controller.util.SessionUtil;
 import service.ClientFacade;
 
 import java.io.Serializable;
@@ -14,10 +16,12 @@ import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import org.primefaces.context.RequestContext;
 
 @Named("clientController")
 @SessionScoped
@@ -27,11 +31,89 @@ public class ClientController implements Serializable {
     private service.ClientFacade ejbFacade;
     private List<Client> items = null;
     private Client selected;
+    @EJB
+    private service.PasswordEmail passwordEmailFacade;
 
     public ClientController() {
     }
 
+//    public List<DemandeService> initDemande() {
+//
+//        List<DemandeService> demandes = (List<DemandeService>) demandeServiceFacade.findByClient(selected);
+//        System.out.println(selected);
+//        return demandes;
+//    }
+
+    public void showMessage(String msg) {
+        RequestContext.getCurrentInstance().showMessageInDialog(new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", " " + msg + ""));
+    }
+
+    public Client init() {
+        Client c = (Client) SessionUtil.getAttribute("nselected");
+        return c;
+    }
+
+    public String connect() {
+        if (EmailUtil.emailValidate(selected.getEmail())) {
+            int res = ejbFacade.seConnecter(selected);
+            if (res > 0) {
+                selected = ejbFacade.findByEmail(selected.getEmail());
+                System.out.println("done");
+                SessionUtil.setAttribute("nselected", selected);
+                showMessage("connection reussite");
+                return "/client/Compte";
+            } else if (res == -3) {
+                showMessage("email invalid");
+                return null;
+            } else if (res == -1) {
+                showMessage("ce compte est blocké .");
+                return null;
+            } else if (res == -2) {
+                showMessage("mot de passe erroné .");
+                return null;
+            } else {
+                return null;
+            }
+        }
+
+        return null;
+    }
+
+    public String deconnecte() {
+        SessionUtil.remove("nselected");
+        return "/client/Login";
+
+    }
+
+    public String resetPassword() {
+        int res = passwordEmailFacade.recByEmail(selected, selected.getEmail(), "heizenhamza@gmail.com");
+
+        if (res > 0) {
+            showMessage("cheek your email");
+            return "/client/Login";
+        } else if (res == -2) {
+            showMessage("ce compte est bloqué");
+        } else {
+            showMessage("compte introuvable");
+        }
+        return null;
+    }
+
+    public String createCompte() {
+        int res = ejbFacade.creerCompte(selected);
+        if (res > 0) {
+            showMessage("Creation avec succes");
+            return "/client/Login";
+        } else {
+            showMessage("erreur l'ors de la creation");
+            return null;
+        }
+    }
+
     public Client getSelected() {
+        if (selected == null) {
+            selected = new Client();
+        }
         return selected;
     }
 
