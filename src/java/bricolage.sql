@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 22, 2018 at 09:18 PM
+-- Generation Time: Mar 31, 2018 at 08:24 PM
 -- Server version: 10.1.30-MariaDB
 -- PHP Version: 5.6.33
 
@@ -81,7 +81,8 @@ CREATE TABLE `client` (
 --
 
 INSERT INTO `client` (`EMAIL`, `ADRESSECOMPLEMENT`, `BLOCKED`, `NOM`, `PASSWORD`, `PHONE`, `PRENOM`, `SECTEUR_ID`) VALUES
-('anas.the.creator@gmail.com', 'Saada 1 No 570', 0, 'Benchebani', 'walo', '0630247385', 'Mohamed Anas', 2);
+('anas.the.creator@gmail.com', 'Saada 1 No 570', 0, 'Benchebani', 'walo', '0630247385', 'Mohamed Anas', 3),
+('newCustomer@gmail.com', 'no 12 hay salama', 0, 'Customer', 'newCustomer@gmail.com', '0679461382', 'new', 5);
 
 -- --------------------------------------------------------
 
@@ -153,10 +154,24 @@ CREATE TABLE `demandebabysitting` (
 CREATE TABLE `demandecleaning` (
   `ID` bigint(20) NOT NULL,
   `BRINGEQUIPEMENT` tinyint(1) DEFAULT '0',
-  `NBRCLEANER` int(11) DEFAULT NULL,
+  `NBRCLEANER` decimal(38,0) DEFAULT NULL,
   `NBRHEURES` decimal(38,0) DEFAULT NULL,
   `DEMANDESERVICE_ID` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `demandecleaning`
+--
+
+INSERT INTO `demandecleaning` (`ID`, `BRINGEQUIPEMENT`, `NBRCLEANER`, `NBRHEURES`, `DEMANDESERVICE_ID`) VALUES
+(1, 0, '3', '2', 1),
+(2, 1, '1', '1', 2),
+(3, 0, '4', '2', 3),
+(4, 0, '2', '4', 4),
+(5, 0, '3', '4', 5),
+(6, 0, '1', '1', 6),
+(7, 0, '2', '2', 7),
+(8, 1, '4', '5', 8);
 
 -- --------------------------------------------------------
 
@@ -277,6 +292,20 @@ CREATE TABLE `demandeservice` (
   `WORKERTYPE_ID` bigint(20) DEFAULT NULL,
   `TYPEDEMANDE_ID` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `demandeservice`
+--
+
+INSERT INTO `demandeservice` (`ID`, `DATECONFIRMATION`, `DATEDERNIERMODIF`, `DATESUPPRESSION`, `DATEDEMANDE`, `DETAIL`, `PRIXHT`, `PRIXTTC`, `CLIENT_EMAIL`, `MANAGERCONFIRMATION_ID`, `PLANNING_ID`, `SECTEUR_ID`, `SERVICE_ID`, `SERVICEPRICING_ID`, `WORKER_EMAIL`, `WORKERTYPE_ID`, `TYPEDEMANDE_ID`) VALUES
+(1, NULL, NULL, NULL, '2018-03-23', 'please enter quietly because the kids are still sleeping ', '300', '300', 'anas.the.creator@gmail.com', NULL, 1, 2, 1, 1, 'coitcleaners@gmail.com', 1, NULL),
+(2, NULL, NULL, NULL, '2018-03-23', 'none', '50', '50', 'anas.the.creator@gmail.com', NULL, 2, 2, 1, 1, 'merrymaids@gmail.com', 2, NULL),
+(3, NULL, NULL, NULL, '2018-03-23', 'i left food in the kitchen if you would like to eat', '400', '400', 'anas.the.creator@gmail.com', NULL, 3, 2, 1, 1, 'cleanharbors@gmail.com', 2, NULL),
+(4, NULL, NULL, NULL, '2018-03-23', 'if you cloud please check to close the door before you leave thank you', '400', '400', 'newCustomer@gmail.com', NULL, 4, 5, 1, 1, 'cleanharbors@gmail.com', 2, NULL),
+(5, NULL, NULL, NULL, '2018-03-31', 'this is just a test', '600', '600', 'anas.the.creator@gmail.com', NULL, 5, 2, 1, 1, 'coitcleaners@gmail.com', 1, NULL),
+(6, NULL, NULL, NULL, '2018-03-31', 'test for cleaning', '50', '50', 'anas.the.creator@gmail.com', NULL, 6, 2, 1, 1, 'merrymaids@gmail.com', 2, NULL),
+(7, NULL, NULL, NULL, '2018-03-31', 'none', '200', '200', 'anas.the.creator@gmail.com', NULL, 7, 2, 1, 1, 'cleanharbors@gmail.com', 2, NULL),
+(8, NULL, NULL, NULL, '2018-03-31', 'please enter the house quietly ! ', '1000', '1000', 'anas.the.creator@gmail.com', NULL, 8, 3, 1, 1, 'merrymaids@gmail.com', 2, NULL);
 
 -- --------------------------------------------------------
 
@@ -467,6 +496,20 @@ CREATE TABLE `planning` (
   `TIMING_ID` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `planning`
+--
+
+INSERT INTO `planning` (`ID`, `DATEDEBUT`, `DATEFIN`, `DATEONCE`, `TIMING_ID`) VALUES
+(1, '2018-04-18', '2018-08-31', NULL, NULL),
+(2, NULL, NULL, '2018-05-24', 1),
+(3, '2018-07-25', '2018-11-29', NULL, NULL),
+(4, '2018-03-23', '2019-02-20', NULL, NULL),
+(5, NULL, NULL, '2018-03-31', 13),
+(6, '2018-03-08', '2018-09-21', NULL, NULL),
+(7, '2018-03-14', '2018-03-24', NULL, NULL),
+(8, NULL, NULL, '2018-03-31', 5);
+
 -- --------------------------------------------------------
 
 --
@@ -481,6 +524,22 @@ CREATE TABLE `planningitem` (
   `PLANNING_ID` bigint(20) DEFAULT NULL,
   `TIMING_ID` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `planningitem`
+--
+
+INSERT INTO `planningitem` (`ID`, `NUMEROJOUR`, `REPETITION`, `DAY_ID`, `PLANNING_ID`, `TIMING_ID`) VALUES
+(1, 0, 1, 1, 6, 1),
+(2, 0, 1, 3, 1, 5),
+(3, 3, 2, NULL, 1, 9),
+(4, 1, 2, NULL, 3, 15),
+(5, 0, 1, 5, 3, 13),
+(51, 7, 2, NULL, 4, 1),
+(52, 0, 1, 2, 4, 5),
+(101, 0, 1, 1, 6, 1),
+(151, 5, 2, NULL, 7, 1),
+(152, 0, 1, 5, 7, 9);
 
 -- --------------------------------------------------------
 
@@ -542,7 +601,7 @@ CREATE TABLE `sequence` (
 --
 
 INSERT INTO `sequence` (`SEQ_NAME`, `SEQ_COUNT`) VALUES
-('SEQ_GEN', '0');
+('SEQ_GEN', '200');
 
 -- --------------------------------------------------------
 
@@ -561,7 +620,7 @@ CREATE TABLE `service` (
 --
 
 INSERT INTO `service` (`ID`, `NOM`, `CATEGORIE_ID`) VALUES
-(1, 'Nettoyage Maison', 1),
+(1, 'nettoyageMaison', 1),
 (2, 'Nettoyage Complet', 1),
 (3, 'Nettoyage Piscine', 1),
 (4, 'Nettoyage Divers', 1),

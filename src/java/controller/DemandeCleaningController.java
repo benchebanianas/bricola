@@ -83,7 +83,7 @@ public class DemandeCleaningController implements Serializable {
     public void saveDemandeCleaning() {
         
         try {
-            ejbFacade.saveDemandeCleaning(demandeCleaning, company, individual, dateOnce, cleaningOnce, cleaningMnayTimes);
+            ejbFacade.saveDemandeCleaning(demandeCleaning, company, individual, cleaningOnce, cleaningMnayTimes);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Demande enregistrer avec succes !"));
 
         } catch (Exception e) {

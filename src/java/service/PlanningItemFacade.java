@@ -20,41 +20,44 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class PlanningItemFacade extends AbstractFacade<PlanningItem> {
-
+    
     @PersistenceContext(unitName = "bricolagePU")
     private EntityManager em;
     @EJB
     private PlanningFacade planningFacade;
-
+    
     @Override
     protected EntityManager getEntityManager() {
         return em;
     }
-
+    
     public PlanningItemFacade() {
         super(PlanningItem.class);
     }
-
+    
     public void saveWithPlanning(Planning planning, DemandeService demandeService, boolean cleaningOnce, boolean cleaningMnayTimes) {
-
+        
         if (cleaningOnce) {
-
+            
             planning.setDateDebut(null);
             planning.setDateFin(null);
         }
-
+        
+        for (PlanningItem planningItem : demandeService.getPlanning().getPlanningItems()) {
+                planningItem.setId(null);
+            }
+        
         planning.setId(generateId("Planning", "id"));
         planningFacade.create(planning);
         demandeService.setPlanning(planning);
-
+        
         if (cleaningMnayTimes) {
-
+            
             planning.setDateOnce(null);
             planning.setTiming(null);
-
             
             planningFacade.edit(planning);
-
+            
             List<PlanningItem> items = planning.getPlanningItems();
             for (PlanningItem planningItem : items) {
                 planningItem.setPlanning(planning);
@@ -65,9 +68,9 @@ public class PlanningItemFacade extends AbstractFacade<PlanningItem> {
                 }
                 create(planningItem);
             }
-
+            
         }
-
+        
     }
-
+    
 }

@@ -31,6 +31,11 @@ public class ServiceFacade extends AbstractFacade<Service> {
         super(Service.class);
     }
 
+    public Service findServiceByName(String nomService){
+        
+        String requette = "select s from Service s where s.nom = '"+nomService+"'";
+        return (Service) em.createQuery(requette).getResultList().get(0);
+    }
     
     
 }
