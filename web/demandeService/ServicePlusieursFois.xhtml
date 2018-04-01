@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ServicePlusieursFoisDlg" widgetVar="ServicePlusieursFoisDialog" modal="true" resizable="false" appendTo="@(body)" width="800" height="600" header="Selectionner les dates">
+
+
+
+            <h:form id="ServicePlusieursFoisForm" style="margin-top: 20px;margin-bottom: 20px">
+
+                <p:panelGrid id="grid" styleClass="ui-noborder" style="margin: 0 auto">
+
+                    <p:row>
+                        <p:column>
+
+                            <p:outputLabel for="dateDebut" value="Date Debut :" style="width: 120px" />
+                        </p:column>
+
+
+                        <p:column>
+                            <p:calendar id="dateDebut" value="#{demandeServiceController.demandeService.planning.dateDebut}" inputStyle="width: 170px;height: 40px" pattern="dd/MM/yyyy" />
+                        </p:column>
+                        <p:column>
+                            <p:outputLabel for="dateFin" value="Date Fin :" style="width: 120px"/>
+                        </p:column>
+                        <p:column>
+                            <p:calendar id="dateFin" value="#{demandeServiceController.demandeService.planning.dateFin}" inputStyle="width: 170px;height: 40px" pattern="dd/MM/yyyy" />
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+
+                        <p:column>
+                            <p:outputLabel for="timing" value="Timing :"  style="width: 120px" />
+
+                        </p:column>
+
+                        <p:column>
+                            <p:selectOneMenu class="form-control" id="timing" value="#{demandeServiceController.planningItem.timing}" style="width: 170px;height: 40px">
+                                <f:selectItem itemValue="#{null}" itemLabel="--SELECT TIMING--"/>
+                                <f:selectItems value="#{demandeServiceController.loadTimings()}" 
+                                               var="timing"
+                                               itemValue="#{timing}" itemLabel="#{timing.name}"
+                                               />
+                            </p:selectOneMenu>
+                        </p:column>
+
+                        <p:column>
+                            <p:outputLabel for="repetition" value="Repitition:" style="width: 120px" />
+                        </p:column>
+
+                        <p:column>
+                            <p:selectOneMenu class="form-control" id="repetition" value="#{demandeServiceController.planningItem.repetition}" style="width: 170px;height: 40px">
+                                <f:selectItem itemValue="#{null}" itemLabel="--REPETITION MODE--"/>
+                                <f:selectItem itemValue="#{1}" itemLabel="Par semaine"/>
+                                <f:selectItem itemValue="#{2}" itemLabel="Par mois"/>
+                                <p:ajax process="grid"  update="grid" />
+                            </p:selectOneMenu>
+                        </p:column>
+
+                    </p:row>
+
+                    <p:row>
+
+                        <p:column  rendered="#{demandeServiceController.planningItem.repetition == 1}" style="width: 120px">
+                            <p:outputLabel  id="jourLabel" for="jour" value="Quel jour :"/>
+                        </p:column>
+
+                        <p:column  rendered="#{demandeServiceController.planningItem.repetition == 1}" style="width: 120px">
+                            <p:selectOneMenu class="form-control" id="jour" value="#{demandeServiceController.planningItem.day}" style="width: 170px;height: 40px" >
+                                <f:selectItem itemValue="#{null}" itemLabel="--SELECT JOUR--"/>
+                                <f:selectItems value="#{demandeServiceController.loadDays()}" 
+                                               var="day"
+                                               itemValue="#{day}" itemLabel="#{day.nom}"
+                                               />
+                            </p:selectOneMenu>
+                        </p:column>
+
+                        <p:column rendered="#{demandeServiceController.planningItem.repetition == 2}">
+                            <p:outputLabel id="numeroJourLabel" for="numeroJour" value="Quel jour du mois :"  style="width: 120px"/>
+                        </p:column>
+
+                        <p:column rendered="#{demandeServiceController.planningItem.repetition == 2}">
+                            <p:selectOneMenu class="form-control" id="numeroJour" value="#{demandeServiceController.planningItem.numeroJour}" style="width: 170px;height: 40px">
+                                <f:selectItem itemValue="#{null}" itemLabel="--NUMERO JOUR--"/>
+                                <f:selectItems value="#{demandeServiceController.loadNumeroJour()}" 
+                                               var="numeroJour"
+                                               itemValue="#{numeroJour}"
+                                               />
+                            </p:selectOneMenu>
+                        </p:column>
+
+                    </p:row>
+
+                    <p:row>
+                        <p:column colspan="4" style="text-align: center;margin: 0 auto">
+                            <p:commandButton value="Ajouter" actionListener="#{demandeServiceController.addPlanningItem()}" style="width: 50%;height: 40px;text-align: center" update=":planningListFrom,:growl" />
+                        </p:column>
+
+                    </p:row>    
+
+                </p:panelGrid>
+
+
+
+
+            </h:form>
+
+
+
+            <h:form id="planningListFrom" style="margin-top: 20px">
+
+                <p:panel header="#{bundle.ListPlanningItemTitle}">
+                    <p:dataTable id="datalist" value="#{demandeServiceController.demandeService.planning.planningItems}" var="item"
+                                 
+                                 paginator="true"
+                                 rows="3"
+                                 >
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Jour"/>
+                            </f:facet>
+                            <h:outputText value="#{item.repetition==1? item.day.nom:'-------'}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Numero Jour"/>
+                            </f:facet>
+                            <h:outputText value="#{item.repetition==2? item.numeroJour:'-------'}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Timing"/>
+                            </f:facet>
+                            <h:outputText value="#{item.timing.name}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Action"/>
+                            </f:facet>
+                            <p:commandButton value="Delete" actionListener="#{demandeServiceController.deletePlanningItem(item)}" style="width: 50%;text-align: center" update="planningListFrom,:growl" />
+
+                        </p:column>
+                        <f:facet name="footer">
+                            <p:commandButton value="Comfirmer"  style="width: 25%;height: 30px;text-align: center" oncomplete="PF('ServicePlusieursFoisDialog').hide()" />
+
+                        </f:facet>
+
+
+                    </p:dataTable>
+                </p:panel>
+
+            </h:form>
+
+
+        </p:dialog>
+
+    </ui:composition>
+</html>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <div class="row">
+            <h5 class="info-text"> Select a company for your service </h5>
+
+            <div class="col-sm-12">
+                <p:panelGrid id="companyGrid" styleClass="ui-noborder" style="text-align: center;margin: 0 auto">
+                    <p:row>
+                        <p:column style="width: 100px">
+                            <p:outputLabel value="Choice :" for="choice" style="padding-top: 10px" />
+                        </p:column>
+
+                        <p:column style="width: 260px">
+                            <p:selectOneMenu class="form-control" id="choice" widgetVar="choice" value="#{demandeServiceController.demandeService.workerType}" style="width: 250px;height: 40px" >
+
+
+                                <f:selectItem itemValue="#{null}" itemLabel="-- SELECT A CHOICE --"/>
+                                <f:selectItem itemValue="#{demandeServiceController.workerType}" itemLabel="Choose a company / individual for me"/>
+                                <f:selectItems value="#{demandeServiceController.loadWorkerType()}" 
+                                               var="workerType"
+                                               itemValue="#{workerType}"
+                                               />
+                                <p:ajax listener="#{demandeServiceController.checkChoice()}" update=":SocieteDlg, :IndividualDlg"/>
+
+                            </p:selectOneMenu>
+                        </p:column>
+
+                    </p:row>
+
+                </p:panelGrid>
+            </div>
+</div>
+
+    </ui:composition>
+</html>
