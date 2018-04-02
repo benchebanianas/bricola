@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="FormateurJobCreateDlg" widgetVar="FormateurJobCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateFormateurJobTitle}">
+            <h:form id="FormateurJobCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{formateurJobController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateFormateurJobLabel_worker}" for="worker" />
+                        <p:selectOneMenu id="worker" value="#{formateurJobController.selected.worker}" >
+                            <f:selectItems value="#{workerController.itemsAvailableSelectOne}"
+                                           var="workerItem"
+                                           itemValue="#{workerItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateFormateurJobLabel_fps}" for="fps" />
+                        <p:selectOneMenu id="fps" value="#{formateurJobController.selected.fps}" >
+                            <f:selectItems value="#{fProSubtypeController.itemsAvailableSelectOne}"
+                                           var="fpsItem"
+                                           itemValue="#{fpsItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateFormateurJobLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{formateurJobController.selected.id}" title="#{bundle.CreateFormateurJobTitle_id}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{formateurJobController.create}" value="#{bundle.Save}" update="display,:FormateurJobListForm:datalist,:growl" oncomplete="handleSubmit(args,'FormateurJobCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="FormateurJobCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

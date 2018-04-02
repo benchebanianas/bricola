@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="FiliereCreateDlg" widgetVar="FiliereCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateFiliereTitle}">
+            <h:form id="FiliereCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{filiereController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateFiliereLabel_nom}" for="nom" />
+                        <p:inputText id="nom" value="#{filiereController.selected.nom}" title="#{bundle.CreateFiliereTitle_nom}" />
+                        <p:outputLabel value="#{bundle.CreateFiliereLabel_niveauScolaire}" for="niveauScolaire" />
+                        <p:selectOneMenu id="niveauScolaire" value="#{filiereController.selected.niveauScolaire}" >
+                            <f:selectItems value="#{niveauScolaireController.itemsAvailableSelectOne}"
+                                           var="niveauScolaireItem"
+                                           itemValue="#{niveauScolaireItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateFiliereLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{filiereController.selected.id}" title="#{bundle.CreateFiliereTitle_id}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{filiereController.create}" value="#{bundle.Save}" update="display,:FiliereListForm:datalist,:growl" oncomplete="handleSubmit(args,'FiliereCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="FiliereCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

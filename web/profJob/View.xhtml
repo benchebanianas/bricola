@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ProfJobViewDlg" widgetVar="ProfJobViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewProfJobTitle}">
+            <h:form id="ProfJobViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{profJobController.selected != null}">
+                        <h:outputText value="#{bundle.ViewProfJobLabel_matiere}"/>
+                        <h:outputText value="#{profJobController.selected.matiere}" title="#{bundle.ViewProfJobTitle_matiere}"/>
+                        <h:outputText value="#{bundle.ViewProfJobLabel_worker}"/>
+                        <h:outputText value="#{profJobController.selected.worker}" title="#{bundle.ViewProfJobTitle_worker}"/>
+                        <h:outputText value="#{bundle.ViewProfJobLabel_id}"/>
+                        <h:outputText value="#{profJobController.selected.id}" title="#{bundle.ViewProfJobTitle_id}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="ProfJobViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

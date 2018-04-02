@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="MatiereCreateDlg" widgetVar="MatiereCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateMatiereTitle}">
+            <h:form id="MatiereCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{matiereController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateMatiereLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{matiereController.selected.id}" title="#{bundle.CreateMatiereTitle_id}" />
+                        <p:outputLabel value="#{bundle.CreateMatiereLabel_nom}" for="nom" />
+                        <p:inputText id="nom" value="#{matiereController.selected.nom}" title="#{bundle.CreateMatiereTitle_nom}" />
+                        <p:outputLabel value="#{bundle.CreateMatiereLabel_filiere}" for="filiere" />
+                        <p:selectOneMenu id="filiere" value="#{matiereController.selected.filiere}" >
+                            <f:selectItems value="#{filiereController.itemsAvailableSelectOne}"
+                                           var="filiereItem"
+                                           itemValue="#{filiereItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{matiereController.create}" value="#{bundle.Save}" update="display,:MatiereListForm:datalist,:growl" oncomplete="handleSubmit(args,'MatiereCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="MatiereCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>
