@@ -24,7 +24,7 @@ public class DemandeFormationPersonnel implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private int nbreheure;
+    private int nbrpersonne;
     private Boolean adomicile;
     @OneToOne
     private DemandeService demandeService;
@@ -38,20 +38,20 @@ public class DemandeFormationPersonnel implements Serializable {
         this.id = id;
     }
 
-    public DemandeFormationPersonnel(Long id, int nbreheure, int nbrepersonne, Boolean adomicile, DemandeService demandeService, Matiere matiere) {
+    public DemandeFormationPersonnel(Long id, int nbrpersonne, int nbrepersonne, Boolean adomicile, DemandeService demandeService, Matiere matiere) {
         this.id = id;
-        this.nbreheure = nbreheure;
+        this.nbrpersonne = nbrpersonne;
         this.adomicile = adomicile;
         this.demandeService = demandeService;
         this.matiere = matiere;
     }
 
-    public int getNbreheure() {
-        return nbreheure;
+    public int getNbrpersonne() {
+        return nbrpersonne;
     }
 
-    public void setNbreheure(int nbreheure) {
-        this.nbreheure = nbreheure;
+    public void setNbrpersonne(int nbrpersonne) {
+        this.nbrpersonne = nbrpersonne;
     }
 
     
@@ -112,7 +112,7 @@ public class DemandeFormationPersonnel implements Serializable {
 
     @Override
     public String toString() {
-        return "DemandeFormationPersonnel{" + "id=" + id + ", nbreheure=" + nbreheure + ", adomicile=" + adomicile + ", demandeService=" + demandeService + ", matiere=" + matiere + '}';
+        return "DemandeFormationPersonnel{" + "id=" + id + ", nbrpersonne=" + nbrpersonne + ", adomicile=" + adomicile + ", demandeService=" + demandeService + ", matiere=" + matiere + '}';
     }
 
    
