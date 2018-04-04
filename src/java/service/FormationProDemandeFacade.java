@@ -5,19 +5,17 @@
  */
 package service;
 
-import bean.Service;
-import bean.Ville;
-import java.util.List;
+import bean.FormationProDemande;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 /**
  *
- * @author Ashen One
+ * @author Boss
  */
 @Stateless
-public class ServiceFacade extends AbstractFacade<Service> {
+public class FormationProDemandeFacade extends AbstractFacade<FormationProDemande> {
 
     @PersistenceContext(unitName = "bricolagePU")
     private EntityManager em;
@@ -27,15 +25,8 @@ public class ServiceFacade extends AbstractFacade<Service> {
         return em;
     }
 
-    public ServiceFacade() {
-        super(Service.class);
+    public FormationProDemandeFacade() {
+        super(FormationProDemande.class);
     }
-
-    public Service findServiceByName(String nomService){
-        
-        String requette = "select s from Service s where s.nom = '"+nomService+"'";
-        return (Service) em.createQuery(requette).getResultList().get(0);
-    }
-    
     
 }

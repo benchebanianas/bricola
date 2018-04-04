@@ -6,8 +6,8 @@
 package service;
 
 import bean.DemandeCleaning;
+import bean.DemandeService;
 import bean.Worker;
-import java.math.BigDecimal;
 import java.util.Date;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -45,7 +45,7 @@ public class DemandeCleaningFacade extends AbstractFacade<DemandeCleaning> {
         super(DemandeCleaning.class);
     }
 
-    public void saveDemandeCleaning(DemandeCleaning demandeCleaning, Worker company, Worker individual, Date dateOnce, boolean cleaningOnce, boolean cleaningMnayTimes) {
+    public void saveDemandeCleaning(DemandeCleaning demandeCleaning, Worker company, Worker individual, boolean cleaningOnce, boolean cleaningMnayTimes) {
 
         demandeCleaning.getDemandeService().setService(serviceFacade.find(new Long(1)));
         demandeCleaning.getDemandeService().setServicePricing(servicePricingFacade.findByService(demandeCleaning.getDemandeService().getService()));
@@ -81,4 +81,16 @@ public class DemandeCleaningFacade extends AbstractFacade<DemandeCleaning> {
 
     }
 
+    public void saveDemandeCleaning(DemandeCleaning demandeCleaning, DemandeService demandeService) {
+    
+        demandeCleaning.setDemandeService(demandeService);
+        demandeCleaning.getDemandeService().setPrixTtc(demandeCleaning.getDemandeService().getServicePricing().getPrix().multiply(demandeCleaning.getNbrHeures()).multiply(demandeCleaning.getNbrCleaner()));
+        demandeCleaning.getDemandeService().setPrixHt(demandeCleaning.getDemandeService().getPrixTtc());
+        demandeServiceFacade.edit(demandeService);
+        demandeCleaning.setId(generateId("DemandeCleaning", "id"));
+        create(demandeCleaning);
+    
+    }
+
+    
 }
