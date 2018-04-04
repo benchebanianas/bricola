@@ -1,0 +1,87 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <f:view contentType="text/html" locale="fr">
+        <h:head>
+            <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+            <meta name="viewport" content="width=device-width" />
+            <link rel="shortcut icon" href="resources/images/symbol.png" type="image/png"/>
+            <h:outputStylesheet library="css" name="jsfcrud.css"/>
+            <h:outputScript library="js" name="jsfcrud.js"/>
+            <h:outputStylesheet name="bootstrap-4.0.0/css/bootstrap.min.css"/>
+            <h:outputStylesheet name="css/workerProfilecss.css"/>
+
+            <h:outputScript library="js" name="popper.min.js"/>
+            <script src="../resources/bootstrap-4.0.0/js/bootstrap.min.js"></script>
+            <h:outputScript library="js" name="workerProfileJs.js"/>
+           
+        </h:head>
+
+        <h:body>
+            <p:growl id="growl" life="5000" showDetail="true"/>
+
+
+            <h:form id="menuForm" style="margin: 0px">
+
+                <!--                <div class="aboveNav" style="padding: 0px; margin: 0px">
+                
+                
+                
+                                    <div class="row" style="padding: 0px; margin: 0px" >
+                                        <div class="col-md-3">
+                                            <i class="fa fa-map-marker"><h6>11 Résidence BAB Al Manar Marrakech</h6></i>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <i class="fa fa-clock-o"><h6>Mon–Sat: 9:00am–18:00pm</h6> </i>
+                                        </div>
+                
+                                        <div class="col-md-2">
+                                            <i class="fa fa-envelope"><h6>clients@bricola.ma</h6> </i>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <i class="fa fa-phone"><h6>+212 5 24059716 </h6> </i>
+                                        </div>
+                                        <div class="col-md-2">
+                
+                                            <div class="aboveNavSocial">
+                                                <a href="#" class="twitter"><i class="fa fa-twitter"></i></a>
+                                                <a href="#" class="facebook"><i class="fa fa-facebook"></i></a>
+                                                <a href="#" class="google"><i class="fa fa-google-plus"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>-->
+                <nav class="navbar navbar-expand navbar-dark bg-info">
+                    <a class="sidebar-toggle text-light mr-3"><i class="fa fa-bars"></i></a>
+                    <a class="navbar-brand" href="#"><i class="fa fa-group"></i></a>
+
+                    <div class="navbar-collapse collapse">
+                        <ul class="navbar-nav ml-auto">
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">
+                                    <span class="fa fa-envelope fa-lg" style="color: white"></span>
+                                    <p:outputLabel value="56" class="badge badge-notify"></p:outputLabel>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">
+                                    <span class="fa fa-calendar fa-lg" style="color: white"></span>
+                                    <p:outputLabel value="16" class="badge badge-notify"></p:outputLabel>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </h:form>
+
+            <p:layoutUnit position="center" id="pageLayout" >
+                <ui:insert name="body"/>
+            </p:layoutUnit>
+
+        </h:body>
+    </f:view>
+</html>

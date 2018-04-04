@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/templateAdmin.xhtml">
+
+
+
+        <ui:define name="title">
+            <h:outputText value="Societes"></h:outputText>
+        </ui:define>
+
+        <ui:define name="body">
+
+            <h:outputStylesheet name="bootstrap-4.0.0/css/bootstrap.min.css"/>
+            <h:outputStylesheet name="css/workerProfilecss.css"/>
+
+
+
+
+            <!--   Big container   -->
+            <div class="d-flex image-container set-full-height" style="background-image: url('../resources/images/Barcelona.jpg')">
+                <nav class="sidebar bg-dark">
+                    <p style="text-align: center;">
+                        <a href="#">
+                            <img src="../resources/images/workerLogo.jpg" style="border-radius: 70%;" width="200" class="img-rounded" />
+                        </a>
+                    </p>
+                    <div align="center">
+                        <h3 style="color: white;font-family: 'Arial', sans-serif;"> #{managerController.selected.id} </h3>
+                    </div>
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#">
+                                <span data-feather="home"></span>
+                                Profile <span class="sr-only">(current)</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <span data-feather="file"></span>
+                                Demandes
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <span data-feather="shopping-cart"></span>
+                                Workers
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <span data-feather="users"></span>
+                                Operations
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <span data-feather="bar-chart-2"></span>
+                                Statistiques
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+
+                <div class="content p-4">
+                    <h:form>
+                        <hr></hr>
+                        <h1 align="center">Tous Sociétes : </h1><br></br>
+                        <hr></hr>
+                        <div class="container">
+                            <div class="row">
+
+                                <br></br>
+                                <p:repeat value="#{workerController.items}" var="worker" >
+                                    <div class="col-md-2">
+                                        <p:commandButton actionListener="#{workerController.setSelected(worker)}" update=":dform" onclick="PF('Dialog').show()" value="#{worker.nom}" style="width:120px;height: 40px;text-align: center;padding: 8px 0;"/>
+                                    </div>
+                                </p:repeat>
+
+                            </div>
+                        </div>
+                        <br></br><hr></hr>
+                    </h:form>
+                </div>
+            </div>
+
+            <ui:include src="WorkerInfo.xhtml"/>
+
+        </ui:define>
+    </ui:composition>
+
+</html>

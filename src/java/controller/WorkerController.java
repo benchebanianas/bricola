@@ -32,6 +32,24 @@ public class WorkerController implements Serializable {
     private List<Worker> items = null;
     private Worker selected;
 
+    
+    
+    public void modifier() {
+        ejbFacade.edit(getSelected());
+        items.set(items.indexOf(getSelected()), getSelected());
+        
+    }
+
+    public void supprimer() {
+        ejbFacade.remove(getSelected());
+        items.remove(getSelected());
+        selected = null;
+    }
+    
+    public String next() {
+        return "/workerJob/WorkerJobCreate";
+    }
+    
     public WorkerController() {
     }
 

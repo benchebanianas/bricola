@@ -5,7 +5,11 @@
  */
 package service;
 
+import bean.DemandeService;
 import bean.DemandeServiceConfirmationDetail;
+import bean.Manager;
+import bean.TypeAction;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -20,6 +24,22 @@ public class DemandeServiceConfirmationDetailFacade extends AbstractFacade<Deman
     @PersistenceContext(unitName = "bricolagePU")
     private EntityManager em;
 
+    
+    public void save(Manager manager,TypeAction action,DemandeService demandeService){
+        DemandeServiceConfirmationDetail dscd =  new DemandeServiceConfirmationDetail(manager, action, demandeService);
+        create(dscd);
+    }
+    
+    
+    public Manager findByManagerSuppression(DemandeService demandeService){
+        return (Manager) em.createQuery("SELECT d.manager FROM DemandeServiceConfirmationDetail d "
+                + "WHERE d.demandeService.id='"+ demandeService.getId() +"' and d.typeAction.name='suppression'").getSingleResult();
+    }
+    
+    public List<DemandeServiceConfirmationDetail> findByManager(Manager manager){
+        return em.createQuery("SELECT d FROM DemandeServiceConfirmationDetail d WHERE d.manager.id='"+ manager.getId() +"'").getResultList();
+    }
+    
     @Override
     protected EntityManager getEntityManager() {
         return em;
