@@ -35,22 +35,42 @@ public class WorkerController implements Serializable {
     public WorkerController() {
     }
 
-    public double showRating(){
+    public void modifier() {
+        ejbFacade.edit(getSelected());
+        items.set(items.indexOf(getSelected()), getSelected());
+
+    }
+
+    public void supprimer() {
+        ejbFacade.remove(getSelected());
+        items.remove(getSelected());
+        selected = null;
+    }
+
+    public String next() {
+        return "/workerJob/WorkerJobCreate";
+    }
+
+    public double showRating() {
         return ejbFacade.showRating(selected);
     }
-    public int numberReviews(){
+
+    public int numberReviews() {
         return ejbFacade.numberReviews(selected);
     }
-    public int numberServices(){
+
+    public int numberServices() {
         return ejbFacade.numberServices(selected);
     }
-    public int numberDemandes(){
+
+    public int numberDemandes() {
         return ejbFacade.numberDemandes(selected);
     }
-    public List<Service> serviceByWorker(){
+
+    public List<Service> serviceByWorker() {
         return ejbFacade.findServiceByWorker(selected);
     }
-    
+
     public String login() {
         int connected = ejbFacade.login(selected);
         if (connected == -1) {

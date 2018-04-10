@@ -37,6 +37,13 @@ public class DemandeServiceConfirmationDetail implements Serializable {
     public DemandeServiceConfirmationDetail() {
     }
 
+    public DemandeServiceConfirmationDetail(Manager manager, TypeAction typeAction, DemandeService demandeService) {
+        this.manager = manager;
+        this.typeAction = typeAction;
+        this.demandeService = demandeService;
+        this.dateAction = new Date();
+    }
+
     public Manager getManager() {
         return manager;
     }

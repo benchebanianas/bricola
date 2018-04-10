@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <h5 class="info-text">Your contact details and location</h5>
+        <div class="row">
+            <div class="col-sm-12">
+                <p:panelGrid id="detailGrid" styleClass="ui-noborder" style="margin: 0 auto;width: 100%">
+
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel value="Your email:" for="email" style="text-align: left;padding-top: 5px;width: 100%" />
+                        </p:column>
+
+                        <p:column>
+
+
+                            <p:inputText id="email" value="#{demandeServiceController.demandeService.client.email}"  style="width:200px;height: 40px;" />
+
+                            <p:commandButton icon="fa fa-search" process="detailGrid"  styleClass="white-button" style="width:50px;height: 40px;" actionListener="#{demandeServiceController.checkEmail()}" update=":ConnexionDlg,:growl,detailGrid"/>  
+
+                        </p:column>
+
+
+
+                        <p:column>
+                            <p:outputLabel value="Your number:" for="number" style="text-align: left;padding-top: 10px;width: 100%" />
+                        </p:column>
+
+                        <p:column>
+                            <p:inputText id="number" value="#{demandeServiceController.demandeService.client.phone}" style="width:250px;height: 40px;" />
+                        </p:column>
+
+                    </p:row>
+
+                    <p:row>
+
+                        <p:column>
+                            <p:outputLabel value="Your First name:" for="firstName" style="text-align: left;padding-top: 10px;width: 100%" />
+                        </p:column>
+
+                        <p:column>
+                            <p:inputText id="firstName" value="#{demandeServiceController.demandeService.client.prenom}" style="width:250px;height: 40px;" />
+                        </p:column>
+
+                        <p:column>
+                            <p:outputLabel value="Your Last Name:" for="lastName" style="text-align: left;padding-top: 10px;width: 100%" />
+                        </p:column>
+
+                        <p:column>
+                            <p:inputText id="lastName" value="#{demandeServiceController.demandeService.client.nom}" style="width:250px;height: 40px;" />
+                        </p:column>
+
+                    </p:row>
+
+                    <p:row>
+
+                        <p:column>
+                            <p:outputLabel value="City:" for="city" style="text-align: left;padding-top: 10px;width: 100%" />
+                        </p:column>
+
+                        <p:column>
+                            <p:selectOneMenu class="form-control" id="city" value="#{demandeServiceController.ville}" style="width:250px;height: 40px;">
+                                <p:ajax listener="#{demandeServiceController.loadSectors()}" process="detailGrid" update="detailGrid " />
+                                <f:selectItem itemValue="#{null}" itemLabel="--SELECT CITY--"/>
+                                <f:selectItems value="#{demandeServiceController.loadVilles()}" 
+                                               var="ville"
+                                               itemValue="#{ville}"
+                                               />
+                            </p:selectOneMenu>
+                        </p:column>
+
+                        <p:column>
+                            <p:outputLabel value="Area:" for="area" style="text-align: left;padding-top: 10px;width: 100%" />
+                        </p:column>
+
+                        <p:column>
+                            <p:selectOneMenu class="form-control" id="area" value="#{demandeServiceController.demandeService.client.secteur}" style="width:250px;height: 40px;">
+                                <f:selectItem  itemValue="#{null}" itemLabel="--SELECT AREA--"/>
+                                <f:selectItems value="#{demandeServiceController.secteurs}" 
+                                               var="secteur"
+                                               itemValue="#{secteur}"
+                                               />
+                            </p:selectOneMenu>
+                        </p:column>
+
+                    </p:row>
+
+                    <p:row>
+
+                        <p:column>
+                            <p:outputLabel value="Adresse" for="adresse" style="text-align: left;padding-top: 10px;width: 100%" />
+                        </p:column>
+
+                        <p:column>
+                            <p:inputText id="adresse" value="#{demandeServiceController.demandeService.client.adresseComplement}" style="width:250px;height: 40px;" />
+                        </p:column>
+
+                    </p:row>
+
+                </p:panelGrid>
+
+            </div>
+
+
+
+        </div>
+
+    </ui:composition>
+</html>

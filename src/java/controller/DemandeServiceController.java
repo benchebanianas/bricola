@@ -4,19 +4,24 @@ import bean.Client;
 import bean.Day;
 import bean.DemandeCleaning;
 import bean.DemandeService;
+import bean.Manager;
+import bean.MenuFormulaire;
 import bean.PlanningItem;
 import bean.Secteur;
 import bean.Service;
 import bean.Timing;
+import bean.TypeAction;
 import bean.Ville;
 import bean.Worker;
 import bean.WorkerType;
 import controller.util.JsfUtil;
 import controller.util.JsfUtil.PersistAction;
+import controller.util.SessionUtil;
 import service.DemandeServiceFacade;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -31,6 +36,8 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import org.primefaces.context.RequestContext;
+import service.DemandeServiceConfirmationDetailFacade;
+import service.TypeActionFacade;
 
 @Named("demandeServiceController")
 @SessionScoped
@@ -56,6 +63,12 @@ public class DemandeServiceController implements Serializable {
     private service.VilleFacade villeFacade;
     @EJB
     private service.SecteurFacade secteurFacade;
+    @EJB
+    private service.MenuFormulaireFacade menuFormulaireFacade;
+    @EJB
+    private TypeActionFacade typeActionFacade;
+    @EJB
+    private DemandeServiceConfirmationDetailFacade detailFacade;
 
     private List<DemandeService> items = null;
     private List<Worker> companies;
@@ -64,6 +77,7 @@ public class DemandeServiceController implements Serializable {
 
     private DemandeService demandeService;
     private DemandeCleaning demandeCleaning;
+    private MenuFormulaire menuFormulaire;
 
     private WorkerType workerType;
     private Service currentService;
@@ -119,7 +133,12 @@ public class DemandeServiceController implements Serializable {
 
     public void initService(String nomService) {
         demandeService = new DemandeService();
+        menuFormulaire = new MenuFormulaire();
+
         currentService = serviceFacade.findServiceByName(nomService);
+        menuFormulaire = menuFormulaireFacade.findMenuByService(nomService);
+        System.out.println(currentService.getNom());
+        System.out.println(menuFormulaire.getTypeDemande());
     }
 
     public List<Timing> loadTimings() {
@@ -367,6 +386,14 @@ public class DemandeServiceController implements Serializable {
         this.oneTime = oneTime;
     }
 
+    public MenuFormulaire getMenuFormulaire() {
+        return menuFormulaire;
+    }
+
+    public void setMenuFormulaire(MenuFormulaire menuFormulaire) {
+        this.menuFormulaire = menuFormulaire;
+    }
+
     protected void setEmbeddableKeys() {
     }
 
@@ -409,6 +436,64 @@ public class DemandeServiceController implements Serializable {
         return items;
     }
 
+    ///////////// manager related/////
+    public String voirPlus(DemandeService demande) {
+        Object d = ejbFacade.findDemande(demande);
+        SessionUtil.setAttribute("demande", d);
+        if (demande.getTypeDemande().getId().equals("DemandeBabySitting")) {
+            return "/demandeBabySitting/babySittingView";
+        } else if (demande.getTypeDemande().getId().equals("DemandeCleaning")) {
+            return "/demandeCleaning/cleaningView";
+        } else if (demande.getTypeDemande().getId().equals("DemandeEvent")) {
+            return "/demandeEvent/eventView";
+        } else if (demande.getTypeDemande().getId().equals("DemandeGardening")) {
+            return "/demandeGardening/gardeningView";
+        } else if (demande.getTypeDemande().getId().equals("DemandeHandyMan")) {
+            return "/demandeHandyMan/handyManView";
+        } else if (demande.getTypeDemande().getId().equals("DemandeMoving")) {
+            return "/demandeMoving/movingView";
+        } else if (demande.getTypeDemande().getId().equals("DemandePainting")) {
+            return "/demandePainting/paintingView";
+        } else if (demande.getTypeDemande().getId().equals("DemandePestControl")) {
+            return "/demandePestControl/pestControlView";
+        } else if (demande.getTypeDemande().getId().equals("DemandePhotographie")) {
+            return "/demandePhotographie/photographieView";
+        } else if (demande.getTypeDemande().getId().equals("DemandeVoiture")) {
+            return "/demandeVoiture/voitureView";
+        }
+        return "#";
+
+    }
+
+    public String Action(DemandeService demandeService, Long idType) {
+        Manager manager = (Manager) SessionUtil.getAttribute("connectedManager");
+        if (idType == 1) {
+            demandeService.setDateConfirmation(new Date());
+            demandeService.setDateSuppression(null);
+        }
+        if (idType == 2) {
+            demandeService.setDateSuppression(new Date());
+            demandeService.setDateConfirmation(null);
+        }
+        demandeService.setManagerConfirmation(manager);
+        ejbFacade.edit(demandeService);
+        TypeAction action = typeActionFacade.find(idType);
+        detailFacade.save(manager, action, demandeService);
+        return "#";
+    }
+
+    public int nvDmd() {
+        List<DemandeService> dmnds = ejbFacade.findAll();
+        int nbr = 0;
+        for (DemandeService dmnd : dmnds) {
+            if (dmnd.getDateConfirmation() == null && dmnd.getDateSuppression() == null) {
+                nbr++;
+            }
+        }
+        return nbr;
+    }
+
+    //////////////
     private void persist(PersistAction persistAction, String successMessage) {
         if (demandeService != null) {
             setEmbeddableKeys();

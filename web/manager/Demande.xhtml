@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/templateAdmin.xhtml">
+
+
+
+        <ui:define name="title">
+            <h:outputText value="Societes"></h:outputText>
+        </ui:define>
+
+        <ui:define name="body">
+
+            <h:outputStylesheet name="bootstrap-4.0.0/css/bootstrap.min.css"/>
+            <h:outputStylesheet name="css/workerProfilecss.css"/>
+
+
+
+
+            <!--   Big container   -->
+            <div class="d-flex image-container set-full-height" style="background-image: url('../resources/images/Barcelona.jpg')">
+                <nav class="sidebar bg-dark">
+                    <p style="text-align: center;">
+                        <a href="#">
+                            <img src="../resources/images/workerLogo.jpg" style="border-radius: 70%;" width="200" class="img-rounded" />
+                        </a>
+                    </p>
+                    <div align="center">
+                        <h3 style="color: white;font-family: 'Arial', sans-serif;"> #{managerController.selected.id} </h3>
+                    </div>
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#">
+                                <span data-feather="home"></span>
+                                Profile <span class="sr-only">(current)</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <span data-feather="file"></span>
+                                Demandes
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <span data-feather="shopping-cart"></span>
+                                Workers
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <span data-feather="users"></span>
+                               Operations
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <span data-feather="bar-chart-2"></span>
+                                 Statistiques
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+
+                <div class="content p-4">
+                    <h:form>
+                         <hr></hr>
+                        <h1 align="center"> Demandes : </h1>
+                        <hr></hr><br></br>
+                        <div class="container">
+                            <div class="row">
+                                <h:form>
+                                    <h1><h:outputText value="Vous avez #{demandeServiceController.nvDmd()} nouveaux Demandes : "/></h1>
+                                    <p:dataTable style="text-align: center;" rowStyleClass="high" value="#{demandeServiceController.items}" var="item">
+                                        <p:column>
+                                            <f:facet name="header">
+                                                <h:outputText value="Service"/>
+                                            </f:facet>
+                                            <h:outputText value="#{item.service.nom}"/>
+                                        </p:column>
+                                        <p:column >
+                                            <f:facet name="header">
+                                                <h:outputText value="Societe"/>
+                                            </f:facet>
+                                            <h:outputText value="#{item.worker.nom}"/>
+                                        </p:column>
+                                        <p:column>
+                                            <f:facet name="header">
+                                                <h:outputText value="Secteur"/>
+                                            </f:facet>
+                                            <h:outputText value="#{item.secteur.nom}"/>
+                                        </p:column>
+                                        <p:column>
+                                            <f:facet name="header">
+                                                <h:outputText value="Date de demande"/>
+                                            </f:facet>
+                                            <h:outputText value="#{item.datedemande}">
+                                                <f:convertDateTime pattern="MM-dd-yyyy" />
+                                            </h:outputText>
+                                        </p:column>
+                                        <p:column>
+                                            <f:facet name="header">
+                                                <h:outputText value="Client"/>
+                                            </f:facet>
+                                            <h:outputText value="#{item.client.nom}-#{item.client.email} "/>
+                                        </p:column>
+                                        <p:column>
+                                            <f:facet name="header">
+                                                <h:outputText value="Prix Ttc"/>
+                                            </f:facet>
+                                            <h:outputText value="#{item.prixTtc}"/>
+                                        </p:column>
+
+                                        <p:column>
+                                            <f:facet name="header">
+                                                <h:outputText value="Etat"/>
+                                            </f:facet>
+                                            <img src="#{item.dateSuppression ne null ? '../resources/images/logo-s.png' : item.dateConfirmation ne null ? '../resources/images/logo-v.png' :  null}" />
+                                        </p:column>
+                                        <p:column style="width:140px">
+                                            <f:facet name="header">
+                                                <h:outputText value="Action"/>
+                                            </f:facet>
+                                            <p:panelMenu style="width:100px">
+                                                <p:submenu label="#{item.dateSuppression ne null ? 'Supprimée' : item.dateConfirmation ne null ? 'Validée' : 'nouvelle'}">
+                                                    <p:menuitem value="Valider" actionListener="#{demandeServiceController.Action(item,1)}" icon="ui-icon-disk" />
+                                                    <p:menuitem value="Supprimer" actionListener="#{demandeServiceController.Action(item,2)}" icon="ui-icon-close" />
+                                                </p:submenu>
+                                            </p:panelMenu>
+                                        </p:column>
+                                        <p:column>
+                                            <h:commandLink action="#{demandeServiceController.voirPlus(item)}"> 
+                                                <h:graphicImage value="../resources/images/seeMore.png" alt="voir Plus" />
+                                            </h:commandLink>
+                                        </p:column>
+                                    </p:dataTable>
+                                </h:form>
+                            </div>
+                        </div>
+                        <br></br><hr></hr>
+                    </h:form>
+                </div>
+            </div>
+
+
+        </ui:define>
+    </ui:composition>
+
+</html>

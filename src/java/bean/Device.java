@@ -35,6 +35,7 @@ public class Device implements Serializable {
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date dateConnection;
     private boolean blocked;
+    private String deviceCategorie;
 
     public Device() {
     }
@@ -71,6 +72,14 @@ public class Device implements Serializable {
         this.navigateur = navigateur;
     }
 
+    public String getDeviceCategorie() {
+        return deviceCategorie;
+    }
+
+    public void setDeviceCategorie(String deviceCategorie) {
+        this.deviceCategorie = deviceCategorie;
+    }
+    
     public Manager getManager() {
         return manager;
     }

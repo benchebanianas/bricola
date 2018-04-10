@@ -1,15 +1,19 @@
 package controller;
 
+import bean.DemandeServiceConfirmationDetail;
+import bean.Device;
 import bean.Manager;
 import bean.Secteur;
 import bean.Service;
 import bean.Ville;
 import controller.util.JsfUtil;
 import controller.util.JsfUtil.PersistAction;
+import controller.util.SessionUtil;
 import service.ManagerFacade;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -22,6 +26,8 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import service.DemandeServiceConfirmationDetailFacade;
+import service.DeviceFacade;
 
 @Named("managerController")
 @SessionScoped
@@ -42,6 +48,122 @@ public class ManagerController implements Serializable {
     private Service service;
     private List<Service> services;
     private List<Secteur> secteurs;
+    @EJB
+    private DeviceFacade deviceFacade;
+    @EJB
+    private DemandeServiceConfirmationDetailFacade confirmationDetailFacade;
+    private List<DemandeServiceConfirmationDetail> managerItems;
+    private Date dernierConex;
+    private Date dernierConfirmation;
+    private String action;
+    private DemandeServiceConfirmationDetail demandeServiceConfirmationDetail;
+
+    public void doAction(DemandeServiceConfirmationDetail confirmationDetail) {
+        demandeServiceConfirmationDetail = confirmationDetail;
+    }
+
+    public String login() {
+        System.out.println("bsmllah");
+        int conected = ejbFacade.login(selected);
+        System.out.println(selected);
+        if (conected == 0) {
+            SessionUtil.setAttribute("connectedManager", selected);
+            Device dev = deviceFacade.getManagerDevice(selected);
+            deviceFacade.creerDevice(dev);
+        } else if (conected == 1) {
+            System.out.println("search device");
+            Device device = deviceFacade.verifDevice(selected);
+            System.out.println(device);
+            if (device == null) {
+                return "/manager/question";
+            } else {
+                device.setDateConnection(new Date());
+                deviceFacade.edit(device);
+                selected = ejbFacade.find(selected.getId());
+                System.out.println(selected);
+                SessionUtil.setAttribute("connectedManager", selected);
+            }
+        }
+        return "/manager/Profile?faces-redirect=true";
+    }
+
+    public String verifRepons() {
+        int verifier = 0;
+        verifier += ejbFacade.RepDernConx(selected, dernierConex);
+        verifier += ejbFacade.RepDernAction(selected, action);
+        verifier += ejbFacade.RepDernConfir(selected, dernierConfirmation);
+        if (verifier < 2) {
+            return "/manager/Login";
+        } else {
+            Device dev = deviceFacade.getManagerDevice(selected);
+            deviceFacade.creerDevice(dev);
+            SessionUtil.setAttribute("device", dev);
+            SessionUtil.setAttribute("connectedManager", selected);
+            return "/manager/Profile";
+        }
+    }
+
+    public DeviceFacade getDeviceFacade() {
+        return deviceFacade;
+    }
+
+    public void setDeviceFacade(DeviceFacade deviceFacade) {
+        this.deviceFacade = deviceFacade;
+    }
+
+    public Date getDernierConfirmation() {
+        return dernierConfirmation;
+    }
+
+    public void setDernierConfirmation(Date dernierConfirmation) {
+        this.dernierConfirmation = dernierConfirmation;
+    }
+
+    public DemandeServiceConfirmationDetail getDemandeServiceConfirmationDetail() {
+        if (demandeServiceConfirmationDetail == null) {
+            demandeServiceConfirmationDetail = new DemandeServiceConfirmationDetail();
+        }
+        return demandeServiceConfirmationDetail;
+    }
+
+    public void setDemandeServiceConfirmationDetail(DemandeServiceConfirmationDetail demandeServiceConfirmationDetail) {
+        this.demandeServiceConfirmationDetail = demandeServiceConfirmationDetail;
+    }
+
+    public ManagerFacade getManagerFacade() {
+        return ejbFacade;
+    }
+
+    public void setManagerFacade(ManagerFacade ejbFacade) {
+        this.ejbFacade = ejbFacade;
+    }
+
+    public Date getDernierConex() {
+        return dernierConex;
+    }
+
+    public void setDernierConex(Date dernierConex) {
+        this.dernierConex = dernierConex;
+    }
+
+    public String getAction() {
+        return action;
+    }
+
+    public void setAction(String action) {
+        this.action = action;
+    }
+
+    public List<DemandeServiceConfirmationDetail> getManagerItems() {
+        if (managerItems == null) {
+            return confirmationDetailFacade.findByManager(getSelected());
+        }
+        return managerItems;
+    }
+
+    public void setManagerItems(List<DemandeServiceConfirmationDetail> managerItems) {
+        this.managerItems = managerItems;
+    }
 
     public ManagerController() {
     }
@@ -49,23 +171,22 @@ public class ManagerController implements Serializable {
     public void onCityChange() {
 
     }
-    
-    public String nomVille(){
-        if(ville == null){
+
+    public String nomVille() {
+        if (ville == null) {
             return "Marrakesh";
-        }else{
+        } else {
             return ville.getNom();
         }
     }
-    
-    public String redirectToHandyMan(){
+
+    public String redirectToHandyMan() {
         return "/demandeHandyMan/List.xhtml";
     }
-    
+
 //    public List<Service> loadServices(){
 //        return serviceFacade.findByVille(ville);
 //    }
-
     public String getImagename() {
         String nomVille = "Marrakesh";
         if (ville != null) {
@@ -84,7 +205,7 @@ public class ManagerController implements Serializable {
     }
 
     public Secteur getSecteur() {
-        if(secteur == null){
+        if (secteur == null) {
             secteur = new Secteur();
         }
         return secteur;
@@ -95,7 +216,7 @@ public class ManagerController implements Serializable {
     }
 
     public List<Secteur> getSecteurs() {
-        if(secteurs == null){
+        if (secteurs == null) {
             secteurs = new ArrayList<>();
         }
         return secteurs;
@@ -113,10 +234,8 @@ public class ManagerController implements Serializable {
         this.service = service;
     }
 
-    
-    
     public Ville getVille() {
-        if(ville == null){
+        if (ville == null) {
             ville = new Ville();
         }
         return ville;
@@ -127,6 +246,9 @@ public class ManagerController implements Serializable {
     }
 
     public Manager getSelected() {
+        if (selected == null) {
+            selected = new Manager();
+        }
         return selected;
     }
 
@@ -135,7 +257,7 @@ public class ManagerController implements Serializable {
     }
 
     public List<Service> getServices() {
-        if(services == null){
+        if (services == null) {
             services = new ArrayList<>();
         }
         return services;
@@ -144,8 +266,6 @@ public class ManagerController implements Serializable {
     public void setServices(List<Service> services) {
         this.services = services;
     }
-    
-    
 
     protected void setEmbeddableKeys() {
     }
@@ -246,10 +366,10 @@ public class ManagerController implements Serializable {
     }
 
     public void loadServices() {
-    
+
         services = serviceVilleFacade.findServiceforVille(ville);
-        System.out.println("hahiya list services : "+services);
-    
+        System.out.println("hahiya list services : " + services);
+
     }
 
     @FacesConverter(forClass = Manager.class)

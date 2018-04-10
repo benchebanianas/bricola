@@ -38,6 +38,18 @@ public class DemandeServiceFacade extends AbstractFacade<DemandeService> {
         return em;
     }
 
+    public Object findDemande(DemandeService demandeService) {
+
+        List<Object> demandes = em.createQuery("SELECT demande FROM " + demandeService.getTypeDemande().getId() + " demande WHERE "
+                + " demande.demandeService.id='" + demandeService.getId() + "'").getResultList();
+        if (demandes == null) {
+            return null;
+        } else {
+            return demandes.get(0);
+        }
+
+    }
+
     public int findNumberOfDemandesByWorker(Worker worker) {
         List<DemandeService> demandes = getMultipleResult("SELECT ds FROM DemandeService ds WHERE ds.worker.email='" + worker.getEmail() + "'");
         if (demandes == null) {

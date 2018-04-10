@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+
+
+
+        <ui:define name="title">
+            <h:outputText value="#{demandeServiceController.currentService.nom}"></h:outputText>
+        </ui:define>
+
+        <ui:define name="body">
+
+            <h:outputStylesheet name="bootstrap-3.3.6/css/bootstrap.min.css"/>
+            <h:outputStylesheet name="css/paper-bootstrap-wizard.css"/>
+            <h:outputStylesheet name="css/loginStyle.css"/>
+            <h:outputStylesheet name="css/themify-icons.css"/>
+
+            <h:outputScript name="bootstrap-3.3.6/js/bootstrap.min.js" />
+            <h:outputScript name="js/jquery.bootstrap.wizard.js" />
+            <h:outputScript name="js/paper-bootstrap-wizard.js" />
+            <h:outputScript name="js/jquery.validatePaper.min.js" />
+
+
+            <div class="image-container set-full-height" style="background-image: url('../resources/images/#{demandeServiceController.currentService.nom}.jpg')">
+
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-10 col-sm-offset-1">
+                            <div class="wizard-container" >
+                                <div class="card wizard-card" data-color="blue" id="wizard">
+
+                                    <h:form id="demandeForm">
+
+                                        <div class="wizard-navigation">
+
+                                            <div class="progress-with-circle">
+                                                <div class="progress-bar" role="progressbar" aria-valuenow="1" aria-valuemin="1" aria-valuemax="4" style="width: 15%;"></div>
+                                            </div>
+
+                                            <ul>
+
+                                                <li>
+                                                    <a href="#info" data-toggle="tab">
+                                                        <div class="icon-circle">
+                                                            <i class="ti-info"></i>
+                                                        </div>
+                                                        Info
+                                                    </a>
+                                                </li>
+
+                                                <li>
+                                                    <a href="#company" data-toggle="tab">
+                                                        <div class="icon-circle">
+                                                            <i class="ti-home"></i>
+                                                        </div>
+                                                        Company
+                                                    </a>
+                                                </li>
+
+                                                <li>
+                                                    <a href="#details" data-toggle="tab">
+                                                        <div class="icon-circle">
+                                                            <i class="ti-user"></i>
+                                                        </div>
+                                                        Details
+                                                    </a>
+                                                </li>
+
+                                                <li>
+                                                    <a href="#summary" data-toggle="tab">
+                                                        <div class="icon-circle">
+                                                            <i class="ti-clipboard"></i>
+                                                        </div>
+                                                        Summary
+                                                    </a>
+                                                </li>
+
+                                                <li>
+                                                    <a href="#payment" data-toggle="tab">
+                                                        <div class="icon-circle">
+                                                            <i class="ti-money"></i>
+                                                        </div>
+                                                        Payement
+                                                    </a>
+                                                </li>
+
+                                            </ul>
+                                        </div>
+
+                                        <div class="tab-content">
+
+                                            <div class="tab-pane" id="info">
+                                                <ui:include src="#{demandeServiceController.currentService.nom}/Info.xhtml" />
+                                            </div>
+
+
+                                            <div class="tab-pane" id="company">
+                                                <ui:include src="Company.xhtml" />
+                                            </div>
+
+                                            <div class="tab-pane" id="details">
+                                                <ui:include src="Details.xhtml" />
+                                            </div>
+
+                                            <div class="tab-pane" id="summary">
+                                                <ui:include src="#{demandeServiceController.currentService.nom}/Summary.xhtml" />
+                                            </div>
+
+                                            <div class="tab-pane" id="payment">
+                                                <ui:include src="Payement.xhtml" />
+                                            </div>
+
+                                        </div>
+
+                                        <div class="wizard-footer">
+
+                                            <div class="pull-right">
+                                                <input type='button' class='btn btn-next btn-fill btn-success btn-wd' name='next' value='Next' />
+                                                <input type='button' class='btn btn-finish btn-fill btn-success btn-wd' name='finish' value='Finish' />
+                                            </div>
+
+                                            <div class="pull-left">
+                                                <input type='button' class='btn btn-previous btn-default btn-wd' name='previous' value='Previous' />
+                                            </div>
+
+                                            <div class="clearfix"></div>
+                                        </div>
+
+                                    </h:form>
+                                </div>
+                            </div> <!-- wizard container -->
+                        </div>
+                    </div> <!-- row -->
+                </div> <!--  big container -->
+
+            </div>
+
+
+
+
+
+
+            <ui:include src="ServicePlusieursFois.xhtml"/>
+            <ui:include src="ServiceUneFois.xhtml"/>
+            <ui:include src="Connexion.xhtml"/>
+            <ui:include src="Societe.xhtml"/>
+            <ui:include src="Individual.xhtml"/>
+
+
+
+        </ui:define>
+    </ui:composition>
+
+</html>
