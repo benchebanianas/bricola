@@ -141,6 +141,20 @@ public class DemandeServiceController implements Serializable {
         System.out.println(menuFormulaire.getTypeDemande());
     }
 
+    public String initService2(String nomService) {
+        String link;
+        demandeService = new DemandeService();
+        menuFormulaire = new MenuFormulaire();
+
+        currentService = serviceFacade.findServiceByName(nomService);
+        menuFormulaire = menuFormulaireFacade.findMenuByService(nomService);
+        System.out.println(currentService.getNom());
+        System.out.println(menuFormulaire.getTypeDemande());
+        
+        link = "demandeService/Demande.xhtml";
+        return link;
+    }
+
     public List<Timing> loadTimings() {
         return timingFacade.findAll();
     }
