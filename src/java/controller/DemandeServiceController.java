@@ -13,6 +13,8 @@ import bean.DemandePainting;
 import bean.DemandePestControl;
 import bean.DemandePhotographie;
 import bean.DemandeService;
+import bean.Manager;
+import bean.MenuFormulaire;
 import bean.DemandeVoiture;
 import bean.Manager;
 import bean.TypeAction;
@@ -20,17 +22,20 @@ import bean.PlanningItem;
 import bean.Secteur;
 import bean.Service;
 import bean.Timing;
+import bean.TypeAction;
 import bean.Ville;
 import bean.Worker;
 import bean.WorkerType;
 import controller.util.JsfUtil;
 import controller.util.JsfUtil.PersistAction;
+import controller.util.SessionUtil;
 import service.DemandeServiceFacade;
 
 import java.io.Serializable;
 import java.util.Date;
 import controller.util.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -73,12 +78,15 @@ public class DemandeServiceController implements Serializable {
     private service.VilleFacade villeFacade;
     @EJB
     private service.SecteurFacade secteurFacade;
+    @EJB
+    private service.MenuFormulaireFacade menuFormulaireFacade;
     private List<Worker> companies;
     private List<Worker> individuals;
     private List<Secteur> secteurs;
 
     private DemandeService demandeService;
-    private DemandeCleaning demandeServiceCleaning;
+    private DemandeCleaning demandeCleaning;
+    private MenuFormulaire menuFormulaire;
 
     private WorkerType workerType;
     private Service currentService;
@@ -117,7 +125,7 @@ public class DemandeServiceController implements Serializable {
                 demandeBabySitting = (DemandeBabySitting) demande;
                 break;
             case "DemandeCleaning":
-                demandeServiceCleaning = (DemandeCleaning) demande;
+                demandeCleaning = (DemandeCleaning) demande;
                 break;
             case "DemandeEvent":
                 demandeEvent = (DemandeEvent) demande;
@@ -211,7 +219,7 @@ public class DemandeServiceController implements Serializable {
         try {
             ejbFacade.saveDemandeService(demandeService, currentService, company, individual, oneTime, multipleTimes);
             if (currentService.getId() == 1) {
-                demandeServiceCleaningFacade.saveDemandeCleaning(demandeServiceCleaning, demandeService);
+                demandeServiceCleaningFacade.saveDemandeCleaning(demandeCleaning, demandeService);
             }
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Demande enregistrer avec succes !"));
             resetObjects();
@@ -223,7 +231,7 @@ public class DemandeServiceController implements Serializable {
     public void resetObjects() {
 
         demandeService = new DemandeService();
-        demandeServiceCleaning = new DemandeCleaning();
+        demandeCleaning = new DemandeCleaning();
     }
 
     public void checkOnce() {
@@ -246,7 +254,12 @@ public class DemandeServiceController implements Serializable {
 
     public void initService(String nomService) {
         demandeService = new DemandeService();
+        menuFormulaire = new MenuFormulaire();
+
         currentService = serviceFacade.findServiceByName(nomService);
+        menuFormulaire = menuFormulaireFacade.findMenuByService(nomService);
+        System.out.println(currentService.getNom());
+        System.out.println(menuFormulaire.getTypeDemande());
     }
 
     public List<Timing> loadTimings() {
@@ -446,14 +459,14 @@ public class DemandeServiceController implements Serializable {
     }
 
     public DemandeCleaning getDemandeCleaning() {
-        if (demandeServiceCleaning == null) {
-            demandeServiceCleaning = new DemandeCleaning();
+        if (demandeCleaning == null) {
+            demandeCleaning = new DemandeCleaning();
         }
-        return demandeServiceCleaning;
+        return demandeCleaning;
     }
 
-    public void setDemandeCleaning(DemandeCleaning demandeServiceCleaning) {
-        this.demandeServiceCleaning = demandeServiceCleaning;
+    public void setDemandeCleaning(DemandeCleaning demandeCleaning) {
+        this.demandeCleaning = demandeCleaning;
     }
 
     public Service getCurrentService() {
@@ -561,14 +574,6 @@ public class DemandeServiceController implements Serializable {
         this.demandeEvent = demandeEvent;
     }
 
-    public DemandeCleaning getDemandeServiceCleaning() {
-        return demandeServiceCleaning;
-    }
-
-    public void setDemandeServiceCleaning(DemandeCleaning demandeServiceCleaning) {
-        this.demandeServiceCleaning = demandeServiceCleaning;
-    }
-
     public DemandeMoving getDemandeMoving() {
         return demandeMoving;
     }
@@ -607,6 +612,14 @@ public class DemandeServiceController implements Serializable {
 
     public void setDemandePainting(DemandePainting demandePainting) {
         this.demandePainting = demandePainting;
+    }
+
+    public MenuFormulaire getMenuFormulaire() {
+        return menuFormulaire;
+    }
+
+    public void setMenuFormulaire(MenuFormulaire menuFormulaire) {
+        this.menuFormulaire = menuFormulaire;
     }
 
     protected void setEmbeddableKeys() {

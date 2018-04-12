@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  127.0.0.1
--- Généré le :  Lun 02 Avril 2018 à 19:26
+-- Généré le :  Mar 10 Avril 2018 à 19:37
 -- Version du serveur :  10.1.16-MariaDB
 -- Version de PHP :  5.6.24
 
@@ -360,8 +360,16 @@ CREATE TABLE `device` (
   `NAVIGATEUR` varchar(255) DEFAULT NULL,
   `OS` varchar(255) DEFAULT NULL,
   `MANAGER_ID` varchar(255) DEFAULT NULL,
-  `WORKER_EMAIL` varchar(255) DEFAULT NULL
+  `WORKER_EMAIL` varchar(255) DEFAULT NULL,
+  `DEVICECATEGORIE` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Contenu de la table `device`
+--
+
+INSERT INTO `device` (`ID`, `BLOCKED`, `DATECONNECTION`, `IP`, `NAVIGATEUR`, `OS`, `MANAGER_ID`, `WORKER_EMAIL`, `DEVICECATEGORIE`) VALUES
+(1, 0, '2018-04-10', '172.31.20.65', 'Firefox', 'Windows', 'manager', NULL, 'Personal computer');
 
 -- --------------------------------------------------------
 
@@ -492,6 +500,13 @@ CREATE TABLE `manager` (
   `BLOCKED` tinyint(1) DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Contenu de la table `manager`
+--
+
+INSERT INTO `manager` (`ID`, `PASSWORD`, `BLOCKED`) VALUES
+('manager', 'manager', 0);
+
 -- --------------------------------------------------------
 
 --
@@ -503,6 +518,30 @@ CREATE TABLE `matiere` (
   `NOM` varchar(255) DEFAULT NULL,
   `FILIERE_ID` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `menuformulaire`
+--
+
+CREATE TABLE `menuformulaire` (
+  `ID` bigint(20) NOT NULL,
+  `COMPANYTAB` tinyint(1) DEFAULT '0',
+  `DETAILSTAB` tinyint(1) DEFAULT '0',
+  `IMAGENAME` varchar(255) DEFAULT NULL,
+  `INFOTAB` tinyint(1) DEFAULT '0',
+  `PAYEMENTTAB` tinyint(1) DEFAULT '0',
+  `SUMMARYTAB` tinyint(1) DEFAULT '0',
+  `TYPEDEMANDE_ID` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Contenu de la table `menuformulaire`
+--
+
+INSERT INTO `menuformulaire` (`ID`, `COMPANYTAB`, `DETAILSTAB`, `IMAGENAME`, `INFOTAB`, `PAYEMENTTAB`, `SUMMARYTAB`, `TYPEDEMANDE_ID`) VALUES
+(1, 1, 1, 'nettoyageMaison', 1, 1, 1, 'nettoyageMaison');
 
 -- --------------------------------------------------------
 
@@ -891,6 +930,20 @@ CREATE TABLE `typeaction` (
 CREATE TABLE `typedemande` (
   `ID` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Contenu de la table `typedemande`
+--
+
+INSERT INTO `typedemande` (`ID`) VALUES
+('climatisation'),
+('demenagement'),
+('deratisation'),
+('locationVoiture'),
+('nettoyageMaison'),
+('peinture'),
+('photographie'),
+('traiteur');
 
 -- --------------------------------------------------------
 
@@ -1297,6 +1350,13 @@ ALTER TABLE `matiere`
   ADD KEY `FK_MATIERE_FILIERE_ID` (`FILIERE_ID`);
 
 --
+-- Index pour la table `menuformulaire`
+--
+ALTER TABLE `menuformulaire`
+  ADD PRIMARY KEY (`ID`),
+  ADD KEY `FK_MENUFORMULAIRE_TYPEDEMANDE_ID` (`TYPEDEMANDE_ID`);
+
+--
 -- Index pour la table `niveauscolaire`
 --
 ALTER TABLE `niveauscolaire`
@@ -1663,6 +1723,12 @@ ALTER TABLE `home`
 --
 ALTER TABLE `matiere`
   ADD CONSTRAINT `FK_MATIERE_FILIERE_ID` FOREIGN KEY (`FILIERE_ID`) REFERENCES `filiere` (`ID`);
+
+--
+-- Contraintes pour la table `menuformulaire`
+--
+ALTER TABLE `menuformulaire`
+  ADD CONSTRAINT `FK_MENUFORMULAIRE_TYPEDEMANDE_ID` FOREIGN KEY (`TYPEDEMANDE_ID`) REFERENCES `typedemande` (`ID`);
 
 --
 -- Contraintes pour la table `packaging`

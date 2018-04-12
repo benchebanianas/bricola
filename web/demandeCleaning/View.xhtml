@@ -15,32 +15,32 @@
                 <h:form id="DemandeCleaningForm" style="margin-top: 10px;margin-bottom: 10px">
                     <div align="center">
                         <p:panelGrid columns="1" >
-                            <p:outputLabel value="Secteur : #{demandeServiceController.demandeServiceCleaning.demandeService.secteur.nom}" />
-                            <p:outputLabel value="Service : #{demandeServiceController.demandeServiceCleaning.demandeService.service.nom}" />
-                            <p:outputLabel value="Societe : #{demandeServiceController.demandeServiceCleaning.demandeService.worker.nom}" />
-                            <p:outputLabel value="Client : #{demandeServiceController.demandeServiceCleaning.demandeService.client.nom}" />
-                            <p:outputLabel value="Detail : #{demandeServiceController.demandeServiceCleaning.demandeService.detail}"/>
-                            <c:if test="#{demandeServiceController.demandeServiceCleaning.demandeService.dateConfirmation ne null}">
-                                <p:outputLabel value="manager de Confirmation : #{demandeServiceController.demandeServiceCleaning.demandeService.managerConfirmation.id}" />
-                                <p:outputLabel value="date de Confirmation : #{demandeServiceController.demandeServiceCleaning.demandeService.dateConfirmation}" />
+                            <p:outputLabel value="Secteur : #{demandeServiceController.demandeCleaning.demandeService.secteur.nom}" />
+                            <p:outputLabel value="Service : #{demandeServiceController.demandeCleaning.demandeService.service.nom}" />
+                            <p:outputLabel value="Societe : #{demandeServiceController.demandeCleaning.demandeService.worker.nom}" />
+                            <p:outputLabel value="Client : #{demandeServiceController.demandeCleaning.demandeService.client.nom}" />
+                            <p:outputLabel value="Detail : #{demandeServiceController.demandeCleaning.demandeService.detail}"/>
+                            <c:if test="#{demandeServiceController.demandeCleaning.demandeService.dateConfirmation ne null}">
+                                <p:outputLabel value="manager de Confirmation : #{demandeServiceController.demandeCleaning.demandeService.managerConfirmation.id}" />
+                                <p:outputLabel value="date de Confirmation : #{demandeServiceController.demandeCleaning.demandeService.dateConfirmation}" />
                             </c:if>
-                            <c:if test="#{not empty demandeServiceController.demandeServiceCleaning.demandeService.dateSuppression}">
-                                <p:outputLabel value="manager de Suppression : #{demandeServiceController.demandeServiceCleaning.demandeService.managerConfirmation.id}" />
-                                <p:outputLabel value="date de Suppression : #{demandeServiceController.demandeServiceCleaning.demandeService.dateSuppression}" />
+                            <c:if test="#{not empty demandeServiceController.demandeCleaning.demandeService.dateSuppression}">
+                                <p:outputLabel value="manager de Suppression : #{demandeServiceController.demandeCleaning.demandeService.managerConfirmation.id}" />
+                                <p:outputLabel value="date de Suppression : #{demandeServiceController.demandeCleaning.demandeService.dateSuppression}" />
 
                             </c:if>
-                            <c:if test="#{not empty demandeServiceController.demandeServiceCleaning.demandeService.planning.dateDebut}">
-                                <p:outputLabel value="Date Debut : #{demandeServiceController.demandeServiceCleaning.demandeService.planning.dateDebut}" />
-                                <p:outputLabel value="Date Fin : #{demandeServiceController.demandeServiceCleaning.demandeService.planning.dateFin}" />
+                            <c:if test="#{not empty demandeServiceController.demandeCleaning.demandeService.planning.dateDebut}">
+                                <p:outputLabel value="Date Debut : #{demandeServiceController.demandeCleaning.demandeService.planning.dateDebut}" />
+                                <p:outputLabel value="Date Fin : #{demandeServiceController.demandeCleaning.demandeService.planning.dateFin}" />
                             </c:if>
-                            <c:if test="#{not empty demandeServiceController.demandeServiceCleaning.demandeService.planning.dateOnce}">
-                                <p:outputLabel value="Date : #{demandeServiceController.demandeServiceCleaning.demandeService.planning.dateOnce}" />
-                                <p:outputLabel value="Heure : #{demandeServiceController.demandeServiceCleaning.demandeService.planning.timing.name}" />
+                            <c:if test="#{not empty demandeServiceController.demandeCleaning.demandeService.planning.dateOnce}">
+                                <p:outputLabel value="Date : #{demandeServiceController.demandeCleaning.demandeService.planning.dateOnce}" />
+                                <p:outputLabel value="Heure : #{demandeServiceController.demandeCleaning.demandeService.planning.timing.name}" />
                             </c:if>
-                            <p:outputLabel value="Nombre D'employés : #{demandeServiceController.demandeServiceCleaning.nbrCleaner}"/>
-                            <p:outputLabel value="Nombre D'Heures : #{demandeServiceController.demandeServiceCleaning.nbrHeures}"/>
-                            <p:outputLabel value="Prix HT : #{demandeServiceController.demandeServiceCleaning.demandeService.prixHt}" />
-                            <p:outputLabel value="Prix TTC : #{demandeServiceController.demandeServiceCleaning.demandeService.prixTtc}" />
+                            <p:outputLabel value="Nombre D'employés : #{demandeServiceController.demandeCleaning.nbrCleaner}"/>
+                            <p:outputLabel value="Nombre D'Heures : #{demandeServiceController.demandeCleaning.nbrHeures}"/>
+                            <p:outputLabel value="Prix HT : #{demandeServiceController.demandeCleaning.demandeService.prixHt}" />
+                            <p:outputLabel value="Prix TTC : #{demandeServiceController.demandeCleaning.demandeService.prixTtc}" />
                         </p:panelGrid><br></br>
 
                         <p:commandButton action="#{demandeCleaningController.Action(2)}" class="btn btn-danger" value="Supprimer"/>

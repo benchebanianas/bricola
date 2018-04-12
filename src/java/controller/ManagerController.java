@@ -9,6 +9,7 @@ import bean.Ville;
 import controller.util.JsfUtil;
 import controller.util.*;
 import controller.util.JsfUtil.PersistAction;
+import controller.util.SessionUtil;
 import service.ManagerFacade;
 
 import java.io.Serializable;

@@ -1,9 +1,9 @@
 package controller;
 
-import bean.DemandeServiceConfirmationDetail;
+import bean.MenuFormulaire;
 import controller.util.JsfUtil;
 import controller.util.JsfUtil.PersistAction;
-import service.DemandeServiceConfirmationDetailFacade;
+import service.MenuFormulaireFacade;
 
 import java.io.Serializable;
 import java.util.List;
@@ -19,32 +19,23 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-@Named("demandeServiceConfirmationDetailController")
+@Named("menuFormulaireController")
 @SessionScoped
-public class DemandeServiceConfirmationDetailController implements Serializable {
+public class MenuFormulaireController implements Serializable {
 
     @EJB
-    private service.DemandeServiceConfirmationDetailFacade ejbFacade;
-    private List<DemandeServiceConfirmationDetail> items = null;
-    private DemandeServiceConfirmationDetail selected;
+    private service.MenuFormulaireFacade ejbFacade;
+    private List<MenuFormulaire> items = null;
+    private MenuFormulaire selected;
 
-    
-    public String voirPlus(DemandeServiceConfirmationDetail demande){
-      return "#";  
-    }
-    
-    public DemandeServiceConfirmationDetailController() {
+    public MenuFormulaireController() {
     }
 
-    public String voirPlus(DemandeServiceConfirmationDetail demande) {
-        return "#";
-    }
-
-    public DemandeServiceConfirmationDetail getSelected() {
+    public MenuFormulaire getSelected() {
         return selected;
     }
 
-    public void setSelected(DemandeServiceConfirmationDetail selected) {
+    public void setSelected(MenuFormulaire selected) {
         this.selected = selected;
     }
 
@@ -54,36 +45,36 @@ public class DemandeServiceConfirmationDetailController implements Serializable 
     protected void initializeEmbeddableKey() {
     }
 
-    private DemandeServiceConfirmationDetailFacade getFacade() {
+    private MenuFormulaireFacade getFacade() {
         return ejbFacade;
     }
 
-    public DemandeServiceConfirmationDetail prepareCreate() {
-        selected = new DemandeServiceConfirmationDetail();
+    public MenuFormulaire prepareCreate() {
+        selected = new MenuFormulaire();
         initializeEmbeddableKey();
         return selected;
     }
 
     public void create() {
-        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("DemandeServiceConfirmationDetailCreated"));
+        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("MenuFormulaireCreated"));
         if (!JsfUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
 
     public void update() {
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("DemandeServiceConfirmationDetailUpdated"));
+        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("MenuFormulaireUpdated"));
     }
 
     public void destroy() {
-        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("DemandeServiceConfirmationDetailDeleted"));
+        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("MenuFormulaireDeleted"));
         if (!JsfUtil.isValidationFailed()) {
             selected = null; // Remove selection
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
 
-    public List<DemandeServiceConfirmationDetail> getItems() {
+    public List<MenuFormulaire> getItems() {
         if (items == null) {
             items = getFacade().findAll();
         }
@@ -118,29 +109,29 @@ public class DemandeServiceConfirmationDetailController implements Serializable 
         }
     }
 
-    public DemandeServiceConfirmationDetail getDemandeServiceConfirmationDetail(java.lang.Long id) {
+    public MenuFormulaire getMenuFormulaire(java.lang.Long id) {
         return getFacade().find(id);
     }
 
-    public List<DemandeServiceConfirmationDetail> getItemsAvailableSelectMany() {
+    public List<MenuFormulaire> getItemsAvailableSelectMany() {
         return getFacade().findAll();
     }
 
-    public List<DemandeServiceConfirmationDetail> getItemsAvailableSelectOne() {
+    public List<MenuFormulaire> getItemsAvailableSelectOne() {
         return getFacade().findAll();
     }
 
-    @FacesConverter(forClass = DemandeServiceConfirmationDetail.class)
-    public static class DemandeServiceConfirmationDetailControllerConverter implements Converter {
+    @FacesConverter(forClass = MenuFormulaire.class)
+    public static class MenuFormulaireControllerConverter implements Converter {
 
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            DemandeServiceConfirmationDetailController controller = (DemandeServiceConfirmationDetailController) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "demandeServiceConfirmationDetailController");
-            return controller.getDemandeServiceConfirmationDetail(getKey(value));
+            MenuFormulaireController controller = (MenuFormulaireController) facesContext.getApplication().getELResolver().
+                    getValue(facesContext.getELContext(), null, "menuFormulaireController");
+            return controller.getMenuFormulaire(getKey(value));
         }
 
         java.lang.Long getKey(String value) {
@@ -160,11 +151,11 @@ public class DemandeServiceConfirmationDetailController implements Serializable 
             if (object == null) {
                 return null;
             }
-            if (object instanceof DemandeServiceConfirmationDetail) {
-                DemandeServiceConfirmationDetail o = (DemandeServiceConfirmationDetail) object;
+            if (object instanceof MenuFormulaire) {
+                MenuFormulaire o = (MenuFormulaire) object;
                 return getStringKey(o.getId());
             } else {
-                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), DemandeServiceConfirmationDetail.class.getName()});
+                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), MenuFormulaire.class.getName()});
                 return null;
             }
         }
