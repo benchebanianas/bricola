@@ -3,27 +3,60 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <ui:composition>
 
-        <p:dialog id="DemandePhotographieViewDlg" widgetVar="DemandePhotographieViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewDemandePhotographieTitle}">
-            <h:form id="DemandePhotographieViewForm">
-                <h:panelGroup id="display">
-                    <p:panelGrid columns="2" rendered="#{demandePhotographieController.selected != null}">
-                        <h:outputText value="#{bundle.ViewDemandePhotographieLabel_demandeService}"/>
-                        <h:outputText value="#{demandePhotographieController.selected.demandeService}" title="#{bundle.ViewDemandePhotographieTitle_demandeService}"/>
-                        <h:outputText value="#{bundle.ViewDemandePhotographieLabel_typePhotographie}"/>
-                        <h:outputText value="#{demandePhotographieController.selected.typePhotographie}" title="#{bundle.ViewDemandePhotographieTitle_typePhotographie}"/>
-                        <h:outputText value="#{bundle.ViewDemandePhotographieLabel_videographie}"/>
-                        <p:selectBooleanCheckbox value="#{demandePhotographieController.selected.videographie}" disabled="true"/>
-                        <h:outputText value="#{bundle.ViewDemandePhotographieLabel_id}"/>
-                        <h:outputText value="#{demandePhotographieController.selected.id}" title="#{bundle.ViewDemandePhotographieTitle_id}"/>
-                    </p:panelGrid>
-                    <p:commandButton value="#{bundle.Close}" onclick="DemandePhotographieViewDialog.hide()"/>
-                </h:panelGroup>
-            </h:form>
+        <p:dialog id="DemandePhotographieViewDlg" widgetVar="DemandePhotographieViewDialog" modal="true" hideEffect="blind" showEffect="blind" resizable="false" appendTo="@(body)" width="600" height="550" showHeader="false">
+            <hr></hr>
+            <h1 align="center"> Plus D'information : </h1>
+            <hr></hr><br></br>
+            <div class="container">
+                <h:form id="DemandePhotographieForm" style="margin-top: 10px;margin-bottom: 10px">
+                    <div align="center">
+                        <p:panelGrid columns="1" >
+                            <p:outputLabel value="Secteur : #{demandeServiceController.demandePhotographie.demandeService.secteur.nom}" />
+                            <p:outputLabel value="Service : #{demandeServiceController.demandePhotographie.demandeService.service.nom}" />
+                            <p:outputLabel value="Societe : #{demandeServiceController.demandePhotographie.demandeService.worker.nom}" />
+                            <p:outputLabel value="Client : #{demandeServiceController.demandePhotographie.demandeService.client.nom}" />
+                            <p:outputLabel value="Detail : #{demandeServiceController.demandePhotographie.demandeService.detail}"/>
+                            <c:if test="#{demandeServiceController.demandePhotographie.demandeService.dateConfirmation ne null}">
+                                <p:outputLabel value="manager de Confirmation : #{demandeServiceController.demandePhotographie.demandeService.managerConfirmation.id}" />
+                                <p:outputLabel value="date de Confirmation : #{demandeServiceController.demandePhotographie.demandeService.dateConfirmation}" />
+                            </c:if>
+                            <c:if test="#{not empty demandeServiceController.demandePhotographie.demandeService.dateSuppression}">
+                                <p:outputLabel value="manager de Suppression : #{demandeServiceController.demandePhotographie.demandeService.managerConfirmation.id}" />
+                                <p:outputLabel value="date de Suppression : #{demandeServiceController.demandePhotographie.demandeService.dateSuppression}" />
+                            </c:if>
+                            <c:if test="#{not empty demandeServiceController.demandePhotographie.demandeService.planning.dateDebut}">
+                                <p:outputLabel value="Date Debut : #{demandeServiceController.demandePhotographie.demandeService.planning.dateDebut}" />
+                                <p:outputLabel value="Date Fin : #{demandeServiceController.demandePhotographie.demandeService.planning.dateFin}" />
+                            </c:if>
+                            <c:if test="#{not empty demandeServiceController.demandePhotographie.demandeService.planning.dateOnce}">
+                                <p:outputLabel value="Date : #{demandeServiceController.demandePhotographie.demandeService.planning.dateOnce}" />
+                                <p:outputLabel value="Heure : #{demandeServiceController.demandePhotographie.demandeService.planning.timing.name}" />
+                            </c:if>
+                            <p:outputLabel value="Type de Photographie : #{demandeServiceController.demandePhotographie.typePhotographie.nom}"/>
+                            <p:outputLabel value="VideoGraphie : #{demandeServiceController.demandePhotographie.videographie == true ? 'Oui' : 'Non'}"/>
+                            <p:outputLabel value="Prix HT : #{demandeServiceController.demandePhotographie.demandeService.prixHt}" />
+                            <p:outputLabel value="Prix TTC : #{demandeServiceController.demandePhotographie.demandeService.prixTtc}" />
+                        </p:panelGrid>
+
+                        <br></br>
+
+                        <p:commandButton action="#{demandePhotographieController.Action(2)}" class="btn btn-danger" value="Supprimer"/>
+                        <p:commandButton action="#{demandePhotographieController.Action(1)}" class="btn btn-success" value="Valider"/>
+                    </div>
+
+                    <br></br>
+
+                    <p:commandLink oncomplete="handleSubmit(args,'DemandePhotographieViewDialog');" actionListener="#{demandeServiceController.retour()}"> 
+                        <h:graphicImage value="../resources/images/retour.png" alt="retour" />
+                    </p:commandLink>
+                </h:form>
+            </div>
+            <br></br><hr></hr>
         </p:dialog>
 
     </ui:composition>

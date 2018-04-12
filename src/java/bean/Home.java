@@ -35,6 +35,24 @@ public class Home implements Serializable {
         this.id = id;
     }
 
+    public int getNombrePieces() {
+        return nombrePieces;
+    }
+
+    public void setNombrePieces(int nombrePieces) {
+        this.nombrePieces = nombrePieces;
+    }
+
+    public HomeType getHomeType() {
+        return homeType;
+    }
+
+    public void setHomeType(HomeType homeType) {
+        this.homeType = homeType;
+    }
+    
+    
+
     @Override
     public int hashCode() {
         int hash = 0;

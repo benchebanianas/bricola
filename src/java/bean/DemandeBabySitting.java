@@ -122,7 +122,7 @@ public class DemandeBabySitting implements Serializable {
 
     @Override
     public String toString() {
-        return "bean.DemandeBabySitting[ id=" + id + " ]";
+        return "DemandeBabySitting{" + "id=" + id + ", nbrHeures=" + nbrHeures + ", detail=" + detail + ", fulltime=" + fulltime + '}';
     }
 
-}
+   }

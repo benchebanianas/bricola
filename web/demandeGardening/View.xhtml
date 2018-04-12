@@ -3,27 +3,60 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <ui:composition>
 
-        <p:dialog id="DemandeGardeningViewDlg" widgetVar="DemandeGardeningViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewDemandeGardeningTitle}">
-            <h:form id="DemandeGardeningViewForm">
-                <h:panelGroup id="display">
-                    <p:panelGrid columns="2" rendered="#{demandeGardeningController.selected != null}">
-                        <h:outputText value="#{bundle.ViewDemandeGardeningLabel_id}"/>
-                        <h:outputText value="#{demandeGardeningController.selected.id}" title="#{bundle.ViewDemandeGardeningTitle_id}"/>
-                        <h:outputText value="#{bundle.ViewDemandeGardeningLabel_demandeService}"/>
-                        <h:outputText value="#{demandeGardeningController.selected.demandeService}" title="#{bundle.ViewDemandeGardeningTitle_demandeService}"/>
-                        <h:outputText value="#{bundle.ViewDemandeGardeningLabel_gardeningType}"/>
-                        <h:outputText value="#{demandeGardeningController.selected.gardeningType}" title="#{bundle.ViewDemandeGardeningTitle_gardeningType}"/>
-                        <h:outputText value="#{bundle.ViewDemandeGardeningLabel_home}"/>
-                        <h:outputText value="#{demandeGardeningController.selected.home}" title="#{bundle.ViewDemandeGardeningTitle_home}"/>
-                    </p:panelGrid>
-                    <p:commandButton value="#{bundle.Close}" onclick="DemandeGardeningViewDialog.hide()"/>
-                </h:panelGroup>
-            </h:form>
+        <p:dialog id="DemandeGardeningViewDlg" widgetVar="DemandeGardeningViewDialog" modal="true" hideEffect="blind" showEffect="blind" resizable="false" appendTo="@(body)" width="600" height="550" showHeader="false">
+             <hr></hr>
+                    <h1 align="center"> Plus D'information : </h1>
+                    <hr></hr><br></br>
+                    <div class="container">
+                        <h:form id="DemandeGardeningForm" style="margin-top: 10px;margin-bottom: 10px">
+                            <div align="center">
+                                <p:panelGrid columns="1" >
+                                    <p:outputLabel value="Secteur : #{demandeServiceController.demandeGardening.demandeService.secteur.nom}" />
+                                    <p:outputLabel value="Service : #{demandeServiceController.demandeGardening.demandeService.service.nom}" />
+                                    <p:outputLabel value="Societe : #{demandeServiceController.demandeGardening.demandeService.worker.nom}" />
+                                    <p:outputLabel value="Client : #{demandeServiceController.demandeGardening.demandeService.client.nom}" />
+                                    <p:outputLabel value="Detail : #{demandeServiceController.demandeGardening.demandeService.detail}"/>
+                                    <c:if test="#{demandeServiceController.demandeGardening.demandeService.dateConfirmation ne null}">
+                                        <p:outputLabel value="manager de Confirmation : #{demandeServiceController.demandeGardening.demandeService.managerConfirmation.id}" />
+                                        <p:outputLabel value="date de Confirmation : #{demandeServiceController.demandeGardening.demandeService.dateConfirmation}" />
+                                    </c:if>
+                                    <c:if test="#{not empty demandeServiceController.demandeGardening.demandeService.dateSuppression}">
+                                        <p:outputLabel value="manager de Suppression : #{demandeServiceController.demandeGardening.demandeService.managerConfirmation.id}" />
+                                        <p:outputLabel value="date de Suppression : #{demandeServiceController.demandeGardening.demandeService.dateSuppression}" />
+                                    </c:if>
+                                    <c:if test="#{not empty demandeServiceController.demandeGardening.demandeService.planning.dateDebut}">
+                                        <p:outputLabel value="Date Debut : #{demandeServiceController.demandeGardening.demandeService.planning.dateDebut}" />
+                                        <p:outputLabel value="Date Fin : #{demandeServiceController.demandeGardening.demandeService.planning.dateFin}" />
+                                    </c:if>
+                                    <c:if test="#{not empty demandeServiceController.demandeGardening.demandeService.planning.dateOnce}">
+                                        <p:outputLabel value="Date : #{demandeServiceController.demandeGardening.demandeService.planning.dateOnce}" />
+                                        <p:outputLabel value="Heure : #{demandeServiceController.demandeGardening.demandeService.planning.timing.name}" />
+                                    </c:if>
+                                    <p:outputLabel value="Type de Gardening : #{demandeServiceController.demandeGardening.gardeningType.nom}"/>
+                                    <p:outputLabel value="Maison : #{demandeServiceController.demandeGardening.home.homeType.nom} - #{demandeServiceController.demandeGardening.home.nombrePieces} Pieces"/>
+                                    <p:outputLabel value="Prix HT : #{demandeServiceController.demandeGardening.demandeService.prixHt}" />
+                                    <p:outputLabel value="Prix TTC : #{demandeServiceController.demandeGardening.demandeService.prixTtc}" />
+                                </p:panelGrid>
+
+                                <br></br>
+
+                                <p:commandButton action="#{demandeGardeningController.Action(2)}" class="btn btn-danger" value="Supprimer"/>
+                                <p:commandButton action="#{demandeGardeningController.Action(1)}" class="btn btn-success" value="Valider"/>
+                            </div>
+
+                            <br></br>
+
+                             <p:commandLink oncomplete="handleSubmit(args,'DemandeGardeningViewDialog');" actionListener="#{demandeServiceController.retour()}"> 
+                                <h:graphicImage value="../resources/images/retour.png" alt="retour" />
+                            </p:commandLink>
+                        </h:form>
+                    </div>
+                    <br></br><hr></hr>
         </p:dialog>
 
     </ui:composition>

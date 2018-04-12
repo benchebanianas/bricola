@@ -2,8 +2,18 @@ package controller;
 
 import bean.Client;
 import bean.Day;
+import bean.DemandeBabySitting;
 import bean.DemandeCleaning;
+import bean.DemandeEvent;
+import bean.DemandeFormationPersonnel;
+import bean.DemandeGardening;
+import bean.DemandeHandyMan;
+import bean.DemandeMoving;
+import bean.DemandePainting;
+import bean.DemandePestControl;
+import bean.DemandePhotographie;
 import bean.DemandeService;
+import bean.DemandeVoiture;
 import bean.Manager;
 import bean.TypeAction;
 import bean.PlanningItem;
@@ -46,7 +56,7 @@ public class DemandeServiceController implements Serializable {
     private service.DemandeServiceFacade ejbFacade;
     @EJB
     private DemandeServiceConfirmationDetailFacade detailFacade;
-    private service.DemandeCleaningFacade demandeCleaningFacade;
+    private service.DemandeCleaningFacade demandeServiceCleaningFacade;
     @EJB
     private service.WorkerTypeFacade workerTypeFacade;
     @EJB
@@ -68,7 +78,7 @@ public class DemandeServiceController implements Serializable {
     private List<Secteur> secteurs;
 
     private DemandeService demandeService;
-    private DemandeCleaning demandeCleaning;
+    private DemandeCleaning demandeServiceCleaning;
 
     private WorkerType workerType;
     private Service currentService;
@@ -82,52 +92,104 @@ public class DemandeServiceController implements Serializable {
     private boolean multipleTimes;
     private List<DemandeService> items = null;
     private DemandeService selected;
+    private Object demande;
+    private DemandeBabySitting demandeBabySitting;
+    private DemandeEvent demandeEvent;
+    private DemandeFormationPersonnel demandeFormationPersonnel;
+    private DemandeGardening demandeGardening;
+    private DemandeHandyMan demandeHandyMan;
+    private DemandeMoving demandeMoving;
+    private DemandePainting demandePainting;
+    private DemandePestControl demandePestControl;
+    private DemandePhotographie demandePhotographie;
+    private DemandeVoiture demandeVoiture;
+
     @EJB
     private TypeActionFacade typeActionFacade;
+    private List<PlanningItem> planningItems;
 
-    public String voirPlus(DemandeService demande) {
-        Object d = ejbFacade.findDemande(demande);
-        SessionUtil.setAttribute("demande", d);
-        if (demande.getTypeDemande().getId().equals("DemandeBabySitting")) {
-            return "/demandeBabySitting/babySittingView";
-        } else if (demande.getTypeDemande().getId().equals("DemandeCleaning")) {
-            return "/demandeCleaning/cleaningView";
-        } else if (demande.getTypeDemande().getId().equals("DemandeEvent")) {
-            return "/demandeEvent/eventView";
-        } else if (demande.getTypeDemande().getId().equals("DemandeGardening")) {
-            return "/demandeGardening/gardeningView";
-        } else if (demande.getTypeDemande().getId().equals("DemandeHandyMan")) {
-            return "/demandeHandyMan/handyManView";
-        } else if (demande.getTypeDemande().getId().equals("DemandeMoving")) {
-            return "/demandeMoving/movingView";
-        } else if (demande.getTypeDemande().getId().equals("DemandePainting")) {
-            return "/demandePainting/paintingView";
-        } else if (demande.getTypeDemande().getId().equals("DemandePestControl")) {
-            return "/demandePestControl/pestControlView";
-        } else if (demande.getTypeDemande().getId().equals("DemandePhotographie")) {
-            return "/demandePhotographie/photographieView";
-        } else if (demande.getTypeDemande().getId().equals("DemandeVoiture")) {
-            return "/demandeVoiture/voitureView";
+    public void voirPlus(DemandeService demandeService) {
+        setSelected(demandeService);
+        String view = demandeService.getTypeDemande().getId();
+        demande = ejbFacade.findDemande(demandeService);
+        switch (view) {
+            case "DemandeBabySitting":
+                demandeBabySitting = (DemandeBabySitting) demande;
+                break;
+            case "DemandeCleaning":
+                demandeServiceCleaning = (DemandeCleaning) demande;
+                break;
+            case "DemandeEvent":
+                demandeEvent = (DemandeEvent) demande;
+                break;
+            case "DemandeFormationPersonnel":
+                demandeFormationPersonnel = (DemandeFormationPersonnel) demande;
+                break;
+            case "DemandeGardening":
+                demandeGardening = (DemandeGardening) demande;
+                break;
+            case "DemandeHandyMan":
+                demandeHandyMan = (DemandeHandyMan) demande;
+                break;
+            case "DemandeMoving":
+                demandeMoving = (DemandeMoving) demande;
+                break;
+            case "DemandePainting":
+                demandePainting = (DemandePainting) demande;
+                break;
+            case "DemandePestControl":
+                demandePestControl = (DemandePestControl) demande;
+                break;
+            case "DemandePhotographie":
+                demandePhotographie = (DemandePhotographie) demande;
+                break;
+            case "DemandeVoiture":
+                demandeVoiture = (DemandeVoiture) demande;
+                break;
+            default:
+                break;
         }
-        return "#";
+        RequestContext context = RequestContext.getCurrentInstance();
+        context.update("" + view + "Form");
+        context.execute("PF('" + view + "ViewDialog').show();");
+        if (SessionUtil.getAttribute("fromProfile").equals(true)) {
+            items = null;
+            SessionUtil.setAttribute("fromProfile", false);
+        }
+    }
 
+    public String changeItems(DemandeService demandeService) {
+        getItems().clear();
+        getItems().add(demandeService);
+        SessionUtil.setAttribute("fromProfile", true);
+        return "/manager/Demande?faces-redirect=true";
+    }
+
+    public void retour() {
+        setSelected(null);
+        SessionUtil.remove("demandeService");
     }
 
     public String Action(DemandeService demandeService, Long idType) {
+        System.out.println("bsmlaah");
         Manager manager = (Manager) SessionUtil.getAttribute("connectedManager");
         if (idType == 1) {
+            System.out.println("type 1");
             demandeService.setDateConfirmation(new Date());
             demandeService.setDateSuppression(null);
         }
         if (idType == 2) {
+            System.out.println("type 2");
             demandeService.setDateSuppression(new Date());
             demandeService.setDateConfirmation(null);
         }
         demandeService.setManagerConfirmation(manager);
+        System.out.println(manager);
         ejbFacade.edit(demandeService);
         TypeAction action = typeActionFacade.find(idType);
+        System.out.println(action);
         detailFacade.save(manager, action, demandeService);
-        return "#";
+        return "/manager/Demande?faces-redirect=true";
     }
 
     public int nvDmd() {
@@ -149,19 +211,19 @@ public class DemandeServiceController implements Serializable {
         try {
             ejbFacade.saveDemandeService(demandeService, currentService, company, individual, oneTime, multipleTimes);
             if (currentService.getId() == 1) {
-                demandeCleaningFacade.saveDemandeCleaning(demandeCleaning, demandeService);
+                demandeServiceCleaningFacade.saveDemandeCleaning(demandeServiceCleaning, demandeService);
             }
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Demande enregistrer avec succes !"));
             resetObjects();
         } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "Erreur lors du sauvgarde de la demande !"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "Erreur lors du sauvgarde de la demandeService !"));
         }
     }
 
     public void resetObjects() {
 
         demandeService = new DemandeService();
-        demandeCleaning = new DemandeCleaning();
+        demandeServiceCleaning = new DemandeCleaning();
     }
 
     public void checkOnce() {
@@ -384,14 +446,14 @@ public class DemandeServiceController implements Serializable {
     }
 
     public DemandeCleaning getDemandeCleaning() {
-        if (demandeCleaning == null) {
-            demandeCleaning = new DemandeCleaning();
+        if (demandeServiceCleaning == null) {
+            demandeServiceCleaning = new DemandeCleaning();
         }
-        return demandeCleaning;
+        return demandeServiceCleaning;
     }
 
-    public void setDemandeCleaning(DemandeCleaning demandeCleaning) {
-        this.demandeCleaning = demandeCleaning;
+    public void setDemandeCleaning(DemandeCleaning demandeServiceCleaning) {
+        this.demandeServiceCleaning = demandeServiceCleaning;
     }
 
     public Service getCurrentService() {
@@ -430,6 +492,121 @@ public class DemandeServiceController implements Serializable {
 
     public void setOneTime(boolean oneTime) {
         this.oneTime = oneTime;
+    }
+
+    public Object getDemande() {
+        return demande;
+    }
+
+    public void setDemande(Object demande) {
+        this.demande = demande;
+    }
+
+    public List<PlanningItem> getPlanningItems() {
+        return planningItems;
+    }
+
+    public void setPlanningItems(List<PlanningItem> planningItems) {
+        this.planningItems = planningItems;
+    }
+
+    public DemandeService getSelected() {
+        if (selected == null) {
+            selected = new DemandeService();
+        }
+        return selected;
+    }
+
+    public void setSelected(DemandeService selected) {
+        this.selected = selected;
+    }
+
+    public DemandeBabySitting getDemandeBabySitting() {
+        return demandeBabySitting;
+    }
+
+    public void setDemandeBabySitting(DemandeBabySitting demandeBabySitting) {
+        this.demandeBabySitting = demandeBabySitting;
+    }
+
+    public DemandeFormationPersonnel getDemandeFormationPersonnel() {
+        return demandeFormationPersonnel;
+    }
+
+    public void setDemandeFormationPersonnel(DemandeFormationPersonnel demandeFormationPersonnel) {
+        this.demandeFormationPersonnel = demandeFormationPersonnel;
+    }
+
+    public DemandeGardening getDemandeGardening() {
+        return demandeGardening;
+    }
+
+    public void setDemandeGardening(DemandeGardening demandeGardening) {
+        this.demandeGardening = demandeGardening;
+    }
+
+    public DemandeHandyMan getDemandeHandyMan() {
+        return demandeHandyMan;
+    }
+
+    public void setDemandeHandyMan(DemandeHandyMan demandeHandyMan) {
+        this.demandeHandyMan = demandeHandyMan;
+    }
+
+    public DemandeEvent getDemandeEvent() {
+        return demandeEvent;
+    }
+
+    public void setDemandeEvent(DemandeEvent demandeEvent) {
+        this.demandeEvent = demandeEvent;
+    }
+
+    public DemandeCleaning getDemandeServiceCleaning() {
+        return demandeServiceCleaning;
+    }
+
+    public void setDemandeServiceCleaning(DemandeCleaning demandeServiceCleaning) {
+        this.demandeServiceCleaning = demandeServiceCleaning;
+    }
+
+    public DemandeMoving getDemandeMoving() {
+        return demandeMoving;
+    }
+
+    public void setDemandeMoving(DemandeMoving demandeMoving) {
+        this.demandeMoving = demandeMoving;
+    }
+
+    public DemandePestControl getDemandePestControl() {
+        return demandePestControl;
+    }
+
+    public void setDemandePestControl(DemandePestControl demandePestControl) {
+        this.demandePestControl = demandePestControl;
+    }
+
+    public DemandePhotographie getDemandePhotographie() {
+        return demandePhotographie;
+    }
+
+    public void setDemandePhotographie(DemandePhotographie demandePhotographie) {
+        this.demandePhotographie = demandePhotographie;
+    }
+
+    public DemandeVoiture getDemandeVoiture() {
+        return demandeVoiture;
+    }
+
+    public void setDemandeVoiture(DemandeVoiture demandeVoiture) {
+        this.demandeVoiture = demandeVoiture;
+    }
+
+    public DemandePainting getDemandePainting() {
+        return demandePainting;
+    }
+
+    public void setDemandePainting(DemandePainting demandePainting) {
+        this.demandePainting = demandePainting;
     }
 
     protected void setEmbeddableKeys() {
@@ -472,6 +649,10 @@ public class DemandeServiceController implements Serializable {
             items = getFacade().findAll();
         }
         return items;
+    }
+
+    public void setItems(List<DemandeService> items) {
+        this.items = items;
     }
 
     private void persist(PersistAction persistAction, String successMessage) {

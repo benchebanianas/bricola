@@ -3,23 +3,58 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <ui:composition>
 
-        <p:dialog id="DemandeHandyManViewDlg" widgetVar="DemandeHandyManViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewDemandeHandyManTitle}">
-            <h:form id="DemandeHandyManViewForm">
-                <h:panelGroup id="display">
-                    <p:panelGrid columns="2" rendered="#{demandeHandyManController.selected != null}">
-                        <h:outputText value="#{bundle.ViewDemandeHandyManLabel_demandeService}"/>
-                        <h:outputText value="#{demandeHandyManController.selected.demandeService}" title="#{bundle.ViewDemandeHandyManTitle_demandeService}"/>
-                        <h:outputText value="#{bundle.ViewDemandeHandyManLabel_id}"/>
-                        <h:outputText value="#{demandeHandyManController.selected.id}" title="#{bundle.ViewDemandeHandyManTitle_id}"/>
-                    </p:panelGrid>
-                    <p:commandButton value="#{bundle.Close}" onclick="DemandeHandyManViewDialog.hide()"/>
-                </h:panelGroup>
-            </h:form>
+        <p:dialog id="DemandeHandyManViewDlg" widgetVar="DemandeHandyManViewDialog" modal="true" hideEffect="blind" showEffect="blind" resizable="false" appendTo="@(body)" width="600" height="550" showHeader="false">
+           <hr></hr>
+                    <h1 align="center"> Plus D'information : </h1>
+                    <hr></hr><br></br>
+                    <div class="container">
+                        <h:form id="DemandeHandyManForm" style="margin-top: 10px;margin-bottom: 10px">
+                            <div align="center">
+                                <p:panelGrid columns="1" >
+                                    <p:outputLabel value="Secteur : #{demandeServiceController.demandeHandyMan.demandeService.secteur.nom}" />
+                                    <p:outputLabel value="Service : #{demandeServiceController.demandeHandyMan.demandeService.service.nom}" />
+                                    <p:outputLabel value="Societe : #{demandeServiceController.demandeHandyMan.demandeService.worker.nom}" />
+                                    <p:outputLabel value="Client : #{demandeServiceController.demandeHandyMan.demandeService.client.nom}" />
+                                    <p:outputLabel value="Detail : #{demandeServiceController.demandeHandyMan.demandeService.detail}"/>
+                                    <c:if test="#{demandeServiceController.demandeHandyMan.demandeService.dateConfirmation ne null}">
+                                        <p:outputLabel value="manager de Confirmation : #{demandeServiceController.demandeHandyMan.demandeService.managerConfirmation.id}" />
+                                        <p:outputLabel value="date de Confirmation : #{demandeServiceController.demandeHandyMan.demandeService.dateConfirmation}" />
+                                    </c:if>
+                                    <c:if test="#{not empty demandeServiceController.demandeHandyMan.demandeService.dateSuppression}">
+                                        <p:outputLabel value="manager de Suppression : #{demandeServiceController.demandeHandyMan.demandeService.managerConfirmation.id}" />
+                                        <p:outputLabel value="date de Suppression : #{demandeServiceController.demandeHandyMan.demandeService.dateSuppression}" />
+                                    </c:if>
+                                    <c:if test="#{not empty demandeServiceController.demandeHandyMan.demandeService.planning.dateDebut}">
+                                        <p:outputLabel value="Date Debut : #{demandeServiceController.demandeHandyMan.demandeService.planning.dateDebut}" />
+                                        <p:outputLabel value="Date Fin : #{demandeServiceController.demandeHandyMan.demandeService.planning.dateFin}" />
+                                    </c:if>
+                                    <c:if test="#{not empty demandeServiceController.demandeHandyMan.demandeService.planning.dateOnce}">
+                                        <p:outputLabel value="Date : #{demandeServiceController.demandeHandyMan.demandeService.planning.dateOnce}" />
+                                        <p:outputLabel value="Heure : #{demandeServiceController.demandeHandyMan.demandeService.planning.timing.name}" />
+                                    </c:if>
+                                    <p:outputLabel value="Prix HT : #{demandeServiceController.demandeHandyMan.demandeService.prixHt}" />
+                                    <p:outputLabel value="Prix TTC : #{demandeServiceController.demandeHandyMan.demandeService.prixTtc}" />
+                                </p:panelGrid>
+
+                                <br></br>
+
+                                <p:commandButton action="#{demandeGardeningController.Action(2)}" class="btn btn-danger" value="Supprimer"/>
+                                <p:commandButton action="#{demandeGardeningController.Action(1)}" class="btn btn-success" value="Valider"/>
+                            </div>
+
+                            <br></br>
+
+                             <p:commandLink oncomplete="handleSubmit(args,'DemandeHandyManViewDialog');" actionListener="#{demandeServiceController.retour()}"> 
+                                <h:graphicImage value="../resources/images/retour.png" alt="retour" />
+                            </p:commandLink>
+                        </h:form>
+                    </div>
+                    <br></br><hr></hr>
         </p:dialog>
 
     </ui:composition>
