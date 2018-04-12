@@ -36,10 +36,6 @@ public class DemandeServiceConfirmationDetailController implements Serializable 
     public DemandeServiceConfirmationDetailController() {
     }
 
-    public String voirPlus(DemandeServiceConfirmationDetail demande) {
-        return "#";
-    }
-
     public DemandeServiceConfirmationDetail getSelected() {
         return selected;
     }
