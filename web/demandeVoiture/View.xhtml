@@ -3,25 +3,65 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <ui:composition>
 
-        <p:dialog id="DemandeVoitureViewDlg" widgetVar="DemandeVoitureViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewDemandeVoitureTitle}">
-            <h:form id="DemandeVoitureViewForm">
-                <h:panelGroup id="display">
-                    <p:panelGrid columns="2" rendered="#{demandeVoitureController.selected != null}">
-                        <h:outputText value="#{bundle.ViewDemandeVoitureLabel_demandeService}"/>
-                        <h:outputText value="#{demandeVoitureController.selected.demandeService}" title="#{bundle.ViewDemandeVoitureTitle_demandeService}"/>
-                        <h:outputText value="#{bundle.ViewDemandeVoitureLabel_voiture}"/>
-                        <h:outputText value="#{demandeVoitureController.selected.voiture}" title="#{bundle.ViewDemandeVoitureTitle_voiture}"/>
-                        <h:outputText value="#{bundle.ViewDemandeVoitureLabel_id}"/>
-                        <h:outputText value="#{demandeVoitureController.selected.id}" title="#{bundle.ViewDemandeVoitureTitle_id}"/>
-                    </p:panelGrid>
-                    <p:commandButton value="#{bundle.Close}" onclick="DemandeVoitureViewDialog.hide()"/>
-                </h:panelGroup>
-            </h:form>
+        <p:dialog id="DemandeVoitureViewDlg" widgetVar="DemandeVoitureViewDialog" modal="true" hideEffect="blind" showEffect="blind" resizable="false" appendTo="@(body)" width="600" height="550" showHeader="false">
+            <hr></hr>
+            <h1 align="center"> Plus D'information : </h1>
+            <hr></hr><br></br>
+            <div class="container">
+                <h:form id="DemandeVoitureForm" style="margin-top: 10px;margin-bottom: 10px">
+                    <div align="center">
+                        <p:panelGrid columns="1" >
+                            <p:outputLabel value="Secteur : #{demandeServiceController.demandeVoiture.demandeService.secteur.nom}" />
+                            <p:outputLabel value="Service : #{demandeServiceController.demandeVoiture.demandeService.service.nom}" />
+                            <p:outputLabel value="Societe : #{demandeServiceController.demandeVoiture.demandeService.worker.nom}" />
+                            <p:outputLabel value="Client : #{demandeServiceController.demandeVoiture.demandeService.client.nom}" />
+                            <p:outputLabel value="Voiture Modele : #{demandeServiceController.demandeVoiture.voiture.modele.nom} 
+                                           -#{demandeServiceController.demandeVoiture.voiture.modele.marque.nom} 
+                                           -#{demandeServiceController.demandeVoiture.voiture.modele.annee}" />
+                            <p:outputLabel value="information du Voiture : #{demandeServiceController.demandeVoiture.voiture.matricule}                
+                                           -#{demandeServiceController.demandeVoiture.voiture.couleur} 
+                                           -#{demandeServiceController.demandeVoiture.voiture.kilometrage} Km
+                                           - carburant : #{demandeServiceController.demandeVoiture.voiture.carburant}" />
+                            <p:outputLabel value="Detail : #{demandeServiceController.demandeVoiture.demandeService.detail}"/>
+                            <c:if test="#{demandeServiceController.demandeVoiture.demandeService.dateConfirmation ne null}">
+                                <p:outputLabel value="manager de Confirmation : #{demandeServiceController.demandeVoiture.demandeService.managerConfirmation.id}" />
+                                <p:outputLabel value="date de Confirmation : #{demandeServiceController.demandeVoiture.demandeService.dateConfirmation}" />
+                            </c:if>
+                            <c:if test="#{not empty demandeServiceController.demandeVoiture.demandeService.dateSuppression}">
+                                <p:outputLabel value="manager de Suppression : #{demandeServiceController.demandeVoiture.demandeService.managerConfirmation.id}" />
+                                <p:outputLabel value="date de Suppression : #{demandeServiceController.demandeVoiture.demandeService.dateSuppression}" />
+                            </c:if>
+                            <c:if test="#{not empty demandeServiceController.demandeVoiture.demandeService.planning.dateDebut}">
+                                <p:outputLabel value="Date Debut : #{demandeServiceController.demandeVoiture.demandeService.planning.dateDebut}" />
+                                <p:outputLabel value="Date Fin : #{demandeServiceController.demandeVoiture.demandeService.planning.dateFin}" />
+                            </c:if>
+                            <c:if test="#{not empty demandeServiceController.demandeVoiture.demandeService.planning.dateOnce}">
+                                <p:outputLabel value="Date : #{demandeServiceController.demandeVoiture.demandeService.planning.dateOnce}" />
+                                <p:outputLabel value="Heure : #{demandeServiceController.demandeVoiture.demandeService.planning.timing.name}" />
+                            </c:if>
+                            <p:outputLabel value="Prix HT : #{demandeServiceController.demandeVoiture.demandeService.prixHt}" />
+                            <p:outputLabel value="Prix TTC : #{demandeServiceController.demandeVoiture.demandeService.prixTtc}" />
+                        </p:panelGrid>
+
+                        <br></br>
+
+                        <p:commandButton action="#{demandeGardeningController.Action(2)}" class="btn btn-danger" value="Supprimer"/>
+                        <p:commandButton action="#{demandeGardeningController.Action(1)}" class="btn btn-success" value="Valider"/>
+                    </div>
+
+                    <br></br>
+
+                    <p:commandLink oncomplete="handleSubmit(args,'DemandeVoitureViewDialog');" actionListener="#{demandeServiceController.retour()}"> 
+                        <h:graphicImage value="../resources/images/retour.png" alt="retour" />
+                    </p:commandLink>
+                </h:form>
+            </div>
+            <br></br><hr></hr>
         </p:dialog>
 
     </ui:composition>

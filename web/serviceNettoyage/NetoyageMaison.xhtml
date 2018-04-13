@@ -1,0 +1,382 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+
+
+
+        <ui:define name="title">
+            <h:outputText value="Profile"></h:outputText>
+        </ui:define>
+
+        <ui:define name="body">
+
+            <h:outputStylesheet name="bootstrap-3.3.6/css/bootstrap.min.css"/>
+            <h:outputStylesheet name="css/paper-bootstrap-wizard.css"/>
+            <h:outputStylesheet name="css/loginStyle.css"/>
+            <h:outputStylesheet name="css/themify-icons.css"/>
+
+
+
+            <h:outputScript name="bootstrap-3.3.6/js/bootstrap.min.js" />
+            <h:outputScript name="js/jquery.bootstrap.wizard.js" />
+            <h:outputScript name="js/paper-bootstrap-wizard.js" />
+            <h:outputScript name="js/jquery.validatePaper.min.js" />
+
+
+
+
+            <div class="image-container set-full-height" style="background-image: url('../resources/images/houseCleaning.jpg')">
+
+
+                <!--   Big container   -->
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-10 col-sm-offset-1">
+
+                            <!--      Wizard container        -->
+                            <div class="wizard-container" >
+                                <div class="card wizard-card" data-color="blue" id="wizard">
+
+                                    <h:form id="cleaningInfoForm">
+                                        <!--        You can switch " data-color="green" "  with one of the next bright colors: "blue", "azure", "orange", "red"       -->
+
+
+                                        <div class="wizard-navigation">
+                                            <div class="progress-with-circle">
+                                                <div class="progress-bar" role="progressbar" aria-valuenow="1" aria-valuemin="1" aria-valuemax="4" style="width: 15%;"></div>
+                                            </div>
+                                            <ul>
+                                                <li>
+                                                    <a href="#info" data-toggle="tab">
+                                                        <div class="icon-circle">
+                                                            <i class="ti-info"></i>
+                                                        </div>
+                                                        Info
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="#company" data-toggle="tab">
+                                                        <div class="icon-circle">
+                                                            <i class="ti-home"></i>
+                                                        </div>
+                                                        Company
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="#details" data-toggle="tab">
+                                                        <div class="icon-circle">
+                                                            <i class="ti-user"></i>
+                                                        </div>
+                                                        Details
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="#summary" data-toggle="tab">
+                                                        <div class="icon-circle">
+                                                            <i class="ti-clipboard"></i>
+                                                        </div>
+                                                        Summary
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="#payment" data-toggle="tab">
+                                                        <div class="icon-circle">
+                                                            <i class="ti-money"></i>
+                                                        </div>
+                                                        Payement
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="tab-content">
+                                            <div class="tab-pane" id="info">
+                                                <div class="row">
+
+                                                    <h5 class="info-text"> Please fill out this form so that we can book you a professional cleaner right away.</h5>
+                                                    <div class="col-sm-12">
+                                                        <p:panelGrid id="infoGrid" styleClass="ui-noborder" style="margin: 0 auto;width: 100%">
+                                                            <p:row>
+
+                                                                <p:column>
+                                                                    <p:outputLabel value="How many cleaners do you need?" for="numberOfCleaners" style="text-align: left;padding-top: 10px;width: 200px"/>
+                                                                </p:column>
+
+                                                                <p:column>
+                                                                    <p:selectOneMenu class="form-control" id="numberOfCleaners" value="#{demandeCleaningController.demandeCleaning.nbrCleaner}" style="width: 242px;height: 40px">
+                                                                        <f:selectItem itemValue="#{1}" itemLabel="1"/>
+                                                                        <f:selectItem itemValue="#{2}" itemLabel="2"/>
+                                                                        <f:selectItem itemValue="#{3}" itemLabel="3"/>
+                                                                        <f:selectItem itemValue="#{4}" itemLabel="4"/>
+                                                                        <f:selectItem itemValue="#{5}" itemLabel="5"/>
+                                                                    </p:selectOneMenu>
+                                                                </p:column>
+
+                                                                <p:column>
+                                                                    <p:outputLabel for="hours" value="For how long :" style="text-align: left;padding-top: 10px" />
+                                                                </p:column>
+
+                                                                <p:column>
+                                                                    <p:selectOneMenu class="form-control" id="hours" value="#{demandeCleaningController.demandeCleaning.nbrHeures}" style="width: 170px;height: 40px">
+                                                                        <f:selectItem itemValue="#{1}" itemLabel="1 Hour"/>
+                                                                        <f:selectItem itemValue="#{2}" itemLabel="2 Hours"/>
+                                                                        <f:selectItem itemValue="#{3}" itemLabel="3 Hours"/>
+                                                                        <f:selectItem itemValue="#{4}" itemLabel="4 Hours"/>
+                                                                        <f:selectItem itemValue="#{5}" itemLabel="5 Hours"/>
+                                                                    </p:selectOneMenu>
+                                                                </p:column>
+                                                            </p:row>
+
+                                                            <p:row>
+
+                                                                <p:column>
+                                                                    <p:outputLabel value="How often do you need cleaning?" for="oftenOnce" style="text-align: left;padding-top: 10px;width: 200px" />
+                                                                </p:column>
+
+                                                                <p:column>
+                                                                    <p:selectBooleanButton id="oftenOnce" class="myBtn" value="#{demandeCleaningController.cleaningOnce}" onLabel="ONCE" offLabel="ONCE" style="width:120px;height: 40px;text-align: center;padding: 8px 0;" onchange="PF('NetoyageUneFoisDialog').show()" >
+                                                                        <p:ajax listener="#{demandeCleaningController.checkOnce()}" update="oftenOnce oftenManyTimes :NetoyageUneFoisForm :NetoyagePlusieursFoisForm"/>
+                                                                    </p:selectBooleanButton>
+
+                                                                    <p:selectBooleanButton id="oftenManyTimes" class="myBtn" value="#{demandeCleaningController.cleaningMnayTimes}" onLabel="MANY TIMES" offLabel="MANY TIMES" style="width:120px;height: 40px;text-align: center;padding: 8px 0;" onchange="PF('NetoyagePlusieursFoisDialog').show()">
+                                                                        <p:ajax listener="#{demandeCleaningController.checkMany()}" update="oftenOnce oftenManyTimes :NetoyageUneFoisForm :NetoyagePlusieursFoisForm"/>
+                                                                    </p:selectBooleanButton>
+                                                                </p:column>
+
+                                                                <p:column>
+                                                                    <p:outputLabel value="Do you need cleaning materials?" for="materials" style="text-align: left;padding-top: 10px;" />
+                                                                </p:column>
+
+                                                                <p:column>
+                                                                    <p:selectBooleanButton id="materials" class="myBtn" value="#{demandeCleaningController.demandeCleaning.bringEquipement}" onLabel="YES (+20 MAD per hour)" offLabel="NO" style="width:170px;height: 40px;text-align: center;padding: 8px 0;" />
+                                                                </p:column>
+
+
+                                                            </p:row>
+
+                                                            <p:column>
+                                                                <p:outputLabel value="Any special instructions" for="instructions" style="text-align: left;padding-top: 10px;width: 200px" />
+                                                            </p:column>
+                                                            <p:column colspan="3">
+                                                                <p:inputTextarea rows="6" style="width: 100%"   id="instructions" placeholder="Example: The keys are under the door mat, and the money is on the kitchen counter." value="#{demandeCleaningController.demandeCleaning.demandeService.detail}" />
+                                                            </p:column>
+
+                                                            <p:row>
+
+
+                                                            </p:row>
+
+
+
+                                                        </p:panelGrid>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+
+                                            <div class="tab-pane" id="company">
+                                                <div class="row">
+                                                    <h5 class="info-text"> Select a company for your service </h5>
+
+                                                    <div class="col-sm-12">
+                                                        <p:panelGrid id="companyGrid" styleClass="ui-noborder" style="text-align: center;margin: 0 auto">
+                                                            <p:row>
+                                                                <p:column style="width: 100px">
+                                                                    <p:outputLabel value="Choice :" for="choice" style="padding-top: 10px" />
+                                                                </p:column>
+
+                                                                <p:column style="width: 260px">
+                                                                    <p:selectOneMenu class="form-control" id="choice" widgetVar="choice" value="#{demandeCleaningController.demandeCleaning.demandeService.workerType}" style="width: 250px;height: 40px" >
+
+
+                                                                        <f:selectItem itemValue="#{null}" itemLabel="-- SELECT A CHOICE --"/>
+                                                                        <f:selectItem itemValue="#{demandeCleaningController.workerType}" itemLabel="Choose a company / individual for me"/>
+                                                                        <f:selectItems value="#{demandeCleaningController.loadWorkerType()}" 
+                                                                                       var="workerType"
+                                                                                       itemValue="#{workerType}"
+                                                                                       />
+                                                                        <p:ajax listener="#{demandeCleaningController.checkChoice()}" update=":SocieteDlg, :IndividualDlg"/>
+
+                                                                    </p:selectOneMenu>
+                                                                </p:column>
+
+                                                            </p:row>
+
+                                                        </p:panelGrid>
+                                                    </div>
+
+
+
+
+
+
+                                                </div>
+                                            </div>
+
+                                            <div class="tab-pane" id="details">
+
+                                                <h5 class="info-text">Your contact details and location</h5>
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <p:panelGrid id="detailGrid" styleClass="ui-noborder" style="margin: 0 auto;width: 100%">
+
+                                                            <p:row>
+                                                                <p:column>
+                                                                    <p:outputLabel value="Your email:" for="email" style="text-align: left;padding-top: 5px;width: 100%" />
+                                                                </p:column>
+
+                                                                <p:column>
+
+
+                                                                    <p:inputText id="email" value="#{demandeCleaningController.demandeCleaning.demandeService.client.email}"  style="width:200px;height: 40px;" />
+
+                                                                    <p:commandButton icon="fa fa-search" process="detailGrid"  styleClass="white-button" style="width:50px;height: 40px;" actionListener="#{demandeCleaningController.checkEmail()}" update=":ConnexionDlg,:growl,detailGrid"/>  
+
+                                                                </p:column>
+
+
+
+                                                                <p:column>
+                                                                    <p:outputLabel value="Your number:" for="number" style="text-align: left;padding-top: 10px;width: 100%" />
+                                                                </p:column>
+
+                                                                <p:column>
+                                                                    <p:inputText id="number" value="#{demandeCleaningController.demandeCleaning.demandeService.client.phone}" style="width:250px;height: 40px;" />
+                                                                </p:column>
+
+                                                            </p:row>
+
+                                                            <p:row>
+
+                                                                <p:column>
+                                                                    <p:outputLabel value="Your First name:" for="firstName" style="text-align: left;padding-top: 10px;width: 100%" />
+                                                                </p:column>
+
+                                                                <p:column>
+                                                                    <p:inputText id="firstName" value="#{demandeCleaningController.demandeCleaning.demandeService.client.prenom}" style="width:250px;height: 40px;" />
+                                                                </p:column>
+
+                                                                <p:column>
+                                                                    <p:outputLabel value="Your Last Name:" for="lastName" style="text-align: left;padding-top: 10px;width: 100%" />
+                                                                </p:column>
+
+                                                                <p:column>
+                                                                    <p:inputText id="lastName" value="#{demandeCleaningController.demandeCleaning.demandeService.client.nom}" style="width:250px;height: 40px;" />
+                                                                </p:column>
+
+                                                            </p:row>
+
+                                                            <p:row>
+
+                                                                <p:column>
+                                                                    <p:outputLabel value="City:" for="city" style="text-align: left;padding-top: 10px;width: 100%" />
+                                                                </p:column>
+
+                                                                <p:column>
+                                                                    <p:selectOneMenu class="form-control" id="city" value="#{demandeCleaningController.ville}" style="width:250px;height: 40px;">
+                                                                        <p:ajax listener="#{demandeCleaningController.doAction}" process="detailGrid" update="detailGrid " />
+                                                                        <f:selectItem itemValue="#{null}" itemLabel="--SELECT CITY--"/>
+                                                                        <f:selectItems value="#{demandeCleaningController.loadVilles()}" 
+                                                                                       var="ville"
+                                                                                       itemValue="#{ville}"
+                                                                                       />
+                                                                    </p:selectOneMenu>
+                                                                </p:column>
+
+                                                                <p:column>
+                                                                    <p:outputLabel value="Area:" for="area" style="text-align: left;padding-top: 10px;width: 100%" />
+                                                                </p:column>
+
+                                                                <p:column>
+                                                                    <p:selectOneMenu class="form-control" id="area" value="#{demandeCleaningController.demandeCleaning.demandeService.client.secteur}" style="width:250px;height: 40px;">
+                                                                        <f:selectItem  itemValue="#{null}" itemLabel="--SELECT AREA--"/>
+                                                                        <f:selectItems value="#{demandeCleaningController.secteurs}" 
+                                                                                       var="secteur"
+                                                                                       itemValue="#{secteur}"
+                                                                                       />
+                                                                    </p:selectOneMenu>
+                                                                </p:column>
+
+                                                            </p:row>
+
+                                                            <p:row>
+
+                                                                <p:column>
+                                                                    <p:outputLabel value="Adresse" for="adresse" style="text-align: left;padding-top: 10px;width: 100%" />
+                                                                </p:column>
+
+                                                                <p:column>
+                                                                    <p:inputText id="adresse" value="#{demandeCleaningController.demandeCleaning.demandeService.client.adresseComplement}" style="width:250px;height: 40px;" />
+                                                                </p:column>
+
+                                                            </p:row>
+
+                                                        </p:panelGrid>
+
+                                                    </div>
+
+
+
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane" id="summary">
+                                                <h5 class="info-text">A summary of your booking. </h5>
+                                                <div class="row">
+
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane" id="payment">
+                                                <h5 class="info-text">Let's discuss money. </h5>
+                                                <div class="row">
+
+                                                    <div class="col-sm-2 col-md-offset-5">
+                                                        <p:commandButton value="Save" styleClass="white-button" style="width:100%;height: 40px;text-align: center" actionListener="#{demandeCleaningController.saveDemandeCleaning()}" update=":growl"/>  
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="wizard-footer">
+                                            <div class="pull-right">
+                                                <input type='button' class='btn btn-next btn-fill btn-success btn-wd' name='next' value='Next' />
+                                                <input type='button' class='btn btn-finish btn-fill btn-success btn-wd' name='finish' value='Finish' />
+                                            </div>
+
+                                            <div class="pull-left">
+                                                <input type='button' class='btn btn-previous btn-default btn-wd' name='previous' value='Previous' />
+                                            </div>
+                                            <div class="clearfix"></div>
+                                        </div>
+
+                                    </h:form>
+                                </div>
+                            </div> <!-- wizard container -->
+                        </div>
+                    </div> <!-- row -->
+                </div> <!--  big container -->
+
+            </div>
+
+
+
+
+
+
+            <ui:include src="NetoyagePlusieursFois.xhtml"/>
+            <ui:include src="NetoyageUneFois.xhtml"/>
+            <ui:include src="Connexion.xhtml"/>
+            <ui:include src="Societe.xhtml"/>
+            <ui:include src="Individual.xhtml"/>
+
+
+
+        </ui:define>
+    </ui:composition>
+
+</html>

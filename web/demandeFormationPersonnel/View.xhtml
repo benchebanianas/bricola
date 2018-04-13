@@ -8,8 +8,8 @@
 
     <ui:composition>
 
-        <p:dialog id="DemandeFormationPersonnelViewDlg" widgetVar="DemandeFormationPersonnelViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewDemandeFormationPersonnelTitle}">
-            <h:form id="DemandeFormationPersonnelViewForm">
+        <p:dialog id="DemandeFormationPersonnelViewDlg" widgetVar="DemandeFormationPersonnelViewDialog" modal="true" hideEffect="blind" showEffect="blind" resizable="false" appendTo="@(body)" width="600" height="550" showHeader="false">
+            <h:form id="DemandeFormationPersonnelForm" style="margin-top: 10px;margin-bottom: 10px">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{demandeFormationPersonnelController.selected != null}">
                         <h:outputText value="#{bundle.ViewDemandeFormationPersonnelLabel_nbreheure}"/>

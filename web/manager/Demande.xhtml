@@ -23,11 +23,11 @@
 
 
             <!--   Big container   -->
-            <div class="d-flex image-container set-full-height" style="background-image: url('../resources/images/Barcelona.jpg')">
+            <div class="d-flex image-container set-full-height" style="background-image: url('../resources/images/managerbg.png')">
                 <nav class="sidebar bg-dark">
                     <p style="text-align: center;">
-                        <a href="#">
-                            <img src="../resources/images/workerLogo.jpg" style="border-radius: 70%;" width="200" class="img-rounded" />
+                        <a href="../manager/Profile.xhtml">
+                            <img src="../resources/images/adminuser.png" style="border-radius: 70%;" width="200" class="img-rounded" />
                         </a>
                     </p>
                     <div align="center">
@@ -35,31 +35,31 @@
                     </div>
                     <ul class="nav flex-column">
                         <li class="nav-item">
-                            <a class="nav-link active" href="#">
+                            <a class="nav-link active" href="../manager/Profile.xhtml">
                                 <span data-feather="home"></span>
                                 Profile <span class="sr-only">(current)</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="../manager/Demande.xhtml">
                                 <span data-feather="file"></span>
                                 Demandes
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="../manager/Worker.xhtml">
                                 <span data-feather="shopping-cart"></span>
                                 Workers
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="../manager/Operation.xhtml">
                                 <span data-feather="users"></span>
                                Operations
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="../manager/Statistique.xhtml">
                                 <span data-feather="bar-chart-2"></span>
                                  Statistiques
                             </a>
@@ -128,15 +128,15 @@
                                             </f:facet>
                                             <p:panelMenu style="width:100px">
                                                 <p:submenu label="#{item.dateSuppression ne null ? 'Supprimée' : item.dateConfirmation ne null ? 'Validée' : 'nouvelle'}">
-                                                    <p:menuitem value="Valider" actionListener="#{demandeServiceController.Action(item,1)}" icon="ui-icon-disk" />
-                                                    <p:menuitem value="Supprimer" actionListener="#{demandeServiceController.Action(item,2)}" icon="ui-icon-close" />
+                                                    <p:menuitem value="Valider" action="#{demandeServiceController.Action(item,1)}" icon="ui-icon-disk" />
+                                                    <p:menuitem value="Supprimer" action="#{demandeServiceController.Action(item,2)}" icon="ui-icon-close" />
                                                 </p:submenu>
                                             </p:panelMenu>
                                         </p:column>
                                         <p:column>
-                                            <h:commandLink action="#{demandeServiceController.voirPlus(item)}"> 
-                                                <h:graphicImage value="../resources/images/seeMore.png" alt="voir Plus" />
-                                            </h:commandLink>
+                                            <p:commandLink action="#{demandeServiceController.voirPlus(item)}"> 
+                                                <h:graphicImage value="../resources/images/seeMore.png" alt=">>" />
+                                            </p:commandLink>
                                         </p:column>
                                     </p:dataTable>
                                 </h:form>
@@ -146,8 +146,18 @@
                     </h:form>
                 </div>
             </div>
-
-
+            <ui:include src="../demandeBabySitting/View.xhtml"/>
+            <ui:include src="../demandeCleaning/View.xhtml"/>
+            <ui:include src="../demandeEvent/View.xhtml"/>
+            <ui:include src="../demandeGardening/View.xhtml"/>
+            <ui:include src="../demandeHandyMan/View.xhtml"/>
+            <ui:include src="../demandeMoving/View.xhtml"/>
+            <ui:include src="../demandePainting/View.xhtml"/>
+            <ui:include src="../demandePestControl/View.xhtml"/>
+            <ui:include src="../demandePhotographie/View.xhtml"/>
+            <ui:include src="../demandeVoiture/View.xhtml"/>
+              
+              
         </ui:define>
     </ui:composition>
 

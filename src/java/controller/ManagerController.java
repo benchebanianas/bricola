@@ -7,6 +7,7 @@ import bean.Secteur;
 import bean.Service;
 import bean.Ville;
 import controller.util.JsfUtil;
+import controller.util.*;
 import controller.util.JsfUtil.PersistAction;
 import controller.util.SessionUtil;
 import service.ManagerFacade;
@@ -26,6 +27,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import org.primefaces.context.RequestContext;
 import service.DemandeServiceConfirmationDetailFacade;
 import service.DeviceFacade;
 
@@ -58,8 +60,8 @@ public class ManagerController implements Serializable {
     private String action;
     private DemandeServiceConfirmationDetail demandeServiceConfirmationDetail;
 
-    public void doAction(DemandeServiceConfirmationDetail confirmationDetail) {
-        demandeServiceConfirmationDetail = confirmationDetail;
+    public void viewMore(DemandeServiceConfirmationDetail confirmationDetail) {
+           demandeServiceConfirmationDetail=confirmationDetail;
     }
 
     public String login() {
@@ -75,7 +77,7 @@ public class ManagerController implements Serializable {
             Device device = deviceFacade.verifDevice(selected);
             System.out.println(device);
             if (device == null) {
-                return "/manager/question";
+                return "/manager/question?faces-redirect=true";
             } else {
                 device.setDateConnection(new Date());
                 deviceFacade.edit(device);
@@ -93,13 +95,13 @@ public class ManagerController implements Serializable {
         verifier += ejbFacade.RepDernAction(selected, action);
         verifier += ejbFacade.RepDernConfir(selected, dernierConfirmation);
         if (verifier < 2) {
-            return "/manager/Login";
+            return "/manager/Login?faces-redirect=true";
         } else {
             Device dev = deviceFacade.getManagerDevice(selected);
             deviceFacade.creerDevice(dev);
             SessionUtil.setAttribute("device", dev);
             SessionUtil.setAttribute("connectedManager", selected);
-            return "/manager/Profile";
+            return "/manager/Profile?faces-redirect=true";
         }
     }
 
@@ -248,6 +250,9 @@ public class ManagerController implements Serializable {
     public Manager getSelected() {
         if (selected == null) {
             selected = new Manager();
+            if (((Manager) SessionUtil.getAttribute("connectedManager")) != null) {
+                selected = (Manager) SessionUtil.getAttribute("connectedManager");
+            }
         }
         return selected;
     }

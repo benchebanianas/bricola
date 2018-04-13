@@ -23,11 +23,11 @@
 
 
             <!--   Big container   -->
-            <div class="d-flex image-container set-full-height" style="background-image: url('../resources/images/Barcelona.jpg')">
+            <div class="d-flex image-container set-full-height" style="background-image: url('../resources/images/managerbg.png')">
                 <nav class="sidebar bg-dark">
                     <p style="text-align: center;">
-                        <a href="#">
-                            <img src="../resources/images/workerLogo.jpg" style="border-radius: 70%;" width="200" class="img-rounded" />
+                        <a href="../manager/Profile.xhtml">
+                            <img src="../resources/images/adminuser.png" style="border-radius: 70%;" width="200" class="img-rounded" />
                         </a>
                     </p>
                     <div align="center">
@@ -35,33 +35,33 @@
                     </div>
                     <ul class="nav flex-column">
                         <li class="nav-item">
-                            <a class="nav-link active" href="#">
+                            <a class="nav-link active" href="../manager/Profile.xhtml">
                                 <span data-feather="home"></span>
                                 Profile <span class="sr-only">(current)</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="../manager/Demande.xhtml">
                                 <span data-feather="file"></span>
                                 Demandes
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="../manager/Worker.xhtml">
                                 <span data-feather="shopping-cart"></span>
                                 Workers
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="../manager/Operation.xhtml">
                                 <span data-feather="users"></span>
-                               Operations
+                                Operations
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="../manager/Statistique.xhtml">
                                 <span data-feather="bar-chart-2"></span>
-                                 Statistiques
+                                Statistiques
                             </a>
                         </li>
                     </ul>
@@ -69,50 +69,50 @@
 
                 <div class="content p-4">
                     <h:form>
-                         <hr></hr>
+                        <hr></hr>
                         <h1 align="center"> Operations : </h1>
                         <hr></hr><br></br>
                         <div class="container">
                             <div class="row">
                                 <h:form>
-                                   <h1><h:outputText value="Liste Des Operations Des Managers :"/></h1>
-                                <p:dataTable value="#{demandeServiceConfirmationDetailController.items}" class="table table-striped" var="item">
-                                    <p:column>
-                                        <f:facet name="header">
-                                            <h:outputText value="Manager"/>
-                                        </f:facet>
-                                        <h:outputText value="#{item.manager.id}"/>
-                                    </p:column>
-                                    <p:column>
-                                        <f:facet name="header">
-                                            <h:outputText value="Type d'Action"/>
-                                        </f:facet>
-                                        <h:outputText value="#{item.typeAction.name}"/>
-                                    </p:column>
-                                    <p:column>
-                                        <f:facet name="header">
-                                            <h:outputText value="Date d'Action"/>
-                                        </f:facet>
-                                        <h:outputText value="#{item.dateAction}">
-                                            <f:convertDateTime pattern="MM-dd-yyyy" />
-                                        </h:outputText>
-                                    </p:column>
-                                    <p:column>
-                                        <f:facet name="header">
-                                            <h:outputText value="Service"/>
-                                        </f:facet>
-                                        <h:outputText value="#{item.demandeService.service.nom}"/>
-                                    </p:column>
-                                    <p:column>
-                                        <f:facet name="header">
-                                            <h:outputText value="Societe"/>
-                                        </f:facet>
-                                        <h:outputText value="#{item.demandeService.worker.nom}"/>
-                                    </p:column>
-                                    <p:column>
-                                        <p:commandButton class="btn btn-next" action="#{demandeServiceConfirmationDetailController.voirPlus(item)}" value="Plus >>"/>
-                                    </p:column>
-                                </p:dataTable>
+                                    <h1><h:outputText value="Liste Des Operations Des Managers :"/></h1>
+                                    <p:dataTable value="#{demandeServiceConfirmationDetailController.items}" class="table table-striped" var="item">
+                                        <p:column>
+                                            <f:facet name="header">
+                                                <h:outputText value="Manager"/>
+                                            </f:facet>
+                                            <h:outputText value="#{item.manager.id}"/>
+                                        </p:column>
+                                        <p:column>
+                                            <f:facet name="header">
+                                                <h:outputText value="Type d'Action"/>
+                                            </f:facet>
+                                            <h:outputText value="#{item.typeAction.name}"/>
+                                        </p:column>
+                                        <p:column>
+                                            <f:facet name="header">
+                                                <h:outputText value="Date d'Action"/>
+                                            </f:facet>
+                                            <h:outputText value="#{item.dateAction}">
+                                                <f:convertDateTime pattern="MM-dd-yyyy" />
+                                            </h:outputText>
+                                        </p:column>
+                                        <p:column>
+                                            <f:facet name="header">
+                                                <h:outputText value="Service"/>
+                                            </f:facet>
+                                            <h:outputText value="#{item.demandeService.service.nom}"/>
+                                        </p:column>
+                                        <p:column>
+                                            <f:facet name="header">
+                                                <h:outputText value="Societe"/>
+                                            </f:facet>
+                                            <h:outputText value="#{item.demandeService.worker.nom}"/>
+                                        </p:column>
+                                        <p:column>
+                                            <p:commandButton class="btn btn-next" action="#{demandeServiceConfirmationDetailController.voirPlus(item)}" value="Plus >>"/>
+                                        </p:column>
+                                    </p:dataTable>
                                 </h:form>
                             </div>
                         </div>

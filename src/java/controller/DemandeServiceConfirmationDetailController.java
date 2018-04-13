@@ -28,11 +28,12 @@ public class DemandeServiceConfirmationDetailController implements Serializable 
     private List<DemandeServiceConfirmationDetail> items = null;
     private DemandeServiceConfirmationDetail selected;
 
-    public DemandeServiceConfirmationDetailController() {
+    
+    public String voirPlus(DemandeServiceConfirmationDetail demande){
+      return "#";  
     }
-
-    public String voirPlus(DemandeServiceConfirmationDetail demande) {
-        return "#";
+    
+    public DemandeServiceConfirmationDetailController() {
     }
 
     public DemandeServiceConfirmationDetail getSelected() {

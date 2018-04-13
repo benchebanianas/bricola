@@ -32,13 +32,12 @@ public class WorkerController implements Serializable {
     private List<Worker> items = null;
     private Worker selected;
 
-    public WorkerController() {
-    }
-
+    
+    
     public void modifier() {
         ejbFacade.edit(getSelected());
         items.set(items.indexOf(getSelected()), getSelected());
-
+        
     }
 
     public void supprimer() {
@@ -46,9 +45,12 @@ public class WorkerController implements Serializable {
         items.remove(getSelected());
         selected = null;
     }
-
+    
     public String next() {
         return "/workerJob/WorkerJobCreate";
+    }
+    
+    public WorkerController() {
     }
 
     public double showRating() {
