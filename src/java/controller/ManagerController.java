@@ -61,7 +61,7 @@ public class ManagerController implements Serializable {
     private DemandeServiceConfirmationDetail demandeServiceConfirmationDetail;
 
     public void viewMore(DemandeServiceConfirmationDetail confirmationDetail) {
-           demandeServiceConfirmationDetail=confirmationDetail;
+        demandeServiceConfirmationDetail = confirmationDetail;
     }
 
     public String login() {

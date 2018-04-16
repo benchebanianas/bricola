@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <div class="row">
+
+            <h5 class="info-text"> Veuillez remplir le formulaire ci-dessous afin que nous puissions trouver la voiture parfaite pour vous.</h5>
+            <div class="col-sm-12">
+                <p:panelGrid id="infoGrid" styleClass="ui-noborder" style="margin: 0 auto;width: 100%">
+                    <p:row>
+
+                        <p:column>
+                            <p:outputLabel value="Marque :" for="marque" style="text-align: left;padding-top: 10px;width: 200px"/>
+                        </p:column>
+
+                        <p:column>
+                            <!--<p:selectOneMenu class="form-control" id="marque" value="# {demandeVoitureController.voitureMarque}" style="width: 170px;height: 40px">-->
+                            <p:selectOneMenu class="form-control" id="marque" value="#{demandeServiceController.voitureMarque}" style="width: 170px;height: 40px">
+                                <!--<p:ajax  event="valueChange" update="modele" listener="# {demandeVoitureController.loadModeles(event)}"/>-->
+                                <p:ajax  event="valueChange" update="modele" listener="#{demandeServiceController.loadModeles(event)}"/>
+                                <f:selectItem itemLabel="-- Select marque-- " itemValue="0"/> 
+                                <f:selectItems value="#{voitureMarqueController.itemsAvailableSelectOne}"  var="item" itemValue="#{item}" itemLabel="#{item.nom}"/>
+                            </p:selectOneMenu>
+                        </p:column>
+
+                        <p:column>
+                            <p:outputLabel for="modele" value="Modele:" style="text-align: left;padding-top: 10px;width: 200px" />
+                        </p:column>
+
+                        <p:column>
+                            <!--<p:selectOneMenu class="form-control" id="modele" value="# {demandeVoitureController.selected.voiture.modele}" style="width: 170px;height: 40px">-->
+                            <p:selectOneMenu class="form-control" id="modele" value="#{demandeServiceController.demandeVoiture.voiture.modele}" style="width: 170px;height: 40px">
+                                <f:selectItem itemLabel="-- Select modele-- " itemValue="0"/> 
+                                <!--<f:selectItems value="# {demandeVoitureController.modeles}" var="item" itemValue="#{item}" itemLabel="#{item.nom}-#{item.annee}"/>-->
+                                <f:selectItems value="#{demandeServiceController.modeles}" var="item" itemValue="#{item}" itemLabel="#{item.nom}-#{item.annee}"/>
+
+                            </p:selectOneMenu>
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel for="couleur" value="Couleur:" style="text-align: left;padding-top: 10px;width: 200px" />
+                        </p:column>
+
+                        <p:column>
+                            <!--<p:selectOneMenu class="form-control" id="couleur" value="# {demandeVoitureController.selected.voiture.couleur}" style="width: 170px;height: 40px">-->
+                            <p:selectOneMenu class="form-control" id="couleur" value="#{demandeServiceController.demandeVoiture.voiture.couleur}" style="width: 170px;height: 40px">
+                                <f:selectItem itemLabel="-- Select couleur-- " itemValue="0"/> 
+                                <f:selectItem itemLabel="Noir" itemValue="Noir" />
+                                <f:selectItem itemLabel="Blanc" itemValue="Blanc" />
+                                <f:selectItem itemLabel="Gris" itemValue="Gris" />
+
+                            </p:selectOneMenu>
+                        </p:column>
+                        <p:column>
+                            <p:outputLabel for="fuel" value="Carburant:" style="text-align: left;padding-top: 10px;width: 200px" />
+                        </p:column>
+
+                        <p:column>
+                            <!--<p:selectOneMenu class="form-control" id="fuel" value="# {demandeVoitureController.selected.voiture.carburant}" style="width: 170px;height: 40px">-->
+                            <p:selectOneMenu class="form-control" id="fuel" value="#{demandeServiceController.demandeVoiture.voiture.carburant}" style="width: 170px;height: 40px">
+                                <f:selectItem itemLabel="-- Select carburant-- " itemValue="0"/> 
+
+                                <f:selectItem itemLabel="Essence" itemValue="Essence" />
+                                <f:selectItem itemLabel="Diesel" itemValue="Diesel" />
+
+                            </p:selectOneMenu>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+
+
+                        <p:column>
+                            <p:outputLabel value="Planning:" for="plan" style="text-align: left;padding-top: 10px;width: 200px" />
+                        </p:column>
+
+                        <p:column>
+                            <!--<p:commandButton value="Select" class="myBtn" type="button" id="plan" onclick="PF('planningDialog').show();" style="width: 170px;height: 40px"/>-->
+                            <p:commandButton value="Select" class="myBtn" type="button" id="plan" onclick="PF('ServiceUneFoisDialog').show();" style="width: 170px;height: 40px"/>
+                        </p:column>
+
+                    </p:row>
+
+                    <p:column>
+                        <p:outputLabel value="Any special instructions" for="instructions" style="text-align: left;padding-top: 10px;width: 200px" />
+                    </p:column>
+                    <p:column colspan="3">
+                        <p:inputTextarea rows="6" style="width: 100%"   id="instructions" placeholder="Example: The keys are under the door mat, and the money is on the kitchen counter." value="#{demandeServiceController.demandeService.detail}" />
+                    </p:column>
+                </p:panelGrid>
+            </div>
+
+        </div>
+
+    </ui:composition>
+</html>

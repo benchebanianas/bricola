@@ -302,7 +302,7 @@ public class DemandeServiceController implements Serializable {
         System.out.println("service name " + currentService.getNom());
         System.out.println("type demande " + menuFormulaire.getService().getNom());
 
-        link = "demandeService/Demande.xhtml";
+        link = "/demandeService/Demande.xhtml?faces-redirect=true";
         return link;
     }
 
@@ -413,6 +413,11 @@ public class DemandeServiceController implements Serializable {
             context.execute("PF('ConnexionDialog').jq.effect('shake', {times:5}, 100)");
 
         }
+    }
+    
+    public String redirectToIndex(){
+//        return "../index.xhtml?faces-redirect=true";
+        return "/index?faces-redirect=true";
     }
 
     public List<Secteur> getSecteurs() {

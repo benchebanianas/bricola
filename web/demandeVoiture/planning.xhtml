@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="planningDlg" widgetVar="planningDialog" modal="true" resizable="false" appendTo="@(body)" width="600" height="270" header="Selectionner le planning">
+            <h:form id="planningForm" style="margin-top: 30px;margin-bottom: 30px">
+                <p:panelGrid  styleClass="ui-noborder" style="margin: 0 auto">
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel for="dateDebut" value="Date debut:" />
+                        </p:column>
+
+                        <p:column>
+                            <p:calendar id="dateDebut" value="#{demandeVoitureController.selected.demandeService.planning.dateDebut}" inputStyle="width: 150px;height: 40px" pattern="MM/dd/yyyy" />
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel for="dateFin" value="Date fin:" />
+                        </p:column>
+
+                        <p:column>
+                            <p:calendar id="dateFin" value="#{demandeVoitureController.selected.demandeService.planning.dateFin}" inputStyle="width: 150px;height: 40px" pattern="MM/dd/yyyy" />
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel for="timing" value="Timing :" />
+                        </p:column>
+
+                        <p:column>
+                            <p:selectOneMenu class="form-control" id="timing" value="#{demandeVoitureController.selected.demandeService.planning.timing}" style="width: 170px;height: 40px">
+                                <f:selectItem itemValue="#{null}" itemLabel="--SELECT TIMING--"/>
+                                <f:selectItems value="#{demandeVoitureController.loadTimings()}" 
+                                               var="timing"
+                                               itemValue="#{timing}" itemLabel="#{timing.name}"
+                                               />
+                            </p:selectOneMenu>
+                        </p:column>
+
+                    </p:row>
+
+                    <p:row>
+                        <p:column colspan="4" style="text-align: center">
+                            <p:commandButton value="Confirmer" style="width: 50%;height: 40px" oncomplete="handleSubmit(args,'planningDialog');" />
+                        </p:column>
+                    </p:row>
+                </p:panelGrid>
+            </h:form>
+        </p:dialog>
+    </ui:composition>
+</html>
