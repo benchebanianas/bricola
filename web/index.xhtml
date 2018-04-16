@@ -55,7 +55,7 @@
             </div>
             <nav class="navbar navbar-expand-lg">
                 <div class="mx-auto order-0">
-                    <a class="navbar-brand" href="/bricolage/faces/index.xhtml"> <img src="resources/images/logo.png" style="width:120px;vertical-align: middle" alt="EDE logo"/></a>
+                    <a class="navbar-brand" href="/bricola/faces/index.xhtml"> <img src="resources/images/logo.png" style="width:120px;vertical-align: middle" alt="EDE logo"/></a>
 
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2">
                         <span class="navbar-toggler-icon"></span>
@@ -65,7 +65,7 @@
 
                     <ul class="navbar-nav ml-auto">
 
-                        <li class="nav-item">
+                        <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownCleaningServices" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Nettoyage
                             </a>
@@ -74,7 +74,10 @@
                                 <p:commandLink id="netoyageMaison" class="nav-link" action="#{demandeServiceController.initService2('nettoyageMaison')}">
                                     Nettoyage Maison
                                 </p:commandLink>
-                                <!--<p:ajax event="click" listener="# {demandeServiceController.initService('nettoyageMaison')}" />-->
+                                <!--                                <a class="dropdown-item" href="/bricola/faces/demandeService/Demande.xhtml">
+                                                                    <p:ajax event="click" listener="# {demandeServiceController.initService('nettoyageMaison')}" />
+                                                                    Nettoyage Maison 
+                                                                </a>-->
                             </div>
                         </li>
 
@@ -134,6 +137,8 @@
                                 <p:commandLink  class="nav-link" action="#{demandeServiceController.initService2('photographie')}">
                                     Photographie 
                                 </p:commandLink>
+                                <!--<a class="dropdown-item" href="/bricola/faces/demandeService/Demande.xhtml">Photographie<p:ajax event="click" listener="# {demandeServiceController.initService('photographie')}"/></a>-->
+
                                 <a class="dropdown-item" href="../photography/Photography.php">Videographie</a>
                             </div>
                         </li>
@@ -144,7 +149,19 @@
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownCleaningServices">
                                 <a class="dropdown-item" href="../voitureLocation/VoitureLocation.php">Location Voiture</a>
-
+                                <p:commandLink  class="nav-link" action="#{demandeServiceController.initService2('locationvoiture')}">
+                                    Location Voiture 
+                                </p:commandLink>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownCleaningServices" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Formations
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownCleaningServices">
+                                <p:commandLink  class="nav-link" action="#{demandeServiceController.initService2('formationpersonnel')}">
+                                    Formation Personnel
+                                </p:commandLink>
                             </div>
                         </li>
 

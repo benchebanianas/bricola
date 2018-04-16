@@ -67,5 +67,17 @@ public class WorkerJobFacade extends AbstractFacade<WorkerJob> {
         }
 
     }
+    
+    //to be removed
+     public List<Worker> findWorkerByService(String service) {
+
+        String requette = "select w.worker from WorkerJob w where w.service.nom = '" + service + "'";
+        List<Worker> workers = em.createQuery(requette).getResultList();
+        if (!workers.isEmpty()) {
+            return workers;
+        } else {
+            return new ArrayList<>();
+        }
+    }
 
 }

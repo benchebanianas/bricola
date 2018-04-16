@@ -6,6 +6,8 @@
 package service;
 
 import bean.Filiere;
+import bean.NiveauScolaire;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -19,6 +21,11 @@ public class FiliereFacade extends AbstractFacade<Filiere> {
 
     @PersistenceContext(unitName = "bricolagePU")
     private EntityManager em;
+    
+    public List<Filiere> findByNiveauScolaire(NiveauScolaire niveauScolaire) {
+        String requette = "select f from Filiere f where f.niveauScolaire.id='" + niveauScolaire.getId() + "'";
+        return em.createQuery(requette).getResultList();
+    }
 
     @Override
     protected EntityManager getEntityManager() {

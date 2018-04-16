@@ -35,7 +35,7 @@ public class Worker implements Serializable {
     private String password;
     private boolean blocked;
     //private List<Device> devices; hta nchof apres wach nkhliwha ola la 
-
+//    private boolean accepted;
     public Worker() {
     }
 

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <div class="row">
+
+            <h5 class="info-text"> Please fill out this form so that we can book you a professional cleaner right away.</h5>
+            <div class="col-sm-12">
+                <p:panelGrid id="infoGrid" styleClass="ui-noborder" style="margin: 0 auto;width: 100%">
+                    <p:row>
+
+
+                        <p:column>
+                            <p:outputLabel value="Niveauscolaire" for="niveauscolaire" style="text-align: left;padding-top: 10px;width: 100%" />
+                        </p:column>
+                        <p:column>
+                            <!--<p:selectOneMenu class="form-control" id="niveauscolaire" value="# {demandeFormationPersonnelController.niveauScolaire}" style="width:170px;height: 40px;text-align: center;padding: 8px 0;">-->
+                            <p:selectOneMenu class="form-control" id="niveauscolaire" value="#{demandeServiceController.niveauScolaire}" style="width:170px;height: 40px;text-align: center;padding: 8px 0;">
+                                <!--<p:ajax event="valueChange" update="filiere"  listener="# {demandeFormationPersonnelController.doActionNiveau(event)}"   />-->
+                                <p:ajax event="valueChange" update="filiere"  listener="#{demandeServiceController.doActionNiveau(event)}"   />
+                                <f:selectItem itemValue="0" itemLabel="--SELECT NIVEAU SCOLAIRE--"/>
+                                <f:selectItems value="#{niveauScolaireController.itemsAvailableSelectOne}" var="item" itemValue="#{item}" itemLabel="#{item.nom}"/>
+                            </p:selectOneMenu>
+                        </p:column>
+                        <p:column>
+                            <p:outputLabel value="Filiere" for="filiere" style="text-align: left;padding-top: 10px;width: 100%" />
+                        </p:column>
+                        <p:column>
+                            <!--<p:selectOneMenu class="form-control" id="filiere" value="# {demandeFormationPersonnelController.filiere}" style="width:170px;height: 40px;text-align: center;padding: 8px 0;">-->
+                            <p:selectOneMenu class="form-control" id="filiere" value="#{demandeServiceController.filiere}" style="width:170px;height: 40px;text-align: center;padding: 8px 0;">
+                                <!--<p:ajax event="valueChange" update="matiere"  listener="# {demandeFormationPersonnelController.doActionFiliere(event)}"   />-->
+                                <p:ajax event="valueChange" update="matiere"  listener="#{demandeServiceController.doActionFiliere(event)}"   />
+                                <f:selectItem itemValue="0" itemLabel="--SELECT FILIERE--"/>
+                                <!--<f:selectItems value="# {demandeFormationPersonnelController.filieres}" itemValue="#{item}" var="item" itemLabel="#{item.nom}"/>-->
+                                <f:selectItems value="#{demandeServiceController.filieres}" itemValue="#{item}" var="item" itemLabel="#{item.nom}"/>
+                            </p:selectOneMenu>
+                        </p:column>
+
+                        <p:column>
+                            <p:outputLabel value="Matiere" for="matiere" style="text-align: left;padding-top: 10px;width: 100%" />
+                        </p:column>
+
+                        <p:column>
+                            <!--<p:selectOneMenu class="form-control" id="matiere" value="# {demandeFormationPersonnelController.selected.matiere}" style="width:170px;height: 40px;text-align: center;padding: 8px 0;">-->
+                            <p:selectOneMenu class="form-control" id="matiere" value="#{demandeServiceController.demandeFormationPersonnel.matiere}" style="width:170px;height: 40px;text-align: center;padding: 8px 0;">
+                                <f:selectItem itemValue="0" itemLabel="--SELECT MATIERE--"/>
+                                <!--<f:selectItems value="# {demandeFormationPersonnelController.matieres}"  itemValue="#{item}" var="item" itemLabel="#{item.nom}"/>-->
+                                <f:selectItems value="#{demandeServiceController.matieres}"  itemValue="#{item}" var="item" itemLabel="#{item.nom}"/>
+                            </p:selectOneMenu>
+                        </p:column>
+
+
+                    </p:row>
+
+                    <p:row>
+
+                        <p:column>
+                            <p:outputLabel for="nbrpersonne" value="combien de personnes :" style="text-align: left;padding-top: 30px" />
+                        </p:column>
+
+                        <p:column>
+                            <!--<p:selectOneMenu class="form-control" id="nbrpersonne" value="# {demandeFormationPersonnelController.selected.nbrpersonne}" style="width:170px;height: 40px;text-align: center;padding: 8px 0;">-->
+                            <p:selectOneMenu class="form-control" id="nbrpersonne" value="#{demandeServiceController.demandeFormationPersonnel.nbrpersonne}" style="width:170px;height: 40px;text-align: center;padding: 8px 0;">
+                                <f:selectItem itemValue="#{1}" itemLabel="1 Personne"/>
+                                <f:selectItem itemValue="#{2}" itemLabel="2 Personnes"/>
+                                <f:selectItem itemValue="#{3}" itemLabel="3 Personnes"/>
+                                <f:selectItem itemValue="#{4}" itemLabel="4 Personnes"/>
+                                <f:selectItem itemValue="#{5}" itemLabel="5 Personnes"/>
+                                <f:selectItem itemValue="#{6}" itemLabel="6 Personnes"/>
+                                <f:selectItem itemValue="#{7}" itemLabel="7 Personnes"/>
+                                <f:selectItem itemValue="#{8}" itemLabel="8 Personnes"/>
+                                <f:selectItem itemValue="#{9}" itemLabel="9 Personnes"/>
+                                <f:selectItem itemValue="#{10}" itemLabel="10 Personnes"/>
+
+                            </p:selectOneMenu>
+                        </p:column>
+
+                        <p:column>
+                            <p:outputLabel value="formation à domicile ?" for="domicile" style="text-align: left;padding-top: 30px;" />
+                        </p:column>
+
+                        <p:column>
+                            <!--<p:selectBooleanButton id="domicile" class="myBtn" value="# {demandeFormationPersonnelController.selected.adomicile}" onLabel="OUI" offLabel="NO" style="width:170px;height: 40px;text-align: center;padding: 8px 0;" />-->
+                            <p:selectBooleanButton id="domicile" class="myBtn" value="#{demandeServiceController.demandeFormationPersonnel.adomicile}" onLabel="OUI" offLabel="NO" style="width:170px;height: 40px;text-align: center;padding: 8px 0;" />
+                        </p:column>
+
+
+                    </p:row>
+
+                    <p:column>
+                        <p:outputLabel value="Any detail ?" for="instructions" style="text-align: left;padding-top: 10px;width: 200px" />
+                    </p:column>
+                    <p:column colspan="3">
+                        <!--<p:inputTextarea rows="6" style="width: 100%"   id="instructions" placeholder="Example: The keys are under the door mat, and the money is on the kitchen counter." value="# {demandeFormationPersonnelController.selected.demandeService.detail}" >-->
+                        <p:inputTextarea rows="6" style="width: 100%"   id="instructions" placeholder="Example: The keys are under the door mat, and the money is on the kitchen counter." value="#{demandeServiceController.demandeService.detail}" >
+                        </p:inputTextarea>
+                    </p:column>
+
+                    <p:row>
+
+
+                    </p:row>
+
+
+
+                </p:panelGrid>
+            </div>
+
+        </div>
+
+    </ui:composition>
+</html>
