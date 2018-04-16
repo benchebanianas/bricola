@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  127.0.0.1
--- Généré le :  Mar 10 Avril 2018 à 19:37
+-- Généré le :  Lun 16 Avril 2018 à 22:48
 -- Version du serveur :  10.1.16-MariaDB
 -- Version de PHP :  5.6.24
 
@@ -44,7 +44,8 @@ INSERT INTO `categorie` (`ID`, `NOM`) VALUES
 (5, 'Evenmentiel'),
 (6, 'Babysitters'),
 (7, 'Photographie'),
-(8, 'Voitures');
+(8, 'Voitures'),
+(9, 'Formation');
 
 -- --------------------------------------------------------
 
@@ -72,6 +73,7 @@ CREATE TABLE `client` (
   `PASSWORD` varchar(255) DEFAULT NULL,
   `PHONE` varchar(255) DEFAULT NULL,
   `PRENOM` varchar(255) DEFAULT NULL,
+  `TOKEN` varchar(255) DEFAULT NULL,
   `SECTEUR_ID` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -79,9 +81,9 @@ CREATE TABLE `client` (
 -- Contenu de la table `client`
 --
 
-INSERT INTO `client` (`EMAIL`, `ADRESSECOMPLEMENT`, `BLOCKED`, `NOM`, `PASSWORD`, `PHONE`, `PRENOM`, `SECTEUR_ID`) VALUES
-('anas.the.creator@gmail.com', 'Saada 1 No 570', 0, 'Benchebani', 'walo', '0630247385', 'Mohamed Anas', 3),
-('newCustomer@gmail.com', 'no 12 hay salama', 0, 'Customer', 'newCustomer@gmail.com', '0679461382', 'new', 5);
+INSERT INTO `client` (`EMAIL`, `ADRESSECOMPLEMENT`, `BLOCKED`, `NOM`, `PASSWORD`, `PHONE`, `PRENOM`, `TOKEN`, `SECTEUR_ID`) VALUES
+('anas.the.creator@gmail.com', 'Saada 1 No 570', 0, 'Benchebani', 'walo', '0630247385', 'Mohamed Anas', NULL, 3),
+('newCustomer@gmail.com', 'no 12 hay salama', 0, 'Customer', 'newCustomer@gmail.com', '0679461382', 'new', NULL, 5);
 
 -- --------------------------------------------------------
 
@@ -195,7 +197,7 @@ CREATE TABLE `demandeevent` (
 CREATE TABLE `demandeformationpersonnel` (
   `ID` bigint(20) NOT NULL,
   `ADOMICILE` tinyint(1) DEFAULT '0',
-  `NBREHEURE` int(11) DEFAULT NULL,
+  `NBRPERSONNE` int(11) DEFAULT NULL,
   `MATIERE_ID` bigint(20) DEFAULT NULL,
   `DEMANDESERVICE_ID` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -356,20 +358,20 @@ CREATE TABLE `device` (
   `ID` bigint(20) NOT NULL,
   `BLOCKED` tinyint(1) DEFAULT '0',
   `DATECONNECTION` date DEFAULT NULL,
+  `DEVICECATEGORIE` varchar(255) DEFAULT NULL,
   `IP` varchar(255) DEFAULT NULL,
   `NAVIGATEUR` varchar(255) DEFAULT NULL,
   `OS` varchar(255) DEFAULT NULL,
   `MANAGER_ID` varchar(255) DEFAULT NULL,
-  `WORKER_EMAIL` varchar(255) DEFAULT NULL,
-  `DEVICECATEGORIE` varchar(255) NOT NULL
+  `WORKER_EMAIL` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Contenu de la table `device`
 --
 
-INSERT INTO `device` (`ID`, `BLOCKED`, `DATECONNECTION`, `IP`, `NAVIGATEUR`, `OS`, `MANAGER_ID`, `WORKER_EMAIL`, `DEVICECATEGORIE`) VALUES
-(1, 0, '2018-04-10', '172.31.20.65', 'Firefox', 'Windows', 'manager', NULL, 'Personal computer');
+INSERT INTO `device` (`ID`, `BLOCKED`, `DATECONNECTION`, `DEVICECATEGORIE`, `IP`, `NAVIGATEUR`, `OS`, `MANAGER_ID`, `WORKER_EMAIL`) VALUES
+(1, 0, '2018-04-13', 'Personal computer', '172.31.20.65', 'Firefox', 'Windows', 'manager', NULL);
 
 -- --------------------------------------------------------
 
@@ -403,6 +405,22 @@ CREATE TABLE `filiere` (
   `NOM` varchar(255) DEFAULT NULL,
   `NIVEAUSCOLAIRE_ID` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Contenu de la table `filiere`
+--
+
+INSERT INTO `filiere` (`ID`, `NOM`, `NIVEAUSCOLAIRE_ID`) VALUES
+(1, 'mipc', 1),
+(2, 'mip', 1),
+(3, 'bcg', 1),
+(4, 'mip', 2),
+(5, 'mipc', 2),
+(6, 'bcg', 2),
+(7, 'sir', 3),
+(8, 'pcm', 3),
+(9, 'ieea', 3),
+(10, 'pm', 3);
 
 -- --------------------------------------------------------
 
@@ -519,6 +537,19 @@ CREATE TABLE `matiere` (
   `FILIERE_ID` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Contenu de la table `matiere`
+--
+
+INSERT INTO `matiere` (`ID`, `NOM`, `FILIERE_ID`) VALUES
+(1, 'base de donnee', 7),
+(2, 'java', 7),
+(3, 'uml', 7),
+(4, 'reseaux', 7),
+(5, 'analyse 1', 1),
+(6, 'algebre 1', 1),
+(7, 'mecanique du point', 1);
+
 -- --------------------------------------------------------
 
 --
@@ -533,15 +564,18 @@ CREATE TABLE `menuformulaire` (
   `INFOTAB` tinyint(1) DEFAULT '0',
   `PAYEMENTTAB` tinyint(1) DEFAULT '0',
   `SUMMARYTAB` tinyint(1) DEFAULT '0',
-  `TYPEDEMANDE_ID` varchar(255) DEFAULT NULL
+  `SERVICE_ID` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Contenu de la table `menuformulaire`
 --
 
-INSERT INTO `menuformulaire` (`ID`, `COMPANYTAB`, `DETAILSTAB`, `IMAGENAME`, `INFOTAB`, `PAYEMENTTAB`, `SUMMARYTAB`, `TYPEDEMANDE_ID`) VALUES
-(1, 1, 1, 'nettoyageMaison', 1, 1, 1, 'nettoyageMaison');
+INSERT INTO `menuformulaire` (`ID`, `COMPANYTAB`, `DETAILSTAB`, `IMAGENAME`, `INFOTAB`, `PAYEMENTTAB`, `SUMMARYTAB`, `SERVICE_ID`) VALUES
+(1, 1, 1, 'nettoyageMaison', 1, 1, 1, 1),
+(2, 1, 1, 'photographie', 1, 1, 1, 19),
+(3, 1, 1, 'LocationVoiture', 1, 1, 1, 21),
+(4, 1, 1, 'formationpersonnel', 1, 1, 1, 22);
 
 -- --------------------------------------------------------
 
@@ -553,6 +587,15 @@ CREATE TABLE `niveauscolaire` (
   `ID` bigint(20) NOT NULL,
   `NOM` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Contenu de la table `niveauscolaire`
+--
+
+INSERT INTO `niveauscolaire` (`ID`, `NOM`) VALUES
+(1, '1er annee fst'),
+(2, '2emme annee fst'),
+(3, '3eme anne fst');
 
 -- --------------------------------------------------------
 
@@ -608,6 +651,16 @@ CREATE TABLE `pestcontroltype` (
   `ID` bigint(20) NOT NULL,
   `NOM` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Contenu de la table `pestcontroltype`
+--
+
+INSERT INTO `pestcontroltype` (`ID`, `NOM`) VALUES
+(1, 'cockroaches '),
+(2, 'bed bugs'),
+(3, 'ants '),
+(4, 'general');
 
 -- --------------------------------------------------------
 
@@ -788,9 +841,10 @@ INSERT INTO `service` (`ID`, `NOM`, `CATEGORIE_ID`) VALUES
 (16, 'Restauration', 5),
 (17, 'Traiteur', 5),
 (18, 'Babysitters', 6),
-(19, 'Photographie', 7),
+(19, 'photographie', 7),
 (20, 'Videographie', 7),
-(21, 'Location Voiture', 8);
+(21, 'locationvoiture', 8),
+(22, 'formationpersonnel', 9);
 
 -- --------------------------------------------------------
 
@@ -936,14 +990,9 @@ CREATE TABLE `typedemande` (
 --
 
 INSERT INTO `typedemande` (`ID`) VALUES
-('climatisation'),
-('demenagement'),
-('deratisation'),
-('locationVoiture'),
-('nettoyageMaison'),
-('peinture'),
-('photographie'),
-('traiteur');
+('DemandeCleaning'),
+('DemandePhotographie'),
+('DemandeVoiture');
 
 -- --------------------------------------------------------
 
@@ -1354,7 +1403,7 @@ ALTER TABLE `matiere`
 --
 ALTER TABLE `menuformulaire`
   ADD PRIMARY KEY (`ID`),
-  ADD KEY `FK_MENUFORMULAIRE_TYPEDEMANDE_ID` (`TYPEDEMANDE_ID`);
+  ADD KEY `FK_MENUFORMULAIRE_SERVICE_ID` (`SERVICE_ID`);
 
 --
 -- Index pour la table `niveauscolaire`
@@ -1728,7 +1777,7 @@ ALTER TABLE `matiere`
 -- Contraintes pour la table `menuformulaire`
 --
 ALTER TABLE `menuformulaire`
-  ADD CONSTRAINT `FK_MENUFORMULAIRE_TYPEDEMANDE_ID` FOREIGN KEY (`TYPEDEMANDE_ID`) REFERENCES `typedemande` (`ID`);
+  ADD CONSTRAINT `FK_MENUFORMULAIRE_SERVICE_ID` FOREIGN KEY (`SERVICE_ID`) REFERENCES `service` (`ID`);
 
 --
 -- Contraintes pour la table `packaging`
