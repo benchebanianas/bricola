@@ -10,70 +10,49 @@
     <ui:composition>
 
         <p:dialog id="DemandeEventViewDlg" widgetVar="DemandeEventViewDialog" modal="true" hideEffect="blind" showEffect="blind" resizable="false" appendTo="@(body)" width="600" height="550" showHeader="false">
-                <hr></hr>
-                <h1 align="center"> Plus D'information : </h1>
-                <hr></hr><br></br>
-                <div class="container">
-                    <h:form id="DemandeEventForm" style="margin-top: 10px;margin-bottom: 10px">
-                        <div align="center">
-                            <p:panelGrid columns="1" >
-                                <p:outputLabel value="Secteur : #{demandeServiceController.demandeEvent.demandeService.secteur.nom}" />
-                                <p:outputLabel value="Service : #{demandeServiceController.demandeEvent.demandeService.service.nom}" />
-                                <p:outputLabel value="Societe : #{demandeServiceController.demandeEvent.demandeService.worker.nom}" />
-                                <p:outputLabel value="Client : #{demandeServiceController.demandeEvent.demandeService.client.nom}" />
-                                <p:outputLabel value="Type D'evenement : #{demandeServiceController.demandeEvent.event.nom}" />
-                                <p:outputLabel value="Detail : #{demandeServiceController.demandeEvent.demandeService.detail} || #{demandeServiceController.demandeEvent.detail}"/>
-                                <c:if test="#{demandeServiceController.demandeEvent.demandeService.dateConfirmation ne null}">
-                                    <p:outputLabel value="manager de Confirmation : #{demandeServiceController.demandeEvent.demandeService.managerConfirmation.id}" />
-                                    <p:outputLabel value="date de Confirmation : #{demandeServiceController.demandeEvent.demandeService.dateConfirmation}" />
-                                </c:if>
-                                <c:if test="#{not empty demandeServiceController.demandeEvent.demandeService.dateSuppression}">
-                                    <p:outputLabel value="manager de Suppression : #{demandeServiceController.demandeEvent.demandeService.managerConfirmation.id}" />
-                                    <p:outputLabel value="date de Suppression : #{demandeServiceController.demandeEvent.demandeService.dateSuppression}" />
-                                </c:if>
-                                <c:if test="#{not empty demandeServiceController.demandeEvent.demandeService.planning.dateDebut}">
-                                    <p:outputLabel value="Date Debut : #{demandeServiceController.demandeEvent.demandeService.planning.dateDebut}" />
-                                    <p:outputLabel value="Date Fin : #{demandeServiceController.demandeEvent.demandeService.planning.dateFin}" />
-                                </c:if>
-                                <c:if test="#{not empty demandeServiceController.demandeEvent.demandeService.planning.dateOnce}">
-                                    <p:outputLabel value="Date : #{demandeServiceController.demandeEvent.demandeService.planning.dateOnce}" />
-                                    <p:outputLabel value="Heure : #{demandeServiceController.demandeEvent.demandeService.planning.timing.name}" />
-                                </c:if>
-                                <c:if test="#{not empty demandeServiceController.demandeEvent.cuisineDemandeEvents}">
-                                    <p:dataList value="#{demandeServiceController.demandeEvent.cuisineDemandeEvents}" var="cuisine" >
-                                        <f:facet name="header">
-                                            Cuisines :
-                                        </f:facet>
-                                        #{cuisine.cuisine.nom}
-                                    </p:dataList>
-                                </c:if>
-                                <c:if test="#{not empty demandeServiceController.demandeEvent.supplementDemandeEvents}">
-                                    <p:dataList value="#{demandeServiceController.demandeEvent.supplementDemandeEvents}" var="supplement" >
-                                        <f:facet name="header">
-                                            Supplements :
-                                        </f:facet>
-                                        #{supplement.supplementEvent.nom}
-                                    </p:dataList>
-                                </c:if>
-                                <p:outputLabel value="Nombre D'Invités : #{demandeServiceController.demandeEvent.nbrInvites}"/>
-                                <p:outputLabel value="Prix HT : #{demandeServiceController.demandeEvent.demandeService.prixHt}" />
-                                <p:outputLabel value="Prix TTC : #{demandeServiceController.demandeEvent.demandeService.prixTtc}" />
-                            </p:panelGrid>
-
-                            <br></br>
-
-                            <p:commandButton action="#{demandeEventController.Action(2)}" class="btn btn-danger" value="Supprimer"/>
-                            <p:commandButton action="#{demandeEventController.Action(1)}" class="btn btn-success" value="Valider"/>
-                        </div>
+            <hr></hr>
+            <h1 align="center"> Plus D'information : </h1>
+            <hr></hr><br></br>
+            <div class="container">
+                <h:form id="DemandeEventForm" style="margin-top: 10px;margin-bottom: 10px">
+                    <div align="center">
+                        <p:panelGrid columns="1" styleClass="ui-noborder">
+                            <p:outputLabel value="Type D'evenement : #{demandeServiceController.demandeEvent.event.nom}" />
+                            <c:if test="#{not empty demandeServiceController.demandeEvent.cuisineDemandeEvents}">
+                                <p:dataList value="#{demandeServiceController.demandeEvent.cuisineDemandeEvents}" var="cuisine" >
+                                    <f:facet name="header">
+                                        Cuisines :
+                                    </f:facet>
+                                    #{cuisine.cuisine.nom}
+                                </p:dataList>
+                            </c:if>
+                            <c:if test="#{not empty demandeServiceController.demandeEvent.supplementDemandeEvents}">
+                                <p:dataList value="#{demandeServiceController.demandeEvent.supplementDemandeEvents}" var="supplement" >
+                                    <f:facet name="header">
+                                        Supplements :
+                                    </f:facet>
+                                    #{supplement.supplementEvent.nom}
+                                </p:dataList>
+                            </c:if>
+                            <p:outputLabel value="Nombre D'Invités : #{demandeServiceController.demandeEvent.nbrInvites}"/>
+                            <p:outputLabel value="Detail : #{demandeServiceController.demandeEvent.detail}"/>
+                            <ui:include src="/manager/DemandeView.xhtml"/>
+                        </p:panelGrid>
 
                         <br></br>
 
-                        <p:commandLink oncomplete="handleSubmit(args,'DemandeEventViewDialog');" actionListener="#{demandeServiceController.deleteSession()}"> 
-                            <h:graphicImage value="../resources/images/retour.png" alt="retour" />
-                        </p:commandLink>
-                    </h:form>
-                </div>
-                <br></br><hr></hr>
+                        <p:commandButton action="#{demandeServiceController.Action(null,2)}" value="Supprimer" style="background-color: #ff8080;"/>
+                        <p:commandButton action="#{demandeServiceController.Action(null,1)}" value="Valider"/>
+                    </div>
+
+                    <br></br>
+
+                    <p:commandLink oncomplete="handleSubmit(args,'DemandeEventViewDialog');" actionListener="#{demandeServiceController.deleteSession()}"> 
+                        <h:graphicImage value="../resources/images/retour.png" alt="retour" />
+                    </p:commandLink>
+                </h:form>
+            </div>
+            <br></br><hr></hr>
         </p:dialog>
 
     </ui:composition>

@@ -27,6 +27,7 @@ public class DemandeServiceConfirmationDetailFacade extends AbstractFacade<Deman
     
     public void save(Manager manager,TypeAction action,DemandeService demandeService){
         DemandeServiceConfirmationDetail dscd =  new DemandeServiceConfirmationDetail(manager, action, demandeService);
+        dscd.setId(generateId("DemandeServiceConfirmationDetail", "id"));
         create(dscd);
     }
     

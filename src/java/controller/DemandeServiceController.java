@@ -13,11 +13,9 @@ import bean.DemandePainting;
 import bean.DemandePestControl;
 import bean.DemandePhotographie;
 import bean.DemandeService;
-import bean.Manager;
 import bean.MenuFormulaire;
 import bean.DemandeVoiture;
 import bean.Manager;
-import bean.TypeAction;
 import bean.PlanningItem;
 import bean.Secteur;
 import bean.Service;
@@ -33,7 +31,6 @@ import service.DemandeServiceFacade;
 
 import java.io.Serializable;
 import java.util.Date;
-import controller.util.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -61,6 +58,7 @@ public class DemandeServiceController implements Serializable {
     private service.DemandeServiceFacade ejbFacade;
     @EJB
     private DemandeServiceConfirmationDetailFacade detailFacade;
+    @EJB
     private service.DemandeCleaningFacade demandeServiceCleaningFacade;
     @EJB
     private service.WorkerTypeFacade workerTypeFacade;
@@ -111,6 +109,7 @@ public class DemandeServiceController implements Serializable {
     private DemandePestControl demandePestControl;
     private DemandePhotographie demandePhotographie;
     private DemandeVoiture demandeVoiture;
+    private Boolean fromDemandeDetail = false;
 
     @EJB
     private TypeActionFacade typeActionFacade;
@@ -119,7 +118,7 @@ public class DemandeServiceController implements Serializable {
     public void voirPlus(DemandeService demandeService) {
         setSelected(demandeService);
         String view = demandeService.getTypeDemande().getId();
-        demande = ejbFacade.findDemande(demandeService);
+        demande = ejbFacade.findDemande(getSelected());
         switch (view) {
             case "DemandeBabySitting":
                 demandeBabySitting = (DemandeBabySitting) demande;
@@ -160,16 +159,16 @@ public class DemandeServiceController implements Serializable {
         RequestContext context = RequestContext.getCurrentInstance();
         context.update("" + view + "Form");
         context.execute("PF('" + view + "ViewDialog').show();");
-        if (SessionUtil.getAttribute("fromProfile").equals(true)) {
+        if (fromDemandeDetail) {
             items = null;
-            SessionUtil.setAttribute("fromProfile", false);
+            fromDemandeDetail = false;
         }
     }
 
     public String changeItems(DemandeService demandeService) {
         getItems().clear();
         getItems().add(demandeService);
-        SessionUtil.setAttribute("fromProfile", true);
+        fromDemandeDetail = true;
         return "/manager/Demande?faces-redirect=true";
     }
 
@@ -179,24 +178,23 @@ public class DemandeServiceController implements Serializable {
     }
 
     public String Action(DemandeService demandeService, Long idType) {
-        System.out.println("bsmlaah");
+        System.out.println("bsmlah");
+        if(demandeService != null){
+            setSelected(demandeService);
+        }
         Manager manager = (Manager) SessionUtil.getAttribute("connectedManager");
         if (idType == 1) {
-            System.out.println("type 1");
-            demandeService.setDateConfirmation(new Date());
-            demandeService.setDateSuppression(null);
+            selected.setDateConfirmation(new Date());
+            selected.setDateSuppression(null);
         }
         if (idType == 2) {
-            System.out.println("type 2");
-            demandeService.setDateSuppression(new Date());
-            demandeService.setDateConfirmation(null);
+            selected.setDateSuppression(new Date());
+            selected.setDateConfirmation(null);
         }
-        demandeService.setManagerConfirmation(manager);
-        System.out.println(manager);
-        ejbFacade.edit(demandeService);
+        selected.setManagerConfirmation(manager);
+        ejbFacade.edit(selected);
         TypeAction action = typeActionFacade.find(idType);
-        System.out.println(action);
-        detailFacade.save(manager, action, demandeService);
+        detailFacade.save(manager, action, selected);
         return "/manager/Demande?faces-redirect=true";
     }
 

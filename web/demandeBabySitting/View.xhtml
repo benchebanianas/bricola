@@ -16,38 +16,9 @@
                     <div class="container">
                         <h:form id="DemandeBabySittingForm" style="margin-top: 10px;margin-bottom: 10px">
                             <div align="center" >
-                                <p:panelGrid columns="1" >
-                                    <p:outputLabel value="Secteur : #{demandeServiceController.demandeBabySitting.demandeService.secteur.nom}" />
-                                    <p:outputLabel value="Service : #{demandeServiceController.demandeBabySitting.demandeService.service.nom}" />
-                                    <p:outputLabel value="Societe : #{demandeServiceController.demandeBabySitting.demandeService.worker.nom}" />
-                                    <p:outputLabel value="Client : #{demandeServiceController.demandeBabySitting.demandeService.client.nom}" />
+                                <p:panelGrid columns="1" styleClass="ui-noborder">
                                     <c:if test="#{demandeServiceController.demandeBabySitting.fulltime}">
                                         <p:outputLabel value="toute la journée." />
-                                    </c:if>
-                                    <p:outputLabel value="Detail : #{demandeServiceController.demandeBabySitting.demandeService.detail} -- #{demandeServiceController.demandeBabySitting.detail}"/>
-                                    <c:if test="#{demandeServiceController.demandeBabySitting.demandeService.dateConfirmation ne null}">
-                                        <p:outputLabel value="manager de Confirmation : #{demandeServiceController.demandeBabySitting.demandeService.managerConfirmation.id}" />
-                                        <p:outputLabel value="date de Confirmation : #{demandeServiceController.demandeBabySitting.demandeService.dateConfirmation}" />
-                                    </c:if>
-                                    <c:if test="#{not empty demandeServiceController.demandeBabySitting.demandeService.dateSuppression}">
-                                        <p:outputLabel value="manager de Suppression : #{demandeServiceController.demandeBabySitting.demandeService.managerConfirmation.id}" />
-                                        <p:outputLabel value="date de Suppression : #{demandeServiceController.demandeBabySitting.demandeService.dateSuppression}" />
-                                    </c:if>
-                                    <c:if test="#{not empty demandeServiceController.demandeBabySitting.demandeService.planning.dateDebut}">
-                                        <p:outputLabel value="Date Debut : #{demandeServiceController.demandeBabySitting.demandeService.planning.dateDebut}" />
-                                        <p:outputLabel value="Date Fin : #{demandeServiceController.demandeBabySitting.demandeService.planning.dateFin}" />
-                                    </c:if>
-                                    <c:if test="#{not empty demandeServiceController.demandeBabySitting.demandeService.planning.dateOnce}">
-                                        <p:outputLabel value="Date : #{demandeServiceController.demandeBabySitting.demandeService.planning.dateOnce}" />
-                                        <p:outputLabel value="Heure : #{demandeServiceController.demandeBabySitting.demandeService.planning.timing.name}" />
-                                    </c:if>
-                                    <c:if test="#{not empty demandeServiceController.planningItems}">
-                                        <p:dataList value="#{demandeServiceController.planningItems}" var="planningItem" >
-                                            <f:facet name="header">
-                                                Jours :
-                                            </f:facet>
-                                            le #{planningItem.day.nom} - #{planningItem.timing.name}
-                                        </p:dataList>
                                     </c:if>
                                     <c:if test="#{not empty demandeServiceController.demandeBabySitting.childs}">
                                         <p:dataList value="#{demandeServiceController.demandeBabySitting.childs}" var="child" type="ordered">
@@ -59,12 +30,12 @@
                                         </p:dataList>
                                     </c:if>
                                     <p:outputLabel value="Nombre D'Heures : #{demandeServiceController.demandeBabySitting.nbrHeures}"/>
-                                    <p:outputLabel value="Prix HT : #{demandeServiceController.demandeBabySitting.demandeService.prixHt}" />
-                                    <p:outputLabel value="Prix TTC : #{demandeServiceController.demandeBabySitting.demandeService.prixTtc}" />
+                                    <p:outputLabel value="Detail : #{demandeServiceController.demandeBabySitting.detail}"/>
+                                    <ui:include src="/manager/DemandeView.xhtml"/>
                                 </p:panelGrid><br></br>
 
-                                <p:commandButton action="#{demandeServiceController.Action(2)}" class="btn btn-danger" value="Supprimer"/>
-                                <p:commandButton action="#{demandeServiceController.Action(1)}" class="btn btn-success" value="Valider"/>
+                                <p:commandButton action="#{demandeServiceController.Action(null,2)}" value="Supprimer" style="background-color: #ff8080;"/>
+                                <p:commandButton action="#{demandeServiceController.Action(null,1)}" value="Valider"/>
                             </div>
                             <br></br>
                             <p:commandLink oncomplete="handleSubmit(args,'DemandeBabySittingViewDialog');" actionListener="#{demandeServiceController.retour()}"> 

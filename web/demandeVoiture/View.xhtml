@@ -15,11 +15,7 @@
             <div class="container">
                 <h:form id="DemandeVoitureForm" style="margin-top: 10px;margin-bottom: 10px">
                     <div align="center">
-                        <p:panelGrid columns="1" >
-                            <p:outputLabel value="Secteur : #{demandeServiceController.demandeVoiture.demandeService.secteur.nom}" />
-                            <p:outputLabel value="Service : #{demandeServiceController.demandeVoiture.demandeService.service.nom}" />
-                            <p:outputLabel value="Societe : #{demandeServiceController.demandeVoiture.demandeService.worker.nom}" />
-                            <p:outputLabel value="Client : #{demandeServiceController.demandeVoiture.demandeService.client.nom}" />
+                        <p:panelGrid columns="1" styleClass="ui-noborder">
                             <p:outputLabel value="Voiture Modele : #{demandeServiceController.demandeVoiture.voiture.modele.nom} 
                                            -#{demandeServiceController.demandeVoiture.voiture.modele.marque.nom} 
                                            -#{demandeServiceController.demandeVoiture.voiture.modele.annee}" />
@@ -27,31 +23,14 @@
                                            -#{demandeServiceController.demandeVoiture.voiture.couleur} 
                                            -#{demandeServiceController.demandeVoiture.voiture.kilometrage} Km
                                            - carburant : #{demandeServiceController.demandeVoiture.voiture.carburant}" />
-                            <p:outputLabel value="Detail : #{demandeServiceController.demandeVoiture.demandeService.detail}"/>
-                            <c:if test="#{demandeServiceController.demandeVoiture.demandeService.dateConfirmation ne null}">
-                                <p:outputLabel value="manager de Confirmation : #{demandeServiceController.demandeVoiture.demandeService.managerConfirmation.id}" />
-                                <p:outputLabel value="date de Confirmation : #{demandeServiceController.demandeVoiture.demandeService.dateConfirmation}" />
-                            </c:if>
-                            <c:if test="#{not empty demandeServiceController.demandeVoiture.demandeService.dateSuppression}">
-                                <p:outputLabel value="manager de Suppression : #{demandeServiceController.demandeVoiture.demandeService.managerConfirmation.id}" />
-                                <p:outputLabel value="date de Suppression : #{demandeServiceController.demandeVoiture.demandeService.dateSuppression}" />
-                            </c:if>
-                            <c:if test="#{not empty demandeServiceController.demandeVoiture.demandeService.planning.dateDebut}">
-                                <p:outputLabel value="Date Debut : #{demandeServiceController.demandeVoiture.demandeService.planning.dateDebut}" />
-                                <p:outputLabel value="Date Fin : #{demandeServiceController.demandeVoiture.demandeService.planning.dateFin}" />
-                            </c:if>
-                            <c:if test="#{not empty demandeServiceController.demandeVoiture.demandeService.planning.dateOnce}">
-                                <p:outputLabel value="Date : #{demandeServiceController.demandeVoiture.demandeService.planning.dateOnce}" />
-                                <p:outputLabel value="Heure : #{demandeServiceController.demandeVoiture.demandeService.planning.timing.name}" />
-                            </c:if>
-                            <p:outputLabel value="Prix HT : #{demandeServiceController.demandeVoiture.demandeService.prixHt}" />
-                            <p:outputLabel value="Prix TTC : #{demandeServiceController.demandeVoiture.demandeService.prixTtc}" />
+                            <ui:include src="/manager/DemandeView.xhtml"/>
                         </p:panelGrid>
 
                         <br></br>
 
-                        <p:commandButton action="#{demandeGardeningController.Action(2)}" class="btn btn-danger" value="Supprimer"/>
-                        <p:commandButton action="#{demandeGardeningController.Action(1)}" class="btn btn-success" value="Valider"/>
+                        <p:commandButton action="#{demandeServiceController.Action(null,2)}" value="Supprimer" style="background-color: #ff8080;"/>
+                        <p:commandButton action="#{demandeServiceController.Action(null,1)}" value="Valider"/>
+                        
                     </div>
 
                     <br></br>

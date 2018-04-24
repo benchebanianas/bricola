@@ -33,12 +33,20 @@
 
                         <h5>Nombe d'employes : </h5>
                         <h:inputText class="form-control" value="#{workerController.selected.nombreEmploye}" />
-
+                        <div class="container">
+                            <p:outputLabel value="Les Services :"/>
+                            <div class="row">
+                                <p:repeat value="#{workerController.loadServices()}" var="workerJob" >
+                                    <div class="col-md-3">
+                                        <p:outputLabel value="#{workerJob.service.nom}- #{workerJob.secteur.nom}-#{workerJob.secteur.ville.nom} " style="width:127px;height: 50px;text-align: center;padding: 3px 0;"/>
+                                    </div>
+                                </p:repeat>
+                            </div>
+                        </div>
                         <div class="f1-buttons" align="center"><br></br>
                             <p:commandButton  value="Modifier" actionListener="#{workerController.modifier()}" oncomplete="handleSubmit(args,'Dialog');" class="btn btn-previous"></p:commandButton>
                             <p:commandButton value="Supprimer" actionListener="#{workerController.supprimer()}" oncomplete="handleSubmit(args,'Dialog');" class="btn btn-danger"></p:commandButton>
                             <br></br><br></br>
-                            <a href="#" class="socbtn" >Les nouveaux Sociétes ></a>
                         </div>
                         <p:commandLink oncomplete="handleSubmit(args,'Dialog');"> 
                             <h:graphicImage value="../resources/images/retour.png" alt="retour" />

@@ -84,6 +84,11 @@ public class ManagerFacade extends AbstractFacade<Manager> {
         return 0;
     }
     
+    public void changeMdp(Manager manager,String mdp){
+        Manager m = find(manager.getId());
+        m.setPassword(mdp);
+        edit(m);
+    }
     
     @Override
     protected EntityManager getEntityManager() {

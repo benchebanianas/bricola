@@ -2,6 +2,8 @@ package controller;
 
 import bean.Service;
 import bean.Worker;
+import bean.WorkerJob;
+import bean.WorkerType;
 import controller.util.JsfUtil;
 import controller.util.JsfUtil.PersistAction;
 import controller.util.SessionUtil;
@@ -22,6 +24,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import org.primefaces.context.RequestContext;
+import service.WorkerJobFacade;
 
 @Named("workerController")
 @SessionScoped
@@ -29,10 +32,42 @@ public class WorkerController implements Serializable {
 
     @EJB
     private service.WorkerFacade ejbFacade;
+    @EJB
+    private WorkerJobFacade workerJobFacade;
     private List<Worker> items = null;
     private Worker selected;
+//    les attrs de recherche
+   private String email;
+    private String nom;
+    private int nombreEmployeMin;
+    private int nombreEmployeMax;
+    private String siteWeb;
+    private String phone;
+    private WorkerType workerType;
+    private boolean blocked = false;
+    private boolean accepted = true;
+    
 
     
+    public void recherche(){
+        items = ejbFacade.findByCriteria(email, nom, new Integer(getNombreEmployeMin()),new Integer(getNombreEmployeMax()), siteWeb, phone, workerType, blocked, accepted);
+    }
+    
+    public List<Worker> nvWorkers(){
+        return ejbFacade.findNvWorkers();
+    }
+    
+    public void nvWorkerDialog(Worker w){
+        setSelected(w);
+        RequestContext context = RequestContext.getCurrentInstance();
+        context.update("dform");
+        context.execute("PF('nvWorkerDialog').hide();");
+        context.execute("PF('Dialog').show();");
+    }
+    
+    public List<WorkerJob> loadServices(){
+        return workerJobFacade.findByWorker(selected);
+    }
     
     public void modifier() {
         ejbFacade.edit(getSelected());
@@ -108,6 +143,83 @@ public class WorkerController implements Serializable {
         this.selected = selected;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public int getNombreEmployeMin() {
+        return nombreEmployeMin;
+    }
+
+    public void setNombreEmployeMin(int nombreEmployeMin) {
+        this.nombreEmployeMin = nombreEmployeMin;
+    }
+
+    public int getNombreEmployeMax() {
+        return nombreEmployeMax;
+    }
+
+    public void setNombreEmployeMax(int nombreEmployeMax) {
+        this.nombreEmployeMax = nombreEmployeMax;
+    }
+
+    public String getSiteWeb() {
+        return siteWeb;
+    }
+
+    public void setSiteWeb(String siteWeb) {
+        this.siteWeb = siteWeb;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public WorkerType getWorkerType() {
+        if(workerType==null){
+            workerType = new WorkerType();
+        }
+        return workerType;
+    }
+
+    public void setWorkerType(WorkerType workerType) {
+        this.workerType = workerType;
+    }
+
+    public boolean isBlocked() {
+        return blocked;
+    }
+
+    public void setBlocked(boolean blocked) {
+        this.blocked = blocked;
+    }
+
+    public boolean isAccepted() {
+        return accepted;
+    }
+
+    public void setAccepted(boolean accepted) {
+        this.accepted = accepted;
+    }
+    
+    
+
     protected void setEmbeddableKeys() {
     }
 
@@ -145,7 +257,7 @@ public class WorkerController implements Serializable {
 
     public List<Worker> getItems() {
         if (items == null) {
-            items = getFacade().findAll();
+            items = ejbFacade.findWorkers();
         }
         return items;
     }

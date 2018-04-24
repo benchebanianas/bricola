@@ -27,7 +27,7 @@
                 <nav class="sidebar bg-dark">
                     <p style="text-align: center;">
                         <a href="../manager/Profile.xhtml">
-                            <img src="../resources/images/adminuser.png" style="border-radius: 70%;" width="200" class="img-rounded" />
+                            <img src="../resources/images/adminuser.png" style="border-radius: 70%;" width="150" class="img-rounded" />
                         </a>
                     </p>
                     <div align="center">
@@ -68,21 +68,68 @@
                 </nav>
 
                 <div class="content p-4">
-                    <h:form>
+                    <h:form id="worker">
                         <hr></hr>
                         <h1 align="center">Tous Sociétes : </h1><br></br>
                         <hr></hr>
                         <div class="container">
                             <div class="row">
+                                <p:panelGrid id="infoGrid" styleClass="ui-noborder" style="margin: 0 auto;width: 100%">
+                                    <p:row>
+                                        <p:column>
+                                            <p:outputLabel value="Email :" for="email" style="text-align: left;padding-top: 10px;width: 200px"/>
+                                            <p:inputText value="#{workerController.email}" id="email" style="text-align: left;padding-top: 10px;width: 200px"/>
 
+                                        </p:column>
+                                        <p:column>
+                                            <p:outputLabel value="Nom de Worker :" for="nom" style="text-align: left;padding-top: 10px;width: 200px"/>
+                                            <p:inputText value="#{workerController.nom}" id="nom" style="text-align: left;padding-top: 10px;width: 200px"/> 
+                                        </p:column>
+                                        <p:column>
+                                            <p:outputLabel value="Site Web :" for="siteWeb" style="text-align: left;padding-top: 10px;width: 200px"/>
+                                            <p:inputText value="#{workerController.siteWeb}" id="siteWeb" style="text-align: left;padding-top: 10px;width: 200px"/>        
+                                        </p:column>
+                                        <p:column>
+                                            <p:outputLabel value="Phone :" for="phone" style="text-align: left;padding-top: 10px;width: 200px"/>
+                                            <p:inputText value="#{workerController.phone}" id="phone" style="text-align: left;padding-top: 10px;width: 200px"/>            
+                                        </p:column>
+                                        <p:column>
+                                            <p:selectOneMenu class="form-control" id="hours" value="#{workerController.workerType}" style="width: 170px;height: 40px">
+                                                <f:selectItems value="#{workerTypeController.itemsAvailableSelectOne}" itemValue="#{item}" var="item" itemLabel="#{item}"/>
+                                            </p:selectOneMenu>
+                                        </p:column>
+                                        <p:column>
+                                            <p:selectBooleanButton id="blocked" class="myBtn" value="#{workerController.blocked}" onLabel="Bloquée" offLabel="non Bloquée" style="width:120px;height: 40px;text-align: center;padding: 8px 0;"/>
+                                        </p:column>
+                                        <p:column>
+                                            <p:selectBooleanButton id="selected" class="myBtn" value="#{workerController.accepted}" onLabel="acceptée" offLabel="non acceptée" style="width:120px;height: 40px;text-align: center;padding: 8px 0;" />
+                                        </p:column>
+                                         <p:column>
+                                            <p:outputLabel value="Nombre d'empoyes min :" for="nbrEmpmin" style="text-align: left;padding-top: 10px;width: 200px"/>
+                                            <p:inputText value="#{workerController.nombreEmployeMin}" id="nbrEmpmin" style="text-align: left;padding-top: 10px;width: 200px"/>        
+                                        </p:column>
+                                         <p:column>
+                                            <p:outputLabel value="Nombre d'empoyes max :" for="nbrEmpmax" style="text-align: left;padding-top: 10px;width: 200px"/>
+                                            <p:inputText value="#{workerController.nombreEmployeMax}" id="nbrEmpmax" style="text-align: left;padding-top: 10px;width: 200px"/>        
+                                        </p:column>
+                                         <p:column>
+                                           <p:commandButton actionListener="#{workerController.recherche()}" update="worker" value="Recherche" />
+                                        </p:column>
+                                    </p:row>
+                                </p:panelGrid>
+                            </div>
+                            <hr></hr>
+                            <div class="row">    
                                 <br></br>
                                 <p:repeat value="#{workerController.items}" var="worker" >
                                     <div class="col-md-2">
-                                        <p:commandButton actionListener="#{workerController.setSelected(worker)}" update=":dform" onclick="PF('Dialog').show()" value="#{worker.nom}" style="width:120px;height: 40px;text-align: center;padding: 8px 0;"/>
+                                        <p:commandButton actionListener="#{workerController.setSelected(worker)}" update=":dform" onclick="PF('Dialog').show()" value="#{worker.nom}" style="width:150px;height: 40px;text-align: center;padding: 3px 0;"/>
                                     </div>
                                 </p:repeat>
 
                             </div>
+                            <br></br><hr></hr>
+                            <p:commandLink update="nvWorkerForm" onclick="PF('nvWorkerDialog').show()" value="Les Nouveaux Worker >" style="color: #4da6ff; height: 40px;border: solid #4da6ff;border-width: 1px; padding: 8px 5px;"/>
                         </div>
                         <br></br><hr></hr>
                     </h:form>
@@ -90,6 +137,7 @@
             </div>
 
             <ui:include src="WorkerInfo.xhtml"/>
+            <ui:include src="NvWorker.xhtml"/>
 
         </ui:define>
     </ui:composition>

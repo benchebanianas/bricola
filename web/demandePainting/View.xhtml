@@ -9,54 +9,32 @@
     <ui:composition>
 
         <p:dialog id="DemandePaintingViewDlg" widgetVar="DemandePaintingViewDialog" modal="true" hideEffect="blind" showEffect="blind" resizable="false" appendTo="@(body)" width="600" height="550" showHeader="false">
-                <hr></hr>
-                    <h1 align="center"> Plus D'information : </h1>
-                    <hr></hr><br></br>
-                    <div class="container">
-                        <h:form id="DemandePaintingForm" style="margin-top: 10px;margin-bottom: 10px">
-                            <div align="center">
-                                <p:panelGrid columns="1" >
-                                    <p:outputLabel value="Secteur : #{demandeServiceController.demandePainting.demandeService.secteur.nom}" />
-                                    <p:outputLabel value="Service : #{demandeServiceController.demandePainting.demandeService.service.nom}" />
-                                    <p:outputLabel value="Societe : #{demandeServiceController.demandePainting.demandeService.worker.nom}" />
-                                    <p:outputLabel value="Client : #{demandeServiceController.demandePainting.demandeService.client.nom}" />
-                                    <p:outputLabel value="Detail : #{demandeServiceController.demandePainting.demandeService.detail}"/>
-                                    <p:outputLabel value="Type de Painture : #{demandeServiceController.demandePainting.painting.nom}"/>
-                                    <p:outputLabel value="Plus de Detail : #{demandeServiceController.demandePainting.detail}"/>
-                                    <c:if test="#{demandeServiceController.demandePainting.demandeService.dateConfirmation ne null}">
-                                        <p:outputLabel value="manager de Confirmation : #{demandeServiceController.demandePainting.demandeService.managerConfirmation.id}" />
-                                        <p:outputLabel value="date de Confirmation : #{demandeServiceController.demandePainting.demandeService.dateConfirmation}" />
-                                    </c:if>
-                                    <c:if test="#{not empty demandeServiceController.demandePainting.demandeService.dateSuppression}">
-                                        <p:outputLabel value="manager de Suppression : #{demandeServiceController.demandePainting.demandeService.managerConfirmation.id}" />
-                                        <p:outputLabel value="date de Suppression : #{demandeServiceController.demandePainting.demandeService.dateSuppression}" />
-                                    </c:if>
-                                    <c:if test="#{not empty demandeServiceController.demandePainting.demandeService.planning.dateDebut}">
-                                        <p:outputLabel value="Date Debut : #{demandeServiceController.demandePainting.demandeService.planning.dateDebut}" />
-                                        <p:outputLabel value="Date Fin : #{demandeServiceController.demandePainting.demandeService.planning.dateFin}" />
-                                    </c:if>
-                                    <c:if test="#{not empty demandeServiceController.demandePainting.demandeService.planning.dateOnce}">
-                                        <p:outputLabel value="Date : #{demandeServiceController.demandePainting.demandeService.planning.dateOnce}" />
-                                        <p:outputLabel value="Heure : #{demandeServiceController.demandePainting.demandeService.planning.timing.name}" />
-                                    </c:if>
-                                    <p:outputLabel value="Prix HT : #{demandeServiceController.demandePainting.demandeService.prixHt}" />
-                                    <p:outputLabel value="Prix TTC : #{demandeServiceController.demandePainting.demandeService.prixTtc}" />
-                                </p:panelGrid>
+            <hr></hr>
+            <h1 align="center"> Plus D'information : </h1>
+            <hr></hr><br></br>
+            <div class="container">
+                <h:form id="DemandePaintingForm" style="margin-top: 10px;margin-bottom: 10px">
+                    <div align="center">
+                        <p:panelGrid columns="1" styleClass="ui-noborder">
+                            <p:outputLabel value="Type de Painture : #{demandeServiceController.demandePainting.painting.nom}"/>
+                            <p:outputLabel value="Plus de Detail : #{demandeServiceController.demandePainting.detail}"/>
+                            <ui:include src="/manager/DemandeView.xhtml"/>
+                        </p:panelGrid>
 
-                                <br></br>
+                        <br></br>
 
-                                <p:commandButton action="#{demandeGardeningController.Action(2)}" class="btn btn-danger" value="Supprimer"/>
-                                <p:commandButton action="#{demandeGardeningController.Action(1)}" class="btn btn-success" value="Valider"/>
-                            </div>
-
-                            <br></br>
-
-                             <p:commandLink oncomplete="handleSubmit(args,'DemandePaintingViewDialog');" actionListener="#{demandeServiceController.retour()}"> 
-                                <h:graphicImage value="../resources/images/retour.png" alt="retour" />
-                            </p:commandLink>
-                        </h:form>
+                        <p:commandButton action="#{demandeServiceController.Action(null,2)}" value="Supprimer" style="background-color: #ff8080;"/>
+                        <p:commandButton action="#{demandeServiceController.Action(null,1)}" value="Valider"/>
                     </div>
-                    <br></br><hr></hr>
+
+                    <br></br>
+
+                    <p:commandLink oncomplete="handleSubmit(args,'DemandePaintingViewDialog');" actionListener="#{demandeServiceController.retour()}"> 
+                        <h:graphicImage value="../resources/images/retour.png" alt="retour" />
+                    </p:commandLink>
+                </h:form>
+            </div>
+            <br></br><hr></hr>
         </p:dialog>
 
     </ui:composition>

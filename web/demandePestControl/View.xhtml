@@ -9,54 +9,32 @@
     <ui:composition>
 
         <p:dialog id="DemandePestControlViewDlg" widgetVar="DemandePestControlViewDialog" modal="true" hideEffect="blind" showEffect="blind" resizable="false" appendTo="@(body)" width="600" height="550" showHeader="false">
-               <hr></hr>
-                    <h1 align="center"> Plus D'information : </h1>
-                    <hr></hr><br></br>
-                    <div class="container">
-                        <h:form id="DemandePestControlForm" style="margin-top: 10px;margin-bottom: 10px">
-                            <div align="center">
-                                <p:panelGrid columns="1" >
-                                    <p:outputLabel value="Secteur : #{demandeServiceController.demandePestControl.demandeService.secteur.nom}" />
-                                    <p:outputLabel value="Service : #{demandeServiceController.demandePestControl.demandeService.service.nom}" />
-                                    <p:outputLabel value="Societe : #{demandeServiceController.demandePestControl.demandeService.worker.nom}" />
-                                    <p:outputLabel value="Client : #{demandeServiceController.demandePestControl.demandeService.client.nom}" />
-                                    <p:outputLabel value="Detail : #{demandeServiceController.demandePestControl.demandeService.detail}"/>
-                                    <p:outputLabel value="Type de Control : #{demandeServiceController.demandePestControl.typeOfPestControl.nom}"/>
-                                    <p:outputLabel value="Plus de Detail : #{demandeServiceController.demandePestControl.detail}"/>
-                                    <c:if test="#{demandeServiceController.demandePestControl.demandeService.dateConfirmation ne null}">
-                                        <p:outputLabel value="manager de Confirmation : #{demandeServiceController.demandePestControl.demandeService.managerConfirmation.id}" />
-                                        <p:outputLabel value="date de Confirmation : #{demandeServiceController.demandePestControl.demandeService.dateConfirmation}" />
-                                    </c:if>
-                                    <c:if test="#{not empty demandeServiceController.demandePestControl.demandeService.dateSuppression}">
-                                        <p:outputLabel value="manager de Suppression : #{demandeServiceController.demandePestControl.demandeService.managerConfirmation.id}" />
-                                        <p:outputLabel value="date de Suppression : #{demandeServiceController.demandePestControl.demandeService.dateSuppression}" />
-                                    </c:if>
-                                    <c:if test="#{not empty demandeServiceController.demandePestControl.demandeService.planning.dateDebut}">
-                                        <p:outputLabel value="Date Debut : #{demandeServiceController.demandePestControl.demandeService.planning.dateDebut}" />
-                                        <p:outputLabel value="Date Fin : #{demandeServiceController.demandePestControl.demandeService.planning.dateFin}" />
-                                    </c:if>
-                                    <c:if test="#{not empty demandeServiceController.demandePestControl.demandeService.planning.dateOnce}">
-                                        <p:outputLabel value="Date : #{demandeServiceController.demandePestControl.demandeService.planning.dateOnce}" />
-                                        <p:outputLabel value="Heure : #{demandeServiceController.demandePestControl.demandeService.planning.timing.name}" />
-                                    </c:if>
-                                    <p:outputLabel value="Prix HT : #{demandeServiceController.demandePestControl.demandeService.prixHt}" />
-                                    <p:outputLabel value="Prix TTC : #{demandeServiceController.demandePestControl.demandeService.prixTtc}" />
-                                </p:panelGrid>
+            <hr></hr>
+            <h1 align="center"> Plus D'information : </h1>
+            <hr></hr><br></br>
+            <div class="container">
+                <h:form id="DemandePestControlForm" style="margin-top: 10px;margin-bottom: 10px">
+                    <div align="center">
+                        <p:panelGrid columns="1" styleClass="ui-noborder">
+                            <p:outputLabel value="Type de Control : #{demandeServiceController.demandePestControl.typeOfPestControl.nom}"/>
+                            <p:outputLabel value="Plus de Detail : #{demandeServiceController.demandePestControl.detail}"/>
+                            <ui:include src="/manager/DemandeView.xhtml"/>
+                        </p:panelGrid>
 
-                                <br></br>
+                        <br></br>
 
-                                <p:commandButton action="#{demandeGardeningController.Action(2)}" class="btn btn-danger" value="Supprimer"/>
-                                <p:commandButton action="#{demandeGardeningController.Action(1)}" class="btn btn-success" value="Valider"/>
-                            </div>
-
-                            <br></br>
-
-                             <p:commandLink oncomplete="handleSubmit(args,'DemandePestControlViewDialog');" actionListener="#{demandeServiceController.retour()}"> 
-                                <h:graphicImage value="../resources/images/retour.png" alt="retour" />
-                            </p:commandLink>
-                        </h:form>
+                        <p:commandButton action="#{demandeServiceController.Action(null,2)}" value="Supprimer" style="background-color: #ff8080;"/>
+                        <p:commandButton action="#{demandeServiceController.Action(null,1)}" value="Valider"/>
                     </div>
-                    <br></br><hr></hr>
+
+                    <br></br>
+
+                    <p:commandLink oncomplete="handleSubmit(args,'DemandePestControlViewDialog');" actionListener="#{demandeServiceController.retour()}"> 
+                        <h:graphicImage value="../resources/images/retour.png" alt="retour" />
+                    </p:commandLink>
+                </h:form>
+            </div>
+            <br></br><hr></hr>
         </p:dialog>
 
     </ui:composition>

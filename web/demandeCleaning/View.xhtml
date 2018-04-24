@@ -12,39 +12,17 @@
             <h1 align="center"> Plus D'information : </h1>
             <hr></hr><br></br>
             <div class="container">
-                <h:form id="DemandeCleaningForm" style="margin-top: 10px;margin-bottom: 10px">
+                <h:form id="DemandeCleaningForm" style="margin-top: 10px;margin-bottom: 10px" >
                     <div align="center">
-                        <p:panelGrid columns="1" >
-                            <p:outputLabel value="Secteur : #{demandeServiceController.demandeCleaning.demandeService.secteur.nom}" />
-                            <p:outputLabel value="Service : #{demandeServiceController.demandeCleaning.demandeService.service.nom}" />
-                            <p:outputLabel value="Societe : #{demandeServiceController.demandeCleaning.demandeService.worker.nom}" />
-                            <p:outputLabel value="Client : #{demandeServiceController.demandeCleaning.demandeService.client.nom}" />
-                            <p:outputLabel value="Detail : #{demandeServiceController.demandeCleaning.demandeService.detail}"/>
-                            <c:if test="#{demandeServiceController.demandeCleaning.demandeService.dateConfirmation ne null}">
-                                <p:outputLabel value="manager de Confirmation : #{demandeServiceController.demandeCleaning.demandeService.managerConfirmation.id}" />
-                                <p:outputLabel value="date de Confirmation : #{demandeServiceController.demandeCleaning.demandeService.dateConfirmation}" />
-                            </c:if>
-                            <c:if test="#{not empty demandeServiceController.demandeCleaning.demandeService.dateSuppression}">
-                                <p:outputLabel value="manager de Suppression : #{demandeServiceController.demandeCleaning.demandeService.managerConfirmation.id}" />
-                                <p:outputLabel value="date de Suppression : #{demandeServiceController.demandeCleaning.demandeService.dateSuppression}" />
-
-                            </c:if>
-                            <c:if test="#{not empty demandeServiceController.demandeCleaning.demandeService.planning.dateDebut}">
-                                <p:outputLabel value="Date Debut : #{demandeServiceController.demandeCleaning.demandeService.planning.dateDebut}" />
-                                <p:outputLabel value="Date Fin : #{demandeServiceController.demandeCleaning.demandeService.planning.dateFin}" />
-                            </c:if>
-                            <c:if test="#{not empty demandeServiceController.demandeCleaning.demandeService.planning.dateOnce}">
-                                <p:outputLabel value="Date : #{demandeServiceController.demandeCleaning.demandeService.planning.dateOnce}" />
-                                <p:outputLabel value="Heure : #{demandeServiceController.demandeCleaning.demandeService.planning.timing.name}" />
-                            </c:if>
+                        <p:panelGrid columns="1" styleClass="ui-noborder">
+                            
                             <p:outputLabel value="Nombre D'employés : #{demandeServiceController.demandeCleaning.nbrCleaner}"/>
                             <p:outputLabel value="Nombre D'Heures : #{demandeServiceController.demandeCleaning.nbrHeures}"/>
-                            <p:outputLabel value="Prix HT : #{demandeServiceController.demandeCleaning.demandeService.prixHt}" />
-                            <p:outputLabel value="Prix TTC : #{demandeServiceController.demandeCleaning.demandeService.prixTtc}" />
+                            <ui:include src="/manager/DemandeView.xhtml"/>
                         </p:panelGrid><br></br>
 
-                        <p:commandButton action="#{demandeCleaningController.Action(2)}" class="btn btn-danger" value="Supprimer"/>
-                        <p:commandButton action="#{demandeCleaningController.Action(1)}" class="btn btn-success" value="Valider"/>
+                        <p:commandButton action="#{demandeServiceController.Action(null,2)}" value="Supprimer" style="background-color: #ff8080;"/>
+                        <p:commandButton action="#{demandeServiceController.Action(null,1)}" value="Valider"/>
                     </div>
                     <br></br>
                     <p:commandLink oncomplete="handleSubmit(args,'DemandeCleaningViewDialog');" action="#{demandeServiceController.retour()}"> 

@@ -59,9 +59,19 @@ public class ManagerController implements Serializable {
     private Date dernierConfirmation;
     private String action;
     private DemandeServiceConfirmationDetail demandeServiceConfirmationDetail;
+    private String ancienPassword;
+    private String nvPassword;
+    private String nvPassword1;
 
-    public void viewMore(DemandeServiceConfirmationDetail confirmationDetail) {
-           demandeServiceConfirmationDetail=confirmationDetail;
+    public void changeMdp() {
+        if (ancienPassword.equals(selected.getPassword())) {
+            if (nvPassword.equals(nvPassword1) && nvPassword != null) {
+                ejbFacade.changeMdp(getSelected(), nvPassword);
+                selected.setPassword(nvPassword);
+            } else {
+            }
+        } else {
+        }
     }
 
     public String login() {
@@ -270,6 +280,30 @@ public class ManagerController implements Serializable {
 
     public void setServices(List<Service> services) {
         this.services = services;
+    }
+
+    public String getAncienPassword() {
+        return ancienPassword;
+    }
+
+    public void setAncienPassword(String ancienPassword) {
+        this.ancienPassword = ancienPassword;
+    }
+
+    public String getNvPassword() {
+        return nvPassword;
+    }
+
+    public void setNvPassword(String nvPassword) {
+        this.nvPassword = nvPassword;
+    }
+
+    public String getNvPassword1() {
+        return nvPassword1;
+    }
+
+    public void setNvPassword1(String nvPassword1) {
+        this.nvPassword1 = nvPassword1;
     }
 
     protected void setEmbeddableKeys() {

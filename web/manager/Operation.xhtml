@@ -27,7 +27,7 @@
                 <nav class="sidebar bg-dark">
                     <p style="text-align: center;">
                         <a href="../manager/Profile.xhtml">
-                            <img src="../resources/images/adminuser.png" style="border-radius: 70%;" width="200" class="img-rounded" />
+                            <img src="../resources/images/adminuser.png" style="border-radius: 70%;" width="150" class="img-rounded" />
                         </a>
                     </p>
                     <div align="center">
@@ -110,7 +110,9 @@
                                             <h:outputText value="#{item.demandeService.worker.nom}"/>
                                         </p:column>
                                         <p:column>
-                                            <p:commandButton class="btn btn-next" action="#{demandeServiceConfirmationDetailController.voirPlus(item)}" value="Plus >>"/>
+                                            <p:commandLink action="#{demandeServiceController.changeItems(item.demandeService)}" >
+                                                <h:graphicImage value="../resources/images/seeMore.png" alt=">>" />
+                                            </p:commandLink>
                                         </p:column>
                                     </p:dataTable>
                                 </h:form>

@@ -48,8 +48,10 @@ public class WorkerJobFacade extends AbstractFacade<WorkerJob> {
 ////////////////tariqa mdl7a for testing
         List<Service> services = new ArrayList();
         List<WorkerJob> jobs = getMultipleResult("SELECT wj FROM WorkerJob wj WHERE wj.worker.email='" + worker.getEmail() + "'");
-        for (WorkerJob job : jobs) {
-            services.add(job.getService());
+        if (jobs != null) {
+            for (WorkerJob job : jobs) {
+                services.add(job.getService());
+            }
         }
         return services;
     }
@@ -64,6 +66,19 @@ public class WorkerJobFacade extends AbstractFacade<WorkerJob> {
             return workers;
         } else {
             return new ArrayList<>();
+        }
+
+    }
+    public List<WorkerJob> findByWorker(Worker worker) {
+
+        String requette = "select w from WorkerJob w where w.worker.email='" + worker.getEmail() + "'";
+        System.out.println("hahiya requette : " + requette);
+        List<WorkerJob> workerJobs = em.createQuery(requette).getResultList();
+        System.out.println("hahiya list workers : " + workerJobs);
+        if (!workerJobs.isEmpty()) {
+            return workerJobs;
+        } else {
+            return new ArrayList();
         }
 
     }

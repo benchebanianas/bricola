@@ -8,8 +8,11 @@ package service;
 import bean.Secteur;
 import bean.Service;
 import bean.Worker;
+import bean.WorkerType;
 import controller.util.EmailUtil;
+import controller.util.SearchUtil;
 import controller.util.SessionUtil;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -82,6 +85,59 @@ public class WorkerFacade extends AbstractFacade<Worker> {
                 return 1;
             }
         }
+    }
+
+    public List<Worker> findWorkers() {
+
+        String requette = "select w from Worker w where w.accepted = 1 and w.blocked =0";
+        System.out.println("hahiya requette : " + requette);
+        List<Worker> workers = em.createQuery(requette).getResultList();
+        System.out.println("hahiya list workers : " + workers);
+        if (!workers.isEmpty()) {
+            return workers;
+        } else {
+            return new ArrayList();
+        }
+
+    }
+
+    public List<Worker> findNvWorkers() {
+
+        String requette = "select w from Worker w where w.accepted = 0 and w.blocked = 0";
+        System.out.println("hahiya requette : " + requette);
+        List<Worker> workers = em.createQuery(requette).getResultList();
+        System.out.println("hahiya list workers : " + workers);
+        if (!workers.isEmpty()) {
+            return workers;
+        } else {
+            return new ArrayList();
+        }
+
+    }
+
+    public List<Worker> findByCriteria(String email, String nom, Integer nombreEmployeMin,Integer nombreEmployeMax, String siteWeb,
+            String phone, WorkerType workerType, Boolean blocked, Boolean accepted) {
+
+        String requette = "select w from Worker w where 1=1 ";
+        requette += SearchUtil.addConstraint("w", "email", "=", email);
+        requette += SearchUtil.addConstraint("w", "nom", "=", nom);
+        requette += SearchUtil.addConstraintMinMax("w", "nombreEmploye", nombreEmployeMin,nombreEmployeMax);
+        requette += SearchUtil.addConstraint("w", "siteWeb", "=", siteWeb);
+        requette += SearchUtil.addConstraint("w", "workerType.id", "=", workerType.getId());
+        requette += SearchUtil.addConstraint("w", "siteWeb", "=", siteWeb);
+        requette += SearchUtil.addConstraint("w", "phone", "=", phone);
+        int i = 0;
+        if (blocked) {
+            i = 1;
+        }
+        requette += " and w.blocked = " + i + " ";
+        i = 0;
+        if (accepted) {
+            i = 1;
+        }
+        requette += " and w.accepted = " + i + " ";
+        System.out.println("haa requeta : " + requette);
+        return getEntityManager().createQuery(requette).getResultList();
     }
 
     public WorkerFacade() {

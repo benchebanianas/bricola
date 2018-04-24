@@ -27,7 +27,7 @@
                 <nav class="sidebar bg-dark">
                     <p style="text-align: center;">
                         <a href="../manager/Profile.xhtml">
-                            <img src="../resources/images/adminuser.png" style="border-radius: 70%;" width="200" class="img-rounded" />
+                            <img src="../resources/images/adminuser.png" style="border-radius: 70%;" width="150" class="img-rounded" />
                         </a>
                     </p>
                     <div align="center">
@@ -109,16 +109,20 @@
                                         <h:outputText value="#{item.demandeService.worker.nom}"/>
                                     </p:column>
                                     <p:column style="width: 65px;">
-                                        <p:commandButton value=">>" action="#{demandeServiceController.changeItems(item.demandeService)}" />
+                                        <p:commandLink action="#{demandeServiceController.changeItems(item.demandeService)}" >
+                                            <h:graphicImage value="../resources/images/seeMore.png" alt=">>" />
+                                        </p:commandLink> 
                                     </p:column>
                                 </p:dataTable>
+                                    <p:commandLink update="changeMdpForm" onclick="PF('changeMdpDialog').show()" value="Changer Votre Mot de Passe >" style="color: #4da6ff; height: 40px;border: solid #4da6ff;border-width: 1px; padding: 8px 5px;"/>
                             </div>
+                            <ui:include src="ChangeMdp.xhtml"/>
                         </div>
-                        <ui:include src="test.xhtml"/>
                         <br></br><hr></hr>
                     </h:form>
                 </div>
             </div>
+
 
 
 

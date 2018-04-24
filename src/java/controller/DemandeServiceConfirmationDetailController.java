@@ -81,7 +81,7 @@ public class DemandeServiceConfirmationDetailController implements Serializable 
 
     public List<DemandeServiceConfirmationDetail> getItems() {
         if (items == null) {
-            items = getFacade().findAll();
+            items = ejbFacade.findAll();
         }
         return items;
     }
