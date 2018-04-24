@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <p:dialog id="SocietesDlg" widgetVar="SocietesDialog" modal="true" resizable="false" appendTo="@(body)" width="900" height="500" header="Selectionner une societe">
+
+            <h:form id="CompanyListForm">
+                <h1><h:outputText value="Selectionner une societe" style="align:center"/></h1>
+                <p:dataTable id="companyList" value="#{demandeVoitureController.checkChoice()}" var="item" 
+                             selectionMode="single" selection="#{demandeVoitureController.selected.demandeService.worker}"
+                             rowKey="#{item.email}"
+                             paginatorPosition="bottom"
+                             paginator="true"
+                             rows="10"
+                             rowsPerPageTemplate="10,20,30,40,50" style="margin-top: 30px">
+
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Nom"/>
+                        </f:facet>
+                        <h:outputText value="#{item.nom}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="SiteWeb"/>
+                        </f:facet>
+                        <h:outputText value="#{item.siteWeb}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Phone"/>
+                        </f:facet>
+                        <h:outputText value="#{item.phone}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Description"/>
+                        </f:facet>
+                        <h:outputText value="#{item.description}"/>
+                    </p:column>
+
+                    <f:facet name="footer" >
+                        <p:commandButton value="Confirmer" style="width: 50%;height: 40px" oncomplete="handleSubmit(args,'SocietesDialog');" />
+                    </f:facet>
+                </p:dataTable>
+            </h:form>
+        </p:dialog>
+    </h:body>
+</html>
+

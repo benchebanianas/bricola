@@ -24,7 +24,7 @@ public class MenuFormulaire implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @ManyToOne
-    private TypeDemande typeDemande;
+    private Service service;
     private boolean infoTab;
     private boolean companyTab;
     private boolean detailsTab;
@@ -32,15 +32,14 @@ public class MenuFormulaire implements Serializable {
     private boolean payementTab;
     private String imageName;
 
-    public TypeDemande getTypeDemande() {
-        return typeDemande;
+    public Service getService() {
+        return service;
     }
 
-    public void setTypeDemande(TypeDemande typeDemande) {
-        this.typeDemande = typeDemande;
+    public void setService(Service service) {
+        this.service = service;
     }
 
-    
     public boolean isInfoTab() {
         return infoTab;
     }
@@ -88,8 +87,6 @@ public class MenuFormulaire implements Serializable {
     public void setImageName(String imageName) {
         this.imageName = imageName;
     }
-    
-    
 
     public Long getId() {
         return id;
@@ -121,11 +118,9 @@ public class MenuFormulaire implements Serializable {
 
     @Override
     public String toString() {
-        return "MenuFormulaire{" + "id=" + id + ", typeDemande=" + typeDemande.getId() + ", infoTab=" + infoTab +
-                ", companyTab=" + companyTab + ", detailsTab=" + detailsTab + ", summaryTab=" + summaryTab +
-                ", payementTab=" + payementTab + ", imageName=" + imageName + '}';
+        return "MenuFormulaire{" + "id=" + id + ", service=" + service + ", infoTab=" + infoTab
+                + ", companyTab=" + companyTab + ", detailsTab=" + detailsTab + ", summaryTab=" + summaryTab
+                + ", payementTab=" + payementTab + ", imageName=" + imageName + '}';
     }
 
-    
-    
 }

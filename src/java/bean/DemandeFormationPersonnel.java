@@ -54,8 +54,6 @@ public class DemandeFormationPersonnel implements Serializable {
         this.nbrpersonne = nbrpersonne;
     }
 
-    
-
     public Boolean getAdomicile() {
         return adomicile;
     }
@@ -65,6 +63,9 @@ public class DemandeFormationPersonnel implements Serializable {
     }
 
     public DemandeService getDemandeService() {
+        if (demandeService == null) {
+            demandeService = new DemandeService();
+        }
         return demandeService;
     }
 
@@ -73,14 +74,15 @@ public class DemandeFormationPersonnel implements Serializable {
     }
 
     public Matiere getMatiere() {
+        if (matiere == null) {
+            matiere = new Matiere();
+        }
         return matiere;
     }
 
     public void setMatiere(Matiere matiere) {
         this.matiere = matiere;
     }
-    
-    
 
     public Long getId() {
         return id;
@@ -114,8 +116,5 @@ public class DemandeFormationPersonnel implements Serializable {
     public String toString() {
         return "DemandeFormationPersonnel{" + "id=" + id + ", nbrpersonne=" + nbrpersonne + ", adomicile=" + adomicile + ", demandeService=" + demandeService + ", matiere=" + matiere + '}';
     }
-
-   
-   
 
 }

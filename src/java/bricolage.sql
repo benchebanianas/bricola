@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  127.0.0.1
--- Généré le :  Mar 10 Avril 2018 à 19:37
+-- Généré le :  Lun 16 Avril 2018 à 22:48
 -- Version du serveur :  10.1.16-MariaDB
 -- Version de PHP :  5.6.24
 
@@ -33,7 +33,8 @@ INSERT INTO `categorie` (`ID`, `NOM`) VALUES
 (5, 'Evenmentiel'),
 (6, 'Babysitters'),
 (7, 'Photographie'),
-(8, 'Voitures');
+(8, 'Voitures'),
+(9, 'Formation');
 
 --
 -- Contenu de la table `client`
@@ -88,8 +89,8 @@ INSERT INTO `demandeservice` (`ID`, `DATECONFIRMATION`, `DATEDERNIERMODIF`, `DAT
 -- Structure de la table `demandeserviceconfirmationdetail`
 --
 
-INSERT INTO `device` (`ID`, `BLOCKED`, `DATECONNECTION`, `IP`, `NAVIGATEUR`, `OS`, `MANAGER_ID`, `WORKER_EMAIL`, `DEVICECATEGORIE`) VALUES
-(1, 0, '2018-04-10', '172.31.20.65', 'Firefox', 'Windows', 'manager', NULL, 'Personal computer');
+INSERT INTO `device` (`ID`, `BLOCKED`, `DATECONNECTION`, `DEVICECATEGORIE`, `IP`, `NAVIGATEUR`, `OS`, `MANAGER_ID`, `WORKER_EMAIL`) VALUES
+(1, 0, '2018-04-13', 'Personal computer', '172.31.20.65', 'Firefox', 'Windows', 'manager', NULL);
 
 
 --
@@ -104,8 +105,11 @@ INSERT INTO `manager` (`ID`, `PASSWORD`, `BLOCKED`) VALUES
 -- Contenu de la table `menuformulaire`
 --
 
-INSERT INTO `menuformulaire` (`ID`, `COMPANYTAB`, `DETAILSTAB`, `IMAGENAME`, `INFOTAB`, `PAYEMENTTAB`, `SUMMARYTAB`, `TYPEDEMANDE_ID`) VALUES
-(1, 1, 1, 'nettoyageMaison', 1, 1, 1, 'nettoyageMaison');
+INSERT INTO `menuformulaire` (`ID`, `COMPANYTAB`, `DETAILSTAB`, `IMAGENAME`, `INFOTAB`, `PAYEMENTTAB`, `SUMMARYTAB`, `SERVICE_ID`) VALUES
+(1, 1, 1, 'nettoyageMaison', 1, 1, 1, 1),
+(2, 1, 1, 'photographie', 1, 1, 1, 19),
+(3, 1, 1, 'LocationVoiture', 1, 1, 1, 21),
+(4, 1, 1, 'formationpersonnel', 1, 1, 1, 22);
 
 
 --
@@ -186,9 +190,10 @@ INSERT INTO `service` (`ID`, `NOM`, `CATEGORIE_ID`) VALUES
 (16, 'Restauration', 5),
 (17, 'Traiteur', 5),
 (18, 'Babysitters', 6),
-(19, 'Photographie', 7),
+(19, 'photographie', 7),
 (20, 'Videographie', 7),
-(21, 'Location Voiture', 8);
+(21, 'locationvoiture', 8),
+(22, 'formationpersonnel', 9);
 
 
 --
@@ -257,14 +262,9 @@ INSERT INTO `timing` (`ID`, `NAME`, `VALEUR`) VALUES
 --
 
 INSERT INTO `typedemande` (`ID`) VALUES
-('climatisation'),
-('demenagement'),
-('deratisation'),
-('locationVoiture'),
-('nettoyageMaison'),
-('peinture'),
-('photographie'),
-('traiteur');
+('DemandeCleaning'),
+('DemandePhotographie'),
+('DemandeVoiture');
 
 
 --

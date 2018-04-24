@@ -27,11 +27,19 @@ public class Client implements Serializable {
     private String password;
     @ManyToOne
     private Secteur secteur;
-
+    private String token;
     private String adresseComplement;
     private boolean blocked;
 
     public Client() {
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 
     public Client(String nom, String prenom, String email, String phone, Secteur secteur, String adresseComplement) {
@@ -134,8 +142,6 @@ public class Client implements Serializable {
         }
         return true;
     }
-
-   
 
     @Override
     public String toString() {

@@ -82,6 +82,9 @@ public class Voiture implements Serializable {
     }
 
     public VoitureModele getModele() {
+        if (modele == null) {
+            modele = new VoitureModele();
+        }
         return modele;
     }
 

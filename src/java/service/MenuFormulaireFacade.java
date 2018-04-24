@@ -30,7 +30,7 @@ public class MenuFormulaireFacade extends AbstractFacade<MenuFormulaire> {
     }
 
     public MenuFormulaire findMenuByService(String nomService) {
-        String req = "SELECT m FROM MenuFormulaire m WHERE m.typeDemande.id='" + nomService + "'";
+        String req = "SELECT m FROM MenuFormulaire m WHERE m.service.nom='" + nomService + "'";
         return (MenuFormulaire) getUniqueResult(req);
     }
 
