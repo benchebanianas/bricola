@@ -36,7 +36,6 @@ public class Worker implements Serializable {
     private boolean blocked;
     private boolean accepted;
     //private List<Device> devices; hta nchof apres wach nkhliwha ola la 
-//    private boolean accepted;
     public Worker() {
     }
 
