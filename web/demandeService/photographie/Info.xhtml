@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <div class="row">
+
+            <h5 class="info-text"> Please fill out the form below so we can find the perfect photographer for you.</h5>
+            <div class="col-sm-12">
+                <p:panelGrid id="infoGrid" styleClass="ui-noborder" style="margin: 0 auto;width: 100%">
+                    <p:row>
+
+                        <p:column>
+                            <p:outputLabel value="What type of photography service are you looking for?" for="photographyType" style="text-align: left;padding-top: 10px;width: 200px"/>
+                        </p:column>
+
+                        <p:column>
+                            <p:selectOneMenu class="form-control" id="photographyType" value="#{demandeServiceController.demandePhotographie.typePhotographie}" style="width: 242px;height: 40px">
+                                <f:selectItems itemValue="#{photographieTypeController.itemsAvailableSelectOne}" />
+                            </p:selectOneMenu>
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+
+                        <p:column>
+                            <p:outputLabel value="When do you need the service?" for="oftenOnce" style="text-align: left;padding-top: 10px;width: 200px" />
+                        </p:column>
+
+                        <p:column>
+                            <p:selectBooleanButton id="oftenOnce" class="myBtn" value="#{demandeServiceController.oneTime}" onLabel="ONCE" offLabel="ONCE" style="width:120px;height: 40px;text-align: center;padding: 8px 0;" onchange="PF('ServiceUneFoisDialog').show()" >
+                                <p:ajax listener="#{demandeServiceController.checkOnce()}" update="oftenOnce  :ServiceUneFoisForm"/>
+                            </p:selectBooleanButton>
+
+                        </p:column>
+
+                        <p:column>
+                            <p:outputLabel value="videographie Incluse?" for="videographie" style="text-align: left;padding-top: 10px;" />
+                        </p:column>
+
+                        <p:column>
+                            <p:selectBooleanButton id="videographie" class="myBtn" value="#{demandeServiceController.demandePhotographie.videographie}" onLabel="YES (+20 MAD per hour)" offLabel="NO" style="width:170px;height: 40px;text-align: center;padding: 8px 0;" />
+                        </p:column>
+
+
+                    </p:row>
+
+                    <p:column>
+                        <p:outputLabel value="Any special instructions" for="instructions" style="text-align: left;padding-top: 10px;width: 200px" />
+                    </p:column>
+                    <p:column colspan="3">
+                        <p:inputTextarea rows="6" style="width: 100%"   id="instructions" placeholder="Example: I want a photoshoot for an after wedding party that might involve shooting a video" value="#{demandeServiceController.demandeService.detail}" />
+                    </p:column>
+
+                    <p:row>
+
+
+                    </p:row>
+
+
+
+                </p:panelGrid>
+            </div>
+
+        </div>
+
+    </ui:composition>
+</html>

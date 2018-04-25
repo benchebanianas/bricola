@@ -32,6 +32,9 @@ public class DemandeVoiture implements Serializable {
     }
 
     public DemandeService getDemandeService() {
+        if (demandeService == null) {
+            demandeService = new DemandeService();
+        }
         return demandeService;
     }
 
@@ -40,6 +43,9 @@ public class DemandeVoiture implements Serializable {
     }
 
     public Voiture getVoiture() {
+        if (voiture == null) {
+            voiture = new Voiture();
+        }
         return voiture;
     }
 

@@ -4,28 +4,55 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <ui:composition>
 
-        <p:dialog id="DemandeEventViewDlg" widgetVar="DemandeEventViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewDemandeEventTitle}">
-            <h:form id="DemandeEventViewForm">
-                <h:panelGroup id="display">
-                    <p:panelGrid columns="2" rendered="#{demandeEventController.selected != null}">
-                        <h:outputText value="#{bundle.ViewDemandeEventLabel_demandeService}"/>
-                        <h:outputText value="#{demandeEventController.selected.demandeService}" title="#{bundle.ViewDemandeEventTitle_demandeService}"/>
-                        <h:outputText value="#{bundle.ViewDemandeEventLabel_event}"/>
-                        <h:outputText value="#{demandeEventController.selected.event}" title="#{bundle.ViewDemandeEventTitle_event}"/>
-                        <h:outputText value="#{bundle.ViewDemandeEventLabel_detail}"/>
-                        <h:outputText value="#{demandeEventController.selected.detail}" title="#{bundle.ViewDemandeEventTitle_detail}"/>
-                        <h:outputText value="#{bundle.ViewDemandeEventLabel_nbrInvites}"/>
-                        <h:outputText value="#{demandeEventController.selected.nbrInvites}" title="#{bundle.ViewDemandeEventTitle_nbrInvites}"/>
-                        <h:outputText value="#{bundle.ViewDemandeEventLabel_id}"/>
-                        <h:outputText value="#{demandeEventController.selected.id}" title="#{bundle.ViewDemandeEventTitle_id}"/>
-                    </p:panelGrid>
-                    <p:commandButton value="#{bundle.Close}" onclick="DemandeEventViewDialog.hide()"/>
-                </h:panelGroup>
-            </h:form>
+        <p:dialog id="DemandeEventViewDlg" widgetVar="DemandeEventViewDialog" modal="true" hideEffect="blind" showEffect="blind" resizable="false" appendTo="@(body)" width="600" height="550" showHeader="false">
+            <hr></hr>
+            <h1 align="center"> Plus D'information : </h1>
+            <hr></hr><br></br>
+            <div class="container">
+                <h:form id="DemandeEventForm" style="margin-top: 10px;margin-bottom: 10px">
+                    <div align="center">
+                        <p:panelGrid columns="1" styleClass="ui-noborder">
+                            <p:outputLabel value="Type D'evenement : #{demandeServiceController.demandeEvent.event.nom}" />
+                            <c:if test="#{not empty demandeServiceController.demandeEvent.cuisineDemandeEvents}">
+                                <p:dataList value="#{demandeServiceController.demandeEvent.cuisineDemandeEvents}" var="cuisine" >
+                                    <f:facet name="header">
+                                        Cuisines :
+                                    </f:facet>
+                                    #{cuisine.cuisine.nom}
+                                </p:dataList>
+                            </c:if>
+                            <c:if test="#{not empty demandeServiceController.demandeEvent.supplementDemandeEvents}">
+                                <p:dataList value="#{demandeServiceController.demandeEvent.supplementDemandeEvents}" var="supplement" >
+                                    <f:facet name="header">
+                                        Supplements :
+                                    </f:facet>
+                                    #{supplement.supplementEvent.nom}
+                                </p:dataList>
+                            </c:if>
+                            <p:outputLabel value="Nombre D'Invités : #{demandeServiceController.demandeEvent.nbrInvites}"/>
+                            <p:outputLabel value="Detail : #{demandeServiceController.demandeEvent.detail}"/>
+                            <ui:include src="/manager/DemandeView.xhtml"/>
+                        </p:panelGrid>
+
+                        <br></br>
+
+                        <p:commandButton action="#{demandeServiceController.Action(null,2)}" value="Supprimer" style="background-color: #ff8080;"/>
+                        <p:commandButton action="#{demandeServiceController.Action(null,1)}" value="Valider"/>
+                    </div>
+
+                    <br></br>
+
+                    <p:commandLink oncomplete="handleSubmit(args,'DemandeEventViewDialog');" actionListener="#{demandeServiceController.deleteSession()}"> 
+                        <h:graphicImage value="../resources/images/retour.png" alt="retour" />
+                    </p:commandLink>
+                </h:form>
+            </div>
+            <br></br><hr></hr>
         </p:dialog>
 
     </ui:composition>

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  127.0.0.1
--- Généré le :  Lun 02 Avril 2018 à 19:26
+-- Généré le :  Mar 24 Avril 2018 à 13:42
 -- Version du serveur :  10.1.16-MariaDB
 -- Version de PHP :  5.6.24
 
@@ -72,6 +72,7 @@ CREATE TABLE `client` (
   `PASSWORD` varchar(255) DEFAULT NULL,
   `PHONE` varchar(255) DEFAULT NULL,
   `PRENOM` varchar(255) DEFAULT NULL,
+  `TOKEN` varchar(255) DEFAULT NULL,
   `SECTEUR_ID` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -79,9 +80,9 @@ CREATE TABLE `client` (
 -- Contenu de la table `client`
 --
 
-INSERT INTO `client` (`EMAIL`, `ADRESSECOMPLEMENT`, `BLOCKED`, `NOM`, `PASSWORD`, `PHONE`, `PRENOM`, `SECTEUR_ID`) VALUES
-('anas.the.creator@gmail.com', 'Saada 1 No 570', 0, 'Benchebani', 'walo', '0630247385', 'Mohamed Anas', 3),
-('newCustomer@gmail.com', 'no 12 hay salama', 0, 'Customer', 'newCustomer@gmail.com', '0679461382', 'new', 5);
+INSERT INTO `client` (`EMAIL`, `ADRESSECOMPLEMENT`, `BLOCKED`, `NOM`, `PASSWORD`, `PHONE`, `PRENOM`, `TOKEN`, `SECTEUR_ID`) VALUES
+('anas.the.creator@gmail.com', 'Saada 1 No 570', 0, 'Benchebani', 'walo', '0630247385', 'Mohamed Anas', NULL, 3),
+('newCustomer@gmail.com', 'no 12 hay salama', 0, 'Customer', 'newCustomer@gmail.com', '0679461382', 'new', NULL, 5);
 
 -- --------------------------------------------------------
 
@@ -195,10 +196,17 @@ CREATE TABLE `demandeevent` (
 CREATE TABLE `demandeformationpersonnel` (
   `ID` bigint(20) NOT NULL,
   `ADOMICILE` tinyint(1) DEFAULT '0',
-  `NBREHEURE` int(11) DEFAULT NULL,
+  `NBRPERSONNE` int(11) DEFAULT NULL,
   `MATIERE_ID` bigint(20) DEFAULT NULL,
   `DEMANDESERVICE_ID` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Contenu de la table `demandeformationpersonnel`
+--
+
+INSERT INTO `demandeformationpersonnel` (`ID`, `ADOMICILE`, `NBRPERSONNE`, `MATIERE_ID`, `DEMANDESERVICE_ID`) VALUES
+(1, 1, 5, NULL, 9);
 
 -- --------------------------------------------------------
 
@@ -311,14 +319,15 @@ CREATE TABLE `demandeservice` (
 --
 
 INSERT INTO `demandeservice` (`ID`, `DATECONFIRMATION`, `DATEDERNIERMODIF`, `DATESUPPRESSION`, `DATEDEMANDE`, `DETAIL`, `PRIXHT`, `PRIXTTC`, `CLIENT_EMAIL`, `MANAGERCONFIRMATION_ID`, `PLANNING_ID`, `SECTEUR_ID`, `SERVICE_ID`, `SERVICEPRICING_ID`, `WORKER_EMAIL`, `WORKERTYPE_ID`, `TYPEDEMANDE_ID`) VALUES
-(1, NULL, NULL, NULL, '2018-03-23', 'please enter quietly because the kids are still sleeping ', '300', '300', 'anas.the.creator@gmail.com', NULL, 1, 2, 1, 1, 'coitcleaners@gmail.com', 1, NULL),
-(2, NULL, NULL, NULL, '2018-03-23', 'none', '50', '50', 'anas.the.creator@gmail.com', NULL, 2, 2, 1, 1, 'merrymaids@gmail.com', 2, NULL),
-(3, NULL, NULL, NULL, '2018-03-23', 'i left food in the kitchen if you would like to eat', '400', '400', 'anas.the.creator@gmail.com', NULL, 3, 2, 1, 1, 'cleanharbors@gmail.com', 2, NULL),
-(4, NULL, NULL, NULL, '2018-03-23', 'if you cloud please check to close the door before you leave thank you', '400', '400', 'newCustomer@gmail.com', NULL, 4, 5, 1, 1, 'cleanharbors@gmail.com', 2, NULL),
-(5, NULL, NULL, NULL, '2018-03-31', 'this is just a test', '600', '600', 'anas.the.creator@gmail.com', NULL, 5, 2, 1, 1, 'coitcleaners@gmail.com', 1, NULL),
-(6, NULL, NULL, NULL, '2018-03-31', 'test for cleaning', '50', '50', 'anas.the.creator@gmail.com', NULL, 6, 2, 1, 1, 'merrymaids@gmail.com', 2, NULL),
-(7, NULL, NULL, NULL, '2018-03-31', 'none', '200', '200', 'anas.the.creator@gmail.com', NULL, 7, 2, 1, 1, 'cleanharbors@gmail.com', 2, NULL),
-(8, NULL, NULL, NULL, '2018-03-31', 'please enter the house quietly ! ', '1000', '1000', 'anas.the.creator@gmail.com', NULL, 8, 3, 1, 1, 'merrymaids@gmail.com', 2, NULL);
+(1, NULL, NULL, '2018-04-23', '2018-03-23', 'please enter quietly because the kids are still sleeping ', '300', '300', 'anas.the.creator@gmail.com', 'ysn', 1, 2, 1, 1, 'coitcleaners@gmail.com', 1, 'DemandeCleaning'),
+(2, NULL, NULL, '2018-04-16', '2018-03-23', 'none', '50', '50', 'anas.the.creator@gmail.com', 'ysn', 2, 2, 1, 1, 'merrymaids@gmail.com', 2, 'DemandeCleaning'),
+(3, NULL, NULL, NULL, '2018-03-23', 'i left food in the kitchen if you would like to eat', '400', '400', 'anas.the.creator@gmail.com', NULL, 3, 2, 1, 1, 'cleanharbors@gmail.com', 2, 'DemandeCleaning'),
+(4, NULL, NULL, '2018-04-16', '2018-03-23', 'if you cloud please check to close the door before you leave thank you', '400', '400', 'newCustomer@gmail.com', 'ysn', 4, 5, 1, 1, 'cleanharbors@gmail.com', 2, 'DemandeCleaning'),
+(5, NULL, NULL, NULL, '2018-03-31', 'this is just a test', '600', '600', 'anas.the.creator@gmail.com', NULL, 5, 2, 1, 1, 'coitcleaners@gmail.com', 1, 'DemandeCleaning'),
+(6, NULL, NULL, NULL, '2018-03-31', 'test for cleaning', '50', '50', 'anas.the.creator@gmail.com', NULL, 6, 2, 1, 1, 'merrymaids@gmail.com', 2, 'DemandeCleaning'),
+(7, NULL, NULL, NULL, '2018-03-31', 'none', '200', '200', 'anas.the.creator@gmail.com', NULL, 7, 2, 1, 1, 'cleanharbors@gmail.com', 2, 'DemandeCleaning'),
+(8, NULL, NULL, NULL, '2018-03-31', 'please enter the house quietly ! ', '1000', '1000', 'anas.the.creator@gmail.com', NULL, 8, 3, 1, 1, 'merrymaids@gmail.com', 2, 'DemandeCleaning'),
+(9, NULL, NULL, NULL, '2018-04-16', 'rah swaret te7t l7be9', '44', '66', 'newCustomer@gmail.com', NULL, 2, 2, 3, NULL, 'cleanharbors@gmail.com', 1, 'DemandeFormationPersonnel');
 
 -- --------------------------------------------------------
 
@@ -333,6 +342,17 @@ CREATE TABLE `demandeserviceconfirmationdetail` (
   `MANAGER_ID` varchar(255) DEFAULT NULL,
   `TYPEACTION_ID` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Contenu de la table `demandeserviceconfirmationdetail`
+--
+
+INSERT INTO `demandeserviceconfirmationdetail` (`ID`, `DATEACTION`, `DEMANDESERVICE_ID`, `MANAGER_ID`, `TYPEACTION_ID`) VALUES
+(1, '2018-04-16', 1, 'ysn', NULL),
+(2, '2018-04-16', 2, 'ysn', NULL),
+(3, '2018-04-16', 4, 'ysn', NULL),
+(4, '2018-04-23', 1, 'ysn', 1),
+(5, '2018-04-23', 1, 'ysn', 2);
 
 -- --------------------------------------------------------
 
@@ -356,12 +376,21 @@ CREATE TABLE `device` (
   `ID` bigint(20) NOT NULL,
   `BLOCKED` tinyint(1) DEFAULT '0',
   `DATECONNECTION` date DEFAULT NULL,
+  `DEVICECATEGORIE` varchar(255) DEFAULT NULL,
   `IP` varchar(255) DEFAULT NULL,
   `NAVIGATEUR` varchar(255) DEFAULT NULL,
   `OS` varchar(255) DEFAULT NULL,
   `MANAGER_ID` varchar(255) DEFAULT NULL,
   `WORKER_EMAIL` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Contenu de la table `device`
+--
+
+INSERT INTO `device` (`ID`, `BLOCKED`, `DATECONNECTION`, `DEVICECATEGORIE`, `IP`, `NAVIGATEUR`, `OS`, `MANAGER_ID`, `WORKER_EMAIL`) VALUES
+(1, 0, '2018-04-10', 'Personal computer', '172.31.20.65', 'Firefox', 'Windows', 'manager', NULL),
+(2, 0, '2018-04-23', 'Personal computer', '192.168.67.2', 'Firefox', 'Windows 8.1', 'ysn', NULL);
 
 -- --------------------------------------------------------
 
@@ -395,6 +424,22 @@ CREATE TABLE `filiere` (
   `NOM` varchar(255) DEFAULT NULL,
   `NIVEAUSCOLAIRE_ID` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Contenu de la table `filiere`
+--
+
+INSERT INTO `filiere` (`ID`, `NOM`, `NIVEAUSCOLAIRE_ID`) VALUES
+(1, 'mipc', 1),
+(2, 'mip', 1),
+(3, 'bcg', 1),
+(4, 'mip', 2),
+(5, 'mipc', 2),
+(6, 'bcg', 2),
+(7, 'sir', 3),
+(8, 'pcm', 3),
+(9, 'ieea', 3),
+(10, 'pm', 3);
 
 -- --------------------------------------------------------
 
@@ -492,6 +537,14 @@ CREATE TABLE `manager` (
   `BLOCKED` tinyint(1) DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Contenu de la table `manager`
+--
+
+INSERT INTO `manager` (`ID`, `PASSWORD`, `BLOCKED`) VALUES
+('manager', 'manager', 0),
+('ysn', '123', 0);
+
 -- --------------------------------------------------------
 
 --
@@ -504,6 +557,46 @@ CREATE TABLE `matiere` (
   `FILIERE_ID` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Contenu de la table `matiere`
+--
+
+INSERT INTO `matiere` (`ID`, `NOM`, `FILIERE_ID`) VALUES
+(1, 'base de donnee', 7),
+(2, 'java', 7),
+(3, 'uml', 7),
+(4, 'reseaux', 7),
+(5, 'analyse 1', 1),
+(6, 'algebre 1', 1),
+(7, 'mecanique du point', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `menuformulaire`
+--
+
+CREATE TABLE `menuformulaire` (
+  `ID` bigint(20) NOT NULL,
+  `COMPANYTAB` tinyint(1) DEFAULT '0',
+  `DETAILSTAB` tinyint(1) DEFAULT '0',
+  `IMAGENAME` varchar(255) DEFAULT NULL,
+  `INFOTAB` tinyint(1) DEFAULT '0',
+  `PAYEMENTTAB` tinyint(1) DEFAULT '0',
+  `SUMMARYTAB` tinyint(1) DEFAULT '0',
+  `SERVICE_ID` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Contenu de la table `menuformulaire`
+--
+
+INSERT INTO `menuformulaire` (`ID`, `COMPANYTAB`, `DETAILSTAB`, `IMAGENAME`, `INFOTAB`, `PAYEMENTTAB`, `SUMMARYTAB`, `SERVICE_ID`) VALUES
+(1, 1, 1, 'nettoyageMaison', 1, 1, 1, 1),
+(2, 1, 1, 'photographie', 1, 1, 1, 19),
+(3, 1, 1, 'LocationVoiture', 1, 1, 1, 21),
+(4, 1, 1, 'formationpersonnel', 1, 1, 1, 22);
+
 -- --------------------------------------------------------
 
 --
@@ -514,6 +607,23 @@ CREATE TABLE `niveauscolaire` (
   `ID` bigint(20) NOT NULL,
   `NOM` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Contenu de la table `niveauscolaire`
+--
+
+INSERT INTO `niveauscolaire` (`ID`, `NOM`) VALUES
+(1, '1 ere annee College'),
+(2, '2 eme annee College'),
+(3, '3 eme annee College'),
+(4, '1 ere annee Lycee'),
+(5, '1 ere Bac'),
+(6, '2 eme Bac'),
+(7, '1 ere annee Universitaire'),
+(8, '2 ere annee Universitaire'),
+(9, 'Licence'),
+(10, '1 ere annee Master'),
+(11, '2 eme annee Master');
 
 -- --------------------------------------------------------
 
@@ -634,7 +744,7 @@ INSERT INTO `planningitem` (`ID`, `NUMEROJOUR`, `REPETITION`, `DAY_ID`, `PLANNIN
 (3, 3, 2, NULL, 1, 9),
 (4, 1, 2, NULL, 3, 15),
 (5, 0, 1, 5, 3, 13),
-(51, 7, 2, NULL, 4, 1),
+(51, 7, 2, 1, 4, 1),
 (52, 0, 1, 2, 4, 5),
 (101, 0, 1, 1, 6, 1),
 (151, 5, 2, NULL, 7, 1),
@@ -712,7 +822,7 @@ CREATE TABLE `sequence` (
 --
 
 INSERT INTO `sequence` (`SEQ_NAME`, `SEQ_COUNT`) VALUES
-('SEQ_GEN', '200');
+('SEQ_GEN', '0');
 
 -- --------------------------------------------------------
 
@@ -749,9 +859,10 @@ INSERT INTO `service` (`ID`, `NOM`, `CATEGORIE_ID`) VALUES
 (16, 'Restauration', 5),
 (17, 'Traiteur', 5),
 (18, 'Babysitters', 6),
-(19, 'Photographie', 7),
+(19, 'photographie', 7),
 (20, 'Videographie', 7),
-(21, 'Location Voiture', 8);
+(21, 'locationvoiture', 8),
+(22, 'formationpersonnel', 9);
 
 -- --------------------------------------------------------
 
@@ -882,6 +993,14 @@ CREATE TABLE `typeaction` (
   `NAME` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Contenu de la table `typeaction`
+--
+
+INSERT INTO `typeaction` (`ID`, `NAME`) VALUES
+(1, 'Confirmation'),
+(2, 'Suppression');
+
 -- --------------------------------------------------------
 
 --
@@ -891,6 +1010,23 @@ CREATE TABLE `typeaction` (
 CREATE TABLE `typedemande` (
   `ID` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Contenu de la table `typedemande`
+--
+
+INSERT INTO `typedemande` (`ID`) VALUES
+('DemandeBabySitting'),
+('DemandeCleaning'),
+('DemandeEvent'),
+('DemandeFormationPersonnel'),
+('DemandeGardening'),
+('DemandeHandyMan'),
+('DemandeMoving'),
+('DemandePainting'),
+('DemandePestControl'),
+('DemandePhotographie'),
+('DemandeVoiture');
 
 -- --------------------------------------------------------
 
@@ -992,6 +1128,7 @@ CREATE TABLE `voituremodele` (
 
 CREATE TABLE `worker` (
   `EMAIL` varchar(255) NOT NULL,
+  `ACCEPTED` tinyint(1) DEFAULT '0',
   `BLOCKED` tinyint(1) DEFAULT '0',
   `DESCRIPTION` varchar(255) DEFAULT NULL,
   `NOM` varchar(255) DEFAULT NULL,
@@ -1006,11 +1143,11 @@ CREATE TABLE `worker` (
 -- Contenu de la table `worker`
 --
 
-INSERT INTO `worker` (`EMAIL`, `BLOCKED`, `DESCRIPTION`, `NOM`, `NOMBREEMPLOYE`, `PASSWORD`, `PHONE`, `SITEWEB`, `WORKERTYPE_ID`) VALUES
-('cleanharbors@gmail.com', 0, 'you probably heard of us, the leading company for cleaning services in over 26 countries', 'Clean Harbors', 32, 'cleanharbors@gmail.com', '0679120435', 'www.cleanharbors.com', 2),
-('coitcleaners@gmail.com', 0, 'An inspiring individual with many years of experiences in cleaning', 'Coit Cleaners ', 5, 'coitcleaners@gmail.com', '0613467982', 'www.coitcleaners.com', 1),
-('merrymaids@gmail.com', 0, 'we can guarantee that our services are the best in the cleaning industry', 'Merry Maids', 54, 'merrymaids@gmail.com', '0687125903', 'www.merrymaids.com', 2),
-('taskrabbit@gmail.com', 0, 'we hire specialist from all around the globe so that you can have the best services', 'TaskRabbit ', 78, 'taskrabbit@gmail.com', '0612064367', 'www.taskrabbit.com', 2);
+INSERT INTO `worker` (`EMAIL`, `ACCEPTED`, `BLOCKED`, `DESCRIPTION`, `NOM`, `NOMBREEMPLOYE`, `PASSWORD`, `PHONE`, `SITEWEB`, `WORKERTYPE_ID`) VALUES
+('cleanharbors@gmail.com', 1, 0, 'you probably heard of us, the leading company for cleaning services in over 26 countries', 'Clean Harbors', 32, 'cleanharbors@gmail.com', '0679120435', 'www.cleanharbors.com', 2),
+('coitcleaners@gmail.com', 0, 0, 'An inspiring individual with many years of experiences in cleaning', 'Coit Cleaners ', 5, 'coitcleaners@gmail.com', '0613467982', 'www.coitcleaners.com', 1),
+('merrymaids@gmail.com', 0, 0, 'we can guarantee that our services are the best in the cleaning industry', 'Merry Maids', 54, 'merrymaids@gmail.com', '0687125903', 'www.merrymaids.com', 2),
+('taskrabbit@gmail.com', 1, 0, 'we hire specialist from all around the globe so that you can have the best services', 'TaskRabbit ', 78, 'taskrabbit@gmail.com', '0612064367', 'www.taskrabbit.com', 2);
 
 -- --------------------------------------------------------
 
@@ -1295,6 +1432,13 @@ ALTER TABLE `manager`
 ALTER TABLE `matiere`
   ADD PRIMARY KEY (`ID`),
   ADD KEY `FK_MATIERE_FILIERE_ID` (`FILIERE_ID`);
+
+--
+-- Index pour la table `menuformulaire`
+--
+ALTER TABLE `menuformulaire`
+  ADD PRIMARY KEY (`ID`),
+  ADD KEY `FK_MENUFORMULAIRE_SERVICE_ID` (`SERVICE_ID`);
 
 --
 -- Index pour la table `niveauscolaire`
@@ -1663,6 +1807,12 @@ ALTER TABLE `home`
 --
 ALTER TABLE `matiere`
   ADD CONSTRAINT `FK_MATIERE_FILIERE_ID` FOREIGN KEY (`FILIERE_ID`) REFERENCES `filiere` (`ID`);
+
+--
+-- Contraintes pour la table `menuformulaire`
+--
+ALTER TABLE `menuformulaire`
+  ADD CONSTRAINT `FK_MENUFORMULAIRE_SERVICE_ID` FOREIGN KEY (`SERVICE_ID`) REFERENCES `service` (`ID`);
 
 --
 -- Contraintes pour la table `packaging`

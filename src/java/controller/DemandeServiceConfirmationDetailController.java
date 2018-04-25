@@ -28,6 +28,11 @@ public class DemandeServiceConfirmationDetailController implements Serializable 
     private List<DemandeServiceConfirmationDetail> items = null;
     private DemandeServiceConfirmationDetail selected;
 
+    
+    public String voirPlus(DemandeServiceConfirmationDetail demande){
+      return "#";  
+    }
+    
     public DemandeServiceConfirmationDetailController() {
     }
 
@@ -76,7 +81,7 @@ public class DemandeServiceConfirmationDetailController implements Serializable 
 
     public List<DemandeServiceConfirmationDetail> getItems() {
         if (items == null) {
-            items = getFacade().findAll();
+            items = ejbFacade.findAll();
         }
         return items;
     }

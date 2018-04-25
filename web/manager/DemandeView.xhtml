@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition>
+        <p:outputLabel value="Secteur : #{demandeServiceController.demande.demandeService.secteur.nom}" />
+        <p:outputLabel value="Service : #{demandeServiceController.demande.demandeService.service.nom}" />
+        <p:outputLabel value="Societe : #{demandeServiceController.demande.demandeService.worker.nom}" />
+        <p:outputLabel value="Client : #{demandeServiceController.demande.demandeService.client.nom}" />
+        <p:outputLabel value="Detail : #{demandeServiceController.demande.demandeService.detail}"/>
+        <c:if test="#{demandeServiceController.demande.demandeService.dateConfirmation ne null}">
+            <p:outputLabel value="manager de Confirmation : #{demandeServiceController.demande.demandeService.managerConfirmation.id}" />
+            <p:outputLabel value="date de Confirmation : #{demandeServiceController.demande.demandeService.dateConfirmation}" />
+        </c:if>
+        <c:if test="#{not empty demandeServiceController.demande.demandeService.dateSuppression}">
+            <p:outputLabel value="manager de Suppression : #{demandeServiceController.demande.demandeService.managerConfirmation.id}" />
+            <p:outputLabel value="date de Suppression : #{demandeServiceController.demande.demandeService.dateSuppression}" />
+        </c:if>
+        <c:if test="#{not empty demandeServiceController.demande.demandeService.planning.dateDebut}">
+            <p:outputLabel value="Date Debut : #{demandeServiceController.demande.demandeService.planning.dateDebut}" />
+            <p:outputLabel value="Date Fin : #{demandeServiceController.demande.demandeService.planning.dateFin}" />
+        </c:if>
+        <c:if test="#{not empty demandeServiceController.demande.demandeService.planning.planningItems}">
+            <p:dataList value="#{demandeServiceController.demande.demandeService.planning.planningItems}" var="planningItem" >
+                <f:facet name="header">
+                    Jours :
+                </f:facet>
+                le #{planningItem.day.nom} - #{planningItem.timing.name}
+            </p:dataList>
+        </c:if>
+        <c:if test="#{not empty demandeServiceController.demande.demandeService.planning.dateOnce}">
+            <p:outputLabel value="Date : #{demandeServiceController.demande.demandeService.planning.dateOnce}" />
+            <p:outputLabel value="Heure : #{demandeServiceController.demande.demandeService.planning.timing.name}" />
+        </c:if>
+        <p:outputLabel value="Prix HT : #{demandeServiceController.demande.demandeService.prixHt}" />
+        <p:outputLabel value="Prix TTC : #{demandeServiceController.demande.demandeService.prixTtc}" />
+    </ui:composition>
+
+</html>

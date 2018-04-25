@@ -2,21 +2,43 @@ package controller;
 
 import bean.Client;
 import bean.Day;
+import bean.DemandeBabySitting;
 import bean.DemandeCleaning;
+import bean.DemandeEvent;
+import bean.DemandeFormationPersonnel;
+import bean.DemandeGardening;
+import bean.DemandeHandyMan;
+import bean.DemandeMoving;
+import bean.DemandePainting;
+import bean.DemandePestControl;
+import bean.DemandePhotographie;
 import bean.DemandeService;
+import bean.MenuFormulaire;
+import bean.DemandeVoiture;
+import bean.Filiere;
+import bean.Manager;
+import bean.Matiere;
+import bean.NiveauScolaire;
+import bean.TypeAction;
 import bean.PlanningItem;
 import bean.Secteur;
 import bean.Service;
 import bean.Timing;
+import bean.TypeAction;
 import bean.Ville;
+import bean.VoitureMarque;
+import bean.VoitureModele;
 import bean.Worker;
 import bean.WorkerType;
 import controller.util.JsfUtil;
 import controller.util.JsfUtil.PersistAction;
+import controller.util.SessionUtil;
 import service.DemandeServiceFacade;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -30,7 +52,12 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.faces.event.AjaxBehaviorEvent;
+import service.DemandeServiceConfirmationDetailFacade;
+import service.TypeActionFacade;
 import org.primefaces.context.RequestContext;
+import service.FiliereFacade;
+import service.MatiereFacade;
 
 @Named("demandeServiceController")
 @SessionScoped
@@ -39,7 +66,9 @@ public class DemandeServiceController implements Serializable {
     @EJB
     private service.DemandeServiceFacade ejbFacade;
     @EJB
-    private service.DemandeCleaningFacade demandeCleaningFacade;
+    private DemandeServiceConfirmationDetailFacade detailFacade;
+    @EJB
+    private service.DemandeCleaningFacade demandeServiceCleaningFacade;
     @EJB
     private service.WorkerTypeFacade workerTypeFacade;
     @EJB
@@ -56,14 +85,28 @@ public class DemandeServiceController implements Serializable {
     private service.VilleFacade villeFacade;
     @EJB
     private service.SecteurFacade secteurFacade;
+    @EJB
+    private service.MenuFormulaireFacade menuFormulaireFacade;
+    @EJB
+    private service.TypeActionFacade typeActionFacade;
+    @EJB
+    private service.DemandeVoitureFacade demandeVoitureFacade;
+    @EJB
+    private service.VoitureModeleFacade modeleFacade;
+    @EJB
+    private FiliereFacade filiereFacade;
+    @EJB
+    private MatiereFacade matiereFacade;
+    @EJB
+    private service.ProfJobFacade profJobFacade;
 
-    private List<DemandeService> items = null;
     private List<Worker> companies;
     private List<Worker> individuals;
     private List<Secteur> secteurs;
 
     private DemandeService demandeService;
     private DemandeCleaning demandeCleaning;
+    private MenuFormulaire menuFormulaire;
 
     private WorkerType workerType;
     private Service currentService;
@@ -72,9 +115,128 @@ public class DemandeServiceController implements Serializable {
     private PlanningItem planningItem;
     private Client loadedClient;
     private Ville ville;
+    private VoitureMarque voitureMarque;
+    private List<VoitureModele> modeles;
+    private NiveauScolaire niveauScolaire;
+    private List<Filiere> filieres;
+    private List<Matiere> matieres;
+    private Filiere filiere;
+    private Matiere matiere;
 
     private boolean oneTime = true;
     private boolean multipleTimes;
+    private List<DemandeService> items = null;
+    private DemandeService selected;
+    private Object demande;
+    private DemandeBabySitting demandeBabySitting;
+    private DemandeEvent demandeEvent;
+    private DemandeFormationPersonnel demandeFormationPersonnel;
+    private DemandeGardening demandeGardening;
+    private DemandeHandyMan demandeHandyMan;
+    private DemandeMoving demandeMoving;
+    private DemandePainting demandePainting;
+    private DemandePestControl demandePestControl;
+    private DemandePhotographie demandePhotographie;
+    private DemandeVoiture demandeVoiture;
+    private Boolean fromDemandeDetail = false;
+
+    private List<PlanningItem> planningItems;
+
+    private String imageName;
+
+    public void voirPlus(DemandeService demandeService) {
+        setSelected(demandeService);
+        String view = demandeService.getTypeDemande().getId();
+        demande = ejbFacade.findDemande(getSelected());
+        switch (view) {
+            case "DemandeBabySitting":
+                demandeBabySitting = (DemandeBabySitting) demande;
+                break;
+            case "DemandeCleaning":
+                demandeCleaning = (DemandeCleaning) demande;
+                break;
+            case "DemandeEvent":
+                demandeEvent = (DemandeEvent) demande;
+                break;
+            case "DemandeFormationPersonnel":
+                demandeFormationPersonnel = (DemandeFormationPersonnel) demande;
+                break;
+            case "DemandeGardening":
+                demandeGardening = (DemandeGardening) demande;
+                break;
+            case "DemandeHandyMan":
+                demandeHandyMan = (DemandeHandyMan) demande;
+                break;
+            case "DemandeMoving":
+                demandeMoving = (DemandeMoving) demande;
+                break;
+            case "DemandePainting":
+                demandePainting = (DemandePainting) demande;
+                break;
+            case "DemandePestControl":
+                demandePestControl = (DemandePestControl) demande;
+                break;
+            case "DemandePhotographie":
+                demandePhotographie = (DemandePhotographie) demande;
+                break;
+            case "DemandeVoiture":
+                demandeVoiture = (DemandeVoiture) demande;
+                break;
+            default:
+                break;
+        }
+        RequestContext context = RequestContext.getCurrentInstance();
+        context.update("" + view + "Form");
+        context.execute("PF('" + view + "ViewDialog').show();");
+        if (fromDemandeDetail) {
+            items = null;
+            fromDemandeDetail = false;
+        }
+    }
+
+    public String changeItems(DemandeService demandeService) {
+        getItems().clear();
+        getItems().add(demandeService);
+        fromDemandeDetail = true;
+        return "/manager/Demande?faces-redirect=true";
+    }
+
+    public void retour() {
+        setSelected(null);
+        SessionUtil.remove("demandeService");
+    }
+
+    public String Action(DemandeService demandeService, Long idType) {
+        System.out.println("bsmlah");
+        if(demandeService != null){
+            setSelected(demandeService);
+        }
+        Manager manager = (Manager) SessionUtil.getAttribute("connectedManager");
+        if (idType == 1) {
+            selected.setDateConfirmation(new Date());
+            selected.setDateSuppression(null);
+        }
+        if (idType == 2) {
+            selected.setDateSuppression(new Date());
+            selected.setDateConfirmation(null);
+        }
+        selected.setManagerConfirmation(manager);
+        ejbFacade.edit(selected);
+        TypeAction action = typeActionFacade.find(idType);
+        detailFacade.save(manager, action, selected);
+        return "/manager/Demande?faces-redirect=true";
+    }
+
+    public int nvDmd() {
+        List<DemandeService> dmnds = ejbFacade.findAll();
+        int nbr = 0;
+        for (DemandeService dmnd : dmnds) {
+            if (dmnd.getDateConfirmation() == null && dmnd.getDateSuppression() == null) {
+                nbr++;
+            }
+        }
+        return nbr;
+    }
 
     public DemandeServiceController() {
     }
@@ -84,12 +246,12 @@ public class DemandeServiceController implements Serializable {
         try {
             ejbFacade.saveDemandeService(demandeService, currentService, company, individual, oneTime, multipleTimes);
             if (currentService.getId() == 1) {
-                demandeCleaningFacade.saveDemandeCleaning(demandeCleaning, demandeService);
+                demandeServiceCleaningFacade.saveDemandeCleaning(demandeCleaning, demandeService);
             }
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Demande enregistrer avec succes !"));
             resetObjects();
         } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "Erreur lors du sauvgarde de la demande !"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "Erreur lors du sauvgarde de la demandeService !"));
         }
     }
 
@@ -119,7 +281,27 @@ public class DemandeServiceController implements Serializable {
 
     public void initService(String nomService) {
         demandeService = new DemandeService();
+        menuFormulaire = new MenuFormulaire();
+        System.out.println(nomService);
         currentService = serviceFacade.findServiceByName(nomService);
+        menuFormulaire = menuFormulaireFacade.findMenuByService(nomService);
+        System.out.println(currentService.getNom());
+        System.out.println(menuFormulaire.getService().getNom());
+    }
+
+    public String initService2(String nomService) {
+        String link;
+        demandeService = new DemandeService();
+        menuFormulaire = new MenuFormulaire();
+
+        currentService = serviceFacade.findServiceByName(nomService);
+        menuFormulaire = menuFormulaireFacade.findMenuByService(nomService);
+
+        System.out.println("service name " + currentService.getNom());
+        System.out.println("type demande " + menuFormulaire.getService().getNom());
+
+        link = "/demandeService/Demande.xhtml?faces-redirect=true";
+        return link;
     }
 
     public List<Timing> loadTimings() {
@@ -128,6 +310,14 @@ public class DemandeServiceController implements Serializable {
 
     public List<Day> loadDays() {
         return dayFacade.findAll();
+    }
+
+    public void doActionNiveau(AjaxBehaviorEvent event) {
+        filieres = filiereFacade.findByNiveauScolaire(niveauScolaire);
+    }
+
+    public void doActionFiliere(AjaxBehaviorEvent event) {
+        matieres = matiereFacade.findByFiliere(filiere);
     }
 
     public List<WorkerType> loadWorkerType() {
@@ -221,6 +411,11 @@ public class DemandeServiceController implements Serializable {
             context.execute("PF('ConnexionDialog').jq.effect('shake', {times:5}, 100)");
 
         }
+    }
+    
+    public String redirectToIndex(){
+//        return "../index.xhtml?faces-redirect=true";
+        return "/index?faces-redirect=true";
     }
 
     public List<Secteur> getSecteurs() {
@@ -367,6 +562,127 @@ public class DemandeServiceController implements Serializable {
         this.oneTime = oneTime;
     }
 
+    public Object getDemande() {
+        return demande;
+    }
+
+    public void setDemande(Object demande) {
+        this.demande = demande;
+    }
+
+    public List<PlanningItem> getPlanningItems() {
+        return planningItems;
+    }
+
+    public void setPlanningItems(List<PlanningItem> planningItems) {
+        this.planningItems = planningItems;
+    }
+
+    public DemandeService getSelected() {
+        if (selected == null) {
+            selected = new DemandeService();
+        }
+        return selected;
+    }
+
+    public void setSelected(DemandeService selected) {
+        this.selected = selected;
+    }
+
+    public DemandeBabySitting getDemandeBabySitting() {
+        return demandeBabySitting;
+    }
+
+    public void setDemandeBabySitting(DemandeBabySitting demandeBabySitting) {
+        this.demandeBabySitting = demandeBabySitting;
+    }
+
+    public DemandeFormationPersonnel getDemandeFormationPersonnel() {
+        if (demandeFormationPersonnel == null) {
+            demandeFormationPersonnel = new DemandeFormationPersonnel();
+        }
+        return demandeFormationPersonnel;
+    }
+
+    public void setDemandeFormationPersonnel(DemandeFormationPersonnel demandeFormationPersonnel) {
+        this.demandeFormationPersonnel = demandeFormationPersonnel;
+    }
+
+    public DemandeGardening getDemandeGardening() {
+        return demandeGardening;
+    }
+
+    public void setDemandeGardening(DemandeGardening demandeGardening) {
+        this.demandeGardening = demandeGardening;
+    }
+
+    public DemandeHandyMan getDemandeHandyMan() {
+        return demandeHandyMan;
+    }
+
+    public void setDemandeHandyMan(DemandeHandyMan demandeHandyMan) {
+        this.demandeHandyMan = demandeHandyMan;
+    }
+
+    public DemandeEvent getDemandeEvent() {
+        return demandeEvent;
+    }
+
+    public void setDemandeEvent(DemandeEvent demandeEvent) {
+        this.demandeEvent = demandeEvent;
+    }
+
+    public DemandeMoving getDemandeMoving() {
+        return demandeMoving;
+    }
+
+    public void setDemandeMoving(DemandeMoving demandeMoving) {
+        this.demandeMoving = demandeMoving;
+    }
+
+    public DemandePestControl getDemandePestControl() {
+        return demandePestControl;
+    }
+
+    public void setDemandePestControl(DemandePestControl demandePestControl) {
+        this.demandePestControl = demandePestControl;
+    }
+
+    public DemandePhotographie getDemandePhotographie() {
+        return demandePhotographie;
+    }
+
+    public void setDemandePhotographie(DemandePhotographie demandePhotographie) {
+        this.demandePhotographie = demandePhotographie;
+    }
+
+    public DemandeVoiture getDemandeVoiture() {
+        if (demandeVoiture == null) {
+            demandeVoiture = new DemandeVoiture();
+        }
+        return demandeVoiture;
+    }
+
+    public void setDemandeVoiture(DemandeVoiture demandeVoiture) {
+        this.demandeVoiture = demandeVoiture;
+    }
+
+    public DemandePainting getDemandePainting() {
+        return demandePainting;
+    }
+
+    public void setDemandePainting(DemandePainting demandePainting) {
+        this.demandePainting = demandePainting;
+    }
+
+    public MenuFormulaire getMenuFormulaire() {
+        return menuFormulaire;
+    }
+
+    public void setMenuFormulaire(MenuFormulaire menuFormulaire) {
+        this.menuFormulaire = menuFormulaire;
+    }
+
     protected void setEmbeddableKeys() {
     }
 
@@ -402,11 +718,101 @@ public class DemandeServiceController implements Serializable {
         }
     }
 
+    public void loadModeles(final AjaxBehaviorEvent event) {
+        modeles = modeleFacade.SearchByMarque(voitureMarque);
+    }
+
+    public VoitureMarque getVoitureMarque() {
+        if (voitureMarque == null) {
+            voitureMarque = new VoitureMarque();
+        }
+        return voitureMarque;
+    }
+
+    public void setVoitureMarque(VoitureMarque voitureMarque) {
+        this.voitureMarque = voitureMarque;
+    }
+
+    public List<VoitureModele> getModeles() {
+        if (modeles == null) {
+            modeles = new ArrayList();
+        }
+        return modeles;
+    }
+
+    public void setModeles(List<VoitureModele> modeles) {
+        this.modeles = modeles;
+    }
+
     public List<DemandeService> getItems() {
         if (items == null) {
             items = getFacade().findAll();
         }
         return items;
+    }
+
+    public void setItems(List<DemandeService> items) {
+        this.items = items;
+    }
+
+    public String getImageName() {
+        return imageName;
+    }
+
+    public void setImageName(String imageName) {
+        this.imageName = imageName;
+    }
+
+    public NiveauScolaire getNiveauScolaire() {
+        if (niveauScolaire == null) {
+            niveauScolaire = new NiveauScolaire();
+        }
+        return niveauScolaire;
+    }
+
+    public void setNiveauScolaire(NiveauScolaire niveauScolaire) {
+        this.niveauScolaire = niveauScolaire;
+    }
+
+    public List<Filiere> getFilieres() {
+        if (filieres == null) {
+            filieres = new ArrayList();
+        }
+        return filieres;
+    }
+
+    public void setFilieres(List<Filiere> filieres) {
+        this.filieres = filieres;
+    }
+
+    public List<Matiere> getMatieres() {
+        if (matieres == null) {
+            matieres = new ArrayList();
+        }
+        return matieres;
+    }
+
+    public void setMatieres(List<Matiere> matieres) {
+        this.matieres = matieres;
+    }
+
+    public Filiere getFiliere() {
+        return filiere;
+    }
+
+    public void setFiliere(Filiere filiere) {
+        this.filiere = filiere;
+    }
+
+    public Matiere getMatiere() {
+        if (matiere == null) {
+            matiere = new Matiere();
+        }
+        return matiere;
+    }
+
+    public void setMatiere(Matiere matiere) {
+        this.matiere = matiere;
     }
 
     private void persist(PersistAction persistAction, String successMessage) {

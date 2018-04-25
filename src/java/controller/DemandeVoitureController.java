@@ -1,11 +1,18 @@
 package controller;
 
 import bean.DemandeVoiture;
+import bean.Secteur;
+import bean.Timing;
+import bean.Ville;
+import bean.VoitureMarque;
+import bean.VoitureModele;
+import bean.Worker;
 import controller.util.JsfUtil;
 import controller.util.JsfUtil.PersistAction;
 import service.DemandeVoitureFacade;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -18,6 +25,12 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.faces.event.AjaxBehaviorEvent;
+import static org.primefaces.component.focus.Focus.PropertyKeys.context;
+import service.SecteurFacade;
+import service.TimingFacade;
+import service.VoitureModeleFacade;
+import service.WorkerJobFacade;
 
 @Named("demandeVoitureController")
 @SessionScoped
@@ -25,18 +38,141 @@ public class DemandeVoitureController implements Serializable {
 
     @EJB
     private service.DemandeVoitureFacade ejbFacade;
+    @EJB
+    private VoitureModeleFacade modeleFacade;
+    @EJB
+    private SecteurFacade secteurFacade;
+    @EJB
+    private TimingFacade timingFacade;
+    @EJB
+    private WorkerJobFacade workerJobFacade;
+
     private List<DemandeVoiture> items = null;
     private DemandeVoiture selected;
+    private VoitureMarque voitureMarque;
+    private List<VoitureModele> modeles;
+    private Ville ville;
+    private List<Secteur> secteurs;
+    private List<Worker> workers;
 
     public DemandeVoitureController() {
     }
 
+    public void save() {
+    }
+
+    public List<Worker> checkChoice() {
+        //hadii rah khedama ela 7sab yassine
+        workers = workerJobFacade.findWorkerByServiceAndType("Location Voiture",null);
+        return workers;
+    }
+
+    public List<Timing> loadTimings() {
+        return timingFacade.findAll();
+
+    }
+
+    public void loadModeles(final AjaxBehaviorEvent event) {
+        modeles = modeleFacade.SearchByMarque(voitureMarque);
+    }
+
+    public void loadSectors(final AjaxBehaviorEvent event) {
+        secteurs = secteurFacade.findByVille(ville);
+    }
+
     public DemandeVoiture getSelected() {
+        if (selected == null) {
+            selected = new DemandeVoiture();
+        }
         return selected;
     }
 
     public void setSelected(DemandeVoiture selected) {
         this.selected = selected;
+    }
+
+    public List<Worker> getWorkers() {
+        if (workers == null) {
+            workers = new ArrayList<>();
+        }
+        return workers;
+    }
+
+    public void setWorkers(List<Worker> workers) {
+        this.workers = workers;
+    }
+
+    public List<Secteur> getSecteurs() {
+        if (secteurs == null) {
+            secteurs = new ArrayList();
+        }
+        return secteurs;
+    }
+
+    public void setSecteurs(List<Secteur> secteurs) {
+        this.secteurs = secteurs;
+    }
+
+    public SecteurFacade getSecteurFacade() {
+        return secteurFacade;
+    }
+
+    public void setSecteurFacade(SecteurFacade secteurFacade) {
+        this.secteurFacade = secteurFacade;
+    }
+
+    public TimingFacade getTimingFacade() {
+        return timingFacade;
+    }
+
+    public void setTimingFacade(TimingFacade timingFacade) {
+        this.timingFacade = timingFacade;
+    }
+
+    public Ville getVille() {
+        if (ville == null) {
+            ville = new Ville();
+        }
+        return ville;
+    }
+
+    public void setVille(Ville ville) {
+        this.ville = ville;
+    }
+
+    public VoitureModeleFacade getModeleFacade() {
+        return modeleFacade;
+    }
+
+    public void setModeleFacade(VoitureModeleFacade modeleFacade) {
+        this.modeleFacade = modeleFacade;
+    }
+
+    public List<VoitureModele> getModeles() {
+        return modeles;
+    }
+
+    public void setModeles(List<VoitureModele> modeles) {
+        this.modeles = modeles;
+    }
+
+    public DemandeVoitureFacade getEjbFacade() {
+        return ejbFacade;
+    }
+
+    public void setEjbFacade(DemandeVoitureFacade ejbFacade) {
+        this.ejbFacade = ejbFacade;
+    }
+
+    public VoitureMarque getVoitureMarque() {
+        if (voitureMarque == null) {
+            voitureMarque = new VoitureMarque();
+        }
+        return voitureMarque;
+    }
+
+    public void setVoitureMarque(VoitureMarque voitureMarque) {
+        this.voitureMarque = voitureMarque;
     }
 
     protected void setEmbeddableKeys() {

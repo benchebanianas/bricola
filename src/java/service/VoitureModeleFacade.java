@@ -5,7 +5,9 @@
  */
 package service;
 
+import bean.VoitureMarque;
 import bean.VoitureModele;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -20,6 +22,11 @@ public class VoitureModeleFacade extends AbstractFacade<VoitureModele> {
     @PersistenceContext(unitName = "bricolagePU")
     private EntityManager em;
 
+    public List<VoitureModele> SearchByMarque(VoitureMarque marque) {
+        String requette = "SELECT DISTINCT vm FROM VoitureModele vm WHERE vm.marque.id='" + marque.getId() + "'";
+        return em.createQuery(requette).getResultList();
+    }
+
     @Override
     protected EntityManager getEntityManager() {
         return em;
@@ -28,5 +35,5 @@ public class VoitureModeleFacade extends AbstractFacade<VoitureModele> {
     public VoitureModeleFacade() {
         super(VoitureModele.class);
     }
-    
+
 }

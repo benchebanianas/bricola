@@ -5,7 +5,9 @@
  */
 package service;
 
+import bean.Filiere;
 import bean.Matiere;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -20,6 +22,10 @@ public class MatiereFacade extends AbstractFacade<Matiere> {
     @PersistenceContext(unitName = "bricolagePU")
     private EntityManager em;
 
+    public List<Matiere> findByFiliere(Filiere filiere) {
+        return em.createQuery("select m from Matiere m where m.filiere.id='" + filiere.getId() + "'").getResultList();
+    }
+
     @Override
     protected EntityManager getEntityManager() {
         return em;
@@ -28,5 +34,5 @@ public class MatiereFacade extends AbstractFacade<Matiere> {
     public MatiereFacade() {
         super(Matiere.class);
     }
-    
+
 }

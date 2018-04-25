@@ -34,9 +34,17 @@ public class Worker implements Serializable {
     private WorkerType workerType;
     private String password;
     private boolean blocked;
+    private boolean accepted;
     //private List<Device> devices; hta nchof apres wach nkhliwha ola la 
-
     public Worker() {
+    }
+
+    public boolean isAccepted() {
+        return accepted;
+    }
+
+    public void setAccepted(boolean accepted) {
+        this.accepted = accepted;
     }
 
     public String getEmail() {

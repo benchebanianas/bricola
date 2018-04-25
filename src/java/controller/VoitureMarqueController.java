@@ -32,6 +32,9 @@ public class VoitureMarqueController implements Serializable {
     }
 
     public VoitureMarque getSelected() {
+        if (selected == null) {
+            selected = new VoitureMarque();
+        }
         return selected;
     }
 

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/templateAdmin.xhtml">
+
+
+
+        <ui:define name="title">
+            <h:outputText value="Profile"></h:outputText>
+        </ui:define>
+
+        <ui:define name="body">
+
+            <h:outputStylesheet name="bootstrap-4.0.0/css/bootstrap.min.css"/>
+            <h:outputStylesheet name="css/workerProfilecss.css"/>
+
+
+
+
+            <!--   Big container   -->
+            <div class="d-flex image-container set-full-height" style="background-image: url('../resources/images/managerbg.png')">
+                <nav class="sidebar bg-dark">
+                    <p style="text-align: center;">
+                        <a href="../manager/Profile.xhtml">
+                            <img src="../resources/images/adminuser.png" style="border-radius: 70%;" width="150" class="img-rounded" />
+                        </a>
+                    </p>
+                    <div align="center">
+                        <h3 style="color: white;font-family: 'Arial', sans-serif;"> #{managerController.selected.id} </h3>
+                    </div>
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="../manager/Profile.xhtml">
+                                <span data-feather="home"></span>
+                                Profile <span class="sr-only">(current)</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../manager/Demande.xhtml">
+                                <span data-feather="file"></span>
+                                Demandes
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../manager/Worker.xhtml">
+                                <span data-feather="shopping-cart"></span>
+                                Workers
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../manager/Operation.xhtml">
+                                <span data-feather="users"></span>
+                                Operations
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../manager/Statistique.xhtml">
+                                <span data-feather="bar-chart-2"></span>
+                                Statistiques
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+
+                <div class="content p-4">
+                    <h:form id="tableForm">
+                        <hr></hr>
+                        <h1 align="center"> Operations : </h1>
+                        <hr></hr><br></br>
+                        <div class="container">
+                            <div class="row">
+                                <h1><h:outputText value="Votre Operations :"/></h1>
+                                <p:dataTable id="managerTable" value="#{managerController.managerItems}" rowStyleClass="high" class="table table-striped" var="item">
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Manager"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.manager.id}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Type d'Action"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.typeAction.name}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Date d'Action"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.dateAction}">
+                                            <f:convertDateTime pattern="MM-dd-yyyy" />
+                                        </h:outputText>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Service"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.demandeService.service.nom}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Societe"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.demandeService.worker.nom}"/>
+                                    </p:column>
+                                    <p:column style="width: 65px;">
+                                        <p:commandLink action="#{demandeServiceController.changeItems(item.demandeService)}" >
+                                            <h:graphicImage value="../resources/images/seeMore.png" alt=">>" />
+                                        </p:commandLink> 
+                                    </p:column>
+                                </p:dataTable>
+                                    <p:commandLink update="changeMdpForm" onclick="PF('changeMdpDialog').show()" value="Changer Votre Mot de Passe >" style="color: #4da6ff; height: 40px;border: solid #4da6ff;border-width: 1px; padding: 8px 5px;"/>
+                            </div>
+                            <ui:include src="ChangeMdp.xhtml"/>
+                        </div>
+                        <br></br><hr></hr>
+                    </h:form>
+                </div>
+            </div>
+
+
+
+
+        </ui:define>
+    </ui:composition>
+
+</html>

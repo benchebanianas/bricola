@@ -3,27 +3,38 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <ui:composition>
 
-        <p:dialog id="DemandePaintingViewDlg" widgetVar="DemandePaintingViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewDemandePaintingTitle}">
-            <h:form id="DemandePaintingViewForm">
-                <h:panelGroup id="display">
-                    <p:panelGrid columns="2" rendered="#{demandePaintingController.selected != null}">
-                        <h:outputText value="#{bundle.ViewDemandePaintingLabel_demandeService}"/>
-                        <h:outputText value="#{demandePaintingController.selected.demandeService}" title="#{bundle.ViewDemandePaintingTitle_demandeService}"/>
-                        <h:outputText value="#{bundle.ViewDemandePaintingLabel_painting}"/>
-                        <h:outputText value="#{demandePaintingController.selected.painting}" title="#{bundle.ViewDemandePaintingTitle_painting}"/>
-                        <h:outputText value="#{bundle.ViewDemandePaintingLabel_detail}"/>
-                        <h:outputText value="#{demandePaintingController.selected.detail}" title="#{bundle.ViewDemandePaintingTitle_detail}"/>
-                        <h:outputText value="#{bundle.ViewDemandePaintingLabel_id}"/>
-                        <h:outputText value="#{demandePaintingController.selected.id}" title="#{bundle.ViewDemandePaintingTitle_id}"/>
-                    </p:panelGrid>
-                    <p:commandButton value="#{bundle.Close}" onclick="DemandePaintingViewDialog.hide()"/>
-                </h:panelGroup>
-            </h:form>
+        <p:dialog id="DemandePaintingViewDlg" widgetVar="DemandePaintingViewDialog" modal="true" hideEffect="blind" showEffect="blind" resizable="false" appendTo="@(body)" width="600" height="550" showHeader="false">
+            <hr></hr>
+            <h1 align="center"> Plus D'information : </h1>
+            <hr></hr><br></br>
+            <div class="container">
+                <h:form id="DemandePaintingForm" style="margin-top: 10px;margin-bottom: 10px">
+                    <div align="center">
+                        <p:panelGrid columns="1" styleClass="ui-noborder">
+                            <p:outputLabel value="Type de Painture : #{demandeServiceController.demandePainting.painting.nom}"/>
+                            <p:outputLabel value="Plus de Detail : #{demandeServiceController.demandePainting.detail}"/>
+                            <ui:include src="/manager/DemandeView.xhtml"/>
+                        </p:panelGrid>
+
+                        <br></br>
+
+                        <p:commandButton action="#{demandeServiceController.Action(null,2)}" value="Supprimer" style="background-color: #ff8080;"/>
+                        <p:commandButton action="#{demandeServiceController.Action(null,1)}" value="Valider"/>
+                    </div>
+
+                    <br></br>
+
+                    <p:commandLink oncomplete="handleSubmit(args,'DemandePaintingViewDialog');" actionListener="#{demandeServiceController.retour()}"> 
+                        <h:graphicImage value="../resources/images/retour.png" alt="retour" />
+                    </p:commandLink>
+                </h:form>
+            </div>
+            <br></br><hr></hr>
         </p:dialog>
 
     </ui:composition>
