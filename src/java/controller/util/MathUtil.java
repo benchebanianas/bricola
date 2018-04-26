@@ -14,17 +14,15 @@ import java.math.BigDecimal;
 public class MathUtil {
 
     
-    public static BigDecimal calculerMax(BigDecimal[][] resultas) {
+    public static BigDecimal calculerMax(BigDecimal[] resultas) {
         BigDecimal max = new BigDecimal(0);
-        max = resultas[0][0];
-        for (int i = 0; i < 2; i++) {
-            for (int j = 0; j < 12; j++) {
-                if (max.compareTo(resultas[i][j]) == -1) {
-                    max = resultas[i][j];
+        max = resultas[0];
+            for (int i = 0; i < 12; i++) {
+                if (max.compareTo(resultas[i]) == -1) {
+                    max = resultas[i];
                     System.out.println("ha max :::" + max);
                 }
             }
-        }
         return max;
     }
 

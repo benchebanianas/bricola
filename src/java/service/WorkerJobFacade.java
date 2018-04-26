@@ -59,7 +59,7 @@ public class WorkerJobFacade extends AbstractFacade<WorkerJob> {
 
     public List<Worker> findWorkerByServiceAndType(String service, Long type) {
         
-        String requette = "select w.worker from WorkerJob w where 1=1 w.service.nom = '" + service + "' and w.worker.workerType.id = '" + type + "'";
+        String requette = "select w.worker from WorkerJob w where w.service.nom = '" + service + "' and w.worker.workerType.id = '" + type + "'";
         requette+=SearchUtil.addConstraint("w", "service.nom", "=", service);
         requette+=SearchUtil.addConstraint("w", "worker.workerType.id", "=", type);
         System.out.println("hahiya requette : " + requette);
