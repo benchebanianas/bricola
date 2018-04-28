@@ -7,12 +7,13 @@ import bean.Secteur;
 import bean.Service;
 import bean.Ville;
 import controller.util.JsfUtil;
-import controller.util.*;
 import controller.util.JsfUtil.PersistAction;
+import controller.util.MathUtil;
 import controller.util.SessionUtil;
 import service.ManagerFacade;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -27,7 +28,12 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
-import org.primefaces.context.RequestContext;
+import org.primefaces.model.chart.Axis;
+import org.primefaces.model.chart.AxisType;
+import org.primefaces.model.chart.BarChartModel;
+import org.primefaces.model.chart.CategoryAxis;
+import org.primefaces.model.chart.ChartSeries;
+import org.primefaces.model.chart.LineChartModel;
 import service.DemandeServiceConfirmationDetailFacade;
 import service.DeviceFacade;
 
@@ -37,6 +43,8 @@ public class ManagerController implements Serializable {
 
     @EJB
     private service.ManagerFacade ejbFacade;
+    @EJB
+    private service.ServiceFacade serviceFacade;
     @EJB
     private service.VilleFacade villeFacade;
     @EJB
@@ -62,6 +70,17 @@ public class ManagerController implements Serializable {
     private String ancienPassword;
     private String nvPassword;
     private String nvPassword1;
+    private int statAnnee;
+    private Service statService;
+    private Ville statVille;
+    private Secteur statSecteur;
+    private List<Ville> statVilles;
+    private List<Secteur> statSecteurs;
+    private List<Service> statServices;
+    private LineChartModel lineCharModel;
+    private BarChartModel barCharModel;
+    private int typeChart;
+    private BigDecimal max;
 
     public void changeMdp() {
         if (ancienPassword.equals(selected.getPassword())) {
@@ -74,29 +93,161 @@ public class ManagerController implements Serializable {
         }
     }
 
+    public void afficherChart() {
+        if (typeChart == 1) {
+            createLineModels();
+        }
+        if (typeChart == 2) {
+            createBarModel();
+        }
+    }
+
+    private void createLineModels() {
+
+        lineCharModel = initCategoryModel();
+
+        String title = "Statisique Globale";
+        
+        if (statAnnee > 0) {
+            title += ", Annee : " + statAnnee + "";
+        }
+        if (statSecteur != null) {
+            title += ", Secteur : " + statSecteur.getNom() + "";
+        }
+        if (statService != null) {
+            title += ", Service : " + statService.getNom() + "";
+        }
+
+        lineCharModel.setTitle(title);
+        lineCharModel.setLegendPosition("ne");
+
+        lineCharModel.setShowPointLabels(true);
+        lineCharModel.getAxes().put(AxisType.X, new CategoryAxis("Mois"));
+        Axis yAxis = lineCharModel.getAxis(AxisType.Y);
+        yAxis.setLabel("Montant");
+        yAxis.setMin(0);
+        yAxis.setMax(max.multiply(new BigDecimal(1.1)));
+        Axis xAxis = lineCharModel.getAxis(AxisType.X);
+        xAxis.setMin(0);
+    }
+
+    private void createBarModel() {
+        barCharModel = initBarModel();
+
+       String title = "Statisique Globale";
+        
+        if (statAnnee > 0) {
+            title += ", Annee : " + statAnnee + "";
+        }
+        if (statSecteur != null) {
+            title += ", Secteur : " + statSecteur.getNom() + "";
+        }
+        if (statService != null) {
+            title += ", Service : " + statService.getNom() + "";
+        }
+        barCharModel.setTitle(title);
+        barCharModel.setLegendPosition("ne");
+        barCharModel.setShowDatatip(false);
+        barCharModel.setShowPointLabels(true);
+        Axis xAxis = barCharModel.getAxis(AxisType.X);
+        xAxis.setLabel("Mois");
+
+        Axis yAxis = barCharModel.getAxis(AxisType.Y);
+        yAxis.setLabel("Montant");
+        yAxis.setMin(0);
+        yAxis.setMax(max.multiply(new BigDecimal(1.1)));
+    }
+
+    private LineChartModel initCategoryModel() {
+        LineChartModel model = new LineChartModel();
+        BigDecimal[] resultas = ejbFacade.genererStatistique(statAnnee, statSecteur, statService);
+        max = MathUtil.calculerMax(resultas);
+        ChartSeries annee = new ChartSeries();
+        if(statAnnee>0){
+            annee.setLabel("Annee " + statAnnee);
+        }else{
+            annee.setLabel("Globale");
+        }
+        annee.set("Janvier", resultas[0]);
+        annee.set("Fevrier", resultas[1]);
+        annee.set("Mars", resultas[2]);
+        annee.set("Avril", resultas[3]);
+        annee.set("Mai", resultas[4]);
+        annee.set("Juin", resultas[5]);
+        annee.set("Juillet", resultas[6]);
+        annee.set("Aout", resultas[7]);
+        annee.set("Semptembre", resultas[8]);
+        annee.set("Octobre", resultas[9]);
+        annee.set("Novombre", resultas[10]);
+        annee.set("Decembre", resultas[11]);
+
+        model.addSeries(annee);
+
+        return model;
+
+    }
+
+    private BarChartModel initBarModel() {
+        BarChartModel model = new BarChartModel();
+        BigDecimal[] resultas = ejbFacade.genererStatistique(statAnnee, statSecteur, statService);
+        max = MathUtil.calculerMax(resultas);
+        ChartSeries annee = new ChartSeries();
+        if(statAnnee>0){
+            annee.setLabel("Annee " + statAnnee);
+        }else{
+            annee.setLabel("Globale");
+        }
+        
+        annee.set("Janvier", resultas[0]);
+        annee.set("Fevrier", resultas[1]);
+        annee.set("Mars", resultas[2]);
+        annee.set("Avril", resultas[3]);
+        annee.set("Mai", resultas[4]);
+        annee.set("Juin", resultas[5]);
+        annee.set("Juillet", resultas[6]);
+        annee.set("Aout", resultas[7]);
+        annee.set("Semptembre", resultas[8]);
+        annee.set("Octobre", resultas[9]);
+        annee.set("Novombre", resultas[10]);
+        annee.set("Decembre", resultas[11]);
+
+        model.addSeries(annee);
+
+        return model;
+    }
+
+    public List<Service> statServices() {
+        return serviceFacade.findAll();
+    }
+
     public String login() {
         System.out.println("bsmllah");
         int conected = ejbFacade.login(selected);
         System.out.println(selected);
-        if (conected == 0) {
-            SessionUtil.setAttribute("connectedManager", selected);
-            Device dev = deviceFacade.getManagerDevice(selected);
-            deviceFacade.creerDevice(dev);
-        } else if (conected == 1) {
-            System.out.println("search device");
-            Device device = deviceFacade.verifDevice(selected);
-            System.out.println(device);
-            if (device == null) {
-                return "/manager/question?faces-redirect=true";
-            } else {
-                device.setDateConnection(new Date());
-                deviceFacade.edit(device);
-                selected = ejbFacade.find(selected.getId());
-                System.out.println(selected);
-                SessionUtil.setAttribute("connectedManager", selected);
-            }
+//        if (conected == 0) {
+//            SessionUtil.setAttribute("connectedManager", selected);
+////            Device dev = deviceFacade.getManagerDevice(selected);
+////            deviceFacade.creerDevice(dev);
+//        } else if (conected == 1) {
+//            System.out.println("search device");
+////            Device device = deviceFacade.verifDevice(selected);
+//            System.out.println(device);
+//            if (device == null) {
+//                return "/manager/question?faces-redirect=true";
+//            } else {
+//                device.setDateConnection(new Date());
+//                deviceFacade.edit(device);
+//                selected = ejbFacade.find(selected.getId());
+//                System.out.println(selected);
+//                SessionUtil.setAttribute("connectedManager", selected);
+//            }
+//        }
+        if (conected > 0) {
+            return "/manager/Profile?faces-redirect=true";
+        } else {
+            return null;
         }
-        return "/manager/Profile?faces-redirect=true";
+
     }
 
     public String verifRepons() {
@@ -177,6 +328,85 @@ public class ManagerController implements Serializable {
         this.managerItems = managerItems;
     }
 
+    public Service getStatService() {
+        if (service == null) {
+            service = new Service();
+        }
+        return statService;
+    }
+
+    public void setStatService(Service statService) {
+        this.statService = statService;
+    }
+
+    public Ville getStatVille() {
+        if (statVille == null) {
+            statVille = new Ville();
+        }
+        return statVille;
+    }
+
+    public void setStatVille(Ville statVille) {
+        this.statVille = statVille;
+    }
+
+    public List<Ville> getStatVilles() {
+        if (statVilles == null) {
+            statVilles = villeFacade.findAll();
+        }
+        return statVilles;
+    }
+
+    public void setStatVilles(List<Ville> statVilles) {
+        this.statVilles = statVilles;
+    }
+
+    public List<Secteur> getStatSecteurs() {
+        if (statSecteurs == null) {
+            statSecteurs = new ArrayList<>();
+        }
+        return statSecteurs;
+    }
+
+    public void setStatSecteurs(List<Secteur> statSecteurs) {
+        this.statSecteurs = statSecteurs;
+    }
+
+    public List<Service> getStatServices() {
+        if (statServices == null) {
+            statServices = new ArrayList<>();
+        }
+        return statServices;
+    }
+
+    public void setStatServices(List<Service> statServices) {
+        this.statServices = statServices;
+    }
+
+    public LineChartModel getLineCharModel() {
+        return lineCharModel;
+    }
+
+    public void setLineCharModel(LineChartModel lineCharModel) {
+        this.lineCharModel = lineCharModel;
+    }
+
+    public int getTypeChart() {
+        return typeChart;
+    }
+
+    public void setTypeChart(int typeChart) {
+        this.typeChart = typeChart;
+    }
+
+    public BigDecimal getMax() {
+        return max;
+    }
+
+    public void setMax(BigDecimal max) {
+        this.max = max;
+    }
+
     public ManagerController() {
     }
 
@@ -213,8 +443,13 @@ public class ManagerController implements Serializable {
     }
 
     public void doAction() {
-        loadSeectors();
-        loadServices();
+        loadSeectors(ville);
+        loadServices(ville);
+    }
+
+    public void loadStatSecteursAndServices() {
+        loadSeectors(statVille);
+        loadServices(statVille);
     }
 
     public Secteur getSecteur() {
@@ -305,6 +540,36 @@ public class ManagerController implements Serializable {
 
     public void setNvPassword1(String nvPassword1) {
         this.nvPassword1 = nvPassword1;
+    }
+
+    public int getStatAnnee() {
+        if(statAnnee == 0){
+            statAnnee = new Date().getYear()+1900;
+        }
+        return statAnnee;
+    }
+
+    public void setStatAnnee(int statAnnee) {
+        this.statAnnee = statAnnee;
+    }
+
+    public Secteur getStatSecteur() {
+        if (statSecteur == null) {
+            statSecteur = new Secteur();
+        }
+        return statSecteur;
+    }
+
+    public void setStatSecteur(Secteur statSecteur) {
+        this.statSecteur = statSecteur;
+    }
+
+    public BarChartModel getBarCharModel() {
+        return barCharModel;
+    }
+
+    public void setBarCharModel(BarChartModel barCharModel) {
+        this.barCharModel = barCharModel;
     }
 
     protected void setEmbeddableKeys() {
@@ -401,14 +666,16 @@ public class ManagerController implements Serializable {
 
     }
 
-    public void loadSeectors() {
+    public void loadSeectors(Ville ville) {
         secteurs = secteurFacade.findByVille(ville);
+        statSecteurs = secteurFacade.findByVille(ville);
+
     }
 
-    public void loadServices() {
+    public void loadServices(Ville ville) {
 
         services = serviceVilleFacade.findServiceforVille(ville);
-        System.out.println("hahiya list services : " + services);
+        statServices = serviceVilleFacade.findServiceforVille(ville);
 
     }
 

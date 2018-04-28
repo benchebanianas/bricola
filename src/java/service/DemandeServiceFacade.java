@@ -69,9 +69,14 @@ public class DemandeServiceFacade extends AbstractFacade<DemandeService> {
         planningItemFacade.saveWithPlanning(demandeService.getPlanning(), demandeService, oneTime, multipleTimes);
         setWorker(demandeService, company, individual);
         clientFacade.checkClientInfo(demandeService.getClient());
-        demandeService.setId(generateId("DemandeService", "id"));
         create(demandeService);
 
+    }
+
+    @Override
+    public void create(DemandeService demandeService) {
+        demandeService.setId(generateId("DemandeService", "id"));
+        super.create(demandeService);
     }
 
     private void initDemandeService(DemandeService demandeService, Service service) {

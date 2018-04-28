@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  127.0.0.1
--- Généré le :  Mar 24 Avril 2018 à 13:42
+-- Généré le :  Sam 28 Avril 2018 à 18:43
 -- Version du serveur :  10.1.16-MariaDB
 -- Version de PHP :  5.6.24
 
@@ -44,7 +44,8 @@ INSERT INTO `categorie` (`ID`, `NOM`) VALUES
 (5, 'Evenmentiel'),
 (6, 'Babysitters'),
 (7, 'Photographie'),
-(8, 'Voitures');
+(8, 'Voitures'),
+(9, 'Formation');
 
 -- --------------------------------------------------------
 
@@ -181,10 +182,10 @@ INSERT INTO `demandecleaning` (`ID`, `BRINGEQUIPEMENT`, `NBRCLEANER`, `NBRHEURES
 
 CREATE TABLE `demandeevent` (
   `ID` bigint(20) NOT NULL,
-  `DETAIL` varchar(255) DEFAULT NULL,
   `NBRINVITES` int(11) DEFAULT NULL,
   `DEMANDESERVICE_ID` bigint(20) DEFAULT NULL,
-  `EVENT_ID` bigint(20) DEFAULT NULL
+  `EVENTBUDGET_ID` bigint(20) DEFAULT NULL,
+  `EVENTTYPE_ID` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -395,6 +396,25 @@ INSERT INTO `device` (`ID`, `BLOCKED`, `DATECONNECTION`, `DEVICECATEGORIE`, `IP`
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `eventbudget`
+--
+
+CREATE TABLE `eventbudget` (
+  `ID` bigint(20) NOT NULL,
+  `BUDGET` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Contenu de la table `eventbudget`
+--
+
+INSERT INTO `eventbudget` (`ID`, `BUDGET`) VALUES
+(1, '100dh par personne'),
+(2, '150 dh par personne');
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `eventtype`
 --
 
@@ -402,6 +422,18 @@ CREATE TABLE `eventtype` (
   `ID` bigint(20) NOT NULL,
   `NOM` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Contenu de la table `eventtype`
+--
+
+INSERT INTO `eventtype` (`ID`, `NOM`) VALUES
+(1, 'Marriage'),
+(2, 'Reception'),
+(3, 'Reunion'),
+(4, 'Soutenance'),
+(5, 'Anniversaire'),
+(6, 'other');
 
 -- --------------------------------------------------------
 
@@ -595,7 +627,8 @@ INSERT INTO `menuformulaire` (`ID`, `COMPANYTAB`, `DETAILSTAB`, `IMAGENAME`, `IN
 (1, 1, 1, 'nettoyageMaison', 1, 1, 1, 1),
 (2, 1, 1, 'photographie', 1, 1, 1, 19),
 (3, 1, 1, 'LocationVoiture', 1, 1, 1, 21),
-(4, 1, 1, 'formationpersonnel', 1, 1, 1, 22);
+(4, 1, 1, 'formationpersonnel', 1, 1, 1, 22),
+(5, 1, 1, 'nan', 1, 1, 1, 17);
 
 -- --------------------------------------------------------
 
@@ -679,6 +712,16 @@ CREATE TABLE `pestcontroltype` (
   `ID` bigint(20) NOT NULL,
   `NOM` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Contenu de la table `pestcontroltype`
+--
+
+INSERT INTO `pestcontroltype` (`ID`, `NOM`) VALUES
+(1, 'cockroaches '),
+(2, 'bed bugs'),
+(3, 'ants '),
+(4, 'general');
 
 -- --------------------------------------------------------
 
@@ -857,7 +900,7 @@ INSERT INTO `service` (`ID`, `NOM`, `CATEGORIE_ID`) VALUES
 (14, 'Deratisation complete', 4),
 (15, 'Gardiennage', 4),
 (16, 'Restauration', 5),
-(17, 'Traiteur', 5),
+(17, 'traiteur', 5),
 (18, 'Babysitters', 6),
 (19, 'photographie', 7),
 (20, 'Videographie', 7),
@@ -1044,7 +1087,11 @@ CREATE TABLE `unite` (
 --
 
 INSERT INTO `unite` (`ID`, `NAME`) VALUES
-(1, 'CleanerPerHour');
+(1, 'CleanerPerHour'),
+(2, 'Studio'),
+(3, '1 BR'),
+(4, '2 BR'),
+(5, '3 BR');
 
 -- --------------------------------------------------------
 
@@ -1254,8 +1301,9 @@ ALTER TABLE `demandecleaning`
 --
 ALTER TABLE `demandeevent`
   ADD PRIMARY KEY (`ID`),
-  ADD KEY `FK_DEMANDEEVENT_EVENT_ID` (`EVENT_ID`),
-  ADD KEY `FK_DEMANDEEVENT_DEMANDESERVICE_ID` (`DEMANDESERVICE_ID`);
+  ADD KEY `FK_DEMANDEEVENT_DEMANDESERVICE_ID` (`DEMANDESERVICE_ID`),
+  ADD KEY `FK_DEMANDEEVENT_EVENTBUDGET_ID` (`EVENTBUDGET_ID`),
+  ADD KEY `FK_DEMANDEEVENT_EVENTTYPE_ID` (`EVENTTYPE_ID`);
 
 --
 -- Index pour la table `demandeformationpersonnel`
@@ -1352,6 +1400,12 @@ ALTER TABLE `device`
   ADD PRIMARY KEY (`ID`),
   ADD KEY `FK_DEVICE_MANAGER_ID` (`MANAGER_ID`),
   ADD KEY `FK_DEVICE_WORKER_EMAIL` (`WORKER_EMAIL`);
+
+--
+-- Index pour la table `eventbudget`
+--
+ALTER TABLE `eventbudget`
+  ADD PRIMARY KEY (`ID`);
 
 --
 -- Index pour la table `eventtype`
@@ -1643,6 +1697,15 @@ ALTER TABLE `workertype`
   ADD PRIMARY KEY (`ID`);
 
 --
+-- AUTO_INCREMENT pour les tables exportées
+--
+
+--
+-- AUTO_INCREMENT pour la table `eventbudget`
+--
+ALTER TABLE `eventbudget`
+  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+--
 -- Contraintes pour les tables exportées
 --
 
@@ -1682,7 +1745,8 @@ ALTER TABLE `demandecleaning`
 --
 ALTER TABLE `demandeevent`
   ADD CONSTRAINT `FK_DEMANDEEVENT_DEMANDESERVICE_ID` FOREIGN KEY (`DEMANDESERVICE_ID`) REFERENCES `demandeservice` (`ID`),
-  ADD CONSTRAINT `FK_DEMANDEEVENT_EVENT_ID` FOREIGN KEY (`EVENT_ID`) REFERENCES `eventtype` (`ID`);
+  ADD CONSTRAINT `FK_DEMANDEEVENT_EVENTBUDGET_ID` FOREIGN KEY (`EVENTBUDGET_ID`) REFERENCES `eventbudget` (`ID`),
+  ADD CONSTRAINT `FK_DEMANDEEVENT_EVENTTYPE_ID` FOREIGN KEY (`EVENTTYPE_ID`) REFERENCES `eventtype` (`ID`);
 
 --
 -- Contraintes pour la table `demandeformationpersonnel`
