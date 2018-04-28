@@ -37,10 +37,10 @@ public class WorkerController implements Serializable {
     private List<Worker> items = null;
     private Worker selected;
 //    les attrs de recherche
-   private String email;
+    private String email;
     private String nom;
-    private int nombreEmployeMin;
-    private int nombreEmployeMax;
+    private Integer nombreEmployeMin;
+    private Integer nombreEmployeMax;
     private String siteWeb;
     private String phone;
     private WorkerType workerType;
@@ -50,8 +50,16 @@ public class WorkerController implements Serializable {
 
     
     public void recherche(){
-        items = ejbFacade.findByCriteria(email, nom, new Integer(getNombreEmployeMin()),new Integer(getNombreEmployeMax()), siteWeb, phone, workerType, blocked, accepted);
+        items = ejbFacade.findByCriteria(email, nom, nombreEmployeMin,nombreEmployeMax, siteWeb, phone, workerType, blocked, accepted);
     }
+    public void accepter(){
+        if(!getSelected().isAccepted()){
+        getSelected().setAccepted(true);
+        ejbFacade.edit(selected);
+        RequestContext context = RequestContext.getCurrentInstance();
+        context.execute("PF('Dialog').hide();");
+        }
+    }    
     
     public List<Worker> nvWorkers(){
         return ejbFacade.findNvWorkers();
@@ -159,19 +167,19 @@ public class WorkerController implements Serializable {
         this.nom = nom;
     }
 
-    public int getNombreEmployeMin() {
+    public Integer getNombreEmployeMin() {
         return nombreEmployeMin;
     }
 
-    public void setNombreEmployeMin(int nombreEmployeMin) {
+    public void setNombreEmployeMin(Integer nombreEmployeMin) {
         this.nombreEmployeMin = nombreEmployeMin;
     }
 
-    public int getNombreEmployeMax() {
+    public Integer getNombreEmployeMax() {
         return nombreEmployeMax;
     }
 
-    public void setNombreEmployeMax(int nombreEmployeMax) {
+    public void setNombreEmployeMax(Integer nombreEmployeMax) {
         this.nombreEmployeMax = nombreEmployeMax;
     }
 

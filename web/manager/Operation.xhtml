@@ -31,7 +31,7 @@
                         </a>
                     </p>
                     <div align="center">
-                        <h3 style="color: white;font-family: 'Arial', sans-serif;"> #{managerController.selected.id} </h3>
+                        <h3 style="color: white;font-family: 'Arial', sans-serif;"> #{demandeServiceConfirmationDetailController.selected.id} </h3>
                     </div>
                     <ul class="nav flex-column">
                         <li class="nav-item">
@@ -68,11 +68,51 @@
                 </nav>
 
                 <div class="content p-4">
-                    <h:form>
+                    <h:form id="operationForm">
                         <hr></hr>
                         <h1 align="center"> Operations : </h1>
                         <hr></hr><br></br>
                         <div class="container">
+                            <div class="row">
+                                <p:panelGrid id="searchGrid" styleClass="ui-noborder" style="margin: 0 auto;width: 100%">
+                                    <p:row>
+                                        <p:column>
+                                            <p:outputLabel value="Nom de Worker :" for="workerNom" style="text-align: left;padding-top: 10px;width: 200px"/>
+                                            <p:inputText value="#{demandeServiceConfirmationDetailController.workerNom}" id="workerNom" style="text-align: left;padding-top: 10px;width: 200px"/> 
+                                        </p:column>
+                                        <p:column>
+                                            <p:outputLabel value="Date de demande :" for="dateD" style="text-align: left;padding-top: 10px;width: 200px"/>
+                                            <p:calendar value="#{demandeServiceConfirmationDetailController.dateDemande}" id="dateD" style="text-align: left;padding-top: 10px;width: 200px"/>            
+                                        </p:column>
+                                        <p:column>
+                                            <p:outputLabel value="Date d'Action :" for="dateA" style="text-align: left;padding-top: 10px;width: 200px"/>
+                                            <p:calendar value="#{demandeServiceConfirmationDetailController.dateAction}" id="dateA" style="text-align: left;padding-top: 10px;width: 200px"/>            
+                                        </p:column>
+
+
+                                        <p:column>
+                                            <p:outputLabel value="Service :" for="service" style="text-align: left;padding-top: 10px;width: 200px"/>
+                                            <p:selectOneMenu class="form-control" id="service" value="#{demandeServiceConfirmationDetailController.serviceR}" style="width: 170px;height: 40px">
+                                                <f:selectItem itemLabel="--SERVICE--" itemValue="#{null}" />
+                                                <f:selectItems value="#{serviceController.itemsAvailableSelectOne}" itemValue="#{item.id}" var="item" itemLabel="#{item}"/>
+                                            </p:selectOneMenu>
+                                        </p:column>
+                                        <p:column>
+                                            <p:outputLabel value="Action :" for="action" style="text-align: left;padding-top: 10px;width: 200px"/>
+                                            <p:selectOneMenu class="form-control" id="action" value="#{demandeServiceConfirmationDetailController.typeAction}" style="width: 170px;height: 40px">
+                                                <f:selectItem itemLabel="--ACTION--" itemValue="#{null}" />
+                                                <f:selectItems value="#{typeActionController.itemsAvailableSelectOne}" itemValue="#{item.id}" var="item" itemLabel="#{item.name}"/>
+                                            </p:selectOneMenu>
+                                        </p:column> 
+                                    </p:row>
+                                    <p:row>
+                                        <p:column>
+                                            <p:commandButton actionListener="#{demandeServiceConfirmationDetailController.recherche()}" update="operationForm" value="Recherche" style="width:120px;height: 40px;text-align: center;padding: 6px 0;"/>
+                                        </p:column>
+                                    </p:row>
+                                </p:panelGrid>
+                            </div>
+                            <hr></hr>
                             <div class="row">
                                 <h:form>
                                     <h1><h:outputText value="Liste Des Operations Des Managers :"/></h1>

@@ -5,9 +5,9 @@ import bean.Device;
 import bean.Manager;
 import bean.Secteur;
 import bean.Service;
+import bean.TypeAction;
 import bean.Ville;
 import controller.util.JsfUtil;
-import controller.util.*;
 import controller.util.JsfUtil.PersistAction;
 import controller.util.SessionUtil;
 import service.ManagerFacade;
@@ -27,7 +27,6 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
-import org.primefaces.context.RequestContext;
 import service.DemandeServiceConfirmationDetailFacade;
 import service.DeviceFacade;
 
@@ -62,6 +61,22 @@ public class ManagerController implements Serializable {
     private String ancienPassword;
     private String nvPassword;
     private String nvPassword1;
+    //search
+    private String workerNom;
+    private Long secteurR;
+    private Long serviceR;
+    private Date dateDemande;
+    private Date dateAction;
+    private Long typeAction;
+    
+    public void recherche(){
+        managerItems = confirmationDetailFacade.findByCriteria(getSelected().getId(),dateAction,secteurR, workerNom, serviceR,dateDemande, typeAction);
+    }
+    
+    public String logout(){
+        SessionUtil.remove("connectedManager");
+        return "/manager/Login?faces-redirect=true";
+    }
 
     public void changeMdp() {
         if (ancienPassword.equals(selected.getPassword())) {
@@ -75,24 +90,19 @@ public class ManagerController implements Serializable {
     }
 
     public String login() {
-        System.out.println("bsmllah");
         int conected = ejbFacade.login(selected);
-        System.out.println(selected);
         if (conected == 0) {
             SessionUtil.setAttribute("connectedManager", selected);
             Device dev = deviceFacade.getManagerDevice(selected);
             deviceFacade.creerDevice(dev);
         } else if (conected == 1) {
-            System.out.println("search device");
             Device device = deviceFacade.verifDevice(selected);
-            System.out.println(device);
             if (device == null) {
                 return "/manager/question?faces-redirect=true";
             } else {
                 device.setDateConnection(new Date());
                 deviceFacade.edit(device);
                 selected = ejbFacade.find(selected.getId());
-                System.out.println(selected);
                 SessionUtil.setAttribute("connectedManager", selected);
             }
         }
@@ -168,7 +178,7 @@ public class ManagerController implements Serializable {
 
     public List<DemandeServiceConfirmationDetail> getManagerItems() {
         if (managerItems == null) {
-            return confirmationDetailFacade.findByManager(getSelected());
+            return confirmationDetailFacade.findByCriteria(getSelected().getId(),null,null,null,null,null,null);
         }
         return managerItems;
     }
@@ -177,6 +187,56 @@ public class ManagerController implements Serializable {
         this.managerItems = managerItems;
     }
 
+    public String getWorkerNom() {
+        return workerNom;
+    }
+
+    public void setWorkerNom(String workerNom) {
+        this.workerNom = workerNom;
+    }
+
+    public Date getDateAction() {
+        return dateAction;
+    }
+
+    public void setDateAction(Date dateAction) {
+        this.dateAction = dateAction;
+    }
+    
+
+    public Long getSecteurR() {
+        return secteurR;
+    }
+
+    public void setSecteurR(Long secteurR) {
+        this.secteurR = secteurR;
+    }
+
+    public Long getServiceR() {
+        return serviceR;
+    }
+
+    public void setServiceR(Long serviceR) {
+        this.serviceR = serviceR;
+    }
+
+    public Date getDateDemande() {
+        return dateDemande;
+    }
+
+    public void setDateDemande(Date dateDemande) {
+        this.dateDemande = dateDemande;
+    }
+
+    public Long getTypeAction() {
+        return typeAction;
+    }
+
+    public void setTypeAction(Long typeAction) {
+        this.typeAction = typeAction;
+    }
+
+    
     public ManagerController() {
     }
 

@@ -7,6 +7,7 @@ package service;
 
 import bean.Review;
 import bean.Worker;
+import controller.util.SearchUtil;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -43,6 +44,14 @@ public class ReviewFacade extends AbstractFacade<Review> {
             return 0;
         }
         return reviews.size();
+    }
+    
+    public List<Review> findByCriteria(String societe,Long service){
+       String query = "select r from Review r where 1=1 ";
+        query+=SearchUtil.addConstraint("r", "worker.email", "=", societe);
+        query+=SearchUtil.addConstraint("r", "service.id", "=", service);
+        System.out.println("requeta" + query);
+        return getEntityManager().createQuery(query).getResultList();
     }
 
     @Override

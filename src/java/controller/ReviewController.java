@@ -27,9 +27,32 @@ public class ReviewController implements Serializable {
     private service.ReviewFacade ejbFacade;
     private List<Review> items = null;
     private Review selected;
+    private String societe;
+    private Long service;
 
     public ReviewController() {
     }
+
+    public void recherche(){
+        items = ejbFacade.findByCriteria(societe,service);
+    }
+    
+    public String getSociete() {
+        return societe;
+    }
+
+    public void setSociete(String societe) {
+        this.societe = societe;
+    }
+
+    public Long getService() {
+        return service;
+    }
+
+    public void setService(Long service) {
+        this.service = service;
+    }
+    
 
     public Review getSelected() {
         return selected;

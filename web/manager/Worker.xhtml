@@ -74,7 +74,7 @@
                         <hr></hr>
                         <div class="container">
                             <div class="row">
-                                <p:panelGrid id="infoGrid" styleClass="ui-noborder" style="margin: 0 auto;width: 100%">
+                                <p:panelGrid id="searchGrid" styleClass="ui-noborder" style="margin: 0 auto;width: 100%">
                                     <p:row>
                                         <p:column>
                                             <p:outputLabel value="Email :" for="email" style="text-align: left;padding-top: 10px;width: 200px"/>
@@ -93,27 +93,32 @@
                                             <p:outputLabel value="Phone :" for="phone" style="text-align: left;padding-top: 10px;width: 200px"/>
                                             <p:inputText value="#{workerController.phone}" id="phone" style="text-align: left;padding-top: 10px;width: 200px"/>            
                                         </p:column>
+                                    </p:row>
+                                    <p:row>
                                         <p:column>
-                                            <p:selectOneMenu class="form-control" id="hours" value="#{workerController.workerType}" style="width: 170px;height: 40px">
+                                            <p:selectOneMenu class="form-control" id="type" value="#{workerController.workerType}" style="width: 170px;height: 40px">
+                                                <f:selectItem itemLabel="--TYPE--" itemValue="#{null}" />
                                                 <f:selectItems value="#{workerTypeController.itemsAvailableSelectOne}" itemValue="#{item}" var="item" itemLabel="#{item}"/>
                                             </p:selectOneMenu>
                                         </p:column>
+                                        <p:column>
+                                            <p:outputLabel value="Nombre d'empoyes min :" for="nbrEmpmin" style="text-align: left;padding-top: 10px;width: 200px"/>
+                                            <p:inputText value="#{workerController.nombreEmployeMin}" id="nbrEmpmin" style="text-align: left;padding-top: 10px;width: 200px"/>        
+                                        </p:column>
+                                        <p:column>
+                                            <p:outputLabel value="Nombre d'empoyes max :" for="nbrEmpmax" style="text-align: left;padding-top: 10px;width: 200px"/>
+                                            <p:inputText value="#{workerController.nombreEmployeMax}" id="nbrEmpmax" style="text-align: left;padding-top: 10px;width: 200px"/>        
+                                        </p:column>
+                                    </p:row>
+                                    <p:row>
                                         <p:column>
                                             <p:selectBooleanButton id="blocked" class="myBtn" value="#{workerController.blocked}" onLabel="Bloquée" offLabel="non Bloquée" style="width:120px;height: 40px;text-align: center;padding: 8px 0;"/>
                                         </p:column>
                                         <p:column>
                                             <p:selectBooleanButton id="selected" class="myBtn" value="#{workerController.accepted}" onLabel="acceptée" offLabel="non acceptée" style="width:120px;height: 40px;text-align: center;padding: 8px 0;" />
                                         </p:column>
-                                         <p:column>
-                                            <p:outputLabel value="Nombre d'empoyes min :" for="nbrEmpmin" style="text-align: left;padding-top: 10px;width: 200px"/>
-                                            <p:inputText value="#{workerController.nombreEmployeMin}" id="nbrEmpmin" style="text-align: left;padding-top: 10px;width: 200px"/>        
-                                        </p:column>
-                                         <p:column>
-                                            <p:outputLabel value="Nombre d'empoyes max :" for="nbrEmpmax" style="text-align: left;padding-top: 10px;width: 200px"/>
-                                            <p:inputText value="#{workerController.nombreEmployeMax}" id="nbrEmpmax" style="text-align: left;padding-top: 10px;width: 200px"/>        
-                                        </p:column>
-                                         <p:column>
-                                           <p:commandButton actionListener="#{workerController.recherche()}" update="worker" value="Recherche" />
+                                        <p:column>
+                                            <p:commandButton actionListener="#{workerController.recherche()}" update="worker" value="Recherche" style="width:120px;height: 40px;text-align: center;padding: 6px 0;"/>
                                         </p:column>
                                     </p:row>
                                 </p:panelGrid>

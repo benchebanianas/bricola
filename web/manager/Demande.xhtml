@@ -4,7 +4,8 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <ui:composition template="/templateAdmin.xhtml">
 
@@ -37,44 +38,97 @@
                         <li class="nav-item">
                             <a class="nav-link active" href="../manager/Profile.xhtml">
                                 <span data-feather="home"></span>
-                                Profile <span class="sr-only">(current)</span>
+                                <h5 style="color: white;font-family: 'Times New Roman', Times, serif;"> Profile </h5> <span class="sr-only">(current)</span>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="../manager/Demande.xhtml">
                                 <span data-feather="file"></span>
-                                Demandes
+                                <h5 style="color: white;font-family: 'Times New Roman', Times, serif; "> Demandes </h5>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="../manager/Worker.xhtml">
                                 <span data-feather="shopping-cart"></span>
-                                Workers
+                                <h5 style="color: white;font-family: 'Times New Roman', Times, serif; "> Workers </h5>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="../manager/Operation.xhtml">
                                 <span data-feather="users"></span>
-                                Operations
+                                <h5 style="color: white;font-family: 'Times New Roman', Times, serif; "> Operations </h5>
+
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="../manager/Statistique.xhtml">
                                 <span data-feather="bar-chart-2"></span>
-                                Statistiques
+                                <h5 style="color: white;font-family: 'Times New Roman', Times, serif; "> <strong>Statistiques </strong></h5>
+
                             </a>
                         </li>
                     </ul>
                 </nav>
 
                 <div class="content p-4">
-                    <h:form>
+                    <h:form id="demandeForm">
                         <hr></hr>
                         <h1 align="center"> Demandes : </h1>
                         <hr></hr><br></br>
                         <div class="container">
                             <div class="row">
-                                <h:form>
+                                <p:panelGrid id="searchGrid" styleClass="ui-noborder" style="margin: 0 auto;width: 100%">
+                                    <p:row>
+                                        <p:column>
+                                            <p:outputLabel value="Secteur :" for="secteur" style="text-align: left;padding-top: 10px;width: 200px"/>
+                                            <p:selectOneMenu class="form-control" id="secteur" value="#{demandeServiceController.secteur}" style="width: 170px;height: 40px">
+                                                <f:selectItem itemLabel="--SECTEUR--" itemValue="#{null}" />
+                                                <f:selectItems value="#{secteurController.itemsAvailableSelectOne}" itemValue="#{item.id}" var="item" itemLabel="#{item}-#{item.ville.nom}"/>
+                                            </p:selectOneMenu>
+                                        </p:column>
+                                        <p:column>
+                                            <p:outputLabel value="Nom de Worker :" for="workerNom" style="text-align: left;padding-top: 10px;width: 200px"/>
+                                            <p:inputText value="#{demandeServiceController.workerNom}" id="workerNom" style="text-align: left;padding-top: 10px;width: 200px"/> 
+                                        </p:column>
+                                        <p:column>
+                                            <p:outputLabel value="Service :" for="service" style="text-align: left;padding-top: 10px;width: 200px"/>
+                                            <p:selectOneMenu class="form-control" id="service" value="#{demandeServiceController.service}" style="width: 170px;height: 40px">
+                                                <f:selectItem itemLabel="--SERVICE--" itemValue="#{null}" />
+                                                <f:selectItems value="#{serviceController.itemsAvailableSelectOne}" itemValue="#{item.id}" var="item" itemLabel="#{item}"/>
+                                            </p:selectOneMenu>
+                                        </p:column>
+                                        <p:column>
+                                            <p:outputLabel value="Date de demande :" for="date" style="text-align: left;padding-top: 10px;width: 200px"/>
+                                            <p:calendar value="#{demandeServiceController.dateDemande}" id="date" style="text-align: left;padding-top: 10px;width: 200px"/>            
+                                        </p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column>
+                                            <p:outputLabel value="prix min :" for="prixMin" style="text-align: left;padding-top: 10px;width: 200px"/>
+                                            <p:inputText value="#{demandeServiceController.prixMin}" id="prixMin" style="text-align: left;padding-top: 10px;width: 200px"/>        
+                                        </p:column>
+                                        <p:column>
+                                            <p:outputLabel value="prix max :" for="prixMax" style="text-align: left;padding-top: 10px;width: 200px"/>
+                                            <p:inputText value="#{demandeServiceController.prixMax}" id="prixMax" style="text-align: left;padding-top: 10px;width: 200px"/>        
+                                        </p:column>
+                                        <p:column>
+                                            <p:outputLabel value="l'etat du Demande :" for="etat" style="text-align: left;padding-top: 10px;width: 200px"/>
+                                            <p:selectOneMenu class="form-control" id="etat" value="#{demandeServiceController.confirSuprr}" style="width: 170px;height: 40px">
+                                                <f:selectItem itemLabel="--ETAT--" itemValue="#{null}" />
+                                                <f:selectItem itemLabel="nouvelle" itemValue="#{0}" />
+                                                <f:selectItem itemLabel="confirmée" itemValue="#{1}" />
+                                                <f:selectItem itemLabel="supprimée" itemValue="#{2}" />
+                                            </p:selectOneMenu>
+                                        </p:column>
+                                        <p:column>
+                                            <p:commandButton actionListener="#{demandeServiceController.recherche()}" update="demandeForm" value="Recherche" style="width:120px;height: 40px;text-align: center;padding: 6px 0;"/>
+                                        </p:column>
+                                    </p:row>
+                                </p:panelGrid>
+                            </div>
+                            <hr></hr>
+                            <div class="row">
+                                <h:form >
                                     <h1><h:outputText value="Vous avez #{demandeServiceController.nvDmd()} nouveaux Demandes : "/></h1>
                                     <p:dataTable style="text-align: center;" rowStyleClass="high" value="#{demandeServiceController.items}" var="item">
                                         <p:column>
@@ -100,7 +154,7 @@
                                                 <h:outputText value="Date de demande"/>
                                             </f:facet>
                                             <h:outputText value="#{item.datedemande}">
-                                                <f:convertDateTime pattern="MM-dd-yyyy" />
+                                                <f:convertDateTime pattern="dd-MM-yyyy" />
                                             </h:outputText>
                                         </p:column>
                                         <p:column>
@@ -120,18 +174,22 @@
                                             <f:facet name="header">
                                                 <h:outputText value="Etat"/>
                                             </f:facet>
-                                            <img src="#{item.dateSuppression ne null ? '../resources/images/logo-s.png' : item.dateConfirmation ne null ? '../resources/images/logo-v.png' :  null}" />
+                                            <h:outputLabel value="#{item.dateSuppression ne null ? 'Supprimée' : item.dateConfirmation ne null ? 'Validée' :  'Nouvelle'}" />
                                         </p:column>
                                         <p:column style="width:140px">
                                             <f:facet name="header">
                                                 <h:outputText value="Action"/>
                                             </f:facet>
-                                            <p:panelMenu style="width:100px">
-                                                <p:submenu label="#{item.dateSuppression ne null ? 'Supprimée' : item.dateConfirmation ne null ? 'Validée' : 'nouvelle'}">
-                                                    <p:menuitem value="Valider" action="#{demandeServiceController.Action(item,1)}" icon="ui-icon-disk" />
-                                                    <p:menuitem value="Supprimer" action="#{demandeServiceController.Action(item,2)}" icon="ui-icon-close" />
-                                                </p:submenu>
-                                            </p:panelMenu>
+                                            <c:if test="#{item.dateConfirmation eq null}">
+                                                <p:commandLink actionListener="#{demandeServiceController.Action(item,1)}" update="demandeForm"> 
+                                                <h:graphicImage value="../resources/images/logo-v.png" alt=">>" />
+                                            </p:commandLink> 
+                                            </c:if>
+                                            <c:if test="#{item.dateSuppression eq null}">
+                                                <p:commandLink actionListener="#{demandeServiceController.Action(item,2)}" update="demandeForm"> 
+                                                <h:graphicImage value="../resources/images/logo-s.png" alt=">>" />
+                                            </p:commandLink> 
+                                            </c:if>
                                         </p:column>
                                         <p:column>
                                             <p:commandLink action="#{demandeServiceController.voirPlus(item)}"> 

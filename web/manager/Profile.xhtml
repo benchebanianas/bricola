@@ -74,14 +74,47 @@
                         <hr></hr><br></br>
                         <div class="container">
                             <div class="row">
+                                <p:panelGrid id="searchGrid" styleClass="ui-noborder" style="margin: 0 auto;width: 100%">
+                                    <p:row>
+                                        <p:column>
+                                            <p:outputLabel value="Nom de Worker :" for="workerNom" style="text-align: left;padding-top: 10px;width: 200px"/>
+                                            <p:inputText value="#{managerController.workerNom}" id="workerNom" style="text-align: left;padding-top: 10px;width: 200px"/> 
+                                        </p:column>
+                                        <p:column>
+                                            <p:outputLabel value="Date de demande :" for="dateD" style="text-align: left;padding-top: 10px;width: 200px"/>
+                                            <p:calendar value="#{demandeServiceConfirmationDetailController.dateDemande}" id="dateD" style="text-align: left;padding-top: 10px;width: 200px"/>            
+                                        </p:column>
+                                        <p:column>
+                                            <p:outputLabel value="Date d'Action :" for="dateA" style="text-align: left;padding-top: 10px;width: 200px"/>
+                                            <p:calendar value="#{demandeServiceConfirmationDetailController.dateAction}" id="dateA" style="text-align: left;padding-top: 10px;width: 200px"/>            
+                                        </p:column>
+
+                                    </p:row>
+                                    <p:row>
+                                        <p:column>
+                                            <p:outputLabel value="Service :" for="service" style="text-align: left;padding-top: 10px;width: 200px"/>
+                                            <p:selectOneMenu class="form-control" id="service" value="#{managerController.serviceR}" style="width: 170px;height: 40px">
+                                                <f:selectItem itemLabel="--SERVICE--" itemValue="#{null}" />
+                                                <f:selectItems value="#{serviceController.itemsAvailableSelectOne}" itemValue="#{item.id}" var="item" itemLabel="#{item}"/>
+                                            </p:selectOneMenu>
+                                        </p:column>
+                                        <p:column>
+                                            <p:outputLabel value="Action :" for="action" style="text-align: left;padding-top: 10px;width: 200px"/>
+                                            <p:selectOneMenu class="form-control" id="action" value="#{managerController.typeAction}" style="width: 170px;height: 40px">
+                                                <f:selectItem itemLabel="--ACTION--" itemValue="#{null}" />
+                                                <f:selectItems value="#{typeActionController.itemsAvailableSelectOne}" itemValue="#{item.id}" var="item" itemLabel="#{item.name}"/>
+                                            </p:selectOneMenu>
+                                        </p:column>
+                                        <p:column>
+                                            <p:commandButton actionListener="#{managerController.recherche()}" update="tableForm" value="Recherche" style="width:120px;height: 40px;text-align: center;padding: 6px 0;"/>
+                                        </p:column>
+                                    </p:row>
+                                </p:panelGrid>
+                            </div>
+                            <hr></hr>
+                            <div class="row">
                                 <h1><h:outputText value="Votre Operations :"/></h1>
                                 <p:dataTable id="managerTable" value="#{managerController.managerItems}" rowStyleClass="high" class="table table-striped" var="item">
-                                    <p:column>
-                                        <f:facet name="header">
-                                            <h:outputText value="Manager"/>
-                                        </f:facet>
-                                        <h:outputText value="#{item.manager.id}"/>
-                                    </p:column>
                                     <p:column>
                                         <f:facet name="header">
                                             <h:outputText value="Type d'Action"/>
@@ -114,7 +147,7 @@
                                         </p:commandLink> 
                                     </p:column>
                                 </p:dataTable>
-                                    <p:commandLink update="changeMdpForm" onclick="PF('changeMdpDialog').show()" value="Changer Votre Mot de Passe >" style="color: #4da6ff; height: 40px;border: solid #4da6ff;border-width: 1px; padding: 8px 5px;"/>
+                                <p:commandLink update="changeMdpForm" onclick="PF('changeMdpDialog').show()" value="Changer Votre Mot de Passe >" style="color: #4da6ff; height: 40px;border: solid #4da6ff;border-width: 1px; padding: 8px 5px;"/>
                             </div>
                             <ui:include src="ChangeMdp.xhtml"/>
                         </div>

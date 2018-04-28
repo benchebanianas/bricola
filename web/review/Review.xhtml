@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+
+
+        <ui:define name="title">
+            <h:outputText value="Reviews"></h:outputText>
+        </ui:define>
+
+        <ui:define name="body">
+            <h:form id="ReviewListForm">
+                <p:panelGrid>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel value="Service :" for="service" style="text-align: left;padding-top: 10px;width: 100px"/>
+                            <p:selectOneMenu class="form-control" id="service" value="#{reviewController.service}" style="width: 170px;height: 40px">
+                                <f:selectItem itemLabel="--SERVICE--" itemValue="#{null}" />
+                                <f:selectItems value="#{serviceController.itemsAvailableSelectOne}" itemValue="#{item.id}" var="item" itemLabel="#{item.nom}"/>
+                            </p:selectOneMenu>
+                        </p:column>
+                        <p:column>
+                            <p:outputLabel value="Societe :" for="societe" style="text-align: left;padding-top: 10px;width: 100px"/>
+                            <p:selectOneMenu class="form-control" id="societe" value="#{reviewController.societe}" style="width: 170px;height: 40px">
+                                <f:selectItem itemLabel="--SOCIETE--" itemValue="#{null}" />
+                                <f:selectItems value="#{workerController.itemsAvailableSelectOne}" itemValue="#{item.email}" var="item" itemLabel="#{item.nom}"/>
+                            </p:selectOneMenu>
+                        </p:column>
+                        <p:column>
+                            <p:commandButton action="#{reviewController.recherche()}" update="ReviewListForm" value="Recherche" style="width:120px;height: 40px;text-align: center;padding: 6px 0;"/>
+                        </p:column>
+                    </p:row>
+                </p:panelGrid>
+                <p:dataList id="datalist" value="#{reviewController.items}" var="item">
+                    <h:outputText value="Service : "/>
+                    <h:outputText value="#{item.service.nom}"/><br></br>
+                    <h:outputText value="Societe : "/>
+                    <h:outputText value="#{item.worker.nom}"/><br></br>
+                    <h:outputText value="Client : "/>
+                    <h:outputText value="#{item.client.nom} - #{item.client.email}"/><br></br>
+                    <h:outputText value="Rating : "/>
+                    <p:rating value="#{item.stars}" disabled="true" />
+                    <h:outputText value="Commantaire : "/><br></br>
+                    <h:inputTextarea disabled="true" value="#{item.text}"/><br></br>
+                    <h:outputText value="Date : "/>
+                    <h:outputText value="#{item.dateReview}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:outputText><br></br>
+
+                </p:dataList>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

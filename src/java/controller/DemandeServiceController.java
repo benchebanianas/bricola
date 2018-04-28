@@ -36,6 +36,7 @@ import controller.util.SessionUtil;
 import service.DemandeServiceFacade;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.ArrayList;
 import java.util.Date;
@@ -143,6 +144,18 @@ public class DemandeServiceController implements Serializable {
     private List<PlanningItem> planningItems;
 
     private String imageName;
+    //search
+    private Long secteur;
+    private String workerNom;
+    private Long service;
+    private Date dateDemande;
+    private BigDecimal prixMin;
+    private BigDecimal prixMax;
+    private Integer confirSuprr;
+
+    public void recherche() {
+        items = ejbFacade.findByCriteria(secteur, workerNom, service, dateDemande, prixMin, prixMax, confirSuprr);
+    }
 
     public void voirPlus(DemandeService demandeService) {
         setSelected(demandeService);
@@ -206,25 +219,29 @@ public class DemandeServiceController implements Serializable {
         SessionUtil.remove("demandeService");
     }
 
-    public String Action(DemandeService demandeService, Long idType) {
-        System.out.println("bsmlah");
-        if(demandeService != null){
+    public void Action(DemandeService demandeService, Long idType) {
+        if (demandeService != null) {
             setSelected(demandeService);
         }
         Manager manager = (Manager) SessionUtil.getAttribute("connectedManager");
         if (idType == 1) {
-            selected.setDateConfirmation(new Date());
-            selected.setDateSuppression(null);
-        }
-        if (idType == 2) {
-            selected.setDateSuppression(new Date());
-            selected.setDateConfirmation(null);
+            if (getSelected().getDateConfirmation() == null) {
+                System.out.println("bsmlah");
+                selected.setDateConfirmation(new Date());
+                selected.setDateSuppression(null);
+            }
+        } else if (idType == 2) {
+
+            if (getSelected().getDateSuppression() == null) {
+                System.out.println("bsmlah");
+                selected.setDateSuppression(new Date());
+                selected.setDateConfirmation(null);
+            }
         }
         selected.setManagerConfirmation(manager);
         ejbFacade.edit(selected);
         TypeAction action = typeActionFacade.find(idType);
         detailFacade.save(manager, action, selected);
-        return "/manager/Demande?faces-redirect=true";
     }
 
     public int nvDmd() {
@@ -412,8 +429,8 @@ public class DemandeServiceController implements Serializable {
 
         }
     }
-    
-    public String redirectToIndex(){
+
+    public String redirectToIndex() {
 //        return "../index.xhtml?faces-redirect=true";
         return "/index?faces-redirect=true";
     }
@@ -681,6 +698,62 @@ public class DemandeServiceController implements Serializable {
 
     public void setMenuFormulaire(MenuFormulaire menuFormulaire) {
         this.menuFormulaire = menuFormulaire;
+    }
+
+    public Long getSecteur() {
+        return secteur;
+    }
+
+    public void setSecteur(Long secteur) {
+        this.secteur = secteur;
+    }
+
+    public String getWorkerNom() {
+        return workerNom;
+    }
+
+    public void setWorkerNom(String workerNom) {
+        this.workerNom = workerNom;
+    }
+
+    public Long getService() {
+        return service;
+    }
+
+    public void setService(Long service) {
+        this.service = service;
+    }
+
+    public Date getDateDemande() {
+        return dateDemande;
+    }
+
+    public void setDateDemande(Date dateDemande) {
+        this.dateDemande = dateDemande;
+    }
+
+    public BigDecimal getPrixMin() {
+        return prixMin;
+    }
+
+    public void setPrixMin(BigDecimal prixMin) {
+        this.prixMin = prixMin;
+    }
+
+    public BigDecimal getPrixMax() {
+        return prixMax;
+    }
+
+    public void setPrixMax(BigDecimal prixMax) {
+        this.prixMax = prixMax;
+    }
+
+    public Integer getConfirSuprr() {
+        return confirSuprr;
+    }
+
+    public void setConfirSuprr(Integer confirSuprr) {
+        this.confirSuprr = confirSuprr;
     }
 
     protected void setEmbeddableKeys() {

@@ -6,8 +6,12 @@
 package service;
 
 import bean.DemandeService;
+import bean.Secteur;
 import bean.Service;
 import bean.Worker;
+import controller.util.DateUtil;
+import controller.util.SearchUtil;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
@@ -37,8 +41,7 @@ public class DemandeServiceFacade extends AbstractFacade<DemandeService> {
     protected EntityManager getEntityManager() {
         return em;
     }
-    
-  
+
     public Object findDemande(DemandeService demandeService) {
 
         List<Object> demandes = em.createQuery("SELECT demande FROM " + demandeService.getTypeDemande().getId() + " demande WHERE "
@@ -50,10 +53,10 @@ public class DemandeServiceFacade extends AbstractFacade<DemandeService> {
         }
 
     }
-    
-    public int findNumberOfDemandesByWorker(Worker worker){
-        List<DemandeService> demandes= getMultipleResult("SELECT ds FROM DemandeService ds WHERE ds.worker.email='"+worker.getEmail()+"'");
-        if(demandes == null){
+
+    public int findNumberOfDemandesByWorker(Worker worker) {
+        List<DemandeService> demandes = getMultipleResult("SELECT ds FROM DemandeService ds WHERE ds.worker.email='" + worker.getEmail() + "'");
+        if (demandes == null) {
             return 0;
         }
         return demandes.size();
@@ -96,6 +99,36 @@ public class DemandeServiceFacade extends AbstractFacade<DemandeService> {
             demandeService.setWorker(workerFacade.findBestWorkerBySector(demandeService.getClient().getSecteur()));
         }
 
+    }
+
+    public List<DemandeService> findByCriteria(Long secteur, String workerNom, Long service, Date dateDemande, BigDecimal prixMin,
+            BigDecimal prixMax, Integer conSupp) {
+
+        String requette = "select d from DemandeService d where 1=1 ";
+        requette += SearchUtil.addConstraint("d", "secteur.id", "=", secteur);
+        requette += SearchUtil.addConstraint("d", "worker.nom", "=", workerNom);
+        requette += SearchUtil.addConstraintMinMax("d", "prixTtc", prixMin, prixMax);
+        requette += SearchUtil.addConstraint("d", "service.id", "=", service);
+        requette += SearchUtil.addConstraint("d", "datedemande", "=", DateUtil.formateDate("yyyy-MM-dd", dateDemande));
+        if (conSupp != null) {
+            switch (conSupp) {
+                case 0:
+                    requette += " and d.dateSuppression = null and d.dateConfirmation = null";
+                    break;
+                case 1:
+                    requette += " and d.dateConfirmation IS NOT null ";
+                    break;
+                case 2:
+                    requette += " and d.dateSuppression IS NOT null ";
+                    break;
+                default:
+                    break;
+            }
+        } else {
+
+        }
+        System.out.println("haa requeta : " + requette);
+        return getEntityManager().createQuery(requette).getResultList();
     }
 
 }

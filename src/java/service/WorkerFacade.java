@@ -123,7 +123,9 @@ public class WorkerFacade extends AbstractFacade<Worker> {
         requette += SearchUtil.addConstraint("w", "nom", "=", nom);
         requette += SearchUtil.addConstraintMinMax("w", "nombreEmploye", nombreEmployeMin,nombreEmployeMax);
         requette += SearchUtil.addConstraint("w", "siteWeb", "=", siteWeb);
+        if(workerType!=null){
         requette += SearchUtil.addConstraint("w", "workerType.id", "=", workerType.getId());
+        }
         requette += SearchUtil.addConstraint("w", "siteWeb", "=", siteWeb);
         requette += SearchUtil.addConstraint("w", "phone", "=", phone);
         int i = 0;

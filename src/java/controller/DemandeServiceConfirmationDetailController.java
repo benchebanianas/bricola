@@ -6,6 +6,7 @@ import controller.util.JsfUtil.PersistAction;
 import service.DemandeServiceConfirmationDetailFacade;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -27,10 +28,16 @@ public class DemandeServiceConfirmationDetailController implements Serializable 
     private service.DemandeServiceConfirmationDetailFacade ejbFacade;
     private List<DemandeServiceConfirmationDetail> items = null;
     private DemandeServiceConfirmationDetail selected;
-
+    //search
+    private String workerNom;
+    private Long secteurR;
+    private Long serviceR;
+    private Date dateDemande;
+    private Date dateAction;
+    private Long typeAction;
     
-    public String voirPlus(DemandeServiceConfirmationDetail demande){
-      return "#";  
+    public void recherche(){
+        items = ejbFacade.findByCriteria(null,dateAction,secteurR, workerNom, serviceR,dateDemande, typeAction);
     }
     
     public DemandeServiceConfirmationDetailController() {
@@ -50,6 +57,55 @@ public class DemandeServiceConfirmationDetailController implements Serializable 
     protected void initializeEmbeddableKey() {
     }
 
+    public String getWorkerNom() {
+        return workerNom;
+    }
+
+    public void setWorkerNom(String workerNom) {
+        this.workerNom = workerNom;
+    }
+
+    public Date getDateAction() {
+        return dateAction;
+    }
+
+    public void setDateAction(Date dateAction) {
+        this.dateAction = dateAction;
+    }
+
+    public Long getSecteurR() {
+        return secteurR;
+    }
+
+    public void setSecteurR(Long secteurR) {
+        this.secteurR = secteurR;
+    }
+
+    public Long getServiceR() {
+        return serviceR;
+    }
+
+    public void setServiceR(Long serviceR) {
+        this.serviceR = serviceR;
+    }
+
+    public Date getDateDemande() {
+        return dateDemande;
+    }
+
+    public void setDateDemande(Date dateDemande) {
+        this.dateDemande = dateDemande;
+    }
+
+    public Long getTypeAction() {
+        return typeAction;
+    }
+
+    public void setTypeAction(Long typeAction) {
+        this.typeAction = typeAction;
+    }
+
+    
     private DemandeServiceConfirmationDetailFacade getFacade() {
         return ejbFacade;
     }

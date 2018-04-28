@@ -3,8 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <ui:composition>
 
@@ -44,6 +44,7 @@
                             </div>
                         </div>
                         <div class="f1-buttons" align="center"><br></br>
+                            <p:commandButton  value="Accepter" actionListener="#{workerController.accepter()}" class="btn btn-previous"></p:commandButton>
                             <p:commandButton  value="Modifier" actionListener="#{workerController.modifier()}" oncomplete="handleSubmit(args,'Dialog');" class="btn btn-previous"></p:commandButton>
                             <p:commandButton value="Supprimer" actionListener="#{workerController.supprimer()}" oncomplete="handleSubmit(args,'Dialog');" class="btn btn-danger"></p:commandButton>
                             <br></br><br></br>

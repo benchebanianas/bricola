@@ -1,6 +1,8 @@
 package controller;
 
 import bean.Client;
+import bean.DemandeService;
+import bean.Review;
 import controller.util.EmailUtil;
 import controller.util.JsfUtil;
 import controller.util.JsfUtil.PersistAction;
@@ -8,6 +10,7 @@ import controller.util.SessionUtil;
 import service.ClientFacade;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -22,6 +25,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import org.primefaces.context.RequestContext;
+import service.ReviewFacade;
 
 @Named("clientController")
 @SessionScoped
@@ -33,6 +37,10 @@ public class ClientController implements Serializable {
     private Client selected;
     @EJB
     private service.PasswordEmail passwordEmailFacade;
+    @EJB
+    private ReviewFacade reviewFacade;
+    private DemandeService demandeService;
+    private Review review;
 
     public ClientController() {
     }
@@ -43,6 +51,15 @@ public class ClientController implements Serializable {
 //        System.out.println(selected);
 //        return demandes;
 //    }
+    public void commenter() {
+        review.setClient(getSelected());
+        review.setDateReview(new Date());
+        review.setService(demandeService.getService());
+        review.setWorker(demandeService.getWorker());
+        reviewFacade.create(review);
+        RequestContext context = RequestContext.getCurrentInstance();
+        context.execute("reviewDialog.hide();");
+    }
 
     public void showMessage(String msg) {
         RequestContext.getCurrentInstance().showMessageInDialog(new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", " " + msg + ""));
@@ -119,6 +136,22 @@ public class ClientController implements Serializable {
 
     public void setSelected(Client selected) {
         this.selected = selected;
+    }
+
+    public DemandeService getDemandeService() {
+        return demandeService;
+    }
+
+    public void setDemandeService(DemandeService demandeService) {
+        this.demandeService = demandeService;
+    }
+
+    public Review getReview() {
+        return review;
+    }
+
+    public void setReview(Review review) {
+        this.review = review;
     }
 
     protected void setEmbeddableKeys() {
