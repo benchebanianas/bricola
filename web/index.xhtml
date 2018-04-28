@@ -8,7 +8,7 @@
 
     <h:head>
         <title><ui:insert name="title">Find Services from all over the world!</ui:insert></title>
-        <link rel="shortcut icon" href="resources/images/symbol.png" type="image/png"/>
+            <link rel="shortcut icon" href="resources/images/symbol.png" type="image/png"/>
         <h:outputStylesheet name="css/jsfcrud.css"/>
         <h:outputStylesheet library="css" name="jsfcrud.css"/>
         <h:outputScript library="js" name="jsfcrud.js"/>
@@ -71,13 +71,13 @@
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownCleaningServices">
 
-                                <p:commandLink id="netoyageMaison" class="nav-link" action="#{demandeServiceController.initService2('nettoyageMaison')}">
+                                <p:commandLink id="netoyageMaison" class="nav-link" action="#{demandeServiceController.initService2('nettoyageMaison')}" style="color:  black;">
                                     Nettoyage Maison
                                 </p:commandLink>
                                 <!--                                <a class="dropdown-item" href="/bricola/faces/demandeService/Demande.xhtml">
-                                                                    <p:ajax event="click" listener="# {demandeServiceController.initService('nettoyageMaison')}" />
-                                                                    Nettoyage Maison 
-                                                                </a>-->
+                                <p:ajax event="click" listener="# {demandeServiceController.initService('nettoyageMaison')}" />
+                                Nettoyage Maison 
+                            </a>-->
                             </div>
                         </li>
 
@@ -126,6 +126,9 @@
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownCleaningServices">
                                 <a class="dropdown-item" href="../evenementiel/eventformulaire1.php">Restauration</a>
                                 <a class="dropdown-item" href="../evenementiel/eventformulaire1.php">Traiteur</a>
+                                <p:commandLink  class="nav-link" action="#{demandeServiceController.initService2('traiteur')}" style="color:  black;">
+                                    Traiteur 
+                                </p:commandLink>
                             </div>
                         </li>
 
@@ -134,7 +137,7 @@
                                 Photographie
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownCleaningServices">
-                                <p:commandLink  class="nav-link" action="#{demandeServiceController.initService2('photographie')}">
+                                <p:commandLink  class="nav-link" action="#{demandeServiceController.initService2('photographie')}" style="color:  black;">
                                     Photographie 
                                 </p:commandLink>
                                 <!--<a class="dropdown-item" href="/bricola/faces/demandeService/Demande.xhtml">Photographie<p:ajax event="click" listener="# {demandeServiceController.initService('photographie')}"/></a>-->
@@ -149,7 +152,7 @@
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownCleaningServices">
                                 <a class="dropdown-item" href="../voitureLocation/VoitureLocation.php">Location Voiture</a>
-                                <p:commandLink  class="nav-link" action="#{demandeServiceController.initService2('locationvoiture')}">
+                                <p:commandLink  class="nav-link" action="#{demandeServiceController.initService2('locationvoiture')}" style="color:  black;">
                                     Location Voiture 
                                 </p:commandLink>
                             </div>
@@ -159,7 +162,7 @@
                                 Formations
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownCleaningServices">
-                                <p:commandLink  class="nav-link" action="#{demandeServiceController.initService2('formationpersonnel')}">
+                                <p:commandLink  class="nav-link" action="#{demandeServiceController.initService2('formationpersonnel')}" style="color:  black;">
                                     Formation Personnel
                                 </p:commandLink>
                             </div>
@@ -380,7 +383,10 @@
                 <p>2018 © All Copyrights reserved </p>
             </div>
         </footer>
+        <br />
+        <h:link outcome="/eventBudget/List" value="Show All EventBudget Items"/>
     </h:body>
+
 
 
 

@@ -5,18 +5,17 @@
  */
 package service;
 
-import bean.DemandePhotographie;
-import bean.DemandeService;
+import bean.EventBudget;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 /**
  *
- * @author Ashen One
+ * @author Boss
  */
 @Stateless
-public class DemandePhotographieFacade extends AbstractFacade<DemandePhotographie> {
+public class EventBudgetFacade extends AbstractFacade<EventBudget> {
 
     @PersistenceContext(unitName = "bricolagePU")
     private EntityManager em;
@@ -26,12 +25,8 @@ public class DemandePhotographieFacade extends AbstractFacade<DemandePhotographi
         return em;
     }
 
-    public void saveDemandePhotographie(DemandePhotographie demandePhotographie, DemandeService demandeService) {
-
+    public EventBudgetFacade() {
+        super(EventBudget.class);
     }
-
-    public DemandePhotographieFacade() {
-        super(DemandePhotographie.class);
-    }
-
+    
 }

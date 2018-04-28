@@ -186,10 +186,11 @@ public class ManagerController implements Serializable {
 
     public String nomVille() {
         if (ville == null) {
-            return "Marrakesh";
-        } else {
-            return ville.getNom();
+            ville = new Ville();
+            ville.setNom("Marrakesh");
         }
+        return ville.getNom();
+
     }
 
     public String redirectToHandyMan() {
