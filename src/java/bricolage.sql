@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  127.0.0.1
--- Généré le :  Sam 28 Avril 2018 à 18:43
+-- Généré le :  Dim 29 Avril 2018 à 21:59
 -- Version du serveur :  10.1.16-MariaDB
 -- Version de PHP :  5.6.24
 
@@ -83,6 +83,7 @@ CREATE TABLE `client` (
 
 INSERT INTO `client` (`EMAIL`, `ADRESSECOMPLEMENT`, `BLOCKED`, `NOM`, `PASSWORD`, `PHONE`, `PRENOM`, `TOKEN`, `SECTEUR_ID`) VALUES
 ('anas.the.creator@gmail.com', 'Saada 1 No 570', 0, 'Benchebani', 'walo', '0630247385', 'Mohamed Anas', NULL, 3),
+('htakouit@gmail.com', '06', 0, 'Takouit', 'htakouit@gmail.com', '0677352220', 'hamza', NULL, 5),
 ('newCustomer@gmail.com', 'no 12 hay salama', 0, 'Customer', 'newCustomer@gmail.com', '0679461382', 'new', NULL, 5);
 
 -- --------------------------------------------------------
@@ -97,6 +98,16 @@ CREATE TABLE `cuisinedemandeevent` (
   `DEMANDEEVENT_ID` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Contenu de la table `cuisinedemandeevent`
+--
+
+INSERT INTO `cuisinedemandeevent` (`ID`, `CUISINE_ID`, `DEMANDEEVENT_ID`) VALUES
+(1, 2, 1),
+(2, 3, 1),
+(3, 2, 2),
+(4, 3, 2);
+
 -- --------------------------------------------------------
 
 --
@@ -107,6 +118,16 @@ CREATE TABLE `cuisinetype` (
   `ID` bigint(20) NOT NULL,
   `NOM` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Contenu de la table `cuisinetype`
+--
+
+INSERT INTO `cuisinetype` (`ID`, `NOM`) VALUES
+(1, 'Arabe'),
+(2, 'Chinoix'),
+(3, 'Mexican'),
+(4, 'Other');
 
 -- --------------------------------------------------------
 
@@ -187,6 +208,14 @@ CREATE TABLE `demandeevent` (
   `EVENTBUDGET_ID` bigint(20) DEFAULT NULL,
   `EVENTTYPE_ID` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Contenu de la table `demandeevent`
+--
+
+INSERT INTO `demandeevent` (`ID`, `NBRINVITES`, `DEMANDESERVICE_ID`, `EVENTBUDGET_ID`, `EVENTTYPE_ID`) VALUES
+(1, 0, 22, 1, 1),
+(2, 2, 24, 2, 5);
 
 -- --------------------------------------------------------
 
@@ -271,7 +300,6 @@ CREATE TABLE `demandepainting` (
 
 CREATE TABLE `demandepestcontrol` (
   `ID` bigint(20) NOT NULL,
-  `DETAIL` varchar(255) DEFAULT NULL,
   `DEMANDESERVICE_ID` bigint(20) DEFAULT NULL,
   `TYPEOFPESTCONTROL_ID` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -288,6 +316,13 @@ CREATE TABLE `demandephotographie` (
   `DEMANDESERVICE_ID` bigint(20) DEFAULT NULL,
   `TYPEPHOTOGRAPHIE_ID` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Contenu de la table `demandephotographie`
+--
+
+INSERT INTO `demandephotographie` (`ID`, `VIDEOGRAPHIE`, `DEMANDESERVICE_ID`, `TYPEPHOTOGRAPHIE_ID`) VALUES
+(1, 1, 10, 2);
 
 -- --------------------------------------------------------
 
@@ -328,7 +363,22 @@ INSERT INTO `demandeservice` (`ID`, `DATECONFIRMATION`, `DATEDERNIERMODIF`, `DAT
 (6, NULL, NULL, NULL, '2018-03-31', 'test for cleaning', '50', '50', 'anas.the.creator@gmail.com', NULL, 6, 2, 1, 1, 'merrymaids@gmail.com', 2, 'DemandeCleaning'),
 (7, NULL, NULL, NULL, '2018-03-31', 'none', '200', '200', 'anas.the.creator@gmail.com', NULL, 7, 2, 1, 1, 'cleanharbors@gmail.com', 2, 'DemandeCleaning'),
 (8, NULL, NULL, NULL, '2018-03-31', 'please enter the house quietly ! ', '1000', '1000', 'anas.the.creator@gmail.com', NULL, 8, 3, 1, 1, 'merrymaids@gmail.com', 2, 'DemandeCleaning'),
-(9, NULL, NULL, NULL, '2018-04-16', 'rah swaret te7t l7be9', '44', '66', 'newCustomer@gmail.com', NULL, 2, 2, 3, NULL, 'cleanharbors@gmail.com', 1, 'DemandeFormationPersonnel');
+(9, NULL, NULL, NULL, '2018-04-16', 'rah swaret te7t l7be9', '44', '66', 'newCustomer@gmail.com', NULL, 2, 2, 3, NULL, 'cleanharbors@gmail.com', 1, 'DemandeFormationPersonnel'),
+(10, NULL, NULL, NULL, '2018-04-29', 'for a birthday', '500', '500', 'htakouit@gmail.com', NULL, 9, 5, 19, 6, 'MultiServices@gmail.com', 2, NULL),
+(11, NULL, NULL, NULL, '2018-04-29', 'my birthday', NULL, NULL, 'htakouit@gmail.com', NULL, 10, 5, 17, 7, 'MultiServices@gmail.com', 2, NULL),
+(12, NULL, NULL, NULL, '2018-04-29', 'birthday', NULL, NULL, 'htakouit@gmail.com', NULL, 11, 5, 17, 7, 'MultiServices@gmail.com', 2, NULL),
+(13, NULL, NULL, NULL, '2018-04-29', '', NULL, NULL, 'htakouit@gmail.com', NULL, 12, 5, 17, 7, 'MultiServices@gmail.com', 2, NULL),
+(14, NULL, NULL, NULL, '2018-04-29', '', NULL, NULL, 'htakouit@gmail.com', NULL, 13, 5, 17, 7, 'MultiServices@gmail.com', 2, NULL),
+(15, NULL, NULL, NULL, '2018-04-29', '', NULL, NULL, 'htakouit@gmail.com', NULL, 14, 5, 17, 7, 'MultiServices@gmail.com', 2, NULL),
+(16, NULL, NULL, NULL, '2018-04-29', '', NULL, NULL, 'htakouit@gmail.com', NULL, 15, 5, 17, 7, 'MultiServices@gmail.com', 2, NULL),
+(17, NULL, NULL, NULL, '2018-04-29', 'My birthday', NULL, NULL, 'htakouit@gmail.com', NULL, 16, 5, 17, 7, 'MultiServices@gmail.com', 2, NULL),
+(18, NULL, NULL, NULL, '2018-04-29', '', NULL, NULL, 'htakouit@gmail.com', NULL, 17, 5, 17, 7, 'MultiServices@gmail.com', 2, NULL),
+(19, NULL, NULL, NULL, '2018-04-29', '', NULL, NULL, 'htakouit@gmail.com', NULL, 18, 5, 17, 7, 'MultiServices@gmail.com', 2, NULL),
+(20, NULL, NULL, NULL, '2018-04-29', '', NULL, NULL, 'htakouit@gmail.com', NULL, 19, 5, 17, 7, 'MultiServices@gmail.com', 2, NULL),
+(21, NULL, NULL, NULL, '2018-04-29', '', NULL, NULL, 'htakouit@gmail.com', NULL, 20, 5, 17, 7, 'MultiServices@gmail.com', 2, NULL),
+(22, NULL, NULL, NULL, '2018-04-29', '', '150', '150', 'htakouit@gmail.com', NULL, 21, 5, 17, 7, 'MultiServices@gmail.com', 2, NULL),
+(23, NULL, NULL, NULL, '2018-04-29', 'My birthday', NULL, NULL, 'htakouit@gmail.com', NULL, 22, 5, 17, 7, 'MultiServices@gmail.com', 2, NULL),
+(24, NULL, NULL, NULL, '2018-04-29', 'My birthday', '150', '150', 'htakouit@gmail.com', NULL, 23, 5, 17, 7, 'MultiServices@gmail.com', 2, NULL);
 
 -- --------------------------------------------------------
 
@@ -628,7 +678,9 @@ INSERT INTO `menuformulaire` (`ID`, `COMPANYTAB`, `DETAILSTAB`, `IMAGENAME`, `IN
 (2, 1, 1, 'photographie', 1, 1, 1, 19),
 (3, 1, 1, 'LocationVoiture', 1, 1, 1, 21),
 (4, 1, 1, 'formationpersonnel', 1, 1, 1, 22),
-(5, 1, 1, 'nan', 1, 1, 1, 17);
+(5, 1, 1, 'nan', 1, 1, 1, 17),
+(6, 1, 1, 'deratisation', 0, 1, 1, 14),
+(7, 1, 1, 'demenagement', 1, 1, 1, 5);
 
 -- --------------------------------------------------------
 
@@ -671,6 +723,24 @@ CREATE TABLE `packaging` (
   `SERVICEPRICING_ID` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Contenu de la table `packaging`
+--
+
+INSERT INTO `packaging` (`ID`, `NAME`, `SERVICE_ID`, `SERVICEPRICING_ID`) VALUES
+(1, 'cockroaches ', 14, 2),
+(2, 'cockroaches ', 14, 3),
+(3, 'cockroaches ', 14, 4),
+(4, 'cockroaches ', 14, 4),
+(5, 'bed bugs', 14, 2),
+(6, 'bed bugs', 14, 3),
+(7, 'bed bugs', 14, 3),
+(8, 'bed bugs', 14, 5),
+(9, 'ants ', 14, 2),
+(10, 'ants ', 14, 3),
+(11, 'ants ', 14, 4),
+(12, 'ants ', 14, 5);
+
 -- --------------------------------------------------------
 
 --
@@ -699,8 +769,8 @@ CREATE TABLE `pays` (
 --
 
 INSERT INTO `pays` (`ID`, `NAME`, `TVA`) VALUES
-(1, 'Morocco', NULL),
-(2, 'Spain', NULL);
+(1, 'Morocco', '20'),
+(2, 'Spain', '30');
 
 -- --------------------------------------------------------
 
@@ -718,9 +788,9 @@ CREATE TABLE `pestcontroltype` (
 --
 
 INSERT INTO `pestcontroltype` (`ID`, `NOM`) VALUES
-(1, 'cockroaches '),
+(1, 'cockroaches'),
 (2, 'bed bugs'),
-(3, 'ants '),
+(3, 'ants'),
 (4, 'general');
 
 -- --------------------------------------------------------
@@ -733,6 +803,14 @@ CREATE TABLE `photographietype` (
   `ID` bigint(20) NOT NULL,
   `NOM` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Contenu de la table `photographietype`
+--
+
+INSERT INTO `photographietype` (`ID`, `NOM`) VALUES
+(1, 'Marriage'),
+(2, 'Shooting');
 
 -- --------------------------------------------------------
 
@@ -760,7 +838,22 @@ INSERT INTO `planning` (`ID`, `DATEDEBUT`, `DATEFIN`, `DATEONCE`, `TIMING_ID`) V
 (5, NULL, NULL, '2018-03-31', 13),
 (6, '2018-03-08', '2018-09-21', NULL, NULL),
 (7, '2018-03-14', '2018-03-24', NULL, NULL),
-(8, NULL, NULL, '2018-03-31', 5);
+(8, NULL, NULL, '2018-03-31', 5),
+(9, NULL, NULL, '2018-05-01', 5),
+(10, NULL, NULL, '2018-05-02', 1),
+(11, NULL, NULL, '2018-05-01', 1),
+(12, NULL, NULL, '2018-04-11', 4),
+(13, NULL, NULL, NULL, NULL),
+(14, NULL, NULL, NULL, NULL),
+(15, NULL, NULL, NULL, NULL),
+(16, NULL, NULL, '2018-05-02', 1),
+(17, NULL, NULL, NULL, NULL),
+(18, NULL, NULL, '2018-05-16', 1),
+(19, NULL, NULL, '2018-04-30', 3),
+(20, NULL, NULL, NULL, NULL),
+(21, NULL, NULL, NULL, NULL),
+(22, NULL, NULL, '2018-05-02', NULL),
+(23, NULL, NULL, '2018-05-02', 2);
 
 -- --------------------------------------------------------
 
@@ -888,7 +981,7 @@ INSERT INTO `service` (`ID`, `NOM`, `CATEGORIE_ID`) VALUES
 (2, 'Nettoyage Complet', 1),
 (3, 'Nettoyage Piscine', 1),
 (4, 'Nettoyage Divers', 1),
-(5, 'Demenagement national', 2),
+(5, 'demenagement', 2),
 (6, 'Demenagement international', 2),
 (7, 'Stockage', 2),
 (8, 'Peinture', 3),
@@ -897,7 +990,7 @@ INSERT INTO `service` (`ID`, `NOM`, `CATEGORIE_ID`) VALUES
 (11, 'Plomberie', 3),
 (12, 'Menuiserie', 3),
 (13, 'Climatisation', 3),
-(14, 'Deratisation complete', 4),
+(14, 'deratisation', 4),
 (15, 'Gardiennage', 4),
 (16, 'Restauration', 5),
 (17, 'traiteur', 5),
@@ -926,7 +1019,13 @@ CREATE TABLE `servicepricing` (
 --
 
 INSERT INTO `servicepricing` (`ID`, `DATEAPPLICATION`, `PRIX`, `SERVICE_ID`, `UNITE_ID`) VALUES
-(1, '2015-03-03', '50', 1, 1);
+(1, '2015-03-03', '50', 1, 1),
+(2, '2018-03-01', '179', 14, 2),
+(3, '2018-03-01', '300', 14, 3),
+(4, '2018-03-01', '200', 14, 5),
+(5, '2018-03-01', '370', 14, 4),
+(6, '2018-04-29', '500', 19, 6),
+(7, '2018-04-29', '150', 17, 7);
 
 -- --------------------------------------------------------
 
@@ -977,6 +1076,15 @@ CREATE TABLE `supplementdemandeevent` (
   `SUPPLEMENTEVENT_ID` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Contenu de la table `supplementdemandeevent`
+--
+
+INSERT INTO `supplementdemandeevent` (`ID`, `DEMANDEEVENT_ID`, `SUPPLEMENTEVENT_ID`) VALUES
+(1, 1, 2),
+(2, 2, 1),
+(3, 2, 2);
+
 -- --------------------------------------------------------
 
 --
@@ -987,6 +1095,15 @@ CREATE TABLE `supplementevent` (
   `ID` bigint(20) NOT NULL,
   `NOM` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Contenu de la table `supplementevent`
+--
+
+INSERT INTO `supplementevent` (`ID`, `NOM`) VALUES
+(1, 'Serveurs'),
+(2, 'Tables et fournitures'),
+(3, 'Decoration');
 
 -- --------------------------------------------------------
 
@@ -1091,7 +1208,9 @@ INSERT INTO `unite` (`ID`, `NAME`) VALUES
 (2, 'Studio'),
 (3, '1 BR'),
 (4, '2 BR'),
-(5, '3 BR');
+(5, '3 BR'),
+(6, 'PhotographiePerHour'),
+(7, 'EventPerHour');
 
 -- --------------------------------------------------------
 
@@ -1194,6 +1313,7 @@ INSERT INTO `worker` (`EMAIL`, `ACCEPTED`, `BLOCKED`, `DESCRIPTION`, `NOM`, `NOM
 ('cleanharbors@gmail.com', 1, 0, 'you probably heard of us, the leading company for cleaning services in over 26 countries', 'Clean Harbors', 32, 'cleanharbors@gmail.com', '0679120435', 'www.cleanharbors.com', 2),
 ('coitcleaners@gmail.com', 0, 0, 'An inspiring individual with many years of experiences in cleaning', 'Coit Cleaners ', 5, 'coitcleaners@gmail.com', '0613467982', 'www.coitcleaners.com', 1),
 ('merrymaids@gmail.com', 0, 0, 'we can guarantee that our services are the best in the cleaning industry', 'Merry Maids', 54, 'merrymaids@gmail.com', '0687125903', 'www.merrymaids.com', 2),
+('MultiServices@gmail.com', 1, 0, 'We do everything for the sake of testing ', 'Multi Services', 100, 'MultiServices@gmail.com', '0677352220', 'MultiServices.com', 2),
 ('taskrabbit@gmail.com', 1, 0, 'we hire specialist from all around the globe so that you can have the best services', 'TaskRabbit ', 78, 'taskrabbit@gmail.com', '0612064367', 'www.taskrabbit.com', 2);
 
 -- --------------------------------------------------------
@@ -1217,7 +1337,9 @@ INSERT INTO `workerjob` (`ID`, `SECTEUR_ID`, `SERVICE_ID`, `WORKER_EMAIL`) VALUE
 (1, 1, 1, 'cleanharbors@gmail.com'),
 (2, 2, 1, 'merrymaids@gmail.com'),
 (3, 4, 4, 'taskrabbit@gmail.com'),
-(4, 5, 1, 'coitcleaners@gmail.com');
+(4, 5, 1, 'coitcleaners@gmail.com'),
+(5, 4, 19, 'MultiServices@gmail.com'),
+(6, 1, 17, 'MultiServices@gmail.com');
 
 -- --------------------------------------------------------
 
