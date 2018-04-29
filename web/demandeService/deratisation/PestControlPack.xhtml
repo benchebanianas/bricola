@@ -1,0 +1,81 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500"></link>
+    <link href="../resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet"></link>
+    <link rel="stylesheet" href="../resources/assets/font-awesome/css/font-awesome.min.css"></link>
+    <link rel="stylesheet" href="../resources/assets/css/form-elements.css"></link>
+    <link rel="stylesheet" href="../resources/assets/css/style.css"></link>
+    <link rel="stylesheet" href="../resources/css/jquery.datetimepicker.css"></link>
+    <link href="../resources/css/modern-business.css" rel="stylesheet"></link>
+
+    <ui:composition template="/template.xhtml">
+
+
+
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListSecteurTitle}"></h:outputText>
+        </ui:define>
+
+        <ui:define name="body">
+
+            <h:outputStylesheet name="bootstrap-3.3.6/css/bootstrap.min.css"/>
+            <h:outputStylesheet name="css/paper-bootstrap-wizard.css"/>
+            <h:outputStylesheet name="css/loginStyle.css"/>
+            <h:outputStylesheet name="css/themify-icons.css"/>
+
+
+
+            <h:outputScript name="bootstrap-3.3.6/js/bootstrap.min.js" />
+            <h:outputScript name="js/jquery.bootstrap.wizard.js" />
+            <h:outputScript name="js/paper-bootstrap-wizard.js" />
+            <h:outputScript name="js/jquery.validatePaper.min.js" />
+
+            <div class="image-container set-full-height" style="background-image: url('../resources/images/icons/pestcontrol.png')">
+
+                <!--   Big container   -->
+                <div class="container">
+                    <div class="row">
+                        <div>
+                            <h1 style="color: blue; text-align: center " >Obtenez les meilleurs services au Maroc</h1>
+                            <h3 style=" text-align: center ">Lutte contre les ravageurs de Marrakech à partir de 179 MAD</h3 ></div>
+
+                        <div class="col-md-12 portfolio-item">
+                            <p:repeat value="#{pestControlTypeController.itemsAvailableSelectOne}" var="item">
+                                <div class="col-md-3 ">
+                                    <div class="card h-100" style="height: 500px;">
+                                        <img class="card-img-top" width="250" height="200"  src='../resources/images/icons/#{item.nom}.jpg'></img>
+                                        <div align="center">
+                                            <h4 style="color: #01748d; text-align: center;" >#{item.nom}</h4>
+                                        </div>
+                                        <h4 class="card-title">
+                                            <h3 style="text-align: center">Great for:</h3>
+                                        </h4>
+                                        <p class="card-text" style="line-height: 30px; text-align: center; height: 100px;" >Getting rid of #{item.nom}
+                                            Safe and efficient treatment
+                                            Free follow up visit</p>
+                                        <div align="center">
+                                            <p:commandButton value="book now" action="#{demandeServiceController.bookUnite(item)}" actionListener="#{pestControlTypeController.bookUnite(item)}" class="btn btn-next"></p:commandButton>
+                                        </div>
+                                    </div>
+                                </div>
+                            </p:repeat>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </ui:define>
+
+    </ui:composition>
+
+    <script src="../resources/vendor/jquery/jquery.min.js"></script>
+    <script src="../resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+</html>
+

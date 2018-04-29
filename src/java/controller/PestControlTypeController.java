@@ -1,6 +1,7 @@
 package controller;
 
 import bean.PestControlType;
+import bean.ServicePricing;
 import controller.util.JsfUtil;
 import controller.util.JsfUtil.PersistAction;
 import service.PestControlTypeFacade;
@@ -18,6 +19,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import service.PackagingFacade;
 
 @Named("pestControlTypeController")
 @SessionScoped
@@ -25,8 +27,40 @@ public class PestControlTypeController implements Serializable {
 
     @EJB
     private service.PestControlTypeFacade ejbFacade;
-    private List<PestControlType> items = null;
+    @EJB
+    private PackagingFacade packagingFacade;
+
+    private DemandeServiceController demandeServiceController;
+
+    private List<PestControlType> items;
     private PestControlType selected;
+    private List<ServicePricing> unites;
+
+    public void bookUnite(PestControlType type) {
+        setSelected(type);
+    }
+
+    public List<ServicePricing> getUnites() {
+        if (unites == null) {
+            unites = packagingFacade.findServicePricingFromPackaging(selected);
+        }
+        return unites;
+    }
+
+    public String redirectToPestControl() {
+        return "/demandeService/deratisation/PestControlPack.xhtml";
+    }
+
+    public String initService2(ServicePricing servicePricing) {
+        String link = demandeServiceController.initService2("deratisation");
+        demandeServiceController.getDemandePestControl().setTypeOfPestControl(selected);
+        demandeServiceController.getDemandeService().setServicePricing(servicePricing);
+        return link;
+    }
+
+    public void setUnites(List<ServicePricing> unites) {
+        this.unites = unites;
+    }
 
     public PestControlTypeController() {
     }

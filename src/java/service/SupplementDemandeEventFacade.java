@@ -5,7 +5,10 @@
  */
 package service;
 
+import bean.DemandeEvent;
 import bean.SupplementDemandeEvent;
+import bean.SupplementEvent;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -28,5 +31,15 @@ public class SupplementDemandeEventFacade extends AbstractFacade<SupplementDeman
     public SupplementDemandeEventFacade() {
         super(SupplementDemandeEvent.class);
     }
-    
+
+    public void saveSupplementsForEvent(List<SupplementEvent> supplementEvents, DemandeEvent demandeEvent) {
+        for (SupplementEvent supplementEvent : supplementEvents) {
+            SupplementDemandeEvent supplementDemandeEvent = new SupplementDemandeEvent();
+            supplementDemandeEvent.setDemandeEvent(demandeEvent);
+            supplementDemandeEvent.setSupplementEvent(supplementEvent);
+            supplementDemandeEvent.setId(generateId("SupplementDemandeEvent", "id"));
+            create(supplementDemandeEvent);
+        }
+    }
+
 }

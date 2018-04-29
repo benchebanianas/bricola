@@ -50,6 +50,9 @@ public class DemandeMoving implements Serializable {
     }
 
     public DemandeService getDemandeService() {
+         if (demandeService == null) {
+            demandeService = new DemandeService();
+        }
         return demandeService;
     }
 
@@ -58,6 +61,9 @@ public class DemandeMoving implements Serializable {
     }
 
     public Ville getVilleDepart() {
+         if (villeDepart == null) {
+            villeDepart = new Ville();
+        }
         return villeDepart;
     }
 
@@ -74,6 +80,9 @@ public class DemandeMoving implements Serializable {
     }
 
     public Ville getVilleArrive() {
+        if (villeArrive == null) {
+            villeArrive = new Ville();
+        }
         return villeArrive;
     }
 

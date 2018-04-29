@@ -20,6 +20,10 @@ public class CuisineTypeFacade extends AbstractFacade<CuisineType> {
     @PersistenceContext(unitName = "bricolagePU")
     private EntityManager em;
 
+    
+    public CuisineType findByNom(String nom){
+        return getUniqueResult("select c from CuisineType c where c.nom='"+nom+"'");
+    }
     @Override
     protected EntityManager getEntityManager() {
         return em;

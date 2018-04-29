@@ -37,8 +37,7 @@ public class DemandeServiceFacade extends AbstractFacade<DemandeService> {
     protected EntityManager getEntityManager() {
         return em;
     }
-    
-  
+
     public Object findDemande(DemandeService demandeService) {
 
         List<Object> demandes = em.createQuery("SELECT demande FROM " + demandeService.getTypeDemande().getId() + " demande WHERE "
@@ -50,10 +49,10 @@ public class DemandeServiceFacade extends AbstractFacade<DemandeService> {
         }
 
     }
-    
-    public int findNumberOfDemandesByWorker(Worker worker){
-        List<DemandeService> demandes= getMultipleResult("SELECT ds FROM DemandeService ds WHERE ds.worker.email='"+worker.getEmail()+"'");
-        if(demandes == null){
+
+    public int findNumberOfDemandesByWorker(Worker worker) {
+        List<DemandeService> demandes = getMultipleResult("SELECT ds FROM DemandeService ds WHERE ds.worker.email='" + worker.getEmail() + "'");
+        if (demandes == null) {
             return 0;
         }
         return demandes.size();
@@ -82,7 +81,9 @@ public class DemandeServiceFacade extends AbstractFacade<DemandeService> {
     private void initDemandeService(DemandeService demandeService, Service service) {
 
         demandeService.setService(service);
-        demandeService.setServicePricing(servicePricingFacade.findByService(service));
+        if (demandeService.getServicePricing() == null) {
+            demandeService.setServicePricing(servicePricingFacade.findByService(service));
+        }
         demandeService.setDatedemande(new Date());
         demandeService.setSecteur(demandeService.getClient().getSecteur());
 

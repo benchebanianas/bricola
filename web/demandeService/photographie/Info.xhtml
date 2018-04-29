@@ -21,7 +21,7 @@
 
                         <p:column>
                             <p:selectOneMenu class="form-control" id="photographyType" value="#{demandeServiceController.demandePhotographie.typePhotographie}" style="width: 242px;height: 40px">
-                                <f:selectItems itemValue="#{photographieTypeController.itemsAvailableSelectOne}" />
+                                <f:selectItems value="#{photographieTypeController.itemsAvailableSelectOne}" var="item" itemValue="#{item}" itemLabel="#{item.nom}"/>
                             </p:selectOneMenu>
                         </p:column>
                     </p:row>

@@ -88,6 +88,9 @@
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownCleaningServices">
                                 <a class="dropdown-item" href="../demenagement/bookingmoving.php">Demenagement National</a>
+                                <p:commandLink  class="nav-link" action="#{demandeServiceController.initService2('demenagement')}" style="color:  black;">
+                                     Demenagement
+                                </p:commandLink>
                                 <a class="dropdown-item" href="../demenagement/bookingintermoving.php">Demenagement International</a>
                                 <a class="dropdown-item" href="../stockage/bookingstockage.php">Stockage</a>
                             </div>
@@ -115,6 +118,9 @@
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownCleaningServices">
                                 <a class="dropdown-item" href="../pestcontrol/pestcontrol.php">Deratisation complete</a>
+                                <p:commandLink  class="nav-link" action="#{pestControlTypeController.redirectToPestControl()}" style="color:  black;">
+                                    Deratisation 
+                                </p:commandLink>
                                 <a class="dropdown-item" href="../gardening/gardening.php">Gardiennage</a>
                             </div>
                         </li>
