@@ -88,6 +88,22 @@
                                                 </p:column>
 
                                                 <p:column styleClass="text-font">
+                                                    <p:outputLabel value="Date Min" for="dateMin" style="text-align: center;padding-top: 10px;width: 100%"/>
+                                                </p:column>
+
+                                                <p:column styleClass="text-font">
+                                                    <p:calendar id="dateMin" pattern="dd/MM/yyyy" value="#{managerController.dateMin}" inputStyle="width: 100%;height: 40px"/>
+                                                </p:column>
+
+                                                <p:column styleClass="text-font">
+                                                    <p:outputLabel value="Date Max" for="dateMax" style="text-align: center;padding-top: 10px;width: 100%"/>
+                                                </p:column>
+
+                                                <p:column styleClass="text-font">
+                                                    <p:calendar id="dateMax" pattern="dd/MM/yyyy" value="#{managerController.dateMax}" inputStyle="width: 100%;height: 40px"/>
+                                                </p:column>
+
+                                                <p:column styleClass="text-font">
                                                     <p:outputLabel  for="statVille" value="Ville"  style="text-align: center;padding-top: 10px;width: 100%"/>
                                                 </p:column>
 
@@ -113,16 +129,54 @@
                                                     </p:selectOneMenu>
                                                 </p:column>
 
+                                            </p:row>
+                                            <p:row>
+
+
                                                 <p:column styleClass="text-font">
                                                     <p:outputLabel  for="service" value="Service" style="text-align: center;padding-top: 10px;width: 100%" />
                                                 </p:column>
-
-                                                <p:column>
+                                                
+                                               <p:column>
                                                     <p:selectOneMenu class="form-control" id="service" value="#{managerController.statService}" autoWidth="false"  style="width: 100%;height: 40px">
                                                         <f:selectItem value="#{null}" itemLabel="-- SELECT --" />
                                                         <f:selectItems value="#{managerController.statServices}" var="item"
                                                                        itemValue="#{item}" itemLabel="#{item.nom}" />
                                                     </p:selectOneMenu>
+                                                </p:column>
+                                                
+                                                <p:column styleClass="text-font">
+                                                    <p:outputLabel  for="worker" value="Worker" style="text-align: center;padding-top: 10px;width: 100%" />
+                                                </p:column>
+                                                
+                                               <p:column>
+                                                    <p:selectOneMenu class="form-control" id="worker" value="#{managerController.statWorker}" autoWidth="false"  style="width: 100%;height: 40px">
+                                                        <f:selectItem value="#{null}" itemLabel="-- SELECT --" />
+                                                        <f:selectItems value="#{managerController.statWorkers}" var="item"
+                                                                       itemValue="#{item}" itemLabel="#{item.nom}" />
+                                                    </p:selectOneMenu>
+                                                </p:column>
+                                                
+                                                <p:column styleClass="text-font">
+                                                    <p:outputLabel value="Confirmation" for="typeComfirmation" style="text-align: center;padding-top: 10px;width: 100%"/>
+                                                </p:column>
+
+                                                <p:column>
+                                                    <p:selectOneRadio class="form-control" id="typeComfirmation" value="#{managerController.typeComfirmation}" style="width: 100%;height: 40px">
+                                                        <f:selectItem itemValue="1" itemLabel="Oui"  />
+                                                        <f:selectItem itemValue="2" itemLabel="Non" />
+                                                    </p:selectOneRadio>
+                                                </p:column>
+                                                
+                                                <p:column styleClass="text-font">
+                                                    <p:outputLabel value="type Prix" for="typePrix" style="text-align: center;padding-top: 10px;width: 100%"/>
+                                                </p:column>
+
+                                                <p:column>
+                                                    <p:selectOneRadio class="form-control" id="typePrix" value="#{managerController.typePrix}" style="width: 100%;height: 40px">
+                                                        <f:selectItem itemValue="1" itemLabel="HT"  />
+                                                        <f:selectItem itemValue="2" itemLabel="TTC" />
+                                                    </p:selectOneRadio>
                                                 </p:column>
 
                                                 <p:column styleClass="text-font">
@@ -130,11 +184,13 @@
                                                 </p:column>
 
                                                 <p:column>
-                                                    <p:selectOneMenu class="form-control" id="typeChart" value="#{managerController.typeChart}" autoWidth="false"  style="width: 100%;height: 40px">
+                                                    <p:selectOneRadio class="form-control" id="typeChart" value="#{managerController.typeChart}" style="width: 100%;height: 40px">
                                                         <f:selectItem itemValue="1" itemLabel="Lineaire"  />
                                                         <f:selectItem itemValue="2" itemLabel="Bar" />
-                                                    </p:selectOneMenu>
+                                                    </p:selectOneRadio>
                                                 </p:column>
+
+                                                
 
                                             </p:row>
                                             <f:facet name="footer">
