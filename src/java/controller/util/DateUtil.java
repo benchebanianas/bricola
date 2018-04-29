@@ -23,6 +23,10 @@ public class DateUtil {
             return "";
         }
     }
+    
+    public static java.sql.Timestamp getSqlDateTime(java.util.Date date) {
+        return new java.sql.Timestamp(date.getTime());
+    }
 
     public static Date parse(String date) {
         try {

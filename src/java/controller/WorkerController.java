@@ -290,7 +290,7 @@ public class WorkerController implements Serializable {
         }
     }
 
-    public Worker getWorker(java.lang.Long id) {
+    public Worker getWorker(java.lang.String id) {
         return getFacade().find(id);
     }
 
@@ -315,9 +315,9 @@ public class WorkerController implements Serializable {
             return controller.getWorker(getKey(value));
         }
 
-        java.lang.Long getKey(String value) {
-            java.lang.Long key;
-            key = Long.valueOf(value);
+        java.lang.String getKey(String value) {
+            java.lang.String key;
+            key = value;
             return key;
         }
 
