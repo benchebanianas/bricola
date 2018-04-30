@@ -6,14 +6,14 @@
 
     <ui:composition>
         <div class="row">
-            <h5 class="info-text"> Please fill out the form below so we can find the perfect photographer for you.</h5>
+            <h5 class="info-text"> Please fill out the form below so we can find the perfect PestControl for you.</h5>
             <div class="col-sm-12">
                 <p:panelGrid id="infoGrid" styleClass="ui-noborder" style="margin: 0 auto;width: 100%">
                     <p:row> 
                         <p:column>
                             <p:outputLabel value="Any special instructions" for="instructions" style="text-align: left;padding-top: 10px;width: 200px" />
                         </p:column>
-                        <p:column colspan="3">
+                        <p:column colspan="6">
                             <p:inputTextarea rows="6" style="width: 100%"   id="instructions" placeholder="Example: I want a photoshoot for an after wedding party that might involve shooting a video" value="#{demandeServiceController.demandeService.detail}" />
                         </p:column>
                     </p:row>

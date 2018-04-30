@@ -2,12 +2,10 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:p="http://primefaces.org/ui">
-
     <h:head>
-        <title><ui:insert name="title">Find Services from all over the world!</ui:insert></title>
+        <title>Sous Construction!</title>
         <link rel="shortcut icon" href="resources/images/symbol.png" type="image/png"/>
         <h:outputStylesheet name="css/jsfcrud.css"/>
         <h:outputStylesheet library="css" name="jsfcrud.css"/>
@@ -15,15 +13,10 @@
         <link rel="stylesheet" href="resources/bootstrap-4.0.0/css/bootstrap.css" type="text/css" />
         <link rel="stylesheet" href="resources/css/modern-business-index.css" type="text/css"/>
         <h:outputScript name="bootstrap-4.0.0/js/bootstrap.js" />
-
     </h:head>
-
-
     <h:body style="padding: 0px; margin: 0px">
 
-
-
-     <h:form id="menuForm">
+        <h:form id="menuForm">
 
             <div class="aboveNav" style="padding: 0px; margin: 0px">
 
@@ -91,8 +84,8 @@
                                 <p:commandLink  class="nav-link" action="#{demandeServiceController.initService2('demenagement')}" style="color:  black;">
                                     Demenagement
                                 </p:commandLink>
-<!--                                <a class="dropdown-item" href="../demenagement/bookingintermoving.php">Demenagement International</a>
-                                <a class="dropdown-item" href="../stockage/bookingstockage.php">Stockage</a>-->
+                                <!--                                <a class="dropdown-item" href="../demenagement/bookingintermoving.php">Demenagement International</a>
+                                                                <a class="dropdown-item" href="../stockage/bookingstockage.php">Stockage</a>-->
                             </div>
                         </li>
 
@@ -190,49 +183,28 @@
                 </div>
             </nav>
         </h:form>
-
         <h:form id="mainForm">
-            <div style="background:url('resources/images/#{managerController.getImagename()}.jpg') no-repeat center center">
+            <div style="background:url('resources/images/bg.png') no-repeat center center">
                 <header class="masthead text-white text-center" >
 
                     <div class="container">
                         <div class="row">
-                            <div class="col-xl-12">
-                                <h1 class="mb-1">Relax. On s'en charge</h1>
-                                <h3 class="mb-5">Choisissez les meilleurs services dans #{managerController.nomVille()}.</h3>
+                            <div class="col-xl-12" style="padding-top: 100px;">
+                                <h1 class="mb-1">Bonjour!</h1>
+                                <h3 class="mb-5">La page que vous essayer d'acceder est toujours sous construction!</h3>
                             </div>
                             <div class="col-md-12 col-lg-12 col-xl-10 mx-auto">
                                 <div class="form-row">
                                     <div class=" col-md-2">
-                                        <p:selectOneMenu class="form-control" id="ville" value="#{managerController.ville}">
-                                            <p:ajax listener="#{managerController.doAction}" update="mainForm container " />
-                                            <f:selectItem itemValue="#{null}" itemLabel="--SELECT CITY--"/>
-                                            <f:selectItems value="#{managerController.loadVilles()}" 
-                                                           var="ville"
-                                                           itemValue="#{ville}"
-                                                           />
-                                        </p:selectOneMenu>
                                     </div>
 
                                     <div class="col-md-2">
-                                        <p:selectOneMenu class="form-control" id="secteur" value="#{managerController.secteur}">
-                                            <f:selectItem  itemValue="#{null}" itemLabel="--SELECT SECTOR--"/>
-                                            <f:selectItems value="#{managerController.secteurs}" 
-                                                           var="secteur"
-                                                           itemValue="#{secteur}"
-                                                           />
-                                        </p:selectOneMenu>
                                     </div>
 
                                     <div class="col-md-6">
-                                        <p:selectOneMenu class="form-control" id="service" value="#{demandeServiceController.nomService}">
-                                            <f:selectItem itemLabel="--SELECT SERVICE--" itemValue="" noSelectionOption="true" />
-                                            <f:selectItems value="#{managerController.services}" />
-                                        </p:selectOneMenu>
                                     </div>
 
                                     <div class="col-md-2">
-                                        <a href="demandeService/Demande.xhtml" class="btn " role="button">GET STARTED<p:ajax event="click"  listener="#{demandeServiceController.initService3()}" /> </a>
                                     </div>
                                 </div>
                             </div>
@@ -241,111 +213,6 @@
                 </header>
             </div>
         </h:form>
-
-        <h:form id="container">
-            <!-- Page Content -->
-            <div  style="padding: 0px;margin: 15px">
-
-                <h4 class="my-2">Our most popular services in #{managerController.nomVille()}</h4>
-
-                <!-- Marketing Icons Section -->
-                <div class="row">
-                    <div class="card-group">
-                        <div class="col-lg-4 col-sm-6 portfolio-item">
-                            <div class="card h-100">
-                                <a href="#"><img class="card-img-top" src="resources/images/demenagement.jpg" height="" width="" alt=""/></a>
-                                <div class="card-body">
-                                    <h4 class="card-title">
-                                        <a href="#">Demenagement</a>
-                                    </h4>
-                                    <p class="card-text">
-                                        Rapide<br></br>	
-                                        Garantire<br></br>
-                                        Depuis le comfort de votre maison
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-sm-6 portfolio-item">
-                            <div class="card h-100">
-                                <a href="#"><img class="card-img-top" src="resources/images/photographie.jpg" alt=""/></a>
-                                <div class="card-body">
-                                    <h4 class="card-title">
-                                        <a href="#">photographie</a>
-                                    </h4>
-                                    <p class="card-text">
-                                        Photographes reputables<br></br>
-                                        Reponse instantanée<br></br>
-                                        Bonheur garantie    
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-sm-6 portfolio-item">
-                            <div class="card h-100">
-                                <a href="#"><img class="card-img-top" src="resources/images/homeCleaning.jpg" alt=""/></a>
-                                <div class="card-body">
-                                    <h4 class="card-title">
-                                        <a href="#">Nettoyage Maison</a>
-                                    </h4>
-                                    <p class="card-text">
-                                        Nettoyage Efficace<br></br>
-                                        Proffesionnel<br></br>
-                                        A partir de 35MAD par Heure
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-sm-6 portfolio-item">
-                            <div class="card h-100">
-                                <a href="handyman.html"><img class="card-img-top" src="resources/images/formationpersonnel.jpg" alt=""/></a>
-                                <div class="card-body">
-                                    <h4 class="card-title">
-                                        <a href="handyman.html">Formation Personnel</a>
-                                    </h4>
-                                    <p class="card-text">
-                                        Formateur reputés<br></br>
-                                        Proffesionnel<br></br>
-                                        3ilm mdmoun
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-sm-6 portfolio-item">
-                            <div class="card h-100">
-                                <a href="#"><img class="card-img-top" src="resources/images/locationvoiture2.jpg" alt=""/></a>
-                                <div class="card-body">
-                                    <h4 class="card-title">
-                                        <a href="#">Location de voiture</a>
-                                    </h4>
-                                    <p class="card-text">
-                                        Chwtek fchi maserati?<br></br>
-                                        w tkriha mn dar<br></br>
-                                        ServiceMarket hya li tkhtar
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-sm-6 portfolio-item">
-                            <div class="card h-100">
-                                <a href="#"><img class="card-img-top" src="resources/images/traiteur.jpg" alt=""/></a>
-                                <div class="card-body">
-                                    <h4 class="card-title">
-                                        <a href="#">Traiteur</a>
-                                    </h4>
-                                    <p class="card-text">
-                                        Sif hada, khasha chi 3rada<br></br>
-                                        mafik matkhrj tblani <br></br>
-                                        ServiceMarket ytklf lik bkolchi mn dar
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </h:form>
-
         <footer id="myFooter" class="footer">
             <div class="container">
                 <div class="row">
@@ -390,23 +257,6 @@
                 <p>2018 © All Copyrights reserved </p>
             </div>
         </footer>
-
-
-
-
-
     </h:body>
-
-
-
-
-
-
-
-
-
-
-
-
 </html>
 

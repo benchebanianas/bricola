@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  127.0.0.1
--- Généré le :  Dim 29 Avril 2018 à 21:59
+-- Généré le :  Lun 30 Avril 2018 à 03:59
 -- Version du serveur :  10.1.16-MariaDB
 -- Version de PHP :  5.6.24
 
@@ -304,6 +304,13 @@ CREATE TABLE `demandepestcontrol` (
   `TYPEOFPESTCONTROL_ID` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Contenu de la table `demandepestcontrol`
+--
+
+INSERT INTO `demandepestcontrol` (`ID`, `DEMANDESERVICE_ID`, `TYPEOFPESTCONTROL_ID`) VALUES
+(1, 25, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -378,7 +385,8 @@ INSERT INTO `demandeservice` (`ID`, `DATECONFIRMATION`, `DATEDERNIERMODIF`, `DAT
 (21, NULL, NULL, NULL, '2018-04-29', '', NULL, NULL, 'htakouit@gmail.com', NULL, 20, 5, 17, 7, 'MultiServices@gmail.com', 2, NULL),
 (22, NULL, NULL, NULL, '2018-04-29', '', '150', '150', 'htakouit@gmail.com', NULL, 21, 5, 17, 7, 'MultiServices@gmail.com', 2, NULL),
 (23, NULL, NULL, NULL, '2018-04-29', 'My birthday', NULL, NULL, 'htakouit@gmail.com', NULL, 22, 5, 17, 7, 'MultiServices@gmail.com', 2, NULL),
-(24, NULL, NULL, NULL, '2018-04-29', 'My birthday', '150', '150', 'htakouit@gmail.com', NULL, 23, 5, 17, 7, 'MultiServices@gmail.com', 2, NULL);
+(24, NULL, NULL, NULL, '2018-04-29', 'My birthday', '150', '150', 'htakouit@gmail.com', NULL, 23, 5, 17, 7, 'MultiServices@gmail.com', 2, NULL),
+(25, NULL, NULL, NULL, '2018-04-30', 'nothing', '179', '179', 'htakouit@gmail.com', NULL, 24, 5, 14, 2, 'MultiServices@gmail.com', 2, NULL);
 
 -- --------------------------------------------------------
 
@@ -853,7 +861,8 @@ INSERT INTO `planning` (`ID`, `DATEDEBUT`, `DATEFIN`, `DATEONCE`, `TIMING_ID`) V
 (20, NULL, NULL, NULL, NULL),
 (21, NULL, NULL, NULL, NULL),
 (22, NULL, NULL, '2018-05-02', NULL),
-(23, NULL, NULL, '2018-05-02', 2);
+(23, NULL, NULL, '2018-05-02', 2),
+(24, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1339,7 +1348,8 @@ INSERT INTO `workerjob` (`ID`, `SECTEUR_ID`, `SERVICE_ID`, `WORKER_EMAIL`) VALUE
 (3, 4, 4, 'taskrabbit@gmail.com'),
 (4, 5, 1, 'coitcleaners@gmail.com'),
 (5, 4, 19, 'MultiServices@gmail.com'),
-(6, 1, 17, 'MultiServices@gmail.com');
+(6, 1, 17, 'MultiServices@gmail.com'),
+(7, 1, 14, 'MultiServices@gmail.com');
 
 -- --------------------------------------------------------
 

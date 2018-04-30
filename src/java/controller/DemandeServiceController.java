@@ -60,6 +60,7 @@ import org.primefaces.context.RequestContext;
 import service.DemandeEventFacade;
 import service.DemandeFormationPersonnelFacade;
 import service.DemandeMovingFacade;
+import service.DemandePestControlFacade;
 import service.FiliereFacade;
 import service.MatiereFacade;
 import service.PackagingFacade;
@@ -114,6 +115,8 @@ public class DemandeServiceController implements Serializable {
     private DemandeEventFacade demandeEventFacade;
     @EJB
     private DemandeFormationPersonnelFacade demandeFormationPersonnelFacade;
+    @EJB
+    private DemandePestControlFacade demandePestControlFacade;
 
     private List<Worker> companies;
     private List<Worker> individuals;
@@ -163,6 +166,7 @@ public class DemandeServiceController implements Serializable {
     private List<PlanningItem> planningItems;
 
     private String imageName;
+    private String nomService;
 
     public void voirPlus(DemandeService demandeService) {
         setSelected(demandeService);
@@ -277,6 +281,9 @@ public class DemandeServiceController implements Serializable {
                 demandeEventFacade.saveDemandeEvent(demandeEvent, eventCuisines, eventSupplements, demandeService);
             } else if (currentService.getId() == 22) {//formationPerso sway3
 //                demandeFormationPersonnelFacade.saveDemandeEvent();
+            }else if (currentService.getId() == 14) {//deratisation pestControl
+                demandePestControlFacade.saveDemandePestControl(demandePestControl,demandeService);
+//                demandeFormationPersonnelFacade.saveDemandeEvent();
             }
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Demande enregistrer avec succes !"));
             resetObjects();
@@ -336,6 +343,10 @@ public class DemandeServiceController implements Serializable {
 
         link = "/demandeService/Demande.xhtml?faces-redirect=true";
         return link;
+    }
+
+    public String initService3() {
+        return initService2(nomService);
     }
 
     public String bookUnite(PestControlType type) {
@@ -946,6 +957,14 @@ public class DemandeServiceController implements Serializable {
 
     public List<DemandeService> getItemsAvailableSelectOne() {
         return getFacade().findAll();
+    }
+
+    public String getNomService() {
+        return nomService;
+    }
+
+    public void setNomService(String nomService) {
+        this.nomService = nomService;
     }
 
     @FacesConverter(forClass = DemandeService.class)
