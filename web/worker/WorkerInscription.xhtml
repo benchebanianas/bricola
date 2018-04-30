@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <title>Inscription</title>
+        <h:outputStylesheet name="css/jsfcrud.css"/>
+        <h:outputStylesheet name="css/loginStyle.css"/>
+        <link rel="shortcut icon" href="../resources/images/symbol.png" type="image/png" sizes="16x22"/>
+        <link rel="stylesheet" href="../resources/font-awesome-4.6.3/css/font-awesome.min.css" type="text/css" />
+    </h:head>
+    <h:body class="bodyLogin" style="background: url(../resources/images/background-banner.jpg) no-repeat center center fixed; 
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;" >
+        <img src="../resources/images/logo.png" style="margin-top: 65px;width: 250px"/>
+        <div class="login-card" style="margin-top: 50px;width: 350px;height:auto ">
+            <img src="../resources/images/user.png" style="border-radius: 100%; width: 100px; height: auto"/><br/>
+
+            <h:form >
+                <p:growl id="growl" sticky="true" showDetail="true" life="3000" />
+                <h:panelGrid columns="2" cellpadding="10"  styleClass="align-center worker-color">
+                    <i class="fa fa-user-o icon-login"></i>
+                    <p:inputText id="username" value="#{workerController.selected.nom}" required="false" label="NOM" placeholder="Entrer votre nom" />
+                    <i class="fa fa-user icon-login"></i>
+                    <p:inputText id="useremail" value="#{workerController.selected.email}" required="false" label="EMAIL" placeholder="Entrer votre email" />
+                    <i class="fa fa-key icon-login "></i>
+                    <p:password id="password" value="#{workerController.selected.password}" required="false" label="MOT DE PASSE" placeholder="Enter votre mot de passe" />
+                    <i class="fa fa-phone icon-login"></i>
+                    <p:inputText id="userphone" value="#{workerController.selected.phone}" required="false" label="TELEPHONE" placeholder="Entrer votre telephone" />
+                    <i class="fa fa-group icon-login"></i>
+                    <p:inputText id="useremployes" value="#{workerController.selected.nombreEmploye}" required="false" label="NOMBRE EMPLOYES" placeholder="Entrer le nombre d'employes" />
+                    <i class="fa fa-globe icon-login"></i>
+                    <p:inputText id="usersites" value="#{workerController.selected.siteWeb}" required="false" label="SITEWEB" placeholder="Entrer votre siteweb" />
+                    <i class="fa fa-id-card-o icon-login"></i>
+                    <p:inputText id="userdesc" value="#{workerController.selected.description}" required="false" label="DESCRIPTION" placeholder="Entrer votre description" />
+                    <i class="fa fa-user-o icon-login"></i>
+                    <p:selectOneMenu id="userType" value="#{workerController.selected.workerType}"  required="false" label="TYPE" placeholder="type worker">
+                        <!-- TODO: update below reference to list of available items-->
+                        <f:selectItems value="#{workerTypeController.itemsAvailableSelectOne}"/>
+                    </p:selectOneMenu>
+                    <f:facet name="footer">
+                        <p:commandButton value="INSCRIPTION" style=" font-size: 14px;
+                                         font-family: 'Arial', sans-serif;font-weight: 700;height: 36px;
+                                         width:300px;;margin-bottom: 10px;"
+                                         update="growl" action="#{workerController.inscription()}"/>
+                    </f:facet>  
+                </h:panelGrid>
+            </h:form>
+        </div>
+
+
+    </h:body>
+
+
+
+
+</html>

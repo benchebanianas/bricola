@@ -41,6 +41,25 @@ public class WorkerFacade extends AbstractFacade<Worker> {
         return em;
     }
 
+    public int creerCompte(Worker worker) {
+        Worker w = find(worker.getEmail());
+        if (w == null) {
+            Worker inscrit = new Worker();
+            inscrit.setDescription(worker.getDescription());
+            inscrit.setEmail(worker.getEmail());
+            inscrit.setNom(worker.getNom());
+            inscrit.setNombreEmploye(worker.getNombreEmploye());
+            inscrit.setPassword(worker.getPassword());
+            inscrit.setSiteWeb(worker.getSiteWeb());
+            inscrit.setPhone(worker.getPhone());
+            inscrit.setWorkerType(worker.getWorkerType());
+            create(inscrit);
+            return 1;
+        }
+        return -1;
+
+    }
+
     public double showRating(Worker worker) {
         return reviewFacade.calculRating(worker);
     }
@@ -115,13 +134,13 @@ public class WorkerFacade extends AbstractFacade<Worker> {
 
     }
 
-    public List<Worker> findByCriteria(String email, String nom, Integer nombreEmployeMin,Integer nombreEmployeMax, String siteWeb,
+    public List<Worker> findByCriteria(String email, String nom, Integer nombreEmployeMin, Integer nombreEmployeMax, String siteWeb,
             String phone, WorkerType workerType, Boolean blocked, Boolean accepted) {
 
         String requette = "select w from Worker w where 1=1 ";
         requette += SearchUtil.addConstraint("w", "email", "=", email);
         requette += SearchUtil.addConstraint("w", "nom", "=", nom);
-        requette += SearchUtil.addConstraintMinMax("w", "nombreEmploye", nombreEmployeMin,nombreEmployeMax);
+        requette += SearchUtil.addConstraintMinMax("w", "nombreEmploye", nombreEmployeMin, nombreEmployeMax);
         requette += SearchUtil.addConstraint("w", "siteWeb", "=", siteWeb);
         requette += SearchUtil.addConstraint("w", "workerType.id", "=", workerType.getId());
         requette += SearchUtil.addConstraint("w", "siteWeb", "=", siteWeb);
