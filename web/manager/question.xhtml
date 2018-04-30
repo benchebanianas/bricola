@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <title>Authentification</title>
+        <h:outputStylesheet name="css/jsfcrud.css"/>
+        <h:outputStylesheet name="css/loginStyle.css"/>
+        <link rel="shortcut icon" href="../resources/images/symbol.png" type="image/png" sizes="16x22"/>
+        <link rel="stylesheet" href="../resources/font-awesome-4.6.3/css/font-awesome.min.css" type="text/css" />
+    </h:head>
+    <h:body class="bodyLogin" style="background: url(../resources/images/background-banner.jpg) no-repeat center center fixed; 
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;" >
+        <img src="../resources/images/logo.png" style="margin-top: 65px;width: 250px"/>
+        <div class="login-card" style="margin-top: 50px;width: 600px; ">
+
+            <h:form>
+            <p:growl id="msgs" showDetail="true" />
+            <h1><h:outputText value="Respond au questions suivantes pour plus de securité :"/></h1>
+            <p:panelGrid columns="2">
+                <p:outputLabel value="Votre Derniere Connection :" />
+                <p:calendar id="event" value="#{managerController.dernierConex}">
+                    <p:ajax event="dateSelect" listener="#{managerController.onDateSelect}" update="msgs" />
+                </p:calendar>
+                <p:outputLabel value="Date de Votre Derniere Confirmation :" />
+                <p:calendar id="event1" value="#{managerController.dernierConfirmation}">
+                    <p:ajax event="dateSelect" listener="#{managerController.onDateSelect}" update="msgs" />
+                </p:calendar>
+                <p:outputLabel value="Votre Derniere Action Sur une Demande :"/>
+                <p:selectOneMenu id="country" value="#{managerController.action}" style="width:150px">
+                    <f:selectItem itemLabel="confirmation" itemValue="confirmation"  />
+                    <f:selectItem itemLabel="suppression" itemValue="suppression"  />
+                </p:selectOneMenu>
+                <p:commandButton action="#{managerController.verifRepons}" value="Verifier"/>
+            </p:panelGrid>
+        </h:form>
+        </div>
+
+    </h:body>
+
+
+
+</html>
+
+
