@@ -74,6 +74,8 @@
                         <hr></hr><br></br>
                         <div class="container">
                             <div class="row">
+                                <p:fieldset id="StatField" legend="Critere de recherche" style="margin-bottom:20px" >
+
                                 <p:panelGrid id="searchGrid" styleClass="ui-noborder" style="margin: 0 auto;width: 100%">
                                     <p:row>
                                         <p:column>
@@ -82,11 +84,11 @@
                                         </p:column>
                                         <p:column>
                                             <p:outputLabel value="Date de demande :" for="dateD" style="text-align: left;padding-top: 10px;width: 200px"/>
-                                            <p:calendar value="#{demandeServiceConfirmationDetailController.dateDemande}" id="dateD" style="text-align: left;padding-top: 10px;width: 200px"/>            
+                                            <p:calendar value="#{demandeServiceConfirmationDetailController.dateDemande}" showOn="button" id="dateD" style="text-align: left;padding-top: 10px;width: 200px"/>            
                                         </p:column>
                                         <p:column>
                                             <p:outputLabel value="Date d'Action :" for="dateA" style="text-align: left;padding-top: 10px;width: 200px"/>
-                                            <p:calendar value="#{demandeServiceConfirmationDetailController.dateAction}" id="dateA" style="text-align: left;padding-top: 10px;width: 200px"/>            
+                                            <p:calendar value="#{demandeServiceConfirmationDetailController.dateAction}" showOn="button" id="dateA" style="text-align: left;padding-top: 10px;width: 200px"/>            
                                         </p:column>
 
 
@@ -111,6 +113,8 @@
                                         </p:column>
                                     </p:row>
                                 </p:panelGrid>
+                                    
+                                </p:fieldset>
                             </div>
                             <hr></hr>
                             <div class="row">

@@ -105,7 +105,8 @@ public class DemandeServiceConfirmationDetail implements Serializable {
 
     @Override
     public String toString() {
-        return "bean.DemandeServiceConfirmationDetail[ id=" + id + " ]";
+        return "DemandeServiceConfirmationDetail{" + "id=" + id + ", manager=" + manager.getId() + ", typeAction=" + typeAction + ", dateAction=" + dateAction + '}';
     }
+
 
 }

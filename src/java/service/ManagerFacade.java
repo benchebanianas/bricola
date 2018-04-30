@@ -10,8 +10,12 @@ import bean.DemandeServiceConfirmationDetail;
 import bean.Device;
 import bean.Manager;
 import bean.Worker;
+import bean.Secteur;
+import bean.Service;
+import bean.Ville;
 import java.util.List;
 import controller.util.*;
+import java.math.BigDecimal;
 import java.util.Date;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -89,6 +93,15 @@ public class ManagerFacade extends AbstractFacade<Manager> {
         }
     }
 
+    public int verifier(Manager manager, Date dernierDateConf, String action, Date dernierDateCone) {
+
+       int verifier = 0;
+       verifier += RepDernConx(manager, dernierDateCone);
+       verifier += RepDernAction(manager, action);
+       verifier += RepDernConfir(manager, dernierDateConf);
+        return verifier;
+    }
+    
     public int RepDernConx(Manager manager, Date dernierDate) {
 
         String dernierConex = DateUtil.formateDate("yyyy-MM-dd", dernierDate);
@@ -126,8 +139,50 @@ public class ManagerFacade extends AbstractFacade<Manager> {
         }
         return 0;
     }
+    
+    public BigDecimal[] genererStatistique(int annee,String worker,Ville ville, Secteur secteur, Service service) {
+        BigDecimal[] statistique = new BigDecimal[12];
+        for (int i = 1; i <= 12; i++) {
+            statistique[i - 1] = statistiqueParMois(annee, i,worker,ville, secteur, service);
+        }
+        return statistique;
 
-    public void changeMdp(Manager manager, String mdp) {
+    }
+
+    private BigDecimal statistiqueParMois(int annee,int mois,String worker,Ville ville, Secteur secteur, Service service) {
+        String requette = "SELECT SUM(ds.prixTtc) FROM DemandeService ds WHERE FUNCTION('MONTH', ds.datedemande) = '"+mois+"'";
+        
+        if(annee >0){
+            requette += " AND FUNCTION('YEAR', ds.datedemande) = '"+annee+"'";
+        }
+
+        if (secteur != null && secteur.getId() != null) {
+            requette += " AND ds.secteur.id='" + secteur.getId() + "'";
+        }
+        
+        if (ville != null && ville.getId()!= null) {
+            requette += " AND ds.ville.id='" + ville.getId() + "'";
+        }
+        
+        if (worker != null) {
+            requette += " AND ds.worker.nom='" + worker + "'";
+        }
+
+        if (service != null && service.getId() != null) {
+            requette += " AND ds.service.id='" + service.getId() + "'";
+        }
+        
+        System.out.println("hahiya requette : "+requette);
+        
+        List<BigDecimal> res = em.createQuery(requette).getResultList();
+        System.out.println("res f service : " + res);
+        if (res != null && !res.isEmpty() && res.get(0) != null) {
+            return res.get(0);
+        }
+        return new BigDecimal(0);
+    }
+    
+    public void changeMdp(Manager manager,String mdp){
         Manager m = find(manager.getId());
         m.setPassword(mdp);
         edit(m);

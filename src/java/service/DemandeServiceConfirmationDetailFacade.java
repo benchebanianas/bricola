@@ -48,7 +48,9 @@ public class DemandeServiceConfirmationDetailFacade extends AbstractFacade<Deman
         requette += SearchUtil.addConstraint("d", "demandeService.datedemande", "=", DateUtil.formateDate("yyyy-MM-dd", dateDemande));
         requette += SearchUtil.addConstraint("d", "dateAction", "=", DateUtil.formateDate("yyyy-MM-dd", dateAction));
         System.out.println("haa requeta : " + requette);
-        return getEntityManager().createQuery(requette).getResultList();
+        List<DemandeServiceConfirmationDetail> list = getEntityManager().createQuery(requette).getResultList();
+        System.out.println("ha list :::"+list);
+        return list;
     }
 
     @Override

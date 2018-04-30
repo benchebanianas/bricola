@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <div class="row">
+
+            <h5 class="info-text">Veuillez remplir ce formulaire pour trouver afin que nous puissions trouver le traiteur convenable</h5>
+            <div class="col-sm-12">
+                <p:panelGrid id="infoGrid" styleClass="ui-noborder" style="margin: 0 auto;width: 100%">
+                    <p:row>
+
+                        <p:column>
+                            <p:outputLabel value="Quel type d'evenement?" for="eventType" style="text-align: left;padding-top: 10px;width: 200px"/>
+                        </p:column>
+
+                        <p:column>
+                            <!--<p:selectOneMenu class="form-control" id="eventType" value="# {demandeServiceController.demandePhotographie.typePhotographie}" style="width: 242px;height: 40px">-->
+                            <p:selectOneMenu class="form-control" id="eventType" value="#{demandeServiceController.demandeEvent.eventType}" style="width: 242px;height: 40px">
+                                <f:selectItems value="#{eventTypeController.itemsAvailableSelectOne}" var="item" itemValue="#{item}" itemLabel="#{item.nom}"/>
+                            </p:selectOneMenu>
+                        </p:column>
+                        <p:column>
+                            <p:outputLabel value="Combien d'invités" for="invite" style="text-align: left;padding-top: 10px;" />
+                        </p:column>
+
+                        <p:column>
+                            <p:inputNumber id="invite" value="#{demandeServiceController.demandeEvent.nbrInvites}"></p:inputNumber>
+                        </p:column>
+
+                    </p:row>
+
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel value="Budget de l'evenement" for="budget" style="text-align: left;padding-top: 10px;width: 200px" />
+                        </p:column>
+                        <p:column>
+                            <p:selectOneMenu class="form-control" id="budget" value="#{demandeServiceController.demandeEvent.eventBudget}">
+                                <f:selectItems value="#{eventBudgetController.itemsAvailableSelectOne}" var="item" itemValue="#{item}" itemLabel="#{item.budget}"/>
+                            </p:selectOneMenu>
+                        </p:column>
+
+                        <p:column>
+                            <p:outputLabel value="Date de l'evenement" for="oftenOnce" style="text-align: left;padding-top: 10px;width: 200px" />
+                        </p:column>
+                        <p:column>
+                            <p:selectBooleanButton id="oftenOnce" class="myBtn" value="#{demandeServiceController.oneTime}" onLabel="ONCE" offLabel="ONCE" style="width:120px;height: 40px;text-align: center;padding: 8px 0;" onchange="PF('ServiceUneFoisDialog').show()" >
+                                <p:ajax listener="#{demandeServiceController.checkOnce()}" update="oftenOnce  :ServiceUneFoisForm"/>
+                            </p:selectBooleanButton>
+
+                        </p:column>
+                    </p:row>
+
+                    <p:column>
+                        <p:outputLabel value="Any special instructions" for="instructions" style="text-align: left;padding-top: 10px;width: 200px" />
+                    </p:column>
+                    <p:column colspan="3">
+                        <p:inputTextarea rows="6" style="width: 100%"   id="instructions" placeholder="Example: I want a photoshoot for an after wedding party that might involve shooting a video" value="#{demandeServiceController.demandeService.detail}" />
+                    </p:column>
+
+                    <p:row>
+
+
+                    </p:row>
+
+
+
+                </p:panelGrid>
+            </div>
+
+        </div>
+
+    </ui:composition>
+</html>

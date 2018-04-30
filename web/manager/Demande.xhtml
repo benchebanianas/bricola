@@ -38,32 +38,32 @@
                         <li class="nav-item">
                             <a class="nav-link active" href="../manager/Profile.xhtml">
                                 <span data-feather="home"></span>
-                                <h5 style="color: white;font-family: 'Times New Roman', Times, serif;"> Profile </h5> <span class="sr-only">(current)</span>
+                                <h5 style="color: white;"> Profile </h5> <span class="sr-only">(current)</span>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="../manager/Demande.xhtml">
                                 <span data-feather="file"></span>
-                                <h5 style="color: white;font-family: 'Times New Roman', Times, serif; "> Demandes </h5>
+                                <h5 style="color: white; "> Demandes </h5>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="../manager/Worker.xhtml">
                                 <span data-feather="shopping-cart"></span>
-                                <h5 style="color: white;font-family: 'Times New Roman', Times, serif; "> Workers </h5>
+                                <h5 style="color: white;"> Workers </h5>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="../manager/Operation.xhtml">
                                 <span data-feather="users"></span>
-                                <h5 style="color: white;font-family: 'Times New Roman', Times, serif; "> Operations </h5>
+                                <h5 style="color: white;"> Operations </h5>
 
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="../manager/Statistique.xhtml">
                                 <span data-feather="bar-chart-2"></span>
-                                <h5 style="color: white;font-family: 'Times New Roman', Times, serif; "> <strong>Statistiques </strong></h5>
+                                <h5 style="color: white;"> <strong>Statistiques </strong></h5>
 
                             </a>
                         </li>
@@ -77,6 +77,8 @@
                         <hr></hr><br></br>
                         <div class="container">
                             <div class="row">
+                                <p:fieldset id="StatField" legend="Critere de recherche" style="margin-bottom:20px" >
+
                                 <p:panelGrid id="searchGrid" styleClass="ui-noborder" style="margin: 0 auto;width: 100%">
                                     <p:row>
                                         <p:column>
@@ -99,7 +101,7 @@
                                         </p:column>
                                         <p:column>
                                             <p:outputLabel value="Date de demande :" for="date" style="text-align: left;padding-top: 10px;width: 200px"/>
-                                            <p:calendar value="#{demandeServiceController.dateDemande}" id="date" style="text-align: left;padding-top: 10px;width: 200px"/>            
+                                            <p:calendar value="#{demandeServiceController.dateDemande}" showOn="button" id="date" style="text-align: left;padding-top: 10px;width: 200px"/>            
                                         </p:column>
                                     </p:row>
                                     <p:row>
@@ -125,6 +127,7 @@
                                         </p:column>
                                     </p:row>
                                 </p:panelGrid>
+                                </p:fieldset>
                             </div>
                             <hr></hr>
                             <div class="row">
@@ -174,7 +177,7 @@
                                             <f:facet name="header">
                                                 <h:outputText value="Etat"/>
                                             </f:facet>
-                                            <h:outputLabel value="#{item.dateSuppression ne null ? 'Supprimée' : item.dateConfirmation ne null ? 'Validée' :  'Nouvelle'}" />
+                                            <h:outputLabel value="#{item.dateSuppression ne null ? 'Supprimée' : item.dateConfirmation ne null ? 'Validée' :  'Nouvelle'}" style="#{item.dateSuppression ne null ? 'color : red;' : item.dateConfirmation ne null ? 'color : green;' :  ''}" />
                                         </p:column>
                                         <p:column style="width:140px">
                                             <f:facet name="header">

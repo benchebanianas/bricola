@@ -1,20 +1,28 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:p="http://primefaces.org/ui">
 
-    <ui:composition template="/template.xhtml">
+    <h:head>
+        <title><ui:insert name="title">Find Services from all over the world!</ui:insert></title>
+        <link rel="shortcut icon" href="resources/images/symbol.png" type="image/png"/>
+        <h:outputStylesheet name="css/jsfcrud.css"/>
+        <h:outputStylesheet library="css" name="jsfcrud.css"/>
+        <h:outputScript library="js" name="jsfcrud.js"/>
+        <link rel="stylesheet" href="resources/bootstrap-4.0.0/css/bootstrap.css" type="text/css" />
+        <link rel="stylesheet" href="resources/css/modern-business-index.css" type="text/css"/>
+        <h:outputScript name="bootstrap-4.0.0/js/bootstrap.js" />
+
+    </h:head>
 
 
-        <ui:define name="title">
-            <h:outputText value="Reviews"></h:outputText>
-        </ui:define>
+    <h:body style="padding: 0px; margin: 0px;background-image: url('../resources/images/managerbg.png')">
 
-        <ui:define name="body">
-            <div align="center">
+
+        <div align="center">
             <h:form id="ReviewListForm" style="background-image: url('../resources/images/managerbg.png')">
                 <p:panelGrid>
                     <p:row>
@@ -38,28 +46,45 @@
                     </p:row>
                 </p:panelGrid>
                 <hr></hr>
-                <div align="center" style="width: 500px;">
                 <p:repeat id="datalist" value="#{reviewController.items}" var="item">
-                    <h:panelGrid columns="2" styleClass="ui-noborder" cellpadding="5" style="width: 400px;border : 1px solid grey;">
-                    <h:outputText value="Service : #{item.service.nom}"/>
-                    <h:outputText value="Societe : #{item.worker.nom}"/>
-                    <h:outputText value="Client : "/>
-                    <h:outputText value="#{item.client.nom} - #{item.client.email}"/>
-                    <h:outputText value="Rating : "/>
-                    <p:rating value="#{item.stars}" disabled="true" />
-                    <h:outputText value="Date : "/>
-                    <h:outputText value="#{item.dateReview}">
-                        <f:convertDateTime pattern="MM/dd/yyyy" />
-                    </h:outputText>
-                    <h:outputText value="Commantaire : "/>
-                    </h:panelGrid>
-                    <h:inputTextarea disabled="true" style="width: 400px" value="#{item.text}"/>
-                <hr></hr>
+                    <div class="card">
+                        <h:outputText value="Service : "/>
+                        <h:outputText value="#{item.service.nom}"/>
+                        <h:outputText value="  Societe : "/>
+                        <h:outputText value="#{item.worker.nom}"/><br></br>
+                        <h:outputText value="Client : "/>
+                        <h:outputText value="#{item.client.nom} - #{item.client.email}"/><br></br>
+                        <div class="container">
+                            <h:outputText value="Rating : "/>
+                            <p:rating value="#{item.stars}" disabled="true" />
+                            <h:outputText value="Commantaire : "/><br></br>
+                            <h:inputTextarea disabled="true" value="#{item.text}"/><br></br>
+                            <h:outputText value="Date : "/>
+                            <h:outputText value="#{item.dateReview}">
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:outputText><br></br>
+                        </div>
+                    </div>
+                    <hr></hr>
+
                 </p:repeat>
-                </div>
             </h:form>
-            </div>
-        </ui:define>
-    </ui:composition>
+        </div>
+
+
+     
+    </h:body>
+
+
+
+
+
+
+
+
+
+
+
 
 </html>
+

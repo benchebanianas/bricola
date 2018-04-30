@@ -19,7 +19,6 @@ import bean.Filiere;
 import bean.Manager;
 import bean.Matiere;
 import bean.NiveauScolaire;
-import bean.TypeAction;
 import bean.PlanningItem;
 import bean.Secteur;
 import bean.Service;
@@ -55,7 +54,6 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.faces.event.AjaxBehaviorEvent;
 import service.DemandeServiceConfirmationDetailFacade;
-import service.TypeActionFacade;
 import org.primefaces.context.RequestContext;
 import service.FiliereFacade;
 import service.MatiereFacade;
@@ -100,13 +98,13 @@ public class DemandeServiceController implements Serializable {
     private MatiereFacade matiereFacade;
     @EJB
     private service.ProfJobFacade profJobFacade;
+    @EJB
+    private service.DemandePhotographieFacade demandePhotographieFacade;
 
     private List<Worker> companies;
     private List<Worker> individuals;
     private List<Secteur> secteurs;
 
-    private DemandeService demandeService;
-    private DemandeCleaning demandeCleaning;
     private MenuFormulaire menuFormulaire;
 
     private WorkerType workerType;
@@ -123,6 +121,7 @@ public class DemandeServiceController implements Serializable {
     private List<Matiere> matieres;
     private Filiere filiere;
     private Matiere matiere;
+    private Boolean fromDemandeDetail = false;
 
     private boolean oneTime = true;
     private boolean multipleTimes;
@@ -139,7 +138,8 @@ public class DemandeServiceController implements Serializable {
     private DemandePestControl demandePestControl;
     private DemandePhotographie demandePhotographie;
     private DemandeVoiture demandeVoiture;
-    private Boolean fromDemandeDetail = false;
+    private DemandeService demandeService;
+    private DemandeCleaning demandeCleaning;
 
     private List<PlanningItem> planningItems;
 
@@ -262,8 +262,10 @@ public class DemandeServiceController implements Serializable {
 
         try {
             ejbFacade.saveDemandeService(demandeService, currentService, company, individual, oneTime, multipleTimes);
-            if (currentService.getId() == 1) {
+            if (currentService.getId() == 1) {//cleaning
                 demandeServiceCleaningFacade.saveDemandeCleaning(demandeCleaning, demandeService);
+            }else if(currentService.getId() == 19){//photographie
+                demandePhotographieFacade.saveDemandePhotographie(demandePhotographie, demandeService);
             }
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Demande enregistrer avec succes !"));
             resetObjects();
@@ -308,6 +310,9 @@ public class DemandeServiceController implements Serializable {
 
     public String initService2(String nomService) {
         String link;
+        
+        System.out.println(nomService);
+        
         demandeService = new DemandeService();
         menuFormulaire = new MenuFormulaire();
 
@@ -642,6 +647,9 @@ public class DemandeServiceController implements Serializable {
     }
 
     public DemandeEvent getDemandeEvent() {
+        if (demandeEvent == null) {
+            demandeEvent = new DemandeEvent();
+        }
         return demandeEvent;
     }
 

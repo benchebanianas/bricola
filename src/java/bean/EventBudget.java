@@ -10,38 +10,38 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 
 /**
  *
  * @author Boss
  */
 @Entity
-public class CuisineDemandeEvent implements Serializable {
+public class EventBudget implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne
-    private CuisineType cuisine;
-    @ManyToOne
-    private DemandeEvent demandeEvent;
+    private String budget;
 
-    public CuisineType getCuisine() {
-        return cuisine;
+    public EventBudget() {
     }
 
-    public void setCuisine(CuisineType cuisine) {
-        this.cuisine = cuisine;
+    public EventBudget(Long id, String budget) {
+        this.id = id;
+        this.budget = budget;
     }
 
-    public DemandeEvent getDemandeEvent() {
-        return demandeEvent;
+    public EventBudget(Long id) {
+        this.id = id;
     }
 
-    public void setDemandeEvent(DemandeEvent demandeEvent) {
-        this.demandeEvent = demandeEvent;
+    public String getBudget() {
+        return budget;
+    }
+
+    public void setBudget(String budget) {
+        this.budget = budget;
     }
 
     public Long getId() {
@@ -62,10 +62,10 @@ public class CuisineDemandeEvent implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof CuisineDemandeEvent)) {
+        if (!(object instanceof EventBudget)) {
             return false;
         }
-        CuisineDemandeEvent other = (CuisineDemandeEvent) object;
+        EventBudget other = (EventBudget) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -74,7 +74,7 @@ public class CuisineDemandeEvent implements Serializable {
 
     @Override
     public String toString() {
-        return "bean.DemandeCuisineEvent[ id=" + id + " ]";
+        return "bean.EventBudget[ id=" + id + " ]";
     }
 
 }

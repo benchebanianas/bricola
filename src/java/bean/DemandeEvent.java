@@ -6,11 +6,13 @@
 package bean;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 /**
@@ -25,13 +27,21 @@ public class DemandeEvent implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @OneToOne
-    private EventType event;
+    private EventType eventType;
     private int nbrInvites;
-    private String detail;
     @ManyToOne
     private DemandeService demandeService;
+    @ManyToOne
+    private EventBudget eventBudget;
+    @OneToMany(mappedBy = "demandeEvent")
+    private List<CuisineDemandeEvent> cuisineDemandeEvents;
+    @OneToMany(mappedBy = "demandeEvent")
+    private List<SupplementDemandeEvent> supplementDemandeEvents;
 
     public DemandeService getDemandeService() {
+        if (demandeService == null) {
+            demandeService = new DemandeService();
+        }
         return demandeService;
     }
 
@@ -39,24 +49,45 @@ public class DemandeEvent implements Serializable {
         this.demandeService = demandeService;
     }
 
-    //budget???
+    public List<CuisineDemandeEvent> getCuisineDemandeEvents() {
+        return cuisineDemandeEvents;
+    }
+
+    public EventBudget getEventBudget() {
+        if (eventBudget == null) {
+            eventBudget = new EventBudget();
+        }
+        return eventBudget;
+    }
+
+    public void setEventBudget(EventBudget eventBudget) {
+        this.eventBudget = eventBudget;
+    }
+
+    public void setCuisineDemandeEvents(List<CuisineDemandeEvent> cuisineDemandeEvents) {
+        this.cuisineDemandeEvents = cuisineDemandeEvents;
+    }
+
+    public List<SupplementDemandeEvent> getSupplementDemandeEvents() {
+        return supplementDemandeEvents;
+    }
+
+    public void setSupplementDemandeEvents(List<SupplementDemandeEvent> supplementDemandeEvents) {
+        this.supplementDemandeEvents = supplementDemandeEvents;
+    }
+
     public DemandeEvent() {
     }
 
-    public EventType getEvent() {
-        return event;
+    public EventType getEventType() {
+        if (eventType == null) {
+            eventType = new EventType();
+        }
+        return eventType;
     }
 
-    public void setEvent(EventType event) {
-        this.event = event;
-    }
-
-    public String getDetail() {
-        return detail;
-    }
-
-    public void setDetail(String detail) {
-        this.detail = detail;
+    public void setEventType(EventType eventType) {
+        this.eventType = eventType;
     }
 
     public int getNbrInvites() {
