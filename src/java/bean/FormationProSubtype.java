@@ -17,31 +17,39 @@ import javax.persistence.ManyToOne;
  * @author Topo
  */
 @Entity
-public class FormateurJob implements Serializable {
+public class FormationProSubtype implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    private String nom;
+    private String description;
     @ManyToOne
-    private Worker worker;
-    @ManyToOne
-    private FormationProSubtype formationProSubType;
+    private FormationProtype formationProType;
 
-    public Worker getWorker() {
-        return worker;
+    public String getNom() {
+        return nom;
     }
 
-    public void setWorker(Worker worker) {
-        this.worker = worker;
+    public void setNom(String nom) {
+        this.nom = nom;
     }
 
-    public FormationProSubtype getFormationProSubType() {
-        return formationProSubType;
+    public String getDescription() {
+        return description;
     }
 
-    public void setFormationProSubType(FormationProSubtype formationProSubType) {
-        this.formationProSubType = formationProSubType;
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public FormationProtype getFormationProType() {
+        return formationProType;
+    }
+
+    public void setFormationProType(FormationProtype formationProType) {
+        this.formationProType = formationProType;
     }
     
 
@@ -63,10 +71,10 @@ public class FormateurJob implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof FormateurJob)) {
+        if (!(object instanceof FormationProSubtype)) {
             return false;
         }
-        FormateurJob other = (FormateurJob) object;
+        FormationProSubtype other = (FormationProSubtype) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -75,7 +83,7 @@ public class FormateurJob implements Serializable {
 
     @Override
     public String toString() {
-        return "bean.FormateurJob[ id=" + id + " ]";
+        return "bean.FProSubtype[ id=" + id + " ]";
     }
     
 }

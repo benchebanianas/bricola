@@ -17,32 +17,51 @@ import javax.persistence.ManyToOne;
  * @author Topo
  */
 @Entity
-public class FormateurJob implements Serializable {
+public class DemandeFormationPro implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    private int nbrHeures;
+    private int nbrPersonne;
     @ManyToOne
-    private Worker worker;
+    private Worker formateur;
     @ManyToOne
-    private FormationProSubtype formationProSubType;
+    private DemandeService demandeService;
 
-    public Worker getWorker() {
-        return worker;
+    public int getNbrHeures() {
+        return nbrHeures;
     }
 
-    public void setWorker(Worker worker) {
-        this.worker = worker;
+    public void setNbrHeures(int nbrHeures) {
+        this.nbrHeures = nbrHeures;
     }
 
-    public FormationProSubtype getFormationProSubType() {
-        return formationProSubType;
+    public int getNbrPersonne() {
+        return nbrPersonne;
     }
 
-    public void setFormationProSubType(FormationProSubtype formationProSubType) {
-        this.formationProSubType = formationProSubType;
+    public void setNbrPersonne(int nbrPersonne) {
+        this.nbrPersonne = nbrPersonne;
     }
+
+    public Worker getFormateur() {
+        return formateur;
+    }
+
+    public void setFormateur(Worker formateur) {
+        this.formateur = formateur;
+    }
+
+    public DemandeService getDemandeService() {
+        return demandeService;
+    }
+
+    public void setDemandeService(DemandeService demandeService) {
+        this.demandeService = demandeService;
+    }
+    
     
 
     public Long getId() {
@@ -63,10 +82,10 @@ public class FormateurJob implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof FormateurJob)) {
+        if (!(object instanceof DemandeFormationPro)) {
             return false;
         }
-        FormateurJob other = (FormateurJob) object;
+        DemandeFormationPro other = (DemandeFormationPro) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -75,7 +94,7 @@ public class FormateurJob implements Serializable {
 
     @Override
     public String toString() {
-        return "bean.FormateurJob[ id=" + id + " ]";
+        return "bean.FormationProDemande[ id=" + id + " ]";
     }
     
 }

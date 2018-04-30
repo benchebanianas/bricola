@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="DemandeFormationProEditDlg" widgetVar="DemandeFormationProEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditDemandeFormationProTitle}">
+            <h:form id="DemandeFormationProEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{demandeFormationProController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditDemandeFormationProLabel_nbrHeures}" for="nbrHeures" />
+                        <p:inputText id="nbrHeures" value="#{demandeFormationProController.selected.nbrHeures}" title="#{bundle.EditDemandeFormationProTitle_nbrHeures}" />
+                        <p:outputLabel value="#{bundle.EditDemandeFormationProLabel_nbrPersonne}" for="nbrPersonne" />
+                        <p:inputText id="nbrPersonne" value="#{demandeFormationProController.selected.nbrPersonne}" title="#{bundle.EditDemandeFormationProTitle_nbrPersonne}" />
+                        <p:outputLabel value="#{bundle.EditDemandeFormationProLabel_formateur}" for="formateur" />
+                        <p:selectOneMenu id="formateur" value="#{demandeFormationProController.selected.formateur}" >
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{workerController.itemsAvailableSelectOne}"
+                                           var="formateurItem"
+                                           itemValue="#{formateurItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditDemandeFormationProLabel_demandeService}" for="demandeService" />
+                        <p:selectOneMenu id="demandeService" value="#{demandeFormationProController.selected.demandeService}" >
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{demandeServiceController.itemsAvailableSelectOne}"
+                                           var="demandeServiceItem"
+                                           itemValue="#{demandeServiceItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditDemandeFormationProLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{demandeFormationProController.selected.id}" title="#{bundle.EditDemandeFormationProTitle_id}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{demandeFormationProController.update}" value="#{bundle.Save}" update="display,:DemandeFormationProListForm:datalist,:growl" oncomplete="handleSubmit(args, 'DemandeFormationProEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="DemandeFormationProEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

@@ -2,7 +2,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
     <!-- CSS -->
@@ -36,31 +38,31 @@
             <h:outputScript name="js/paper-bootstrap-wizard.js" />
             <h:outputScript name="js/jquery.validatePaper.min.js" />
 
-            <div class="image-container set-full-height" style="background-image: url('../resources/images/icons/deratisation.png')">
+            <div class="image-container set-full-height" style="background-image: url('../resources/images/handyman.jpg')">
 
                 <!--   Big container   -->
                 <div class="container">
                     <div class="row">
                         <div>
                             <h1 style="color: blue; text-align: center " >Obtenez les meilleurs services au Maroc</h1>
-                            <h3 style=" text-align: center ">Lutte contre les ravageurs de Marrakech à partir de 179 MAD</h3 ></div>
+                            <h3 style=" text-align: center ">Profitez-vous des services de bricolage à partir de 150 MAD</h3 ></div>
 
                         <div class="col-md-12 portfolio-item">
-                            <p:repeat value="#{pestControlTypeController.itemsAvailableSelectOne}" var="item">
+                            <p:repeat value="#{handymanTypeController.itemsAvailableSelectOne}" var="item">
                                 <div class="col-md-3 ">
                                     <div class="card h-100" style="height: 500px;">
-                                        <img class="card-img-top" width="250" height="200"  src='../resources/images/icons/#{item.nom}.jpg'></img>
+                                        <img class="card-img-top"  width="250" height="200"  src="../resources/images/icons/#{item.nom}.jpg" ></img> 
                                         <div align="center">
                                             <h4 style="color: #01748d; text-align: center;" >#{item.nom}</h4>
                                         </div>
                                         <h4 class="card-title">
                                             <h3 style="text-align: center">Great for:</h3>
                                         </h4>
-                                        <p class="card-text" style="line-height: 30px; text-align: center; height: 100px;" >Getting rid of #{item.nom}
-                                            Safe and efficient treatment
-                                            Free follow up visit</p>
+                                        <p class="card-text" style="line-height: 30px; text-align: center; height: 100px;" >
+                                            Fixing #{item.nom} All general handyman work 
+                                            </p>
                                         <div align="center">
-                                            <p:commandButton value="book now" action="#{demandeServiceController.bookUnitePestControl(item)}" actionListener="#{pestControlTypeController.bookUnite(item)}" class="btn btn-next"></p:commandButton>
+                                            <p:commandButton value="book now" action="#{demandeServiceController.bookUniteHandyman(item)}"  class="btn btn-next"></p:commandButton>
                                         </div>
                                     </div>
                                 </div>

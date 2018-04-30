@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  127.0.0.1
--- Généré le :  Lun 30 Avril 2018 à 03:59
+-- Généré le :  Lun 30 Avril 2018 à 13:35
 -- Version du serveur :  10.1.16-MariaDB
 -- Version de PHP :  5.6.24
 
@@ -237,6 +237,20 @@ CREATE TABLE `demandeformationpersonnel` (
 
 INSERT INTO `demandeformationpersonnel` (`ID`, `ADOMICILE`, `NBRPERSONNE`, `MATIERE_ID`, `DEMANDESERVICE_ID`) VALUES
 (1, 1, 5, NULL, 9);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `demandeformationpro`
+--
+
+CREATE TABLE `demandeformationpro` (
+  `ID` bigint(20) NOT NULL,
+  `NBRHEURES` int(11) DEFAULT NULL,
+  `NBRPERSONNE` int(11) DEFAULT NULL,
+  `DEMANDESERVICE_ID` bigint(20) DEFAULT NULL,
+  `FORMATEUR_EMAIL` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -539,44 +553,30 @@ INSERT INTO `filiere` (`ID`, `NOM`, `NIVEAUSCOLAIRE_ID`) VALUES
 
 CREATE TABLE `formateurjob` (
   `ID` bigint(20) NOT NULL,
-  `FPS_ID` bigint(20) DEFAULT NULL,
+  `FORMATIONPROSUBTYPE_ID` bigint(20) DEFAULT NULL,
   `WORKER_EMAIL` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `formationprodemande`
+-- Structure de la table `formationprosubtype`
 --
 
-CREATE TABLE `formationprodemande` (
-  `ID` bigint(20) NOT NULL,
-  `NBRHEURES` int(11) DEFAULT NULL,
-  `NBRPERSONNE` int(11) DEFAULT NULL,
-  `DEMANDESERVICE_ID` bigint(20) DEFAULT NULL,
-  `FORMATEUR_EMAIL` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `fprosubtype`
---
-
-CREATE TABLE `fprosubtype` (
+CREATE TABLE `formationprosubtype` (
   `ID` bigint(20) NOT NULL,
   `DESCRIPTION` varchar(255) DEFAULT NULL,
   `NOM` varchar(255) DEFAULT NULL,
-  `FP_ID` bigint(20) DEFAULT NULL
+  `FORMATIONPROTYPE_ID` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `fprotype`
+-- Structure de la table `formationprotype`
 --
 
-CREATE TABLE `fprotype` (
+CREATE TABLE `formationprotype` (
   `ID` bigint(20) NOT NULL,
   `NOM` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -591,6 +591,30 @@ CREATE TABLE `gardeningtype` (
   `ID` bigint(20) NOT NULL,
   `NOM` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `handymantype`
+--
+
+CREATE TABLE `handymantype` (
+  `ID` bigint(20) NOT NULL,
+  `NOM` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Contenu de la table `handymantype`
+--
+
+INSERT INTO `handymantype` (`ID`, `NOM`) VALUES
+(1, 'electricite'),
+(2, 'fourniture'),
+(3, 'nettoyageClim'),
+(4, 'rideaux'),
+(5, 'plomberie'),
+(6, 'AC Installation'),
+(7, 'AC Repair');
 
 -- --------------------------------------------------------
 
@@ -1446,6 +1470,14 @@ ALTER TABLE `demandeformationpersonnel`
   ADD KEY `FK_DEMANDEFORMATIONPERSONNEL_MATIERE_ID` (`MATIERE_ID`);
 
 --
+-- Index pour la table `demandeformationpro`
+--
+ALTER TABLE `demandeformationpro`
+  ADD PRIMARY KEY (`ID`),
+  ADD KEY `FK_DEMANDEFORMATIONPRO_DEMANDESERVICE_ID` (`DEMANDESERVICE_ID`),
+  ADD KEY `FK_DEMANDEFORMATIONPRO_FORMATEUR_EMAIL` (`FORMATEUR_EMAIL`);
+
+--
 -- Index pour la table `demandegardening`
 --
 ALTER TABLE `demandegardening`
@@ -1564,33 +1596,31 @@ ALTER TABLE `filiere`
 ALTER TABLE `formateurjob`
   ADD PRIMARY KEY (`ID`),
   ADD KEY `FK_FORMATEURJOB_WORKER_EMAIL` (`WORKER_EMAIL`),
-  ADD KEY `FK_FORMATEURJOB_FPS_ID` (`FPS_ID`);
+  ADD KEY `FK_FORMATEURJOB_FORMATIONPROSUBTYPE_ID` (`FORMATIONPROSUBTYPE_ID`);
 
 --
--- Index pour la table `formationprodemande`
+-- Index pour la table `formationprosubtype`
 --
-ALTER TABLE `formationprodemande`
+ALTER TABLE `formationprosubtype`
   ADD PRIMARY KEY (`ID`),
-  ADD KEY `FK_FORMATIONPRODEMANDE_FORMATEUR_EMAIL` (`FORMATEUR_EMAIL`),
-  ADD KEY `FK_FORMATIONPRODEMANDE_DEMANDESERVICE_ID` (`DEMANDESERVICE_ID`);
+  ADD KEY `FK_FORMATIONPROSUBTYPE_FORMATIONPROTYPE_ID` (`FORMATIONPROTYPE_ID`);
 
 --
--- Index pour la table `fprosubtype`
+-- Index pour la table `formationprotype`
 --
-ALTER TABLE `fprosubtype`
-  ADD PRIMARY KEY (`ID`),
-  ADD KEY `FK_FPROSUBTYPE_FP_ID` (`FP_ID`);
-
---
--- Index pour la table `fprotype`
---
-ALTER TABLE `fprotype`
+ALTER TABLE `formationprotype`
   ADD PRIMARY KEY (`ID`);
 
 --
 -- Index pour la table `gardeningtype`
 --
 ALTER TABLE `gardeningtype`
+  ADD PRIMARY KEY (`ID`);
+
+--
+-- Index pour la table `handymantype`
+--
+ALTER TABLE `handymantype`
   ADD PRIMARY KEY (`ID`);
 
 --
@@ -1888,6 +1918,13 @@ ALTER TABLE `demandeformationpersonnel`
   ADD CONSTRAINT `FK_DEMANDEFORMATIONPERSONNEL_MATIERE_ID` FOREIGN KEY (`MATIERE_ID`) REFERENCES `matiere` (`ID`);
 
 --
+-- Contraintes pour la table `demandeformationpro`
+--
+ALTER TABLE `demandeformationpro`
+  ADD CONSTRAINT `FK_DEMANDEFORMATIONPRO_DEMANDESERVICE_ID` FOREIGN KEY (`DEMANDESERVICE_ID`) REFERENCES `demandeservice` (`ID`),
+  ADD CONSTRAINT `FK_DEMANDEFORMATIONPRO_FORMATEUR_EMAIL` FOREIGN KEY (`FORMATEUR_EMAIL`) REFERENCES `worker` (`EMAIL`);
+
+--
 -- Contraintes pour la table `demandegardening`
 --
 ALTER TABLE `demandegardening`
@@ -1976,21 +2013,14 @@ ALTER TABLE `filiere`
 -- Contraintes pour la table `formateurjob`
 --
 ALTER TABLE `formateurjob`
-  ADD CONSTRAINT `FK_FORMATEURJOB_FPS_ID` FOREIGN KEY (`FPS_ID`) REFERENCES `fprosubtype` (`ID`),
+  ADD CONSTRAINT `FK_FORMATEURJOB_FORMATIONPROSUBTYPE_ID` FOREIGN KEY (`FORMATIONPROSUBTYPE_ID`) REFERENCES `formationprosubtype` (`ID`),
   ADD CONSTRAINT `FK_FORMATEURJOB_WORKER_EMAIL` FOREIGN KEY (`WORKER_EMAIL`) REFERENCES `worker` (`EMAIL`);
 
 --
--- Contraintes pour la table `formationprodemande`
+-- Contraintes pour la table `formationprosubtype`
 --
-ALTER TABLE `formationprodemande`
-  ADD CONSTRAINT `FK_FORMATIONPRODEMANDE_DEMANDESERVICE_ID` FOREIGN KEY (`DEMANDESERVICE_ID`) REFERENCES `demandeservice` (`ID`),
-  ADD CONSTRAINT `FK_FORMATIONPRODEMANDE_FORMATEUR_EMAIL` FOREIGN KEY (`FORMATEUR_EMAIL`) REFERENCES `worker` (`EMAIL`);
-
---
--- Contraintes pour la table `fprosubtype`
---
-ALTER TABLE `fprosubtype`
-  ADD CONSTRAINT `FK_FPROSUBTYPE_FP_ID` FOREIGN KEY (`FP_ID`) REFERENCES `fprotype` (`ID`);
+ALTER TABLE `formationprosubtype`
+  ADD CONSTRAINT `FK_FORMATIONPROSUBTYPE_FORMATIONPROTYPE_ID` FOREIGN KEY (`FORMATIONPROTYPE_ID`) REFERENCES `formationprotype` (`ID`);
 
 --
 -- Contraintes pour la table `home`

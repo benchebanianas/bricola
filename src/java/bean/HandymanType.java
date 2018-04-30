@@ -10,40 +10,27 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 
 /**
  *
- * @author Topo
+ * @author Boss
  */
 @Entity
-public class FormateurJob implements Serializable {
+public class HandymanType implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @ManyToOne
-    private Worker worker;
-    @ManyToOne
-    private FormationProSubtype formationProSubType;
+    private String nom;
 
-    public Worker getWorker() {
-        return worker;
+    public String getNom() {
+        return nom;
     }
 
-    public void setWorker(Worker worker) {
-        this.worker = worker;
+    public void setNom(String nom) {
+        this.nom = nom;
     }
-
-    public FormationProSubtype getFormationProSubType() {
-        return formationProSubType;
-    }
-
-    public void setFormationProSubType(FormationProSubtype formationProSubType) {
-        this.formationProSubType = formationProSubType;
-    }
-    
 
     public Long getId() {
         return id;
@@ -63,10 +50,10 @@ public class FormateurJob implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof FormateurJob)) {
+        if (!(object instanceof HandymanType)) {
             return false;
         }
-        FormateurJob other = (FormateurJob) object;
+        HandymanType other = (HandymanType) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -75,7 +62,7 @@ public class FormateurJob implements Serializable {
 
     @Override
     public String toString() {
-        return "bean.FormateurJob[ id=" + id + " ]";
+        return "bean.HandymanType[ id=" + id + " ]";
     }
-    
+
 }

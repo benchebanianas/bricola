@@ -1,7 +1,6 @@
 package controller;
 
 import bean.Client;
-import bean.CuisineType;
 import bean.Day;
 import bean.DemandeBabySitting;
 import bean.DemandeCleaning;
@@ -17,6 +16,7 @@ import bean.DemandeService;
 import bean.MenuFormulaire;
 import bean.DemandeVoiture;
 import bean.Filiere;
+import bean.HandymanType;
 import bean.Manager;
 import bean.Matiere;
 import bean.NiveauScolaire;
@@ -25,7 +25,6 @@ import bean.PlanningItem;
 import bean.Secteur;
 import bean.Service;
 import bean.ServicePricing;
-import bean.SupplementEvent;
 import bean.Timing;
 import bean.TypeAction;
 import bean.Ville;
@@ -144,6 +143,7 @@ public class DemandeServiceController implements Serializable {
     private List<PestControlType> pestControltypes;
     private PestControlType pestControlType;
     private List<ServicePricing> servicePricings;
+    private HandymanType handymanType;
 
     private boolean oneTime = true;
     private boolean multipleTimes;
@@ -281,8 +281,8 @@ public class DemandeServiceController implements Serializable {
                 demandeEventFacade.saveDemandeEvent(demandeEvent, eventCuisines, eventSupplements, demandeService);
             } else if (currentService.getId() == 22) {//formationPerso sway3
 //                demandeFormationPersonnelFacade.saveDemandeEvent();
-            }else if (currentService.getId() == 14) {//deratisation pestControl
-                demandePestControlFacade.saveDemandePestControl(demandePestControl,demandeService);
+            } else if (currentService.getId() == 14) {//deratisation pestControl
+                demandePestControlFacade.saveDemandePestControl(demandePestControl, demandeService);
 //                demandeFormationPersonnelFacade.saveDemandeEvent();
             }
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Demande enregistrer avec succes !"));
@@ -349,10 +349,16 @@ public class DemandeServiceController implements Serializable {
         return initService2(nomService);
     }
 
-    public String bookUnite(PestControlType type) {
+    public String bookUnitePestControl(PestControlType type) {
         setPestControlType(type);
         System.out.println("ha type" + type.getNom());
         return "/demandeService/deratisation/PestControlUnit.xhtml";
+    }
+
+    public String bookUniteHandyman(HandymanType type) {
+        setHandymanType(type);
+        System.out.println("ha type" + type.getNom());
+        return "/demandeService/handyman/handyManUnit.xhtml";
     }
 
     public String initServicePestControl(ServicePricing servicePricing) {
@@ -913,6 +919,14 @@ public class DemandeServiceController implements Serializable {
             eventSupplements = new ArrayList();
         }
         return eventSupplements;
+    }
+
+    public HandymanType getHandymanType() {
+        return handymanType;
+    }
+
+    public void setHandymanType(HandymanType handymanType) {
+        this.handymanType = handymanType;
     }
 
     public void setEventSupplements(List<String> eventSupplements) {
