@@ -4,8 +4,11 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui">
     <h:head>
+        <title>Tableau de bord</title>
+
         <meta charset="utf-8"></meta>
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"></meta>
+        <link rel="shortcut icon" href="../resources/images/symbol.png" type="image/png" sizes="16x22"/>
 
         <link rel="stylesheet" href="../resources/bootstrap-4.0.0/css/bootstrap.min.css"></link>
         <link rel="stylesheet" href="../resources/css/workerProfilecss.css"></link>
@@ -14,7 +17,7 @@
         <nav class="navbar navbar-expand navbar-dark bg-info">
             <a class="sidebar-toggle text-light mr-3"><i class="fa fa-bars"></i></a>
 
-            <a class="navbar-brand" href="#"><i class="fa fa-group"></i> <p:outputLabel value="#{workerController.selected.workerType.name}"></p:outputLabel></a>
+            <a class="navbar-brand" href="#"> <p:outputLabel value="#{workerController.selected.workerType.name}"></p:outputLabel></a>
 
             <div class="navbar-collapse collapse">
                 <ul class="navbar-nav ml-auto">
@@ -31,13 +34,10 @@
                         </a>
                     </li>
                     <li class="nav-item dropdown" style="color: white">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown">
+                        <a class="nav-link " href="#" id="navbarDropdownMenuLink" >
                             <i class="fa fa-user" style="color: white"></i> <p:outputLabel value="#{workerController.selected.nom}"></p:outputLabel>
                         </a>
-                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                            <a class="dropdown-item" href="#">Action</a>
-                            <a class="dropdown-item" href="#">Another</a>
-                        </div>
+
                     </li>
                 </ul>
             </div>
@@ -47,47 +47,54 @@
             <nav class="sidebar bg-dark">
                 <p style="text-align: center;"><a href="#"><img src="../resources/images/workerLogo.jpg" style="border-radius: 70%;" width="200" class="img-rounded" ></img></a></p>
                 <ul class="nav flex-column">
+
                     <li class="nav-item">
-                        <a class="nav-link active" href="#">
+                        <a class="nav-link active" href="WorkerDashboard.xhtml">
                             <span data-feather="home"></span>
-                            Dashboard <span class="sr-only">(current)</span>
+                            Tableau de bord <span class="sr-only">(current)</span>
                         </a>
                     </li>
+
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link active" href="WorkerProfil.xhtml">
                             <span data-feather="file"></span>
-                            Demandes
+                            Profil
                         </a>
                     </li>
+
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <span data-feather="shopping-cart"></span>
-                            Reviews
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" href="WorkerTable.xhtml">
                             <span data-feather="users"></span>
-                            Informations
+                            Tableau de données
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="WorkerCalendar.xhtml">
+                            <span data-feather="shopping-cart"></span>
+                            Calendrier 
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <span data-feather="bar-chart-2"></span>
-                            Services
+                        <a class="nav-link" href="WorkerCharts.xhtml">
+                            <span data-feather="file"></span>
+                            Statistiques
                         </a>
                     </li>
+
+
                     <li class="nav-item">
-                        <a class="nav-link" href="searchByCriteria.xhtml">
+                        <a class="nav-link" href="WorkerReport.xhtml">
                             <span data-feather="layers"></span>
-                            SearchbyCriteria
+                            Report
                         </a>
                     </li>
                 </ul>
             </nav>
 
             <div class="content p-4">
-                <h1 class="display-5 mb-4">Hello!</h1>
+                <h1 class="display-5 mb-4">Tableau de bord</h1>
+                <br></br>
 
                 <div class="card-deck">
                     <div class="card">
@@ -99,31 +106,31 @@
                             </div>
                         </div>
                         <div class="card-footer">
-                            <small class="text-muted">Last updated 3 mins ago</small>
+                            <small class="text-muted">Dernière mise à jour: 3 minutes</small>
                         </div>
                     </div>
                     <div class="card">
                         <div class="card-body">
                             <span style="float: left" class="fa fa-align-center fa-3x"></span>
-                            <h5 class="card-title" style="margin-left: 50px">Reviews</h5>
+                            <h5 class="card-title" style="margin-left: 50px">Avis</h5>
                             <div class="card-text" style="margin-left: 60px;">
                                 <p:outputLabel value="#{workerController.numberReviews()}"></p:outputLabel>
                             </div>
                         </div>
                         <div class="card-footer">
-                            <small class="text-muted">Last updated 3 mins ago</small>
+                            <small class="text-muted">Dernière mise à jour: 3 minutes</small>
                         </div>
                     </div>
                     <div class="card">
                         <div class="card-body">
                             <span style="float: left" class="fa fa-star fa-3x"></span>
-                            <h5 class="card-title" style="margin-left: 50px">Rating</h5>
+                            <h5 class="card-title" style="margin-left: 50px">Évaluation</h5>
                             <div class="card-text" style="margin-left: 60px;">
                                 <p:outputLabel value="#{workerController.showRating()}"></p:outputLabel>
                             </div>
                         </div>
                         <div class="card-footer">
-                            <small class="text-muted">Last updated 3 mins ago</small>
+                            <small class="text-muted">Dernière mise à jour: 3 minutes</small>
                         </div>
                     </div>
                     <div class="card">
@@ -135,15 +142,66 @@
                             </div>
                         </div>
                         <div class="card-footer">
-                            <small class="text-muted">Last updated 3 mins ago</small>
+                            <small class="text-muted">Dernière mise à jour: 3 minutes</small>
                         </div>
                     </div>
-
                 </div>
+                <br></br>
+                <br></br>
+                <p:dataTable value="#{workerController.selected}">
+                    <p:column headerText="Nom">
+                        <h:outputText value="#{workerController.selected.nom}" />
+                    </p:column>
+
+                    <p:column headerText="Email">
+                        <h:outputText value="#{workerController.selected.email}" />
+                    </p:column>
+
+                    <p:column headerText="Site">
+                        <h:outputText value="#{workerController.selected.siteWeb}" />
+                    </p:column>
+
+                    <p:column headerText="Phone">
+                        <h:outputText value="#{workerController.selected.phone}" />
+                    </p:column>
+
+                    <p:column headerText="Employés">
+                        <h:outputText value="#{workerController.selected.nombreEmploye}" />
+                    </p:column>
+
+                </p:dataTable>
+                <br></br>
+                <br></br>
+
+                <div class="col-sm-8">
+                    <p:chart type="line" model="#{workerController.dateModel}" style="height:600px;width:1000px"/>
+                </div>
+                <br></br>
+                <br></br>
+
+                <p:dataTable var="demande" value="#{workerController.demandesByWorker()}">
+                    <p:column headerText="Client">
+                        <h:outputText value="#{demande.service.nom}" />
+                    </p:column>
+
+                    <p:column headerText="Service">
+                        <h:outputText value="#{demande.service.nom}" />
+                    </p:column>
+
+                    <p:column headerText="Date">
+                        <h:outputText value="#{demande.datedemande}" />
+                    </p:column>
+
+                    <p:column headerText="Detail">
+                        <h:outputText value="#{demande.detail}" />
+                    </p:column>
+                </p:dataTable>
+                <br></br>
+                <br></br>
+                <!-- calendar static   -->
             </div>
         </div>
 
-        <script src="../resources/js/jquery.min.js"></script>
         <script src="../resources/js/popper.min.js"></script>
         <script src="../resources/bootstrap-4.0.0/js/bootstrap.min.js"></script>
         <script src="../resources/js/workerProfileJs.js"></script>
