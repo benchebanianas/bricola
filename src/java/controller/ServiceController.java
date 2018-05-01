@@ -34,6 +34,9 @@ public class ServiceController implements Serializable {
     public Service getSelected() {
         return selected;
     }
+    public String redirectToConstruciton(){
+        return  "underConstruction.xhtml?faces-redirect=true";
+    }
 
     public void setSelected(Service selected) {
         this.selected = selected;

@@ -24,7 +24,6 @@ public class DemandePestControl implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String detail;
     @ManyToOne
     private DemandeService demandeService;
     @OneToOne
@@ -33,19 +32,11 @@ public class DemandePestControl implements Serializable {
     public DemandePestControl() {
     }
 
-    public DemandePestControl(String detail, DemandeService demandeService, PestControlType typeOfPestControl) {
-        this.detail = detail;
+    public DemandePestControl(DemandeService demandeService, PestControlType typeOfPestControl) {
         this.demandeService = demandeService;
         this.typeOfPestControl = typeOfPestControl;
     }
 
-    public String getDetail() {
-        return detail;
-    }
-
-    public void setDetail(String detail) {
-        this.detail = detail;
-    }
 
     public DemandeService getDemandeService() {
         return demandeService;

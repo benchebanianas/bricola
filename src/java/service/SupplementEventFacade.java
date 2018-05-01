@@ -20,6 +20,10 @@ public class SupplementEventFacade extends AbstractFacade<SupplementEvent> {
     @PersistenceContext(unitName = "bricolagePU")
     private EntityManager em;
 
+    public SupplementEvent findByNom(String nom) {
+        return getUniqueResult("select s from SupplementEvent s where s.nom='" + nom + "'");
+    }
+
     @Override
     protected EntityManager getEntityManager() {
         return em;
@@ -28,5 +32,5 @@ public class SupplementEventFacade extends AbstractFacade<SupplementEvent> {
     public SupplementEventFacade() {
         super(SupplementEvent.class);
     }
-    
+
 }

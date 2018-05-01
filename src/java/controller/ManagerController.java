@@ -6,6 +6,7 @@ import bean.Manager;
 import bean.Secteur;
 import bean.Service;
 import bean.Ville;
+import bean.Worker;
 import controller.util.JsfUtil;
 import controller.util.JsfUtil.PersistAction;
 import controller.util.MathUtil;
@@ -49,6 +50,8 @@ public class ManagerController implements Serializable {
     @EJB
     private service.ServiceFacade serviceFacade;
     @EJB
+    private service.WorkerFacade workerFacade;
+    @EJB
     private service.VilleFacade villeFacade;
     @EJB
     private service.SecteurFacade secteurFacade;
@@ -86,11 +89,14 @@ public class ManagerController implements Serializable {
     private Ville statVille;
     private Secteur statSecteur;
     private List<Ville> statVilles;
+    private List<Worker> statWorkers;
     private List<Secteur> statSecteurs;
     private List<Service> statServices;
     private LineChartModel lineCharModel;
     private BarChartModel barCharModel;
     private int typeChart;
+    private int typePrix;
+    private int typeComfirmation;
     private BigDecimal max;
     
     public void recherche(){
@@ -101,6 +107,8 @@ public class ManagerController implements Serializable {
         SessionUtil.remove("connectedManager");
         return "/manager/Login?faces-redirect=true";
     }
+    private Date dateMin;
+    private Date dateMax;
 
     public void changeMdp() {
         if (ancienPassword.equals(selected.getPassword())) {
@@ -113,128 +121,128 @@ public class ManagerController implements Serializable {
         }
     }
 
-    public void afficherChart() {
-        if (typeChart == 1) {
-            createLineModels();
-        }
-        if (typeChart == 2) {
-            createBarModel();
-        }
-    }
+//    public void afficherChart() {
+//        if (typeChart == 1) {
+//            createLineModels();
+//        }
+//        if (typeChart == 2) {
+//            createBarModel();
+//        }
+//    }
+//
+//    private void createLineModels() {
+//
+//        lineCharModel = initCategoryModel();
+//
+//        String title = "Statisique Globale";
+//        
+//        if (statAnnee > 0) {
+//            title += ", Annee : " + statAnnee + "";
+//        }
+//        if (statSecteur != null) {
+//            title += ", Secteur : " + statSecteur.getNom() + "";
+//        }
+//        if (statService != null) {
+//            title += ", Service : " + statService.getNom() + "";
+//        }
+//
+//        lineCharModel.setTitle(title);
+//        lineCharModel.setLegendPosition("ne");
+//
+//        lineCharModel.setShowPointLabels(true);
+//        lineCharModel.getAxes().put(AxisType.X, new CategoryAxis("Mois"));
+//        Axis yAxis = lineCharModel.getAxis(AxisType.Y);
+//        yAxis.setLabel("Montant");
+//        yAxis.setMin(0);
+//        yAxis.setMax(max.multiply(new BigDecimal(1.1)));
+//        Axis xAxis = lineCharModel.getAxis(AxisType.X);
+//        xAxis.setMin(0);
+//    }
 
-    private void createLineModels() {
+//    private void createBarModel() {
+//        barCharModel = initBarModel();
+//
+//       String title = "Statisique Globale";
+//        
+//        if (statAnnee > 0) {
+//            title += ", Annee : " + statAnnee + "";
+//        }
+//        if (statSecteur != null) {
+//            title += ", Secteur : " + statSecteur.getNom() + "";
+//        }
+//        if (statService != null) {
+//            title += ", Service : " + statService.getNom() + "";
+//        }
+//        barCharModel.setTitle(title);
+//        barCharModel.setLegendPosition("ne");
+//        barCharModel.setShowDatatip(false);
+//        barCharModel.setShowPointLabels(true);
+//        Axis xAxis = barCharModel.getAxis(AxisType.X);
+//        xAxis.setLabel("Mois");
+//
+//        Axis yAxis = barCharModel.getAxis(AxisType.Y);
+//        yAxis.setLabel("Montant");
+//        yAxis.setMin(0);
+//        yAxis.setMax(max.multiply(new BigDecimal(1.1)));
+//    }
 
-        lineCharModel = initCategoryModel();
+//    private LineChartModel initCategoryModel() {
+//        LineChartModel model = new LineChartModel();
+//        BigDecimal[] resultas = ejbFacade.genererStatistique(statAnnee,dateMin, dateMax, statWorker, statVille, statSecteur, statService, typePrix, typeComfirmation);
+//        max = MathUtil.calculerMax(resultas);
+//        ChartSeries annee = new ChartSeries();
+//        if(statAnnee>0){
+//            annee.setLabel("Annee " + statAnnee);
+//        }else{
+//            annee.setLabel("Globale");
+//        }
+//        annee.set("Janvier", resultas[0]);
+//        annee.set("Fevrier", resultas[1]);
+//        annee.set("Mars", resultas[2]);
+//        annee.set("Avril", resultas[3]);
+//        annee.set("Mai", resultas[4]);
+//        annee.set("Juin", resultas[5]);
+//        annee.set("Juillet", resultas[6]);
+//        annee.set("Aout", resultas[7]);
+//        annee.set("Semptembre", resultas[8]);
+//        annee.set("Octobre", resultas[9]);
+//        annee.set("Novombre", resultas[10]);
+//        annee.set("Decembre", resultas[11]);
+//
+//        model.addSeries(annee);
+//
+//        return model;
+//
+//    }
 
-        String title = "Statisique Globale";
-        
-        if (statAnnee > 0) {
-            title += ", Annee : " + statAnnee + "";
-        }
-        if (statSecteur != null) {
-            title += ", Secteur : " + statSecteur.getNom() + "";
-        }
-        if (statService != null) {
-            title += ", Service : " + statService.getNom() + "";
-        }
-
-        lineCharModel.setTitle(title);
-        lineCharModel.setLegendPosition("ne");
-
-        lineCharModel.setShowPointLabels(true);
-        lineCharModel.getAxes().put(AxisType.X, new CategoryAxis("Mois"));
-        Axis yAxis = lineCharModel.getAxis(AxisType.Y);
-        yAxis.setLabel("Montant");
-        yAxis.setMin(0);
-        yAxis.setMax(max.multiply(new BigDecimal(1.1)));
-        Axis xAxis = lineCharModel.getAxis(AxisType.X);
-        xAxis.setMin(0);
-    }
-
-    private void createBarModel() {
-        barCharModel = initBarModel();
-
-       String title = "Statisique Globale";
-        
-        if (statAnnee > 0) {
-            title += ", Annee : " + statAnnee + "";
-        }
-        if (statSecteur != null) {
-            title += ", Secteur : " + statSecteur.getNom() + "";
-        }
-        if (statService != null) {
-            title += ", Service : " + statService.getNom() + "";
-        }
-        barCharModel.setTitle(title);
-        barCharModel.setLegendPosition("ne");
-        barCharModel.setShowDatatip(false);
-        barCharModel.setShowPointLabels(true);
-        Axis xAxis = barCharModel.getAxis(AxisType.X);
-        xAxis.setLabel("Mois");
-
-        Axis yAxis = barCharModel.getAxis(AxisType.Y);
-        yAxis.setLabel("Montant");
-        yAxis.setMin(0);
-        yAxis.setMax(max.multiply(new BigDecimal(1.1)));
-    }
-
-    private LineChartModel initCategoryModel() {
-        LineChartModel model = new LineChartModel();
-        BigDecimal[] resultas = ejbFacade.genererStatistique(statAnnee,statWorker,statVille, statSecteur, statService);
-        max = MathUtil.calculerMax(resultas);
-        ChartSeries annee = new ChartSeries();
-        if(statAnnee>0){
-            annee.setLabel("Annee " + statAnnee);
-        }else{
-            annee.setLabel("Globale");
-        }
-        annee.set("Janvier", resultas[0]);
-        annee.set("Fevrier", resultas[1]);
-        annee.set("Mars", resultas[2]);
-        annee.set("Avril", resultas[3]);
-        annee.set("Mai", resultas[4]);
-        annee.set("Juin", resultas[5]);
-        annee.set("Juillet", resultas[6]);
-        annee.set("Aout", resultas[7]);
-        annee.set("Semptembre", resultas[8]);
-        annee.set("Octobre", resultas[9]);
-        annee.set("Novombre", resultas[10]);
-        annee.set("Decembre", resultas[11]);
-
-        model.addSeries(annee);
-
-        return model;
-
-    }
-
-    private BarChartModel initBarModel() {
-        BarChartModel model = new BarChartModel();
-        BigDecimal[] resultas = ejbFacade.genererStatistique(statAnnee,statWorker,statVille, statSecteur, statService);
-        max = MathUtil.calculerMax(resultas);
-        ChartSeries annee = new ChartSeries();
-        if(statAnnee>0){
-            annee.setLabel("Annee " + statAnnee);
-        }else{
-            annee.setLabel("Globale");
-        }
-        
-        annee.set("Janvier", resultas[0]);
-        annee.set("Fevrier", resultas[1]);
-        annee.set("Mars", resultas[2]);
-        annee.set("Avril", resultas[3]);
-        annee.set("Mai", resultas[4]);
-        annee.set("Juin", resultas[5]);
-        annee.set("Juillet", resultas[6]);
-        annee.set("Aout", resultas[7]);
-        annee.set("Semptembre", resultas[8]);
-        annee.set("Octobre", resultas[9]);
-        annee.set("Novombre", resultas[10]);
-        annee.set("Decembre", resultas[11]);
-
-        model.addSeries(annee);
-
-        return model;
-    }
+//    private BarChartModel initBarModel() {
+//        BarChartModel model = new BarChartModel();
+//        BigDecimal[] resultas = ejbFacade.genererStatistique(statAnnee,dateMin, dateMax, statWorker, statVille, statSecteur, statService, typePrix, typeComfirmation);
+//        max = MathUtil.calculerMax(resultas);
+//        ChartSeries annee = new ChartSeries();
+//        if(statAnnee>0){
+//            annee.setLabel("Annee " + statAnnee);
+//        }else{
+//            annee.setLabel("Globale");
+//        }
+//        
+//        annee.set("Janvier", resultas[0]);
+//        annee.set("Fevrier", resultas[1]);
+//        annee.set("Mars", resultas[2]);
+//        annee.set("Avril", resultas[3]);
+//        annee.set("Mai", resultas[4]);
+//        annee.set("Juin", resultas[5]);
+//        annee.set("Juillet", resultas[6]);
+//        annee.set("Aout", resultas[7]);
+//        annee.set("Semptembre", resultas[8]);
+//        annee.set("Octobre", resultas[9]);
+//        annee.set("Novombre", resultas[10]);
+//        annee.set("Decembre", resultas[11]);
+//
+//        model.addSeries(annee);
+//
+//        return model;
+//    }
 
     public List<Service> statServices() {
         return serviceFacade.findAll();
@@ -400,7 +408,7 @@ public class ManagerController implements Serializable {
 
     public List<Service> getStatServices() {
         if (statServices == null) {
-            statServices = new ArrayList<>();
+            statServices = serviceFacade.findAll();
         }
         return statServices;
     }
@@ -423,6 +431,14 @@ public class ManagerController implements Serializable {
 
     public void setTypeChart(int typeChart) {
         this.typeChart = typeChart;
+    }
+
+    public int getTypePrix() {
+        return typePrix;
+    }
+
+    public void setTypePrix(int typePrix) {
+        this.typePrix = typePrix;
     }
 
     public BigDecimal getMax() {
@@ -525,7 +541,6 @@ public class ManagerController implements Serializable {
 
     public void loadStatSecteursAndServices() {
         loadSeectors(statVille);
-        loadServices(statVille);
     }
 
     public Secteur getSecteur() {
@@ -646,6 +661,58 @@ public class ManagerController implements Serializable {
 
     public void setBarCharModel(BarChartModel barCharModel) {
         this.barCharModel = barCharModel;
+    }
+
+    public Date getDateMin() {
+        if(dateMin == null){
+            dateMin = new Date();
+        }
+        return dateMin;
+    }
+
+    public void setDateMin(Date dateMin) {
+        this.dateMin = dateMin;
+    }
+
+    public Date getDateMax() {
+        if(dateMax == null){
+            dateMax = new Date();
+        }
+        return dateMax;
+    }
+
+    public void setDateMax(Date dateMax) {
+        this.dateMax = dateMax;
+    }
+
+//    public Worker getStatWorker() {
+//        if(statWorker == null){
+//            statWorker = new Worker();
+//        }
+//        return statWorker;
+//    }
+//
+//    public void setStatWorker(Worker statWorker) {
+//        this.statWorker = statWorker;
+//    }
+
+    public List<Worker> getStatWorkers() {
+        if(statWorkers == null){
+            statWorkers = workerFacade.findAll();
+        }
+        return statWorkers;
+    }
+
+    public void setStatWorkers(List<Worker> statWorkers) {
+        this.statWorkers = statWorkers;
+    }
+
+    public int getTypeComfirmation() {
+        return typeComfirmation;
+    }
+
+    public void setTypeComfirmation(int typeComfirmation) {
+        this.typeComfirmation = typeComfirmation;
     }
 
     protected void setEmbeddableKeys() {

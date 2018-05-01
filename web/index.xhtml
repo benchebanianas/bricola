@@ -8,7 +8,7 @@
 
     <h:head>
         <title><ui:insert name="title">Find Services from all over the world!</ui:insert></title>
-            <link rel="shortcut icon" href="resources/images/symbol.png" type="image/png"/>
+        <link rel="shortcut icon" href="resources/images/symbol.png" type="image/png"/>
         <h:outputStylesheet name="css/jsfcrud.css"/>
         <h:outputStylesheet library="css" name="jsfcrud.css"/>
         <h:outputScript library="js" name="jsfcrud.js"/>
@@ -55,7 +55,7 @@
             </div>
             <nav class="navbar navbar-expand-lg">
                 <div class="mx-auto order-0">
-                    <a class="navbar-brand" href="/bricolage/faces/index.xhtml"> <img src="resources/images/logo.png" style="width:120px;vertical-align: middle" alt="EDE logo"/></a>
+                    <a class="navbar-brand" href="/bricola/faces/index.xhtml"> <img src="resources/images/logo.png" style="width:120px;vertical-align: middle" alt="EDE logo"/></a>
 
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2">
                         <span class="navbar-toggler-icon"></span>
@@ -87,9 +87,12 @@
                                 Demenagement / Stock
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownCleaningServices">
-                                <a class="dropdown-item" href="../demenagement/bookingmoving.php">Demenagement National</a>
-                                <a class="dropdown-item" href="../demenagement/bookingintermoving.php">Demenagement International</a>
-                                <a class="dropdown-item" href="../stockage/bookingstockage.php">Stockage</a>
+                                <!--<a class="dropdown-item" href="../demenagement/bookingmoving.php">Demenagement National</a>-->
+                                <p:commandLink  class="nav-link" action="#{demandeServiceController.initService2('demenagement')}" style="color:  black;">
+                                    Demenagement
+                                </p:commandLink>
+                                <!--                                <a class="dropdown-item" href="../demenagement/bookingintermoving.php">Demenagement International</a>
+                                                                <a class="dropdown-item" href="../stockage/bookingstockage.php">Stockage</a>-->
                             </div>
                         </li>
 
@@ -97,15 +100,27 @@
 
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownCleaningServices" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Travaux de maison
+                                Travaux maison
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownCleaningServices">
-                                <a class="dropdown-item" href="../painting/painting.php">Peinture</a>
-                                <a class="dropdown-item" href="../handyman/handyman.php">Handyman</a>
-                                <a class="dropdown-item" href="#">Electricite</a>
-                                <a class="dropdown-item" href="../handyman/plombier.php">Plomberie</a>
-                                <a class="dropdown-item" href="#">Menuiserie</a>
-                                <a class="dropdown-item" href="../climatiseur/acmaintenance.php">Climatisation</a>
+                                <p:commandLink  class="nav-link" action="#{serviceController.redirectToConstruciton()}" style="color:  black;">
+                                    Peinture 
+                                </p:commandLink>
+                                <p:commandLink  class="nav-link" action="#{handymanTypeController.redirectToHandyman()}" style="color:  black;">
+                                    Handyman 
+                                </p:commandLink>
+                                <p:commandLink  class="nav-link" action="#{serviceController.redirectToConstruciton()}" style="color:  black;">
+                                    Electricite 
+                                </p:commandLink>
+                                <p:commandLink  class="nav-link" action="#{serviceController.redirectToConstruciton()}" style="color:  black;">
+                                    Plomberie 
+                                </p:commandLink>
+                                <p:commandLink  class="nav-link" action="#{serviceController.redirectToConstruciton()}" style="color:  black;">
+                                    Menuiserie 
+                                </p:commandLink>
+                                <p:commandLink  class="nav-link" action="#{serviceController.redirectToConstruciton()}" style="color:  black;">
+                                    Climatisation 
+                                </p:commandLink>
                             </div>
                         </li>
 
@@ -114,8 +129,14 @@
                                 Gardiennage / Deratisation
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownCleaningServices">
-                                <a class="dropdown-item" href="../pestcontrol/pestcontrol.php">Deratisation complete</a>
-                                <a class="dropdown-item" href="../gardening/gardening.php">Gardiennage</a>
+                                <!--<a class="dropdown-item" href="../pestcontrol/pestcontrol.php">Deratisation complete</a>-->
+                                <p:commandLink  class="nav-link" action="#{pestControlTypeController.redirectToPestControl()}" style="color:  black;">
+                                    Deratisation 
+                                </p:commandLink>
+                                <p:commandLink  class="nav-link" action="#{serviceController.redirectToConstruciton()}" style="color:  black;">
+                                    Gardiennage 
+                                </p:commandLink>
+                                <!--<a class="dropdown-item" href="../gardening/gardening.php">Gardiennage</a>-->
                             </div>
                         </li>
 
@@ -124,8 +145,8 @@
                                 Evenmentiel
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownCleaningServices">
-                                <a class="dropdown-item" href="../evenementiel/eventformulaire1.php">Restauration</a>
-                                <a class="dropdown-item" href="../evenementiel/eventformulaire1.php">Traiteur</a>
+                                <!--<a class="dropdown-item" href="../evenementiel/eventformulaire1.php">Restauration</a>-->
+                                <!--<a class="dropdown-item" href="../evenementiel/eventformulaire1.php">Traiteur</a>-->
                                 <p:commandLink  class="nav-link" action="#{demandeServiceController.initService2('traiteur')}" style="color:  black;">
                                     Traiteur 
                                 </p:commandLink>
@@ -142,22 +163,22 @@
                                 </p:commandLink>
                                 <!--<a class="dropdown-item" href="/bricola/faces/demandeService/Demande.xhtml">Photographie<p:ajax event="click" listener="# {demandeServiceController.initService('photographie')}"/></a>-->
 
-                                <a class="dropdown-item" href="../photography/Photography.php">Videographie</a>
+                                <!--<a class="dropdown-item" href="../photography/Photography.php">Videographie</a>-->
                             </div>
                         </li>
 
-                        <li class="nav-item">
+                        <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownCleaningServices" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Voitures
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownCleaningServices">
-                                <a class="dropdown-item" href="../voitureLocation/VoitureLocation.php">Location Voiture</a>
+                                <!--<a class="dropdown-item" href="../voitureLocation/VoitureLocation.php">Location Voiture</a>-->
                                 <p:commandLink  class="nav-link" action="#{demandeServiceController.initService2('locationvoiture')}" style="color:  black;">
                                     Location Voiture 
                                 </p:commandLink>
                             </div>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownCleaningServices" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Formations
                             </a>
@@ -167,12 +188,16 @@
                                 </p:commandLink>
                             </div>
                         </li>
+                        <li class="nav-item">
+                            <p:commandLink  class="nav-link" id="navbarDropdownCleaningServices"  action="#{clientController.redirectToLogin()}" >
+                                <strong> Login</strong>
+                            </p:commandLink>
+                        </li>
 
                     </ul>
                 </div>
             </nav>
         </h:form>
-
 
         <h:form id="mainForm">
             <div style="background:url('resources/images/#{managerController.getImagename()}.jpg') no-repeat center center">
@@ -181,8 +206,8 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-xl-12">
-                                <h1 class="mb-1">Sit back, we'll take it from here.</h1>
-                                <h3 class="mb-5">Book from trusted companies in #{managerController.nomVille()}.</h3>
+                                <h1 class="mb-1">Relax. On s'en charge</h1>
+                                <h3 class="mb-5">Choisissez les meilleurs services dans #{managerController.nomVille()}.</h3>
                             </div>
                             <div class="col-md-12 col-lg-12 col-xl-10 mx-auto">
                                 <div class="form-row">
@@ -208,14 +233,14 @@
                                     </div>
 
                                     <div class="col-md-6">
-                                        <p:selectOneMenu class="form-control" id="service" value="#{managerController.service}">
+                                        <p:selectOneMenu class="form-control" id="service" value="#{demandeServiceController.nomService}">
                                             <f:selectItem itemLabel="--SELECT SERVICE--" itemValue="" noSelectionOption="true" />
                                             <f:selectItems value="#{managerController.services}" />
                                         </p:selectOneMenu>
                                     </div>
 
                                     <div class="col-md-2">
-                                        <a href="booking.html" class="btn " role="button">GET STARTED</a>
+                                        <a href="demandeService/Demande.xhtml" class="btn " role="button">GET STARTED<p:ajax event="click"  listener="#{demandeServiceController.initService3()}" /> </a>
                                     </div>
                                 </div>
                             </div>
@@ -232,110 +257,100 @@
                 <h4 class="my-2">Our most popular services in #{managerController.nomVille()}</h4>
 
                 <!-- Marketing Icons Section -->
-                <div class="row" style="margin-top: 50px">
-
-                    <div class="col-lg-3 mb-3">
-                        <div class="card h-100">
-                            <h4 class="card-header">Card Title</h4>
-                            <div class="card-body">
-                                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis ipsam eos, nam perspiciatis natus commodi similique totam consectetur praesentium molestiae atque exercitationem ut consequuntur, sed eveniet, magni nostrum sint fuga.</p>
+                <div class="row">
+                    <div class="card-group">
+                        <div class="col-lg-4 col-sm-6 portfolio-item">
+                            <div class="card h-100">
+                                <a href="#"><img class="card-img-top" src="resources/images/demenagement.jpg" height="" width="" alt=""/></a>
+                                <div class="card-body">
+                                    <h4 class="card-title">
+                                        <a href="#">Demenagement</a>
+                                    </h4>
+                                    <p class="card-text">
+                                        Rapide<br></br>	
+                                        Garantire<br></br>
+                                        Depuis le comfort de votre maison
+                                    </p>
+                                </div>
                             </div>
-                            <div class="card-footer">
-                                <a href="#" class="btn">Learn More</a>
+                        </div>
+                        <div class="col-lg-4 col-sm-6 portfolio-item">
+                            <div class="card h-100">
+                                <a href="#"><img class="card-img-top" src="resources/images/photographie.jpg" alt=""/></a>
+                                <div class="card-body">
+                                    <h4 class="card-title">
+                                        <a href="#">photographie</a>
+                                    </h4>
+                                    <p class="card-text">
+                                        Photographes reputables<br></br>
+                                        Reponse instantanée<br></br>
+                                        Bonheur garantie    
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-sm-6 portfolio-item">
+                            <div class="card h-100">
+                                <a href="#"><img class="card-img-top" src="resources/images/homeCleaning.jpg" alt=""/></a>
+                                <div class="card-body">
+                                    <h4 class="card-title">
+                                        <a href="#">Nettoyage Maison</a>
+                                    </h4>
+                                    <p class="card-text">
+                                        Nettoyage Efficace<br></br>
+                                        Proffesionnel<br></br>
+                                        A partir de 35MAD par Heure
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-sm-6 portfolio-item">
+                            <div class="card h-100">
+                                <a href="handyman.html"><img class="card-img-top" src="resources/images/formationpersonnel.jpg" alt=""/></a>
+                                <div class="card-body">
+                                    <h4 class="card-title">
+                                        <a href="handyman.html">Formation Personnel</a>
+                                    </h4>
+                                    <p class="card-text">
+                                        Formateur reputés<br></br>
+                                        Proffesionnel<br></br>
+                                        3ilm mdmoun
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-sm-6 portfolio-item">
+                            <div class="card h-100">
+                                <a href="#"><img class="card-img-top" src="resources/images/locationvoiture2.jpg" alt=""/></a>
+                                <div class="card-body">
+                                    <h4 class="card-title">
+                                        <a href="#">Location de voiture</a>
+                                    </h4>
+                                    <p class="card-text">
+                                        Chwtek fchi maserati?<br></br>
+                                        w tkriha mn dar<br></br>
+                                        ServiceMarket hya li tkhtar
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-sm-6 portfolio-item">
+                            <div class="card h-100">
+                                <a href="#"><img class="card-img-top" src="resources/images/traiteur.jpg" alt=""/></a>
+                                <div class="card-body">
+                                    <h4 class="card-title">
+                                        <a href="#">Traiteur</a>
+                                    </h4>
+                                    <p class="card-text">
+                                        Sif hada, khasha chi 3rada<br></br>
+                                        mafik matkhrj tblani <br></br>
+                                        ServiceMarket ytklf lik bkolchi mn dar
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     </div>
-
-                    <div class="col-lg-3 mb-3">
-                        <div class="card h-100">
-                            <h4 class="card-header">Card Title</h4>
-                            <div class="card-body">
-                                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis ipsam eos, nam perspiciatis natus commodi similique totam consectetur praesentium molestiae atque exercitationem ut consequuntur, sed eveniet, magni nostrum sint fuga.</p>
-                            </div>
-                            <div class="card-footer">
-                                <a href="#" class="btn">Learn More</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-3 mb-3">
-                        <div class="card h-100">
-                            <h4 class="card-header">Card Title</h4>
-                            <div class="card-body">
-                                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente esse necessitatibus neque.</p>
-                            </div>
-                            <div class="card-footer">
-                                <a href="#" class="btn">Learn More</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-3 mb-3">
-                        <div class="card h-100">
-                            <h4 class="card-header">Card Title</h4>
-                            <div class="card-body">
-                                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente esse necessitatibus neque.</p>
-                            </div>
-                            <div class="card-footer">
-                                <a href="#" class="btn">Learn More</a>
-                            </div>
-                        </div>
-                    </div>
-
                 </div>
-                <div class="row" style="margin-top: 50px">
-
-                    <div class="col-lg-3 mb-3">
-                        <div class="card h-100">
-                            <h4 class="card-header">Card Title</h4>
-                            <div class="card-body">
-                                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis ipsam eos, nam perspiciatis natus commodi similique totam consectetur praesentium molestiae atque exercitationem ut consequuntur, sed eveniet, magni nostrum sint fuga.</p>
-                            </div>
-                            <div class="card-footer">
-                                <a href="#" class="btn">Learn More</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-3 mb-3">
-                        <div class="card h-100">
-                            <h4 class="card-header">Card Title</h4>
-                            <div class="card-body">
-                                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis ipsam eos, nam perspiciatis natus commodi similique totam consectetur praesentium molestiae atque exercitationem ut consequuntur, sed eveniet, magni nostrum sint fuga.</p>
-                            </div>
-                            <div class="card-footer">
-                                <a href="#" class="btn">Learn More</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-3 mb-3">
-                        <div class="card h-100">
-                            <h4 class="card-header">Card Title</h4>
-                            <div class="card-body">
-                                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente esse necessitatibus neque.</p>
-                            </div>
-                            <div class="card-footer">
-                                <a href="#" class="btn">Learn More</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-3 mb-3">
-                        <div class="card h-100">
-                            <h4 class="card-header">Card Title</h4>
-                            <div class="card-body">
-                                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente esse necessitatibus neque.</p>
-                            </div>
-                            <div class="card-footer">
-                                <a href="#" class="btn">Learn More</a>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
-
             </div>
         </h:form>
 
@@ -387,8 +402,11 @@
 
 
 
-       
+
+        <br />
+        <h:link outcome="/handymanType/List" value="Show All HandymanType Items"/>
     </h:body>
+
 
 
 

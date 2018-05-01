@@ -6,6 +6,8 @@
 package service;
 
 import bean.DemandePestControl;
+import bean.DemandeService;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -17,8 +19,21 @@ import javax.persistence.PersistenceContext;
 @Stateless
 public class DemandePestControlFacade extends AbstractFacade<DemandePestControl> {
 
+    @EJB
+    private service.DemandeServiceFacade demandeServiceFacade;
+
     @PersistenceContext(unitName = "bricolagePU")
     private EntityManager em;
+
+    public void saveDemandePestControl(DemandePestControl demandePestControl, DemandeService demandeService) {
+
+        demandePestControl.setDemandeService(demandeService);
+        demandePestControl.getDemandeService().setPrixHt(demandePestControl.getDemandeService().getServicePricing().getPrix());
+        demandePestControl.getDemandeService().setPrixTtc(demandePestControl.getDemandeService().getPrixHt());
+        demandeServiceFacade.edit(demandeService);
+        demandePestControl.setId(generateId("DemandePestControl", "id"));
+        create(demandePestControl);
+    }
 
     @Override
     protected EntityManager getEntityManager() {
@@ -28,5 +43,5 @@ public class DemandePestControlFacade extends AbstractFacade<DemandePestControl>
     public DemandePestControlFacade() {
         super(DemandePestControl.class);
     }
-    
+
 }

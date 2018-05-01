@@ -16,12 +16,15 @@ import bean.DemandeService;
 import bean.MenuFormulaire;
 import bean.DemandeVoiture;
 import bean.Filiere;
+import bean.HandymanType;
 import bean.Manager;
 import bean.Matiere;
 import bean.NiveauScolaire;
+import bean.PestControlType;
 import bean.PlanningItem;
 import bean.Secteur;
 import bean.Service;
+import bean.ServicePricing;
 import bean.Timing;
 import bean.TypeAction;
 import bean.Ville;
@@ -55,8 +58,13 @@ import javax.faces.convert.FacesConverter;
 import javax.faces.event.AjaxBehaviorEvent;
 import service.DemandeServiceConfirmationDetailFacade;
 import org.primefaces.context.RequestContext;
+import service.DemandeEventFacade;
+import service.DemandeFormationPersonnelFacade;
+import service.DemandeMovingFacade;
+import service.DemandePestControlFacade;
 import service.FiliereFacade;
 import service.MatiereFacade;
+import service.PackagingFacade;
 
 @Named("demandeServiceController")
 @SessionScoped
@@ -100,10 +108,22 @@ public class DemandeServiceController implements Serializable {
     private service.ProfJobFacade profJobFacade;
     @EJB
     private service.DemandePhotographieFacade demandePhotographieFacade;
+    @EJB
+    private PackagingFacade packagingFacade;
+    @EJB
+    private DemandeMovingFacade demandeMovingFacade;
+    @EJB
+    private DemandeEventFacade demandeEventFacade;
+    @EJB
+    private DemandeFormationPersonnelFacade demandeFormationPersonnelFacade;
+    @EJB
+    private DemandePestControlFacade demandePestControlFacade;
 
     private List<Worker> companies;
     private List<Worker> individuals;
     private List<Secteur> secteurs;
+    private List<String> eventCuisines;
+    private List<String> eventSupplements;
 
     private MenuFormulaire menuFormulaire;
 
@@ -122,6 +142,10 @@ public class DemandeServiceController implements Serializable {
     private Filiere filiere;
     private Matiere matiere;
     private Boolean fromDemandeDetail = false;
+    private List<PestControlType> pestControltypes;
+    private PestControlType pestControlType;
+    private List<ServicePricing> servicePricings;
+    private HandymanType handymanType;
 
     private boolean oneTime = true;
     private boolean multipleTimes;
@@ -156,6 +180,7 @@ public class DemandeServiceController implements Serializable {
     public void recherche() {
         items = ejbFacade.findByCriteria(secteur, workerNom, service, dateDemande, prixMin, prixMax, confirSuprr);
     }
+    private String nomService;
 
     public void voirPlus(DemandeService demandeService) {
         setSelected(demandeService);
@@ -264,8 +289,19 @@ public class DemandeServiceController implements Serializable {
             ejbFacade.saveDemandeService(demandeService, currentService, company, individual, oneTime, multipleTimes);
             if (currentService.getId() == 1) {//cleaning
                 demandeServiceCleaningFacade.saveDemandeCleaning(demandeCleaning, demandeService);
-            }else if(currentService.getId() == 19){//photographie
+            } else if (currentService.getId() == 19) {//photographie
                 demandePhotographieFacade.saveDemandePhotographie(demandePhotographie, demandeService);
+            } else if (currentService.getId() == 21) {//locationVoiture
+                demandeVoitureFacade.saveDemandeLocation(demandeVoiture, demandeService);
+            } else if (currentService.getId() == 5) {//demenagement
+                demandeMovingFacade.saveDemandeMoving(demandeMoving, demandeService);
+            } else if (currentService.getId() == 17) {//traiteur
+                demandeEventFacade.saveDemandeEvent(demandeEvent, eventCuisines, eventSupplements, demandeService);
+            } else if (currentService.getId() == 22) {//formationPerso sway3
+//                demandeFormationPersonnelFacade.saveDemandeEvent();
+            } else if (currentService.getId() == 14) {//deratisation pestControl
+                demandePestControlFacade.saveDemandePestControl(demandePestControl, demandeService);
+//                demandeFormationPersonnelFacade.saveDemandeEvent();
             }
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Demande enregistrer avec succes !"));
             resetObjects();
@@ -310,9 +346,9 @@ public class DemandeServiceController implements Serializable {
 
     public String initService2(String nomService) {
         String link;
-        
+
         System.out.println(nomService);
-        
+
         demandeService = new DemandeService();
         menuFormulaire = new MenuFormulaire();
 
@@ -321,8 +357,33 @@ public class DemandeServiceController implements Serializable {
 
         System.out.println("service name " + currentService.getNom());
         System.out.println("type demande " + menuFormulaire.getService().getNom());
+        System.out.println("" + menuFormulaire.isCompanyTab() + "," + menuFormulaire.isDetailsTab() + "," + menuFormulaire.isInfoTab() + ",");
 
         link = "/demandeService/Demande.xhtml?faces-redirect=true";
+        return link;
+    }
+
+    public String initService3() {
+        return initService2(nomService);
+    }
+
+    public String bookUnitePestControl(PestControlType type) {
+        setPestControlType(type);
+        System.out.println("ha type" + type.getNom());
+        return "/demandeService/deratisation/PestControlUnit.xhtml";
+    }
+
+    public String bookUniteHandyman(HandymanType type) {
+        setHandymanType(type);
+        System.out.println("ha type" + type.getNom());
+        return "/demandeService/handyman/handyManUnit.xhtml";
+    }
+
+    public String initServicePestControl(ServicePricing servicePricing) {
+        String link = initService2("deratisation");
+        getDemandePestControl().setTypeOfPestControl(pestControlType);
+        getDemandeService().setServicePricing(servicePricing);
+
         return link;
     }
 
@@ -452,6 +513,17 @@ public class DemandeServiceController implements Serializable {
             ville = new Ville();
         }
         return ville;
+    }
+
+    public PestControlType getPestControlType() {
+        if (pestControlType == null) {
+            pestControlType = new PestControlType();
+        }
+        return pestControlType;
+    }
+
+    public void setPestControlType(PestControlType pestControlType) {
+        this.pestControlType = pestControlType;
     }
 
     public void setVille(Ville ville) {
@@ -658,6 +730,9 @@ public class DemandeServiceController implements Serializable {
     }
 
     public DemandeMoving getDemandeMoving() {
+        if (demandeMoving == null) {
+            demandeMoving = new DemandeMoving();
+        }
         return demandeMoving;
     }
 
@@ -666,6 +741,9 @@ public class DemandeServiceController implements Serializable {
     }
 
     public DemandePestControl getDemandePestControl() {
+        if (demandePestControl == null) {
+            demandePestControl = new DemandePestControl();
+        }
         return demandePestControl;
     }
 
@@ -674,6 +752,9 @@ public class DemandeServiceController implements Serializable {
     }
 
     public DemandePhotographie getDemandePhotographie() {
+        if (demandePhotographie == null) {
+            demandePhotographie = new DemandePhotographie();
+        }
         return demandePhotographie;
     }
 
@@ -896,6 +977,36 @@ public class DemandeServiceController implements Serializable {
         this.matiere = matiere;
     }
 
+    public List<String> getEventCuisines() {
+        if (eventCuisines == null) {
+            eventCuisines = new ArrayList();
+        }
+        return eventCuisines;
+    }
+
+    public void setEventCuisines(List<String> eventCuisines) {
+        this.eventCuisines = eventCuisines;
+    }
+
+    public List<String> getEventSupplements() {
+        if (eventSupplements == null) {
+            eventSupplements = new ArrayList();
+        }
+        return eventSupplements;
+    }
+
+    public HandymanType getHandymanType() {
+        return handymanType;
+    }
+
+    public void setHandymanType(HandymanType handymanType) {
+        this.handymanType = handymanType;
+    }
+
+    public void setEventSupplements(List<String> eventSupplements) {
+        this.eventSupplements = eventSupplements;
+    }
+
     private void persist(PersistAction persistAction, String successMessage) {
         if (demandeService != null) {
             setEmbeddableKeys();
@@ -934,6 +1045,14 @@ public class DemandeServiceController implements Serializable {
 
     public List<DemandeService> getItemsAvailableSelectOne() {
         return getFacade().findAll();
+    }
+
+    public String getNomService() {
+        return nomService;
+    }
+
+    public void setNomService(String nomService) {
+        this.nomService = nomService;
     }
 
     @FacesConverter(forClass = DemandeService.class)

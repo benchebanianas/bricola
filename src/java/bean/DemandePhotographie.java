@@ -37,12 +37,14 @@ public class DemandePhotographie implements Serializable {
     public void setDemandeService(DemandeService demandeService) {
         this.demandeService = demandeService;
     }
-    
 
     public DemandePhotographie() {
     }
 
     public PhotographieType getTypePhotographie() {
+        if (typePhotographie == null) {
+            typePhotographie = new PhotographieType();
+        }
         return typePhotographie;
     }
 

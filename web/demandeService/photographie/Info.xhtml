@@ -10,7 +10,7 @@
 
         <div class="row">
 
-            <h5 class="info-text"> Please fill out the form below so we can find the perfect photographer for you.</h5>
+            <h5 class="info-text"> Veuillez remplir le formulaire ci-dessous afin que nous puissions trouver le meilleur photographe pour vous.</h5>
             <div class="col-sm-12">
                 <p:panelGrid id="infoGrid" styleClass="ui-noborder" style="margin: 0 auto;width: 100%">
                     <p:row>
@@ -21,7 +21,7 @@
 
                         <p:column>
                             <p:selectOneMenu class="form-control" id="photographyType" value="#{demandeServiceController.demandePhotographie.typePhotographie}" style="width: 242px;height: 40px">
-                                <f:selectItems itemValue="#{photographieTypeController.itemsAvailableSelectOne}" />
+                                <f:selectItems value="#{photographieTypeController.itemsAvailableSelectOne}" var="item" itemValue="#{item}" itemLabel="#{item.nom}"/>
                             </p:selectOneMenu>
                         </p:column>
                     </p:row>

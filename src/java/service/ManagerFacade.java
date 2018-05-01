@@ -13,6 +13,7 @@ import bean.Worker;
 import bean.Secteur;
 import bean.Service;
 import bean.Ville;
+import bean.Worker;
 import java.util.List;
 import controller.util.*;
 import java.math.BigDecimal;
@@ -140,22 +141,46 @@ public class ManagerFacade extends AbstractFacade<Manager> {
         return 0;
     }
     
-    public BigDecimal[] genererStatistique(int annee,String worker,Ville ville, Secteur secteur, Service service) {
-        BigDecimal[] statistique = new BigDecimal[12];
-        for (int i = 1; i <= 12; i++) {
-            statistique[i - 1] = statistiqueParMois(annee, i,worker,ville, secteur, service);
+//    public BigDecimal[] genererStatistique(int annee,String worker,Ville ville, Secteur secteur, Service service) {
+//        BigDecimal[] statistique = new BigDecimal[12];
+//        for (int i = 1; i <= 12; i++) {
+//            statistique[i - 1] = statistiqueParMois(annee,null,null, i,worker,ville, secteur, service,null);
+//        }
+//        return statistique;
+//
+//    }
+
+    private BigDecimal statistiqueParMois(int annee, Date dateMin, Date dateMax, int mois, Worker worker, Ville ville, Secteur secteur, Service service, int typePrix, int typeComfirmation) {
+        
+        String type;
+        if(typePrix == 2){
+            type = "prixTtc";
+        }else{
+            type = "prixHt";
         }
-        return statistique;
-
-    }
-
-    private BigDecimal statistiqueParMois(int annee,int mois,String worker,Ville ville, Secteur secteur, Service service) {
-        String requette = "SELECT SUM(ds.prixTtc) FROM DemandeService ds WHERE FUNCTION('MONTH', ds.datedemande) = '"+mois+"'";
+        
+        String requette = "SELECT SUM(ds."+type+") FROM DemandeService ds WHERE FUNCTION('MONTH', ds.datedemande) = '"+mois+"'";
         
         if(annee >0){
             requette += " AND FUNCTION('YEAR', ds.datedemande) = '"+annee+"'";
         }
 
+        if(dateMin != null){
+            requette += " AND ds.datedemande >= '" + DateUtil.getSqlDateTime(dateMin) + "'";
+        }
+        
+        if(dateMax != null){
+            requette += " AND ds.datedemande <= '" + DateUtil.getSqlDateTime(dateMax) + "'";
+        }
+        
+        if (worker != null && worker.getEmail()!= null) {
+            requette += " AND ds.worker.email = '" + worker.getEmail()+ "'";
+        }
+        
+        if (ville != null && ville.getId() != null) {
+            requette += " AND ds.secteur.ville.id='" + ville.getId() + "'";
+        }
+        
         if (secteur != null && secteur.getId() != null) {
             requette += " AND ds.secteur.id='" + secteur.getId() + "'";
         }
@@ -170,6 +195,14 @@ public class ManagerFacade extends AbstractFacade<Manager> {
 
         if (service != null && service.getId() != null) {
             requette += " AND ds.service.id='" + service.getId() + "'";
+        }
+        
+        if(typeComfirmation == 1){
+            requette += " AND ds.dateConfirmation != NULL";
+        }
+        
+        if(typeComfirmation == 2){
+            requette += " AND ds.dateConfirmation = NULL";
         }
         
         System.out.println("hahiya requette : "+requette);

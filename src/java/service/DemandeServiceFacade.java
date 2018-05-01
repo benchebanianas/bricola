@@ -5,6 +5,7 @@
  */
 package service;
 
+import bean.Client;
 import bean.DemandeService;
 import bean.Secteur;
 import bean.Service;
@@ -12,6 +13,7 @@ import bean.Worker;
 import controller.util.DateUtil;
 import controller.util.SearchUtil;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
@@ -54,6 +56,30 @@ public class DemandeServiceFacade extends AbstractFacade<DemandeService> {
 
     }
 
+    public int findByMois(int mois) {
+        String moisFormate = "";
+        if (mois < 10) {
+            moisFormate += "0" + mois;
+        } else {
+            moisFormate = "" + mois;
+        }
+        SimpleDateFormat maDate = new SimpleDateFormat("yyyy");
+        String annee = maDate.format(new Date());
+        String requete = "SELECT ds FROM DemandeService ds WHERE ds.datedemande LIKE '" + annee + "-" + moisFormate + "-%'";
+        return em.createQuery(requete).getResultList().size();
+
+    }
+
+    public List<DemandeService> findDemandesByWorker(Worker worker) {
+        String requete = "SELECT ds FROM DemandeService ds WHERE ds.worker.email='" + worker.getEmail() + "'";
+        return (List<DemandeService>) em.createQuery(requete).getResultList();
+    }
+
+    public List<Client> findClientByWorker(Worker worker) {
+        String requete = "SELECT ds.client FROM DemandeService ds WHERE ds.worker.email='" + worker.getEmail() + "'";
+        return em.createQuery(requete).getResultList();
+    }
+
     public int findNumberOfDemandesByWorker(Worker worker) {
         List<DemandeService> demandes = getMultipleResult("SELECT ds FROM DemandeService ds WHERE ds.worker.email='" + worker.getEmail() + "'");
         if (demandes == null) {
@@ -85,7 +111,9 @@ public class DemandeServiceFacade extends AbstractFacade<DemandeService> {
     private void initDemandeService(DemandeService demandeService, Service service) {
 
         demandeService.setService(service);
-        demandeService.setServicePricing(servicePricingFacade.findByService(service));
+        if (demandeService.getServicePricing() == null) {
+            demandeService.setServicePricing(servicePricingFacade.findByService(service));
+        }
         demandeService.setDatedemande(new Date());
         demandeService.setSecteur(demandeService.getClient().getSecteur());
 

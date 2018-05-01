@@ -6,6 +6,7 @@
 package bean;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -50,6 +51,9 @@ public class DemandeEvent implements Serializable {
     }
 
     public List<CuisineDemandeEvent> getCuisineDemandeEvents() {
+        if (cuisineDemandeEvents == null) {
+            cuisineDemandeEvents = new ArrayList();
+        }
         return cuisineDemandeEvents;
     }
 
@@ -69,6 +73,9 @@ public class DemandeEvent implements Serializable {
     }
 
     public List<SupplementDemandeEvent> getSupplementDemandeEvents() {
+        if (supplementDemandeEvents == null) {
+            cuisineDemandeEvents = new ArrayList();
+        }
         return supplementDemandeEvents;
     }
 

@@ -44,35 +44,36 @@
                                             </div>
 
                                             <ul>
-                                                <ui:include src="InfoTab.xhtml" rendered="#{demandeServiceController.menuFormulaire.infoTab}"/>
-                                                <ui:include src="CompanyTab.xhtml" rendered="#{demandeServiceController.menuFormulaire.companyTab}"/>
-                                                <ui:include src="DetailsTab.xhtml" rendered="#{demandeServiceController.menuFormulaire.detailsTab}"/>
-                                                <ui:include src="SummaryTab.xhtml" rendered="#{demandeServiceController.menuFormulaire.summaryTab}"/>
-                                                <ui:include src="PayementTab.xhtml" rendered="#{demandeServiceController.menuFormulaire.payementTab}"/>
+<!--                                                <ui:include src="InfoTab.xhtml" rendered="# {demandeServiceController.menuFormulaire.infoTab} eq 'true' "/>-->
+                                                <ui:include src="InfoTab.xhtml" rendered="#{demandeServiceController.menuFormulaire.infoTab ne 'true'}"/>
+                                                <ui:include src="CompanyTab.xhtml" rendered="#{demandeServiceController.menuFormulaire.companyTab} eq 'true' "/>
+                                                <ui:include src="DetailsTab.xhtml" rendered="#{demandeServiceController.menuFormulaire.detailsTab} eq 'true' "/>
+                                                <ui:include src="SummaryTab.xhtml" rendered="#{demandeServiceController.menuFormulaire.summaryTab} eq 'true' "/>
+                                                <ui:include src="PayementTab.xhtml" rendered="#{demandeServiceController.menuFormulaire.payementTab} eq 'true' "/>
                                             </ul>
                                         </div>
 
                                         <div class="tab-content">
 
                                             <div class="tab-pane" id="info">
-                                                <ui:include src="#{demandeServiceController.currentService.nom}/Info.xhtml" rendered="#{demandeServiceController.menuFormulaire.infoTab}"/>
+                                                <ui:include src="#{demandeServiceController.currentService.nom}/Info.xhtml" rendered="#{demandeServiceController.menuFormulaire.infoTab} eq 'true'"/>
                                             </div>
 
 
                                             <div class="tab-pane" id="company">
-                                                <ui:include src="Company.xhtml" rendered="#{demandeServiceController.menuFormulaire.companyTab}"/>
+                                                <ui:include src="Company.xhtml" rendered="#{demandeServiceController.menuFormulaire.companyTab} eq 'true'"/>
                                             </div>
 
                                             <div class="tab-pane" id="details">
-                                                <ui:include src="Details.xhtml" rendered="#{demandeServiceController.menuFormulaire.detailsTab}"/>
+                                                <ui:include src="Details.xhtml" rendered="#{demandeServiceController.menuFormulaire.detailsTab} eq 'true'"/>
                                             </div>
 
                                             <div class="tab-pane" id="summary">
-                                                <ui:include src="#{demandeServiceController.currentService.nom}/Summary.xhtml" rendered="#{demandeServiceController.menuFormulaire.summaryTab}"/>
+                                                <ui:include src="#{demandeServiceController.currentService.nom}/Summary.xhtml" rendered="#{demandeServiceController.menuFormulaire.summaryTab} eq 'true'"/>
                                             </div>
 
                                             <div class="tab-pane" id="payment">
-                                                <ui:include src="Payement.xhtml" rendered="#{demandeServiceController.menuFormulaire.payementTab}"/>
+                                                <ui:include src="Payement.xhtml" rendered="#{demandeServiceController.menuFormulaire.payementTab} eq 'true'"/>
                                             </div>
 
                                         </div>
