@@ -6,6 +6,7 @@
 package service;
 
 import bean.Client;
+import controller.util.HashageUtil;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -46,6 +47,23 @@ public class ClientFacade extends AbstractFacade<Client> {
             return 1;
         } else {
             return -1;
+        }
+    }
+
+    public void creatAccount(Client client) {
+        Client c = new Client();
+        c.setEmail(client.getEmail());
+        c.setNom(client.getNom());
+        create(c);
+
+    }
+
+    public void register(Client client) {
+        Client c = find(client.getEmail());
+        String hash = HashageUtil.sha256(client.getPassword());
+        if (c == null) {
+            client.setPassword(hash);
+            create(client);
         }
     }
 

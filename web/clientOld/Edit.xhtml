@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ClientEditDlg" widgetVar="ClientEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditClientTitle}">
+            <h:form id="ClientEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{clientController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditClientLabel_prenom}" for="prenom" />
+                        <p:inputText id="prenom" value="#{clientController.selected.prenom}" title="#{bundle.EditClientTitle_prenom}" />
+                        <p:outputLabel value="#{bundle.EditClientLabel_secteur}" for="secteur" />
+                        <p:selectOneMenu id="secteur" value="#{clientController.selected.secteur}" >
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{secteurController.itemsAvailableSelectOne}"
+                                           var="secteurItem"
+                                           itemValue="#{secteurItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditClientLabel_adresseComplement}" for="adresseComplement" />
+                        <p:inputText id="adresseComplement" value="#{clientController.selected.adresseComplement}" title="#{bundle.EditClientTitle_adresseComplement}" />
+                        <p:outputLabel value="#{bundle.EditClientLabel_nom}" for="nom" />
+                        <p:inputText id="nom" value="#{clientController.selected.nom}" title="#{bundle.EditClientTitle_nom}" />
+                        <p:outputLabel value="#{bundle.EditClientLabel_email}" for="email" />
+                        <p:inputText id="email" value="#{clientController.selected.email}" title="#{bundle.EditClientTitle_email}" />
+                        <p:outputLabel value="#{bundle.EditClientLabel_phone}" for="phone" />
+                        <p:inputText id="phone" value="#{clientController.selected.phone}" title="#{bundle.EditClientTitle_phone}" />
+                        <p:outputLabel value="#{bundle.EditClientLabel_password}" for="password" />
+                        <p:inputText id="password" value="#{clientController.selected.password}" title="#{bundle.EditClientTitle_password}" />
+                        <p:outputLabel value="#{bundle.EditClientLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{clientController.selected.id}" title="#{bundle.EditClientTitle_id}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{clientController.update}" value="#{bundle.Save}" update="display,:ClientListForm:datalist,:growl" oncomplete="handleSubmit(args, 'ClientEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="ClientEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

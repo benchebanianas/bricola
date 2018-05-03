@@ -2,40 +2,32 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
-    
-       
-
-
-    <ui:composition template="/newTemplate.xhtml">
-        <ui:define name="body">
-             <meta charset="utf-8"/>
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <meta charset="utf-8"/>
         <link href="../resources/bootstrap-4.0.0/css/bootstrap.min.css" rel="stylesheet"></link>
-        <link rel="stylesheet" type="text/css" href="../resources/css/loginStyle.css"/>
         <link rel="stylesheet" type="text/css" href="../resources/css/workerloginStyle.css"/>
         <title>Facelet Title</title>
-    
-   
-        
+    </h:head>
+    <h:body>
         <p:growl id="msgs" showDetail="true" />
-        <div class="loginBox" style="height: 430px;" >
+        <div class="loginBox">
+            <a href="index.html"><img src="../resources/images/workerLoginUserLogo.png" class="user"/></a>
             <h2>Se connecter</h2>
-            <div class="container" style="text-align: center;">
+            <div class="container" style="text-align: center">
                 <h:form style="padding-top: 20px;">
                     <p>Email</p>
                     <p:inputText value="#{clientController.selected.email}" title="Email" class="input"/>
                     <p>Mot de passe</p>
                     <p:inputText type="password" value="#{clientController.selected.password}" class="input" title="Password"  />
-                    <p:commandButton class="btn-login " action="#{clientController.connect()}" value="se connecter"  /><br></br>
-                    <p:commandButton class="btn-login " action="#{clientController.returnInsc()}" value="s'inscrire"  />
-                    
+                    <p:commandButton class="btn-login " action="#{clientController.connect()}" value="se connecter"  ></p:commandButton>
                     <br></br>
                     <h:commandLink action="/client/reset" value="mot de passe oublié"/><br></br><br></br><br></br>
                     <h1 style="color: white;font-size: 12px;">By logging in to your account, you agree to our Privacy Policy</h1>
                 </h:form>
             </div>
         </div>
-        </ui:define>
-    </ui:composition>
+
+
+    </h:body>
 </html>

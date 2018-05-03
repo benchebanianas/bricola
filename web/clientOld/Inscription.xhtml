@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <h:form>
+            <p:fieldset legend="Inscription">
+                <p:panelGrid columns="2" >
+                    <p:outputLabel value="login"/>
+                    <p:inputText value="#{clientController.selected.email}" />
+                    <p:outputLabel value="Nom"/>
+                    <p:inputText value="#{clientController.selected.nom}" />
+                    <p:outputLabel value="Prénom"/>
+                    <p:inputText value="#{clientController.selected.prenom}" />
+                    <p:outputLabel value="password"/>
+                    <p:inputText value="#{clientController.selected.password}"/>
+                    <p:outputLabel value="Adresse Complete"/>
+                    <p:inputText value="#{clientController.selected.adresseComplement}"/>
+                    <p:outputLabel value="Numereo de telephone"/>
+                    <p:inputText value="#{clientController.selected.phone}"/>
+
+
+                    <p:commandButton value="Valider" action="#{clientController.createCompte()}"/>
+
+                </p:panelGrid>
+                <p:commandButton value="Annuler" type="reset"/>
+            </p:fieldset>
+        </h:form>
+    </ui:composition>
+</html>

@@ -9,86 +9,197 @@
     <ui:composition template="/template.xhtml">
 
 
+
         <ui:define name="title">
-            <h:outputText value="#{bundle.ListClientTitle}"></h:outputText>
         </ui:define>
+        <!--<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>-->
+        <link href="../resources/bootstrap-3.3.6/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>
+        <!--<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet"/>-->
+        <link href="../resources/font-awesome-4.6.3/css/font-awesome.min.css" rel="stylesheet"/>
 
         <ui:define name="body">
-            <h:form id="ClientListForm">
-                <p:panel header="#{bundle.ListClientTitle}">
-                    <p:dataTable id="datalist" value="#{clientController.items}" var="item"
-                                 selectionMode="single" selection="#{clientController.selected}"
-                                 paginator="true"
-                                 rowKey="#{item.email}"
-                                 rows="10"
-                                 rowsPerPageTemplate="10,20,30,40,50"
-                                 >
 
-                        <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
-                        <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
 
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListClientTitle_prenom}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.prenom}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListClientTitle_secteur}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.secteur}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListClientTitle_adresseComplement}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.adresseComplement}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListClientTitle_nom}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.nom}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListClientTitle_email}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.email}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListClientTitle_phone}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.phone}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListClientTitle_password}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.password}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListClientTitle_id}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.id}"/>
-                        </p:column>
-                        <f:facet name="footer">
-                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{clientController.prepareCreate}" update=":ClientCreateForm" oncomplete="PF('ClientCreateDialog').show()"/>
-                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":ClientViewForm" oncomplete="PF('ClientViewDialog').show()" disabled="#{empty clientController.selected}"/>
-                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":ClientEditForm" oncomplete="PF('ClientEditDialog').show()" disabled="#{empty clientController.selected}"/>
-                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{clientController.destroy}" update=":growl,datalist" disabled="#{empty clientController.selected}"/>
-                        </f:facet>
-                    </p:dataTable>
-                </p:panel>
-            </h:form>
 
-            <ui:include src="Create.xhtml"/>
-            <ui:include src="Edit.xhtml"/>
-            <ui:include src="View.xhtml"/>
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-3">
+                        <a href="mail-compose.html" class="btn btn-danger btn-block btn-compose-email">Compose Email</a>
+                        <ul class="nav nav-pills nav-stacked nav-email shadow mb-20">
+                            <li class="active">
+                                <a href="#mail-inbox.html">
+                                    <i class="fa fa-inbox"></i> Inbox  <span class="label pull-right">7</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#mail-compose.html"><i class="fa fa-envelope-o"></i> Send Mail</a>
+                            </li>
+                            <li>
+                                <a href="#"><i class="fas fa-cog"></i> Important</a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="fa fa-file-text-o"></i> Drafts <span class="label label-info pull-right inbox-notification">35</span>
+                                </a>
+                            </li>
+                            <li><a href="#"> <i class="fa fa-trash-o"></i> Trash</a></li>
+                        </ul><!-- /.nav -->
+
+                        <h5 class="nav-email-subtitle">More</h5>
+                        <ul class="nav nav-pills nav-stacked nav-email mb-20 rounded shadow">
+                            <li>
+                                <a>
+                                    <i class="fa fa-folder-open"></i> Promotions  <span class="label label-danger pull-right">3</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a>
+                                    <i class="fa fa-folder-open" onclick="#{clientController.returnInsc()}"></i>list
+                                </a>
+                            </li>
+                            <li>
+                                <p:commandButton  action="#{clientController.deconnecte()}" value="Deconnection" style="border-radius:0%;"></p:commandButton>
+                            </li>
+                            <li>
+                                <p:commandButton update="hanaa" onclick="PF('Dialog').show()" value="parametres"></p:commandButton>
+                            </li>
+                        </ul><!-- /.nav -->
+                    </div>
+                    <div class="col-sm-8">
+                        <p:dialog id="hana" widgetVar="Dialog" modal="true" appendTo="@(body)" style="position: absolute;width: 75px;height :200px;">
+                            <h:form id="hanaa">
+                                <p:panelGrid columns="2">
+                                    <h:outputText value="nom"/>
+                                    <p:inputText value="#{clientController.selected.nom}"/>
+                                    <h:outputText value="prenom"/>
+                                    <p:inputText value="#{clientController.selected.prenom}"/>
+                                    <h:outputText value="adresse"/>
+                                    <p:inputText value="#{clientController.selected.adresseComplement}"/>
+                                    <h:outputText value="numero de telephone"/>
+                                    <p:inputText value="#{clientController.selected.phone}"/>
+                                    <p:commandButton action="#{clientController.updateInformation()}" class="btn" value="update"/>
+
+                                </p:panelGrid>
+                            </h:form>
+                        </p:dialog>
+
+
+                        <!-- resumt -->
+                        <div class="panel-heading resume-heading">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="col-xs-12 col-sm-4">
+                                        <figure>
+                                            <img class="img-circle" style="height:100px;width: 100px;"  alt="" src="../resources/images/hamza.jpg"/>
+                                        </figure>
+                                        <div class="row">
+                                            <div class="col-xs-12 social-btns">
+                                                <div class="col-xs-3 col-md-1 col-lg-1 social-btn-holder">
+                                                    <a href="http://www.google.com" class=" btn-social btn-block btn-google">
+                                                        <i class="fa fa-google"></i> </a>
+                                                </div>
+                                                <div class="col-xs-3 col-md-1 col-lg-1 social-btn-holder">
+                                                    <a href="https://www.facebook.com/profile.php?id=100009992433289" class="btn-social btn-block btn-facebook">
+                                                        <i class="fa fa-facebook"></i> </a>
+                                                </div>
+                                                <div class="col-xs-3 col-md-1 col-lg-1 social-btn-holder">
+                                                    <a href="#" class="btn-social btn-block btn-twitter">
+                                                        <i class="fa fa-twitter"></i> </a>
+                                                </div>
+                                                <div class="col-xs-3 col-md-1 col-lg-1 social-btn-holder">
+                                                    <a href="#" class=" btn-social btn-block btn-linkedin">
+                                                        <i class="fa fa-linkedin"></i> </a>
+                                                </div>
+                                                <div class="col-xs-3 col-md-1 col-lg-1 social-btn-holder">
+                                                    <a href="#" class=" btn-social btn-block btn-github">
+                                                        <i class="fa fa-github"></i> </a>
+                                                </div>
+                                                <div class="col-xs-3 col-md-1 col-lg-1 social-btn-holder">
+                                                    <a href="#" class=" btn-social btn-block btn-stackoverflow">
+                                                        <i class="fa fa-stack-overflow"></i> </a>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-8">
+                                        <ul class="list-group">
+                                            <li class="list-group-item"><h:outputText value="#{clientController.init().nom} #{clientController.init().prenom}" /></li>
+                                            <li class="list-group-item"><i class="fa fa-map-marker"></i><h:outputText value="#{clientController.init().adresseComplement}" /> </li>
+                                            <li class="list-group-item"><i class="fa fa-phone"></i><h:outputText value="#{clientController.init().phone}" /> </li>
+                                            <li class="list-group-item"><i class="fa fa-envelope"></i><h:outputText value="#{clientController.init().email}" /></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <h:form id="upd">
+                            <h1>Historique</h1>
+                            <div class="col-lg-12">
+                                <p:dataTable id="tab" var="items" value="#{clientController.historique()}" widgetVar="carsTable">                    
+                                    <p:column >
+                                        <f:facet name="header"> 
+                                            <h:outputText value="Service" />
+                                        </f:facet>
+
+                                        <h:outputText value="#{items.service}" />
+                                    </p:column>
+
+                                    <p:column >
+                                        <f:facet name="header">
+                                            <h:outputText value=" -detail"/>
+                                        </f:facet>
+                                        <h:outputText value="#{items.detail}" />
+                                    </p:column>
+                                    <p:column >
+                                        <f:facet name="header">
+                                            <h:outputText value="Confirmation"/>
+                                        </f:facet>
+                                        <h:outputText value="#{items.dateConfirmation}" />
+                                    </p:column>
+                                    <p:column >
+                                        <f:facet name="header">
+                                            <h:outputText value="Supression"/>
+                                        </f:facet>
+                                        <h:outputText value="#{items.dateSuppression}" />
+                                    </p:column>
+                                    <p:column >
+                                        <f:facet name="header">
+                                            <h:outputText value="TTC" />
+                                        </f:facet>
+                                        <h:outputText value="#{items.prixTtc}" />
+                                    </p:column>
+                                    <p:column >
+
+                                        <f:facet name="header">
+                                            <h:outputText value="HTC" />
+                                        </f:facet>
+                                        <h:outputText value="#{items.prixHt}" />
+
+
+                                    </p:column>
+                                    <p:column >
+                                        <p:commandButton value="review" actionListener="#{clientController.comm(items)}" update="upd" />
+                                    </p:column>
+
+                                </p:dataTable>
+                            </div>
+                            <ui:include src="Review.xhtml"/>
+                        </h:form>
+
+
+
+                    </div>
+                    <!-- resume -->
+
+                </div>
+            </div>
+
+
         </ui:define>
     </ui:composition>
 
 </html>
+

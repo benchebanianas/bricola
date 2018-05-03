@@ -60,6 +60,7 @@ public class ClientController implements Serializable {
         RequestContext context = RequestContext.getCurrentInstance();
         context.execute("reviewDialog.hide();");
     }
+
     public String redirectToLogin() {
         return "/client/ClientLogin.xhtml?faces-redirect=true";
     }
@@ -71,6 +72,12 @@ public class ClientController implements Serializable {
     public Client init() {
         Client c = (Client) SessionUtil.getAttribute("nselected");
         return c;
+    }
+
+    public String returnInsc() {
+        selected = null;
+        return "/client/Inscription?faces-redirect=true";
+
     }
 
     public String connect() {
@@ -120,6 +127,16 @@ public class ClientController implements Serializable {
     }
 
     public String createCompte() {
+        showMessage("un email est envoyé a " + selected.getEmail());
+        ejbFacade.register(selected);
+        SessionUtil.setAttribute("client", selected);
+        passwordEmailFacade.recByEmailRegistre(selected, selected.getEmail(), "servicemarketmaroc@gmail.com");
+
+        return "/client/ClientLogin";
+
+    }
+
+    public String createCompte2() {
         int res = ejbFacade.creerCompte(selected);
         if (res > 0) {
             showMessage("Creation avec succes");
@@ -128,6 +145,11 @@ public class ClientController implements Serializable {
             showMessage("erreur l'ors de la creation");
             return null;
         }
+    }
+
+    public void acc() {
+        ejbFacade.creatAccount(selected);
+        showMessage("hellow");
     }
 
     public Client getSelected() {
