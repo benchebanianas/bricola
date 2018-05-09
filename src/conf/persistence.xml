@@ -52,7 +52,19 @@
     <class>bean.VoitureModele</class>
     <class>bean.Worker</class>
     <class>bean.WorkerJob</class>
-    <exclude-unlisted-classes>false</exclude-unlisted-classes>
+    <class>bean.DemandeFormationPersonnel</class>
+    <class>bean.EventBudget</class>
+    <class>bean.FProSubtype</class>
+    <class>bean.FProtype</class>
+    <class>bean.Filiere</class>
+    <class>bean.FormateurJob</class>
+    <class>bean.FormationProDemande</class>
+    <class>bean.Matiere</class>
+    <class>bean.MenuFormulaire</class>
+    <class>bean.NiveauScolaire</class>
+    <class>bean.ProfJob</class>
+    <class>bean.WorkerType</class>
+    <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.schema-generation.database.action" value="create"/>
     </properties>

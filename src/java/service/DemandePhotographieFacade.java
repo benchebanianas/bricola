@@ -7,6 +7,7 @@ package service;
 
 import bean.DemandePhotographie;
 import bean.DemandeService;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -18,6 +19,9 @@ import javax.persistence.PersistenceContext;
 @Stateless
 public class DemandePhotographieFacade extends AbstractFacade<DemandePhotographie> {
 
+    @EJB
+    private service.DemandeServiceFacade demandeServiceFacade;
+
     @PersistenceContext(unitName = "bricolagePU")
     private EntityManager em;
 
@@ -27,7 +31,12 @@ public class DemandePhotographieFacade extends AbstractFacade<DemandePhotographi
     }
 
     public void saveDemandePhotographie(DemandePhotographie demandePhotographie, DemandeService demandeService) {
-
+        demandePhotographie.setDemandeService(demandeService);
+        demandePhotographie.getDemandeService().setPrixHt(demandePhotographie.getDemandeService().getServicePricing().getPrix());
+        demandePhotographie.getDemandeService().setPrixTtc(demandePhotographie.getDemandeService().getPrixHt());
+        demandeServiceFacade.edit(demandeService);
+        demandePhotographie.setId(generateId("DemandePhotographie", "id"));
+        create(demandePhotographie);
     }
 
     public DemandePhotographieFacade() {

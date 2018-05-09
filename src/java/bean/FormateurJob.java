@@ -26,7 +26,7 @@ public class FormateurJob implements Serializable {
     @ManyToOne
     private Worker worker;
     @ManyToOne
-    private FProSubtype fps;
+    private FormationProSubtype formationProSubType;
 
     public Worker getWorker() {
         return worker;
@@ -36,12 +36,12 @@ public class FormateurJob implements Serializable {
         this.worker = worker;
     }
 
-    public FProSubtype getFps() {
-        return fps;
+    public FormationProSubtype getFormationProSubType() {
+        return formationProSubType;
     }
 
-    public void setFps(FProSubtype fps) {
-        this.fps = fps;
+    public void setFormationProSubType(FormationProSubtype formationProSubType) {
+        this.formationProSubType = formationProSubType;
     }
     
 

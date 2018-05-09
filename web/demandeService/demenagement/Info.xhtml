@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <div class="row">
+
+            <h5 class="info-text"> Veuillez remplir le formulaire ci-dessous afin que nous puissions trouver la meilleur formule de demenagement.</h5>
+            <div class="col-sm-12">
+                <p:panelGrid id="infoGrid" styleClass="ui-noborder" style="margin: 0 auto;width: 100%">
+                    <p:row>
+
+                        <p:column>
+                            <p:outputLabel value="Ville depart :" for="villedep" style="text-align: left;padding-top: 10px;width: 200px"/>
+                        </p:column>
+
+                        <p:column>
+                            <p:selectOneMenu class="form-control" id="villedep" value="#{demandeServiceController.demandeMoving.villeDepart}" style="width: 170px;height: 40px">
+                                <f:selectItem itemLabel="-- Select ville-- " itemValue="#{null}"/> 
+                                <f:selectItems value="#{villeController.itemsAvailableSelectOne}"  var="item" itemValue="#{item}" itemLabel="#{item.nom}"/>
+                            </p:selectOneMenu>
+                        </p:column>
+
+                        <p:column colspan="3">
+                            <p:inputTextarea rows="2" style="width: 100%"   id="adressedep" placeholder="Adresse depart" value="#{demandeServiceController.demandeMoving.adresseDepart}" />
+                        </p:column>
+                    </p:row>
+                    <p:row>
+
+                        <p:column>
+                            <p:outputLabel value="Ville Arrive :" for="villearr" style="text-align: left;padding-top: 10px;width: 200px"/>
+                        </p:column>
+
+                        <p:column>
+                            <p:selectOneMenu class="form-control" id="villearr" value="#{demandeServiceController.demandeMoving.villeArrive}" style="width: 170px;height: 40px">
+                                <f:selectItem itemLabel="-- Select ville-- " itemValue="#{null}"/> 
+                                <f:selectItems value="#{villeController.itemsAvailableSelectOne}"  var="item" itemValue="#{item}" itemLabel="#{item.nom}"/>
+                            </p:selectOneMenu>
+                        </p:column>
+
+                        <p:column colspan="3">
+                            <p:inputTextarea rows="2" style="width: 100%"   id="adressearr" placeholder="Adresse arrivée" value="#{demandeServiceController.demandeMoving.adresseArrive}" />
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel value="Avez vous besoin d'espace de Stockage" for="stockage" style="text-align: left;padding-top: 10px;" />
+                        </p:column>
+                        <p:column>
+                            <p:selectBooleanButton id="stockage" class="myBtn" value="#{demandeServiceController.demandeMoving.storage}" onLabel="OUI (+20 MAD per hour)" offLabel="NON" style="width:170px;height: 40px;text-align: center;padding: 8px 0;" />
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel value="Avez vous besoin d'espace de handyman" for="handyman" style="text-align: left;padding-top: 10px;" />
+                        </p:column>
+                        <p:column>
+                            <p:selectBooleanButton id="handyman" class="myBtn" value="#{demandeServiceController.demandeMoving.handyman}" onLabel="OUI (+20 MAD per hour)" offLabel="NON" style="width:170px;height: 40px;text-align: center;padding: 8px 0;" />
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel value="Planning:" for="plan" style="text-align: left;padding-top: 10px;width: 200px" />
+                        </p:column>
+
+                        <p:column>
+                            <!--<p:commandButton value="Select" class="myBtn" type="button" id="plan" onclick="PF('planningDialog').show();" style="width: 170px;height: 40px"/>-->
+                            <p:commandButton value="Select" class="myBtn" type="button" id="plan" onclick="PF('ServiceUneFoisDialog').show();" style="width: 170px;height: 40px"/>
+                        </p:column>
+
+                    </p:row>
+                    <p:column>
+                        <p:outputLabel value="Any special instructions" for="instructions" style="text-align: left;padding-top: 10px;width: 200px" />
+                    </p:column>
+                    <p:column colspan="3">
+                        <p:inputTextarea rows="6" style="width: 100%"   id="instructions" placeholder="Example: The keys are under the door mat, and the money is on the kitchen counter." value="#{demandeServiceController.demandeService.detail}" />
+                    </p:column>
+                </p:panelGrid>
+            </div>
+
+        </div>
+
+    </ui:composition>
+</html>

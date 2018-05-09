@@ -36,6 +36,35 @@
 
                     <p:row>
                         <p:column>
+                            <p:outputLabel value="Quel type de cuisine" for="cuisine" style="text-align: left;padding-top: 10px;" />
+                        </p:column>
+                        <p:column>
+                            <p:selectCheckboxMenu id="cuisine" value="#{demandeServiceController.eventCuisines}" label="cuisines" multiple="true"
+                                                  panelStyle="width:250px">
+                                <!--<p:selectManyCheckbox id="cuisine" value="# {demandeServiceController.eventCuisines}" label="cuisines">-->
+                                <f:selectItems value="#{cuisineTypeController.itemsAvailableSelectMany}" var="item" itemLabel="#{item.nom}" itemValue="#{item.nom}"/>
+                            </p:selectCheckboxMenu>
+                            <!--</p:selectManyCheckbox>-->
+                            <!--                            <p:selectManyCheckbox id="cuisine" value="# {demandeServiceController.eventCuisines}" layout="grid" columns="2">
+                                <f:selectItems value="# {cuisineTypeController.itemsAvailableSelectMany}" var="item" itemLabel="#{item.nom}" itemValue="#{item.nom}" />
+                            </p:selectManyCheckbox>-->
+                        </p:column>
+                        <p:column>
+                            <p:outputLabel value="Voulez vous un des ces supplements" for="suppEvent" style="text-align: left;padding-top: 10px;" />
+                        </p:column>
+                        <p:column>
+                            <!--<p:selectManyMenu id="suppEvent" value="# {demandeServiceController.eventSupplements}" label="supplements">-->
+                            <p:selectCheckboxMenu id="suppEvent" value="#{demandeServiceController.eventSupplements}" label="supplements" multiple="true"
+                                                  filter="true" filterMatchMode="startsWith" panelStyle="width:250px">
+                                <!--<p:selectManyCheckbox id="suppEvent" value="#{demandeServiceController.eventSupplements}" layout="grid" columns="1">-->
+                                    <f:selectItems value="#{supplementEventController.itemsAvailableSelectMany}" var="item" itemValue="#{item.nom}" itemLabel="#{item.nom}"/>
+                            </p:selectCheckboxMenu>
+                            <!--</p:selectManyMenu>-->
+                            <!--</p:selectManyCheckbox>-->
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
                             <p:outputLabel value="Budget de l'evenement" for="budget" style="text-align: left;padding-top: 10px;width: 200px" />
                         </p:column>
                         <p:column>

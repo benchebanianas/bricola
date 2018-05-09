@@ -76,15 +76,6 @@
                                             Nettoyage Maison
                                         </p:commandLink>
                                     </li>
-                                    <li>
-                                        <a href="../serviceNettoyage/NettoyageComplet.xhtml">Nettoyage Complet</a>
-                                    </li>
-                                    <li>
-                                        <a href="../serviceNettoyage/NettoyagePiscine.xhtml">Nettoyage Piscine</a>
-                                    </li>
-                                    <li>
-                                        <a href="../serviceNettoyage/NettoyageDivers.xhtml">Nettoyage Divers</a>
-                                    </li>
 
                                 </ul>
                             </li>
@@ -92,36 +83,44 @@
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Demenagement / Stock<b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     <li>
-                                        <a href="../demenagement/DemenagementNational.xhtml">Demenagement National</a>
-                                    </li>
-                                    <li>
-                                        <a href="../demenagement/DemenagementInternational.xhtml">Demenagement International</a>
-                                    </li>
-                                    <li>
-                                        <a href="../demenagement/Stockage.xhtml">Stockage</a>
+                                        <p:commandLink  class="nav-link" action="#{demandeServiceController.initService2('demenagement')}" style="color:  black;">
+                                            Demenagement
+                                        </p:commandLink>
                                     </li>
                                 </ul>
                             </li>
                             <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Travaux de maison<b class="caret"></b></a>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Travaux maison<b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     <li>
-                                        <a href="../traveauxMaison/Peinture.xhtml">Peinture</a>
+                                        <p:commandLink  class="nav-link" action="#{serviceController.redirectToConstruciton()}" style="color:  black;">
+                                            Peinture 
+                                        </p:commandLink>
+                                    </li>
+                                    <li> 
+                                        <p:commandLink  class="nav-link" action="#{serviceController.redirectToConstruciton()}" style="color:  black;">
+                                            Handyman 
+                                        </p:commandLink>
                                     </li>
                                     <li>
-                                        <a href="../traveauxMaison/Handyman.xhtml">Handyman</a>
+                                        <p:commandLink  class="nav-link" action="#{serviceController.redirectToConstruciton()}" style="color:  black;">
+                                            Electricite 
+                                        </p:commandLink>
                                     </li>
                                     <li>
-                                        <a href="../traveauxMaison/Electricite.xhtml">Electricite</a>
+                                        <p:commandLink  class="nav-link" action="#{serviceController.redirectToConstruciton()}" style="color:  black;">
+                                            Plomberie 
+                                        </p:commandLink>
+                                    </li>
+                                    <li> 
+                                        <p:commandLink  class="nav-link" action="#{serviceController.redirectToConstruciton()}" style="color:  black;">
+                                            Menuiserie 
+                                        </p:commandLink>
                                     </li>
                                     <li>
-                                        <a href="../traveauxMaison/Plomberie.xhtml">Plomberie</a>
-                                    </li>
-                                    <li>
-                                        <a href="../traveauxMaison/Menuiserie.xhtml">Menuiserie</a>
-                                    </li>
-                                    <li>
-                                        <a href="../traveauxMaison/Climatisation.xhtml">Climatisation</a>
+                                        <p:commandLink  class="nav-link" action="#{serviceController.redirectToConstruciton()}" style="color:  black;">
+                                            Climatisation 
+                                        </p:commandLink>
                                     </li>
                                 </ul>
                             </li>
@@ -129,10 +128,14 @@
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Gardiennage / Deratisation<b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     <li>
-                                        <a href="../gardiennage/DeratisationComplete.xhtml">Deratisation complete</a>
+                                        <p:commandLink  class="nav-link" action="#{pestControlTypeController.redirectToPestControl()}" style="color:  black;">
+                                            Deratisation 
+                                        </p:commandLink>
                                     </li>
                                     <li>
-                                        <a href="../gardiennage/Gardiennage.xhtml">Gardiennage</a>
+                                        <p:commandLink  class="nav-link" action="#{serviceController.redirectToConstruciton()}" style="color:  black;">
+                                            Gardiennage 
+                                        </p:commandLink>
                                     </li>
 
                                 </ul>
@@ -141,10 +144,9 @@
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Evenmentiel<b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     <li>
-                                        <a href="../evenmentiel/Restauration.xhtml">Restauration</a>
-                                    </li>
-                                    <li>
-                                        <a href="../evenmentiel/Traiteur.xhtml">Traiteur</a>
+                                        <p:commandLink  class="nav-link" action="#{demandeServiceController.initService2('traiteur')}" style="color:  black;">
+                                            Traiteur 
+                                        </p:commandLink>
                                     </li>
 
                                 </ul>
@@ -158,9 +160,6 @@
                                             Photographie 
                                         </p:commandLink>
                                     </li>
-                                    <li>
-                                        <a href="../photographie/Videographie.xhtml">Videographie</a>
-                                    </li>
 
                                 </ul>
                             </li>
@@ -168,7 +167,6 @@
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Voitures<b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     <li>
-                                        <a href="../voiture/LocationVoiture.xhtml">Location Voiture</a>
                                         <p:commandLink  class="nav-link" action="#{demandeServiceController.initService2('locationvoiture')}" style="color:  black;">
                                             Location Voiture 
                                         </p:commandLink>
@@ -186,6 +184,11 @@
                                     </li>
 
                                 </ul>
+                            </li>
+                            <li class="dropdown">
+                                <p:commandLink  class="nav-link" action="#{clientController.redirectToLogin()}" style="color:  black;">
+                                    Login
+                                </p:commandLink>
                             </li>
 
                         </ul>

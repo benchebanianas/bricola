@@ -5,6 +5,7 @@
  */
 package service;
 
+import bean.DemandeService;
 import bean.DemandeVoiture;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -27,6 +28,10 @@ public class DemandeVoitureFacade extends AbstractFacade<DemandeVoiture> {
 
     public DemandeVoitureFacade() {
         super(DemandeVoiture.class);
+    }
+
+    public void saveDemandeLocation(DemandeVoiture demandeVoiture, DemandeService demandeService) {
+        //kifach andiro lprix dyal tonobilate
     }
     
 }

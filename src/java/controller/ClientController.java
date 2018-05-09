@@ -43,6 +43,9 @@ public class ClientController implements Serializable {
 //        System.out.println(selected);
 //        return demandes;
 //    }
+    public String redirectToLogin() {
+        return "/client/ClientLogin.xhtml?faces-redirect=true";
+    }
 
     public void showMessage(String msg) {
         RequestContext.getCurrentInstance().showMessageInDialog(new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", " " + msg + ""));

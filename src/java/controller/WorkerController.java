@@ -1,5 +1,7 @@
 package controller;
 
+import bean.Client;
+import bean.DemandeService;
 import bean.Service;
 import bean.Worker;
 import bean.WorkerJob;
@@ -14,6 +16,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.inject.Named;
@@ -24,6 +27,11 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import org.primefaces.context.RequestContext;
+import org.primefaces.model.chart.AxisType;
+import org.primefaces.model.chart.DateAxis;
+import org.primefaces.model.chart.LineChartModel;
+import org.primefaces.model.chart.LineChartSeries;
+import service.DemandeServiceFacade;
 import service.WorkerJobFacade;
 
 @Named("workerController")
@@ -34,10 +42,12 @@ public class WorkerController implements Serializable {
     private service.WorkerFacade ejbFacade;
     @EJB
     private WorkerJobFacade workerJobFacade;
+    @EJB
+    private DemandeServiceFacade demandeServiceFacade;
     private List<Worker> items = null;
     private Worker selected;
 //    les attrs de recherche
-   private String email;
+    private String email;
     private String nom;
     private int nombreEmployeMin;
     private int nombreEmployeMax;
@@ -46,33 +56,78 @@ public class WorkerController implements Serializable {
     private WorkerType workerType;
     private boolean blocked = false;
     private boolean accepted = true;
-    
+    private LineChartModel dateModel;
+    private DemandeService demandeServiceDetail;
 
-    
-    public void recherche(){
-        items = ejbFacade.findByCriteria(email, nom, new Integer(getNombreEmployeMin()),new Integer(getNombreEmployeMax()), siteWeb, phone, workerType, blocked, accepted);
+    @PostConstruct
+    public void init() {
+        createDateModel();
     }
-    
-    public List<Worker> nvWorkers(){
+
+//    Inscription
+    public String inscription() {
+        int inscrit = ejbFacade.creerCompte(selected);
+        if (inscrit == -1) {
+            showMessage("Compte Existant", "Connectez Vous !");
+            return null;
+        }
+        return "/worker/WorkerDashboard";
+    }
+
+//    Les Statistiques
+    private void createDateModel() {
+        dateModel = new LineChartModel();
+        LineChartSeries demandes = new LineChartSeries();
+        demandes.setLabel("Demandes");
+        for (int i = 1; i <= 12; i++) {
+            demandes.set(i, demandeServiceFacade.findByMois(i));
+        }
+
+        dateModel.addSeries(demandes);
+        dateModel.setTitle("Nombre des demandes de l'annÃ©e en cours");
+        dateModel.setZoom(true);
+        dateModel.getAxis(AxisType.Y).setLabel("Valeurs");
+        dateModel.getAxis(AxisType.Y).setMax(20);
+        dateModel.getAxis(AxisType.Y).setMin(0);
+        dateModel.getAxis(AxisType.X).setMin(0);
+        dateModel.getAxis(AxisType.X).setMax(31);
+        DateAxis axis = new DateAxis("Dates");
+
+    }
+
+    //    Table
+    public void findDetail(DemandeService demandeService) {
+        setDemandeServiceDetail(demandeService);
+    }
+
+    public List<Client> findClientsByWorker() {
+        return demandeServiceFacade.findClientByWorker(selected);
+    }
+
+    public void recherche() {
+        items = ejbFacade.findByCriteria(email, nom, getNombreEmployeMin(), getNombreEmployeMax(), siteWeb, phone, workerType, blocked, accepted);
+    }
+
+    public List<Worker> nvWorkers() {
         return ejbFacade.findNvWorkers();
     }
-    
-    public void nvWorkerDialog(Worker w){
+
+    public void nvWorkerDialog(Worker w) {
         setSelected(w);
         RequestContext context = RequestContext.getCurrentInstance();
         context.update("dform");
         context.execute("PF('nvWorkerDialog').hide();");
         context.execute("PF('Dialog').show();");
     }
-    
-    public List<WorkerJob> loadServices(){
+
+    public List<WorkerJob> loadServices() {
         return workerJobFacade.findByWorker(selected);
     }
-    
+
     public void modifier() {
         ejbFacade.edit(getSelected());
         items.set(items.indexOf(getSelected()), getSelected());
-        
+
     }
 
     public void supprimer() {
@@ -80,14 +135,20 @@ public class WorkerController implements Serializable {
         items.remove(getSelected());
         selected = null;
     }
-    
+
     public String next() {
         return "/workerJob/WorkerJobCreate";
     }
-    
+
+    //    Profil
+    public void miseAJourProfil() {
+        ejbFacade.edit(selected);
+    }
+
     public WorkerController() {
     }
 
+    //    Dashboard
     public double showRating() {
         return ejbFacade.showRating(selected);
     }
@@ -106,6 +167,10 @@ public class WorkerController implements Serializable {
 
     public List<Service> serviceByWorker() {
         return ejbFacade.findServiceByWorker(selected);
+    }
+
+    public List<DemandeService> demandesByWorker() {
+        return demandeServiceFacade.findDemandesByWorker(selected);
     }
 
     public String login() {
@@ -192,7 +257,7 @@ public class WorkerController implements Serializable {
     }
 
     public WorkerType getWorkerType() {
-        if(workerType==null){
+        if (workerType == null) {
             workerType = new WorkerType();
         }
         return workerType;
@@ -200,6 +265,22 @@ public class WorkerController implements Serializable {
 
     public void setWorkerType(WorkerType workerType) {
         this.workerType = workerType;
+    }
+
+    public LineChartModel getDateModel() {
+        return dateModel;
+    }
+
+    public void setDateModel(LineChartModel dateModel) {
+        this.dateModel = dateModel;
+    }
+
+    public DemandeService getDemandeServiceDetail() {
+        return demandeServiceDetail;
+    }
+
+    public void setDemandeServiceDetail(DemandeService demandeServiceDetail) {
+        this.demandeServiceDetail = demandeServiceDetail;
     }
 
     public boolean isBlocked() {
@@ -217,8 +298,6 @@ public class WorkerController implements Serializable {
     public void setAccepted(boolean accepted) {
         this.accepted = accepted;
     }
-    
-    
 
     protected void setEmbeddableKeys() {
     }

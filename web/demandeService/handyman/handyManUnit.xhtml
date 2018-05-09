@@ -1,0 +1,107 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500"></link>
+    <link href="../resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet"></link>
+    <link rel="stylesheet" href="../resources/assets/font-awesome/css/font-awesome.min.css"></link>
+    <link rel="stylesheet" href="../resources/assets/css/form-elements.css"></link>
+    <link rel="stylesheet" href="../resources/assets/css/style.css"></link>
+    <link rel="stylesheet" href="../resources/css/jquery.datetimepicker.css"></link>
+    <link href="../resources/css/modern-business.css" rel="stylesheet"></link>
+
+    <ui:composition template="/template.xhtml">
+
+
+
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListSecteurTitle}"></h:outputText>
+        </ui:define>
+
+        <ui:define name="body">
+
+            <h:outputStylesheet name="css/paper-bootstrap-wizard.css"/>
+            <h:outputStylesheet name="css/loginStyle.css"/>
+            <h:outputStylesheet name="css/themify-icons.css"/>
+
+
+
+            <h:outputScript name="js/jquery.bootstrap.wizard.js" />
+            <h:outputScript name="js/paper-bootstrap-wizard.js" />
+            <h:outputScript name="js/jquery.validatePaper.min.js" />
+
+            <div class="image-container set-full-height" style="background-image: url('../resources/images/managerbg.png')">
+                <div class="container">
+                    <div class="row">
+
+                        <div class="col-xl-12 text-center">
+                            <!--style="-webkit-text-stroke:1px black; font-family: "Times New Roman", Times, serif;"-->
+                            <h1 class="mb-1">Profitez-vous des services de bricolage à partir de 150 MAD</h1>
+                            <h4></h4>
+                            <hr></hr>
+                        </div>
+                    </div>
+                </div>
+                <div class="container-fluid">
+                    <div class="row" >
+                        <div class="col-md-4">
+                            <img class="card-img" style="height: 600px; width: 400px;" src="../resources/images/icons/handyman.png" ></img>
+                        </div>
+                        <br></br>
+                        <br></br>
+                        <br></br>
+                        <br></br>
+                        <div class="col-md-6">
+                            <div class="row" style=" border-style: solid; border-color: #00748d;">
+                                <div class="col-sm-6 text-danger pull-left">
+                                    <h4><i class="fas fa-check-circle"></i>  Instant confirmation</h4>
+                                </div>
+                                <div class="col-sm-6 text-danger pull-left">
+                                    <h4><i class="fas fa-check-circle"></i> 7 days phone support</h4>
+                                </div>
+                                <div class="col-sm-6 text-danger pull-left">
+                                    <h4><i class="fas fa-check-circle"></i>   30 Day Warranty on Labor</h4>
+                                </div>
+
+                                <div class="col-sm-6 text-danger pull-left">
+                                    <h4><i class="fas fa-check-circle"></i>  Service Quality Guaranteed</h4>
+                                </div>
+                                <div class="col-sm-6 text-danger pull-left">
+                                    <h4>  <i class="fas fa-check-circle"></i>  Book now ,Pay Later </h4>
+                                </div>
+                                <div class="col-sm-6 text-danger">
+                                    <h4> <i class="fas fa-check-circle"></i>   Fixed Price</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2  pull-right">
+                            <div class="card text-center" style="margin-bottom: 25px; margin-top: 15px; padding: 15px 10px 10px ">
+                                <div class="card" style="margin: 5px 5px; ">
+                                    <h4 class="card-title" style="color: #ff5a23; margin: 5px 5px; font-size: 30px;"> 150 DH</h4>
+                                    <strong class="card-text" style="color: #00748d; font-size: 20px;"> Par Heure</strong><br></br>
+                                    <p:commandButton value="check now" action="#{handyManController.bookNow(item)}"  class="btn btn-previous"></p:commandButton>
+                                </div>
+                            </div> 
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <!-- Bootstrap core JavaScript -->
+            <script src="../resources/vendor/jquery/jquery.min.js"></script>
+            <script src="../resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+
+
+
+        </ui:define>
+    </ui:composition>
+</html>
