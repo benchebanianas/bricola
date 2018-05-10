@@ -5,6 +5,7 @@ import bean.Device;
 import bean.Manager;
 import bean.Secteur;
 import bean.Service;
+import bean.StatistiqueGenerale;
 import bean.Ville;
 import bean.Worker;
 import controller.util.JsfUtil;
@@ -73,23 +74,17 @@ public class ManagerController implements Serializable {
     private String ancienPassword;
     private String nvPassword;
     private String nvPassword1;
-    private int statAnnee;
-    private Service statService;
-    private Ville statVille;
-    private Secteur statSecteur;
-    private Worker statWorker;
+   
     private List<Ville> statVilles;
     private List<Worker> statWorkers;
     private List<Secteur> statSecteurs;
-    private List<Service> statServices;
     private LineChartModel lineCharModel;
     private BarChartModel barCharModel;
-    private int typeChart;
-    private int typePrix;
-    private int typeComfirmation;
+    
+    private int equipement;
     private BigDecimal max;
-    private Date dateMin;
-    private Date dateMax;
+    
+    private StatistiqueGenerale statistiqueGenerale;
 
     public void changeMdp() {
         if (ancienPassword.equals(selected.getPassword())) {
@@ -102,29 +97,32 @@ public class ManagerController implements Serializable {
         }
     }
 
-    public void afficherChart() {
-        if (typeChart == 1) {
-            createLineModels();
+    public void afficherChart(String service) {
+        if (statistiqueGenerale.getChart() == 1) {
+            createLineModels(service);
         }
-        if (typeChart == 2) {
-            createBarModel();
+        if (statistiqueGenerale.getChart() == 2) {
+            createBarModel(service);
         }
     }
 
-    private void createLineModels() {
+    private void createLineModels(String service) {
 
-        lineCharModel = initCategoryModel();
+        lineCharModel = initCategoryModel(service);
 
-        String title = "Statisique Globale";
+        String title = "Statisique pour Service '"+service+"'";
         
-        if (statAnnee > 0) {
-            title += ", Annee : " + statAnnee + "";
+        if (statistiqueGenerale.getAnnee() > 0) {
+            title += ", Annee : " + statistiqueGenerale.getAnnee() + "";
         }
-        if (statSecteur != null) {
-            title += ", Secteur : " + statSecteur.getNom() + "";
+        if (statistiqueGenerale.getVille() != null) {
+            title += ", Ville : " + statistiqueGenerale.getVille().getNom() + "";
         }
-        if (statService != null) {
-            title += ", Service : " + statService.getNom() + "";
+        if (statistiqueGenerale.getSecteur() != null) {
+            title += ", Secteur : " + statistiqueGenerale.getSecteur().getNom() + "";
+        }
+        if (statistiqueGenerale.getWorker() != null) {
+            title += ", Worker : " + statistiqueGenerale.getWorker().getNom() + "";
         }
 
         lineCharModel.setTitle(title);
@@ -140,20 +138,24 @@ public class ManagerController implements Serializable {
         xAxis.setMin(0);
     }
 
-    private void createBarModel() {
-        barCharModel = initBarModel();
+    private void createBarModel(String service) {
+        barCharModel = initBarModel(service);
 
-       String title = "Statisique Globale";
+       String title = "Statisique pour Service '"+service+"'";
         
-        if (statAnnee > 0) {
-            title += ", Annee : " + statAnnee + "";
+        if (statistiqueGenerale.getAnnee() > 0) {
+            title += ", Annee : " + statistiqueGenerale.getAnnee() + "";
         }
-        if (statSecteur != null) {
-            title += ", Secteur : " + statSecteur.getNom() + "";
+        if (statistiqueGenerale.getVille() != null) {
+            title += ", Ville : " + statistiqueGenerale.getVille().getNom() + "";
         }
-        if (statService != null) {
-            title += ", Service : " + statService.getNom() + "";
+        if (statistiqueGenerale.getSecteur() != null) {
+            title += ", Secteur : " + statistiqueGenerale.getSecteur().getNom() + "";
         }
+        if (statistiqueGenerale.getWorker() != null) {
+            title += ", Worker : " + statistiqueGenerale.getWorker().getNom() + "";
+        }
+        
         barCharModel.setTitle(title);
         barCharModel.setLegendPosition("ne");
         barCharModel.setShowDatatip(false);
@@ -167,13 +169,13 @@ public class ManagerController implements Serializable {
         yAxis.setMax(max.multiply(new BigDecimal(1.1)));
     }
 
-    private LineChartModel initCategoryModel() {
+    private LineChartModel initCategoryModel(String service) {
         LineChartModel model = new LineChartModel();
-        BigDecimal[] resultas = ejbFacade.genererStatistique(statAnnee,dateMin, dateMax, statWorker, statVille, statSecteur, statService, typePrix, typeComfirmation);
+        BigDecimal[] resultas = ejbFacade.genererStatistique(service,statistiqueGenerale,equipement);
         max = MathUtil.calculerMax(resultas);
         ChartSeries annee = new ChartSeries();
-        if(statAnnee>0){
-            annee.setLabel("Annee " + statAnnee);
+        if(statistiqueGenerale.getAnnee()>0){
+            annee.setLabel("Annee " + statistiqueGenerale.getAnnee());
         }else{
             annee.setLabel("Globale");
         }
@@ -196,13 +198,13 @@ public class ManagerController implements Serializable {
 
     }
 
-    private BarChartModel initBarModel() {
+    private BarChartModel initBarModel(String service) {
         BarChartModel model = new BarChartModel();
-        BigDecimal[] resultas = ejbFacade.genererStatistique(statAnnee,dateMin, dateMax, statWorker, statVille, statSecteur, statService, typePrix, typeComfirmation);
+        BigDecimal[] resultas = ejbFacade.genererStatistique(service, statistiqueGenerale,equipement);
         max = MathUtil.calculerMax(resultas);
         ChartSeries annee = new ChartSeries();
-        if(statAnnee>0){
-            annee.setLabel("Annee " + statAnnee);
+        if(statistiqueGenerale.getAnnee()>0){
+            annee.setLabel("Annee " + statistiqueGenerale.getAnnee());
         }else{
             annee.setLabel("Globale");
         }
@@ -334,29 +336,15 @@ public class ManagerController implements Serializable {
         this.managerItems = managerItems;
     }
 
-    public Service getStatService() {
-        if (service == null) {
-            service = new Service();
-        }
-        return statService;
+    public int getEquipement() {
+        return equipement;
     }
 
-    public void setStatService(Service statService) {
-        this.statService = statService;
+    public void setEquipement(int equipement) {
+        this.equipement = equipement;
     }
 
-    public Ville getStatVille() {
-        if (statVille == null) {
-            statVille = new Ville();
-        }
-        return statVille;
-    }
-
-    public void setStatVille(Ville statVille) {
-        this.statVille = statVille;
-    }
-
-    public List<Ville> getStatVilles() {
+ public List<Ville> getStatVilles() {
         if (statVilles == null) {
             statVilles = villeFacade.findAll();
         }
@@ -378,16 +366,6 @@ public class ManagerController implements Serializable {
         this.statSecteurs = statSecteurs;
     }
 
-    public List<Service> getStatServices() {
-        if (statServices == null) {
-            statServices = serviceFacade.findAll();
-        }
-        return statServices;
-    }
-
-    public void setStatServices(List<Service> statServices) {
-        this.statServices = statServices;
-    }
 
     public LineChartModel getLineCharModel() {
         return lineCharModel;
@@ -397,21 +375,6 @@ public class ManagerController implements Serializable {
         this.lineCharModel = lineCharModel;
     }
 
-    public int getTypeChart() {
-        return typeChart;
-    }
-
-    public void setTypeChart(int typeChart) {
-        this.typeChart = typeChart;
-    }
-
-    public int getTypePrix() {
-        return typePrix;
-    }
-
-    public void setTypePrix(int typePrix) {
-        this.typePrix = typePrix;
-    }
 
     public BigDecimal getMax() {
         return max;
@@ -462,7 +425,7 @@ public class ManagerController implements Serializable {
     }
 
     public void loadStatSecteursAndServices() {
-        loadSeectors(statVille);
+        loadSeectors(statistiqueGenerale.getVille());
     }
 
     public Secteur getSecteur() {
@@ -555,28 +518,6 @@ public class ManagerController implements Serializable {
         this.nvPassword1 = nvPassword1;
     }
 
-    public int getStatAnnee() {
-        if(statAnnee == 0){
-            statAnnee = new Date().getYear()+1900;
-        }
-        return statAnnee;
-    }
-
-    public void setStatAnnee(int statAnnee) {
-        this.statAnnee = statAnnee;
-    }
-
-    public Secteur getStatSecteur() {
-        if (statSecteur == null) {
-            statSecteur = new Secteur();
-        }
-        return statSecteur;
-    }
-
-    public void setStatSecteur(Secteur statSecteur) {
-        this.statSecteur = statSecteur;
-    }
-
     public BarChartModel getBarCharModel() {
         return barCharModel;
     }
@@ -585,38 +526,6 @@ public class ManagerController implements Serializable {
         this.barCharModel = barCharModel;
     }
 
-    public Date getDateMin() {
-        if(dateMin == null){
-            dateMin = new Date();
-        }
-        return dateMin;
-    }
-
-    public void setDateMin(Date dateMin) {
-        this.dateMin = dateMin;
-    }
-
-    public Date getDateMax() {
-        if(dateMax == null){
-            dateMax = new Date();
-        }
-        return dateMax;
-    }
-
-    public void setDateMax(Date dateMax) {
-        this.dateMax = dateMax;
-    }
-
-    public Worker getStatWorker() {
-        if(statWorker == null){
-            statWorker = new Worker();
-        }
-        return statWorker;
-    }
-
-    public void setStatWorker(Worker statWorker) {
-        this.statWorker = statWorker;
-    }
 
     public List<Worker> getStatWorkers() {
         if(statWorkers == null){
@@ -629,13 +538,6 @@ public class ManagerController implements Serializable {
         this.statWorkers = statWorkers;
     }
 
-    public int getTypeComfirmation() {
-        return typeComfirmation;
-    }
-
-    public void setTypeComfirmation(int typeComfirmation) {
-        this.typeComfirmation = typeComfirmation;
-    }
 
     protected void setEmbeddableKeys() {
     }
@@ -740,9 +642,21 @@ public class ManagerController implements Serializable {
     public void loadServices(Ville ville) {
 
         services = serviceVilleFacade.findServiceforVille(ville);
-        statServices = serviceVilleFacade.findServiceforVille(ville);
 
     }
+
+    public StatistiqueGenerale getStatistiqueGenerale() {
+        if(statistiqueGenerale == null){
+            statistiqueGenerale = new StatistiqueGenerale();
+        }
+        return statistiqueGenerale;
+    }
+
+    public void setStatistiqueGenerale(StatistiqueGenerale statistiqueGenerale) {
+        this.statistiqueGenerale = statistiqueGenerale;
+    }
+    
+    
 
     @FacesConverter(forClass = Manager.class)
     public static class ManagerControllerConverter implements Converter {

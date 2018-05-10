@@ -16,8 +16,8 @@
   }
 
 .sidebar {
-    min-width: 250px;
-    max-width: 250px;
+    min-width: 220px;
+    max-width: 220px;
     min-height: calc(100vh - 56px);
     transition: all 0.3s;
 }
@@ -52,7 +52,7 @@
     content: "\f0d8";
 }
 .sidebar.toggled {
-    margin-left: -250px;
+    margin-left: -220px;
 }
 
 .content {
@@ -67,7 +67,7 @@
 
 @media (max-width: 768px) {
     .sidebar {
-        margin-left: -250px;
+        margin-left: -220px;
     }
     .sidebar.toggled {
         margin-left: 0;

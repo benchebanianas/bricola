@@ -24,48 +24,8 @@
 
             <!--   Big container   -->
             <div class="d-flex image-container set-full-height" style="background-image: url('../resources/images/managerbg.png')">
-                <nav class="sidebar bg-dark">
-                    <p style="text-align: center;">
-                        <a href="../manager/Profile.xhtml">
-                            <img src="../resources/images/adminuser.png" style="border-radius: 70%;" width="150" class="img-rounded" />
-                        </a>
-                    </p>
-                    <div align="center">
-                        <h3 style="color: white;font-family: 'Arial', sans-serif;"> #{managerController.selected.id} </h3>
-                    </div>
-                    <ul class="nav flex-column">
-                        <li class="nav-item">
-                            <a class="nav-link active" href="../manager/Profile.xhtml">
-                                <span data-feather="home"></span>
-                                Profile <span class="sr-only">(current)</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="../manager/Demande.xhtml">
-                                <span data-feather="file"></span>
-                                Demandes
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="../manager/Worker.xhtml">
-                                <span data-feather="shopping-cart"></span>
-                                Workers
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="../manager/Operation.xhtml">
-                                <span data-feather="users"></span>
-                                Operations
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="../manager/Statistique.xhtml">
-                                <span data-feather="bar-chart-2"></span>
-                                Statistiques
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
+                
+                <ui:include src="Navbar.xhtml"/>
 
                 <div class="content p-4">
                     <h:form>

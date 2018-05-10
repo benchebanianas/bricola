@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition >
+
+        <h:form id="netoyageMaisonForm" style="margin-top: 20px">
+
+
+            <p:panelGrid  style="margin: 0 auto;width: 100%">
+
+                <p:row>
+
+                    <p:column styleClass="text-font">
+                        <p:outputLabel  for="annee" value="Année"  style="text-align: center;padding-top: 10px;width: 100%"/>
+                    </p:column>
+
+                    <p:column>
+                        <p:inputText class="form-control" id="annee" value="#{managerController.statistiqueGenerale.annee}" style="width: 100%;height: 40px"/>
+                    </p:column>
+
+                    <p:column styleClass="text-font">
+                        <p:outputLabel value="Date Min" for="dateMin" style="text-align: center;padding-top: 10px;width: 100%"/>
+                    </p:column>
+
+                    <p:column styleClass="text-font">
+                        <p:calendar id="dateMin" pattern="dd/MM/yyyy" value="#{managerController.statistiqueGenerale.dateMin}" inputStyle="width: 100%;height: 40px"/>
+                    </p:column>
+
+                    <p:column styleClass="text-font">
+                        <p:outputLabel value="Date Max" for="dateMax" style="text-align: center;padding-top: 10px;width: 100%"/>
+                    </p:column>
+
+                    <p:column styleClass="text-font">
+                        <p:calendar id="dateMax" pattern="dd/MM/yyyy" value="#{managerController.statistiqueGenerale.dateMax}" inputStyle="width: 100%;height: 40px"/>
+                    </p:column>
+
+                    <p:column styleClass="text-font">
+                        <p:outputLabel  for="statVille" value="Ville"  style="text-align: center;padding-top: 10px;width: 100%"/>
+                    </p:column>
+
+                    <p:column>
+                        <p:selectOneMenu class="form-control" id="statVille" value="#{managerController.statistiqueGenerale.ville}" autoWidth="false" style="width: 100%;height: 40px" >
+                            <p:ajax listener="#{managerController.loadStatSecteursAndServices()}" update="netoyageMaisonForm" />
+                            <f:selectItem value="#{null}" itemLabel="-- SELECT --" />
+                            <f:selectItems value="#{managerController.statVilles}" var="item"
+                                           itemValue="#{item}" itemLabel="#{item.nom}" />
+                        </p:selectOneMenu>
+
+                    </p:column>
+
+                    <p:column styleClass="text-font">
+                        <p:outputLabel  value="Secteur" for="statSecteur" style="text-align: center;padding-top: 10px;width: 100%"/>
+                    </p:column>
+
+                    <p:column>
+                        <p:selectOneMenu class="form-control" id="statSecteur" value="#{managerController.statistiqueGenerale.secteur}" autoWidth="false" style="width: 100%;height: 40px" >
+                            <f:selectItem value="#{null}" itemLabel="-- SELECT --" />
+                            <f:selectItems value="#{managerController.statSecteurs}" var="item"
+                                           itemValue="#{item}" itemLabel="#{item.nom}" />
+                        </p:selectOneMenu>
+                    </p:column>
+
+                </p:row>
+                <p:row>
+
+
+                    <p:column styleClass="text-font">
+                        <p:outputLabel  for="worker" value="Worker" style="text-align: center;padding-top: 10px;width: 100%" />
+                    </p:column>
+
+                    <p:column>
+                        <p:selectOneMenu class="form-control" id="worker" value="#{managerController.statistiqueGenerale.worker}" autoWidth="false"  style="width: 100%;height: 40px">
+                            <f:selectItem value="#{null}" itemLabel="-- SELECT --" />
+                            <f:selectItems value="#{managerController.statWorkers}" var="item"
+                                           itemValue="#{item}" itemLabel="#{item.nom}" />
+                        </p:selectOneMenu>
+                    </p:column>
+
+                    <p:column styleClass="text-font">
+                        <p:outputLabel value="Confirmation" for="typeComfirmation" style="text-align: center;padding-top: 10px;width: 100%"/>
+                    </p:column>
+
+                    <p:column>
+                        <p:selectOneMenu class="form-control" id="typeComfirmation" value="#{managerController.statistiqueGenerale.confirmation}" style="width: 100%;height: 40px">
+                            <f:selectItem value="#{null}" itemLabel="-- SELECT --" />
+                            <f:selectItem itemValue="1" itemLabel="Oui"  />
+                            <f:selectItem itemValue="2" itemLabel="Non" />
+                        </p:selectOneMenu>
+                    </p:column>
+
+                    <p:column styleClass="text-font">
+                        <p:outputLabel value="type Prix" for="typePrix" style="text-align: center;padding-top: 10px;width: 100%"/>
+                    </p:column>
+
+                    <p:column>
+                        <p:selectOneMenu class="form-control" id="typePrix" value="#{managerController.statistiqueGenerale.prix}" style="width: 100%;height: 40px">
+                            <f:selectItem value="#{null}" itemLabel="-- SELECT --" />
+                            <f:selectItem itemValue="1" itemLabel="HT"  />
+                            <f:selectItem itemValue="2" itemLabel="TTC" />
+                        </p:selectOneMenu>
+                    </p:column>
+                    
+                    <p:column styleClass="text-font">
+                        <p:outputLabel value="Equipement" for="equipement" style="text-align: center;padding-top: 10px;width: 100%"/>
+                    </p:column>
+
+                    <p:column>
+                        <p:selectOneMenu class="form-control" id="equipement" value="#{managerController.equipement}" style="width: 100%;height: 40px">
+                            <f:selectItem value="#{null}" itemLabel="-- SELECT --" />
+                            <f:selectItem itemValue="1" itemLabel="Oui"  />
+                            <f:selectItem itemValue="2" itemLabel="Non" />
+                        </p:selectOneMenu>
+                    </p:column>
+
+                    <p:column styleClass="text-font">
+                        <p:outputLabel value="type Chart" for="typeChart" style="text-align: center;padding-top: 10px;width: 100%"/>
+                    </p:column>
+
+                    <p:column>
+                        <p:selectOneMenu class="form-control" id="typeChart" value="#{managerController.statistiqueGenerale.chart}" style="width: 100%;height: 40px">
+                            <f:selectItem value="#{null}" itemLabel="-- SELECT --" />
+                            <f:selectItem itemValue="1" itemLabel="Lineaire"  />
+                            <f:selectItem itemValue="2" itemLabel="Bar" />
+                        </p:selectOneMenu>
+                    </p:column>
+
+
+
+                </p:row>
+                <f:facet name="footer">
+                    <p:row>
+                        <p:column colspan="12">
+                            <p:commandButton id="rechercher" value="RECHERCHER" actionListener="#{managerController.afficherChart('nettoyageMaison')}" update=":growl,lineChart,barChart,netoyageMaisonForm" style="width: 12%;height: 30px;margin-bottom: 5px" />
+                        </p:column>
+                    </p:row>
+                </f:facet>
+
+            </p:panelGrid>
+
+            <div style="margin-top: 20px">
+                <p:chart id="lineChart" type="line"  model="#{managerController.lineCharModel}"  rendered="#{managerController.statistiqueGenerale.chart == 1}" style="height:400px;width: 100%" />
+                <p:chart id="barChart" type="bar"  model="#{managerController.barCharModel}"  rendered="#{managerController.statistiqueGenerale.chart == 2}" style="height:400px;width: 100%" />
+            </div>
+
+
+        </h:form>
+
+
+    </ui:composition>
+
+</html>

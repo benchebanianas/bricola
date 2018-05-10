@@ -10,6 +10,7 @@ import bean.Device;
 import bean.Manager;
 import bean.Secteur;
 import bean.Service;
+import bean.StatistiqueGenerale;
 import bean.Ville;
 import bean.Worker;
 import java.util.List;
@@ -30,7 +31,6 @@ public class ManagerFacade extends AbstractFacade<Manager> {
     @PersistenceContext(unitName = "bricolagePU")
     private EntityManager em;
 
-    
     public int login(Manager manager) {
 
         Manager m = (Manager) em.createQuery("SELECT m FROM Manager m WHERE m.id='" + manager.getId() + "'").getSingleResult();
@@ -49,18 +49,18 @@ public class ManagerFacade extends AbstractFacade<Manager> {
             }
         }
     }
-    
+
     public int RepDernConx(Manager manager, Date dernierDate) {
 
         String dernierConex = DateUtil.formateDate("yyyy-MM-dd", dernierDate);
         List<Device> device = em.createQuery("SELECT d FROM Device d WHERE "
                 + " d.manager.id='" + manager.getId() + "' ORDER BY d.dateConnection DESC").getResultList();
-        if (DateUtil.formateDate("yyyy-MM-dd",device.get(0).getDateConnection()).equals(dernierConex)) {
+        if (DateUtil.formateDate("yyyy-MM-dd", device.get(0).getDateConnection()).equals(dernierConex)) {
             return 1;
         }
         return 0;
     }
-    
+
     public int RepDernAction(Manager manager, String action) {
 
         List<DemandeServiceConfirmationDetail> demandes = em.createQuery("SELECT d FROM DemandeServiceConfirmationDetail d WHERE "
@@ -69,84 +69,80 @@ public class ManagerFacade extends AbstractFacade<Manager> {
             System.out.println("type empty");
         } else if (demandes.get(0).getTypeAction().getName().equals(action)) {
             return 1;
-        } 
-            System.out.println(demandes.get(0).getTypeAction().getName());
+        }
+        System.out.println(demandes.get(0).getTypeAction().getName());
         return 0;
     }
 
     public int RepDernConfir(Manager manager, Date dernierDate) {
 
-        
         String dernierConfirmation = DateUtil.formateDate("yyyy-MM-dd", dernierDate);
         List<DemandeServiceConfirmationDetail> demandes = em.createQuery("SELECT d FROM DemandeServiceConfirmationDetail d WHERE "
                 + " d.manager.id='" + manager.getId() + "' AND d.typeAction.name='confirmation' ORDER BY d.dateAction DESC").setMaxResults(1).getResultList();
         if (demandes.isEmpty()) {
             System.out.println("confir empty");
             return 0;
-        } else if (DateUtil.formateDate("yyyy-MM-dd",demandes.get(0).getDateAction()).equals(dernierConfirmation)) {
+        } else if (DateUtil.formateDate("yyyy-MM-dd", demandes.get(0).getDateAction()).equals(dernierConfirmation)) {
             return 1;
         }
         return 0;
     }
-    
-    public BigDecimal[] genererStatistique(int annee, Date datemin, Date dateMax, Worker worker, Ville ville, Secteur secteur, Service service, int typePrix, int typeComfirmation) {
+
+    public BigDecimal[] genererStatistique(String service, StatistiqueGenerale statistiqueGenerale, int equipement) {
         BigDecimal[] statistique = new BigDecimal[12];
         for (int i = 1; i <= 12; i++) {
-            statistique[i - 1] = statistiqueParMois(annee, datemin, dateMax, i, worker, ville, secteur, service, typePrix, typeComfirmation);
+            statistique[i - 1] = statistiqueParMois(service, statistiqueGenerale, equipement, i);
         }
         return statistique;
 
     }
 
-    private BigDecimal statistiqueParMois(int annee, Date dateMin, Date dateMax, int mois, Worker worker, Ville ville, Secteur secteur, Service service, int typePrix, int typeComfirmation) {
-        
+    private BigDecimal statistiqueParMois(String service, StatistiqueGenerale statistiqueGenerale, int equipement, int i) {
+
         String type;
-        if(typePrix == 2){
+        if (statistiqueGenerale.getPrix() == 2) {
             type = "prixTtc";
-        }else{
+        } else {
             type = "prixHt";
         }
-        
-        String requette = "SELECT SUM(ds."+type+") FROM DemandeService ds WHERE FUNCTION('MONTH', ds.datedemande) = '"+mois+"'";
-        
-        if(annee >0){
-            requette += " AND FUNCTION('YEAR', ds.datedemande) = '"+annee+"'";
+
+        String requette = checkCriteriaByService(service, type, equipement, i);
+
+        //String requette = "SELECT SUM(ds."+type+") FROM DemandeService ds WHERE ds.service.nom = "+service+" AND FUNCTION('MONTH', ds.datedemande) = '"+i+"'";
+        if (statistiqueGenerale.getAnnee() > 0) {
+            requette += " AND FUNCTION('YEAR', ds.datedemande) = '" + statistiqueGenerale.getAnnee() + "'";
         }
 
-        if(dateMin != null){
-            requette += " AND ds.datedemande >= '" + DateUtil.getSqlDateTime(dateMin) + "'";
-        }
-        
-        if(dateMax != null){
-            requette += " AND ds.datedemande <= '" + DateUtil.getSqlDateTime(dateMax) + "'";
-        }
-        
-        if (worker != null && worker.getEmail()!= null) {
-            requette += " AND ds.worker.email = '" + worker.getEmail()+ "'";
-        }
-        
-        if (ville != null && ville.getId() != null) {
-            requette += " AND ds.secteur.ville.id='" + ville.getId() + "'";
-        }
-        
-        if (secteur != null && secteur.getId() != null) {
-            requette += " AND ds.secteur.id='" + secteur.getId() + "'";
+        if (statistiqueGenerale.getDateMin() != null) {
+            requette += " AND ds.datedemande >= '" + DateUtil.getSqlDateTime(statistiqueGenerale.getDateMin()) + "'";
         }
 
-        if (service != null && service.getId() != null) {
-            requette += " AND ds.service.id='" + service.getId() + "'";
+        if (statistiqueGenerale.getDateMax() != null) {
+            requette += " AND ds.datedemande <= '" + DateUtil.getSqlDateTime(statistiqueGenerale.getDateMax()) + "'";
         }
-        
-        if(typeComfirmation == 1){
+
+        if (statistiqueGenerale.getWorker() != null && statistiqueGenerale.getWorker().getEmail() != null) {
+            requette += " AND ds.worker.email = '" + statistiqueGenerale.getWorker().getEmail() + "'";
+        }
+
+        if (statistiqueGenerale.getVille() != null && statistiqueGenerale.getVille().getId() != null) {
+            requette += " AND ds.secteur.ville.id='" + statistiqueGenerale.getVille().getId() + "'";
+        }
+
+        if (statistiqueGenerale.getSecteur() != null && statistiqueGenerale.getSecteur().getId() != null) {
+            requette += " AND ds.secteur.id='" + statistiqueGenerale.getSecteur().getId() + "'";
+        }
+
+        if (statistiqueGenerale.getConfirmation() == 1) {
             requette += " AND ds.dateConfirmation != NULL";
         }
-        
-        if(typeComfirmation == 2){
+
+        if (statistiqueGenerale.getConfirmation() == 2) {
             requette += " AND ds.dateConfirmation = NULL";
         }
-        
-        System.out.println("hahiya requette : "+requette);
-        
+
+        System.out.println("hahiya requette : " + requette);
+
         List<BigDecimal> res = em.createQuery(requette).getResultList();
         System.out.println("res f service : " + res);
         if (res != null && !res.isEmpty() && res.get(0) != null) {
@@ -154,13 +150,35 @@ public class ManagerFacade extends AbstractFacade<Manager> {
         }
         return new BigDecimal(0);
     }
-    
-    public void changeMdp(Manager manager,String mdp){
+
+    private String checkCriteriaByService(String service, String type,int equipement, int i ) {
+
+        String requette = "SELECT SUM(ds." + type + ") FROM DemandeService ds";
+
+        String requetteComplement = "WHERE ds.service.nom = '" + service + "' AND FUNCTION('MONTH', ds.datedemande) = '" + i + "'";
+
+        if (service.equals("nettoyageMaison")) {
+
+            requette += ", DemandeCleaning dc " + requetteComplement + "";
+
+            if (equipement == 1) {
+                requette += " AND dc.bringEquipement = '1'";
+            }
+            if (equipement == 2) {
+                requette += " AND dc.bringEquipement = '0'";
+            }
+            
+        }
+
+        return requette;
+    }
+
+    public void changeMdp(Manager manager, String mdp) {
         Manager m = find(manager.getId());
         m.setPassword(mdp);
         edit(m);
     }
-    
+
     @Override
     protected EntityManager getEntityManager() {
         return em;
@@ -169,5 +187,5 @@ public class ManagerFacade extends AbstractFacade<Manager> {
     public ManagerFacade() {
         super(Manager.class);
     }
-    
+
 }
