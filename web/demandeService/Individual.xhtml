@@ -21,7 +21,7 @@
                              rowsPerPageTemplate="10,20,30,40,50" style="margin-top: 30px">
 
                     <f:facet name="header">
-                        <h5>Select an individual</h5>
+                        <h5>Sélectionnez une personne</h5>
                     </f:facet>
                     <p:column>
 
@@ -39,7 +39,7 @@
                                     <span class="fa fa-star"></span>
                                     <span class="fa fa-star"></span>
                                 </span>
-                                <span class="review-block-title" style="display:block">Individual description</span>
+                                <span class="review-block-title" style="display:block">Description</span>
                                 <span class="review-block-description" style="display:block">#{individual.description}</span>
 
                             </span>
@@ -47,7 +47,7 @@
                     </p:column>
 
                     <f:facet name="footer" >
-                        <p:commandButton value="CONFIRM" oncomplete="PF('IndividualDialog').hide()" style="text-align: center;width: 100%;height: 50px"/>
+                        <p:commandButton value="Confirmer" oncomplete="PF('IndividualDialog').hide()" style="text-align: center;width: 100%;height: 50px"/>
                     </f:facet>
                 </p:dataTable>
             </h:form>

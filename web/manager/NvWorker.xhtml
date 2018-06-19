@@ -22,7 +22,7 @@
                                 <br></br>
                                 <p:repeat value="#{workerController.nvWorkers()}" var="worker" >
                                     <div class="col-md-3">
-                                        <p:commandButton actionListener="#{workerController.nvWorkerDialog(worker)}" update=":dform" onclick="PF('Dialog').show()" value="#{worker.nom}" style="width:127px;height: 50px;text-align: center;padding: 3px 0;"/>
+                                        <p:commandButton actionListener="#{workerController.nvWorkerDialog(worker)}" update=":dform" value="#{worker.nom}" style="width:127px;height: 50px;text-align: center;padding: 3px 0;"/>
                                     </div>
                                 </p:repeat>
 

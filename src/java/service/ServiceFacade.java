@@ -7,6 +7,7 @@ package service;
 
 import bean.Service;
 import bean.Ville;
+import bean.Worker;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -35,6 +36,13 @@ public class ServiceFacade extends AbstractFacade<Service> {
         
         String requette = "select s from Service s where s.nom = '"+nomService+"'";
         return (Service) em.createQuery(requette).getResultList().get(0);
+    }
+
+    public List<Service> findByWorker(Worker selected) {
+        
+        String requette = "select wj.service from WorkerJob wj where wj.worker.email = '"+selected.getEmail()+"'";
+        return em.createQuery(requette).getResultList();
+        
     }
     
     

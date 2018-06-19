@@ -7,8 +7,14 @@ package service;
 
 import bean.Client;
 import bean.DemandeService;
+import bean.Secteur;
 import bean.Service;
+import bean.ServicePricing;
 import bean.Worker;
+import bean.WorkerType;
+import controller.util.DateUtil;
+import controller.util.SearchUtil;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -77,7 +83,7 @@ public class DemandeServiceFacade extends AbstractFacade<DemandeService> {
     }
 
     public int findNumberOfDemandesByWorker(Worker worker) {
-        List<DemandeService> demandes = getMultipleResult("SELECT ds FROM DemandeService ds WHERE ds.worker.email='" + worker.getEmail() + "'");
+        List<DemandeService> demandes = getMultipleResult("SELECT ds FROM DemandeService ds WHERE ds.worker.email='" + worker.getEmail() + "' AND ds.dateConfirmation = NULL");
         if (demandes == null) {
             return 0;
         }
@@ -93,8 +99,11 @@ public class DemandeServiceFacade extends AbstractFacade<DemandeService> {
         initDemandeService(demandeService, currentService);
         planningItemFacade.saveWithPlanning(demandeService.getPlanning(), demandeService, oneTime, multipleTimes);
         setWorker(demandeService, company, individual);
+        
         clientFacade.checkClientInfo(demandeService.getClient());
+        System.out.println("mora check client");
         create(demandeService);
+        System.out.println("mora create");
 
     }
 
@@ -107,27 +116,132 @@ public class DemandeServiceFacade extends AbstractFacade<DemandeService> {
     private void initDemandeService(DemandeService demandeService, Service service) {
 
         demandeService.setService(service);
-        if (demandeService.getServicePricing() == null) {
-            demandeService.setServicePricing(servicePricingFacade.findByService(service));
+        ServicePricing servicePricing = servicePricingFacade.findByService(service);
+        if(servicePricing != null && servicePricing.getId() != null){
+            demandeService.setServicePricing(servicePricing);
         }
+        
         demandeService.setDatedemande(new Date());
         demandeService.setSecteur(demandeService.getClient().getSecteur());
 
     }
 
     private void setWorker(DemandeService demandeService, Worker company, Worker individual) {
-
+        
+        System.out.println("hahowa workertype : "+demandeService.getWorkerType());
+        
         if (demandeService.getWorkerType().getId() > 0) {
             if (demandeService.getWorkerType().getId() == 1) {
                 demandeService.setWorker(individual);
             } else {
                 demandeService.setWorker(company);
             }
-        } else {
+        }else {
             demandeService.setWorkerType(null);
-            demandeService.setWorker(workerFacade.findBestWorkerBySector(demandeService.getClient().getSecteur()));
+        }
+        
+        System.out.println("salit mn worker type");
+
+    }
+
+    public List<DemandeService> findByCriteria(Long secteur, String workerNom, Long service, Date dateDemande, BigDecimal prixMin,
+            BigDecimal prixMax, Integer conSupp) {
+
+        String requette = "select d from DemandeService d where 1=1 ";
+        requette += SearchUtil.addConstraint("d", "secteur.id", "=", secteur);
+        requette += SearchUtil.addConstraint("d", "worker.nom", "=", workerNom);
+        requette += SearchUtil.addConstraintMinMax("d", "prixTtc", prixMin, prixMax);
+        requette += SearchUtil.addConstraint("d", "service.id", "=", service);
+        requette += SearchUtil.addConstraint("d", "datedemande", "=", DateUtil.formateDate("yyyy-MM-dd", dateDemande));
+        if (conSupp != null) {
+            switch (conSupp) {
+                case 0:
+                    requette += " and d.dateSuppression = null and d.dateConfirmation = null";
+                    break;
+                case 1:
+                    requette += " and d.dateConfirmation IS NOT null ";
+                    break;
+                case 2:
+                    requette += " and d.dateSuppression IS NOT null ";
+                    break;
+                default:
+                    break;
+            }
+        } else {
+
+        }
+        System.out.println("haa requeta : " + requette);
+        return getEntityManager().createQuery(requette).getResultList();
+    }
+
+    public List<DemandeService> rechercher(Worker worker, Client clientRecherche, Service serviceRecherche, int etatRecherche, Date dateMin, Date dateMax) {
+
+        String requete = "SELECT ds FROM DemandeService ds WHERE ds.service.id != 21";
+        
+        if(worker != null && worker.getEmail() != null){
+            requete += " and ds.worker.email = '"+worker.getEmail()+"'";
+        }
+        
+        if(serviceRecherche != null && serviceRecherche.getId() != null){
+            requete += " and ds.service.id = '"+serviceRecherche.getId()+"'";
+        }
+        
+        if(clientRecherche != null && clientRecherche.getEmail() != null){
+            requete += " and ds.client.email = '"+clientRecherche.getEmail()+"'";
+        }
+        if(etatRecherche == 1){
+            requete += " and ds.dateConfirmation != NULL";
+        }
+        if(etatRecherche == 2){
+            requete += " and ds.dateConfirmation = NULL";
+        }
+        if (dateMin != null) {
+            requete += " AND ds.datedemande >= '" + DateUtil.getSqlDateTime(dateMin) + "'";
         }
 
+        if (dateMax != null) {
+            requete += " AND ds.datedemande <= '" + DateUtil.getSqlDateTime(dateMax) + "'";
+        }
+        
+        return em.createQuery(requete).getResultList();
+
+    }
+    
+    public int findNumberOfNewDemandes(){
+        
+        List<DemandeService> demandes = getMultipleResult("SELECT ds FROM DemandeService ds WHERE ds.dateConfirmation = NULL");
+        if (demandes == null) {
+            return 0;
+        }
+        return demandes.size();
+        
+    }
+
+    public BigDecimal profitAnnuelle() {
+        
+        int year = new Date().getYear() + 1900;
+        
+        String requette = "SELECT sum(ds.prixTtc) FROM DemandeService ds WHERE FUNCTION('YEAR', ds.datedemande) = '"+year+"'";
+        
+        System.out.println("hahiya requette : "+requette);
+        return (BigDecimal) em.createQuery(requette).getResultList().get(0);
+        
+    }
+
+    public List<DemandeService> orderByDate() {
+        
+        String requette = "select ds from DemandeService ds where ds.dateConfirmation = NULL order by ds.datedemande desc";
+        System.out.println("requette : "+requette);
+        return em.createQuery(requette).getResultList().subList(0, 5);
+    
+    
+    }
+
+    public List<DemandeService> findAllDemandesSaufLocation() {
+    
+        String requette = "select ds from DemandeService ds where ds.service.id != 21";
+        return em.createQuery(requette).getResultList();
+    
     }
 
 }

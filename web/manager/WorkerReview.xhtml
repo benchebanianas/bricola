@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <ui:composition>
+
+        <p:dialog id="WorkerReviewDlg" widgetVar="WorkerReviewDialog" modal="true" resizable="false" width="75%" appendTo="@(body)">
+            <h:form id="WorkerReviewForm">
+
+                <p:dataTable id="reviewList" var="review" value="#{managerController.workerReviews}"
+                             paginatorPosition="bottom"
+                             paginator="true"
+                             rows="10"
+                             rowsPerPageTemplate="10,20,30,40,50" >
+
+                    <p:column>
+                        <f:facet name="header">
+                            <h5>Avis</h5>
+                        </f:facet>
+
+                        <div class="row" style="display:block;margin-top: 10px" >
+
+                            <div class="col-sm-9" style="margin-top: 5px">
+                                <p:rating value="#{review.stars}" readonly="true" style="display: inline" />
+                                <h:outputText value="#{review.sujet}" style="display: inline;font-weight: bold;font-size: 16px;margin-left: 10px"  /><br></br>
+                                <h:outputText value="Par "/>
+                                <h:outputText value=" #{review.client.prenom} #{review.client.nom}" style="color: #06afb5"/>
+                                <h:outputText value="En" style="display: inline;margin-left: 5px"/>
+                                <h:outputText value="#{review.dateReview}" style="display: inline;margin-left: 5px"  >
+                                    <f:convertDateTime pattern="dd-MM-yyyy"  />
+                                </h:outputText>
+                                <br></br>
+
+                                <h:outputText value="Demande Service (ID) : #{review.demandeService.id}" style="color: #06afb5"/>
+
+                                <h:outputText value=" | Verifiée" style="color: red;display: inline"  />
+                            </div>
+
+                            <div class="col-sm-9" style="margin-top: 40px;margin-bottom: 15px">
+                                <h:outputText value="#{review.corps}"/>
+                            </div>
+
+                        </div>
+
+
+
+
+                    </p:column>
+                </p:dataTable>
+
+
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>
+

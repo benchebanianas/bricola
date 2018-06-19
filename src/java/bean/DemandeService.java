@@ -5,9 +5,14 @@
  */
 package bean;
 
+import controller.util.PdfUtil;
+import java.io.IOException;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,6 +20,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
+import net.sf.jasperreports.engine.JRException;
 
 /**
  *
@@ -261,5 +267,8 @@ public class DemandeService implements Serializable {
     public String toString() {
         return "bean.DemandeService[ id=" + id + " ]";
     }
+
+    
+    
 
 }

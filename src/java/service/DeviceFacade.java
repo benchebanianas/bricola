@@ -39,7 +39,7 @@ public class DeviceFacade extends AbstractFacade<Device> {
     public Device verifDevice(Manager manager) {
         Device dev = getManagerDevice(manager);
         List<Device> device = em.createQuery("SELECT d From Device d WHERE d.os='" + dev.getOs() + "'"
-                + " and d.manager.id LIKE '" + manager.getId() + "'").getResultList();
+                + " and d.manager.id LIKE '" + manager.getLogin() + "'").getResultList();
         if (device.isEmpty()) {
             return null;
         } else {

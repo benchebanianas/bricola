@@ -74,7 +74,7 @@ public class Timing implements Serializable {
 
     @Override
     public String toString() {
-        return "bean.Timing[ id=" + id + " ]";
+        return name;
     }
 
 }

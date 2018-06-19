@@ -3,7 +3,7 @@ package controller;
 import bean.VoitureModele;
 import controller.util.JsfUtil;
 import controller.util.JsfUtil.PersistAction;
-import service.VoitureModeleFacade;
+import service.VoitureCarburantCouleurFacade;
 
 import java.io.Serializable;
 import java.util.List;
@@ -18,6 +18,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import service.VoitureModeleFacade;
 
 @Named("voitureModeleController")
 @SessionScoped

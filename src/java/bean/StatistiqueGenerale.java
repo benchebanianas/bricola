@@ -19,6 +19,7 @@ public class StatistiqueGenerale {
     private Ville ville;
     private Secteur secteur;
     private Worker worker;
+    private Service service;
     private int confirmation;
     private int prix;
     private int chart;
@@ -93,5 +94,13 @@ public class StatistiqueGenerale {
 
     public void setChart(int chart) {
         this.chart = chart;
+    }
+
+    public Service getService() {
+        return service;
+    }
+
+    public void setService(Service service) {
+        this.service = service;
     }
 }

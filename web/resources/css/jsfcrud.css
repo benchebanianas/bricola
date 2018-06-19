@@ -1,5 +1,5 @@
 .ui-widget {
-    font-size: 12px !important;
+    font-size: 14px !important;
 }
 .ui-layout-north {
     z-index: 20 !important;
@@ -35,11 +35,11 @@
     font-weight: bold;
 }
 .text-font-bold15{
-    font-size: 15px !important;
+    font-size: 17px !important;
     font-weight: bold;
 }
 .text-size15{
-    font-size: 15px !important;  
+    font-size: 17px !important;  
 }
 .align-center{
     text-align: center;
@@ -134,3 +134,4 @@ ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .u
     background: #01549c;
     color: #fff;
 }
+

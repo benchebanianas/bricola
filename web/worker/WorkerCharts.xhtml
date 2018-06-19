@@ -2,7 +2,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Statistiques</title>
 
@@ -12,98 +14,122 @@
 
         <link rel="stylesheet" href="../resources/bootstrap-4.0.0/css/bootstrap.min.css"></link>
         <link rel="stylesheet" href="../resources/css/workerProfilecss.css"></link>
+
+        <h:outputStylesheet library="css" name="jsfcrud.css"/>
+        <h:outputScript library="js" name="jsfcrud.js"/>
+
     </h:head>
     <h:body>
-        <nav class="navbar navbar-expand navbar-dark bg-info">
-            <a class="sidebar-toggle text-light mr-3"><i class="fa fa-bars"></i></a>
 
-            <a class="navbar-brand" href="#"> <p:outputLabel value="#{workerController.selected.workerType.name}"></p:outputLabel></a>
-
-            <div class="navbar-collapse collapse">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <span class="fa fa-envelope fa-lg" style="color: white"></span>
-                            <p:outputLabel value="1" class="badge badge-notify"></p:outputLabel>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <span class="fa fa-calendar fa-lg" style="color: white"></span>
-                            <p:outputLabel value="3" class="badge badge-notify"></p:outputLabel>
-                        </a>
-                    </li>
-                    <li class="nav-item dropdown" style="color: white">
-                        <a class="nav-link " href="#" id="navbarDropdownMenuLink" >
-                            <i class="fa fa-user" style="color: white"></i> <p:outputLabel value="#{workerController.selected.nom}"></p:outputLabel>
-                        </a>
-
-                    </li>
-                </ul>
-            </div>
-        </nav>
+        <ui:include src="TopNav.xhtml"/>
 
         <div class="d-flex">
-            <nav class="sidebar bg-dark">
-                <p style="text-align: center;"><a href="#"><img src="../resources/images/workerLogo.jpg" style="border-radius: 70%;" width="200" class="img-rounded" ></img></a></p>
-                <ul class="nav flex-column">
 
-                    <li class="nav-item">
-                        <a class="nav-link active" href="WorkerDashboard.xhtml">
-                            <span data-feather="home"></span>
-                            Tableau de bord <span class="sr-only">(current)</span>
-                        </a>
-                    </li>
+            <ui:include src="SidebarNav.xhtml"/>
 
-                    <li class="nav-item">
-                        <a class="nav-link active" href="WorkerProfil.xhtml">
-                            <span data-feather="file"></span>
-                            Profil
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="WorkerTable.xhtml">
-                            <span data-feather="users"></span>
-                            Tableau de données
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="WorkerCalendar.xhtml">
-                            <span data-feather="shopping-cart"></span>
-                            Calendrier 
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="WorkerCharts.xhtml">
-                            <span data-feather="file"></span>
-                            Statistiques
-                        </a>
-                    </li>
-
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="WorkerReport.xhtml">
-                            <span data-feather="layers"></span>
-                            Report
-                        </a>
-                    </li>
-                </ul>
-
-
-            </nav>
 
             <div class="content p-4">
-                <h1 class="display-5 mb-4">Statistiques</h1>
-                <br></br>
-                <br></br>
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-12 " >
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="WorkerDashboard.xhtml">Home</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Statistique</li>
+                            </ol>
+                        </nav>   
 
-                <div class="col-sm-8">
-                    <p:chart type="line" model="#{workerController.dateModel}" style="height:500px;width:1050px"/>
+
+
+                        <h:form id="workerStats">
+                            <p:panelGrid  style="margin: 0 auto;width: 100%">
+
+                                <p:row>
+
+                                    <p:column styleClass="text-font">
+                                        <p:outputLabel  for="annee" value="Année"  style="text-align: center;padding-top: 10px;width: 100%"/>
+                                    </p:column>
+
+                                    <p:column>
+                                        <p:inputText class="form-control" id="annee" value="#{workerController.statistiqueGenerale.annee}" style="width: 100%;height: 40px"/>
+                                    </p:column>
+
+                                    <p:column styleClass="text-font">
+                                        <p:outputLabel value="Date Min" for="dateMin" style="text-align: center;padding-top: 10px;width: 100%"/>
+                                    </p:column>
+
+                                    <p:column styleClass="text-font">
+                                        <p:calendar id="dateMin" pattern="dd/MM/yyyy" value="#{workerController.statistiqueGenerale.dateMin}" inputStyle="width: 100%;height: 40px"/>
+                                    </p:column>
+
+                                    <p:column styleClass="text-font">
+                                        <p:outputLabel value="Date Max" for="dateMax" style="text-align: center;padding-top: 10px;width: 100%"/>
+                                    </p:column>
+
+                                    <p:column styleClass="text-font">
+                                        <p:calendar id="dateMax" pattern="dd/MM/yyyy" value="#{workerController.statistiqueGenerale.dateMax}" inputStyle="width: 100%;height: 40px"/>
+                                    </p:column>
+
+
+
+                                </p:row>
+                                <p:row>
+
+                                    <p:column styleClass="text-font">
+                                        <p:outputLabel value="Service" for="service" style="text-align: center;padding-top: 10px;width: 100%"/>
+                                    </p:column>
+
+                                    <p:column>
+                                        <p:selectOneMenu class="form-control" id="service" value="#{workerController.statistiqueGenerale.service}" style="width: 100%;height: 40px">
+                                            <f:selectItem value="#{null}" itemLabel="-- SELECT --" />
+                                            <f:selectItems value="#{workerController.findServiceForWorker()}"
+                                                           var="service"
+                                                           itemValue="#{service}"/>
+                                        </p:selectOneMenu>
+                                    </p:column>
+
+                                    <p:column styleClass="text-font">
+                                        <p:outputLabel value="Confirmation" for="typeComfirmation" style="text-align: center;padding-top: 10px;width: 100%"/>
+                                    </p:column>
+
+                                    <p:column>
+                                        <p:selectOneMenu class="form-control" id="typeComfirmation" value="#{workerController.statistiqueGenerale.confirmation}" style="width: 100%;height: 40px">
+                                            <f:selectItem value="#{null}" itemLabel="-- SELECT --" />
+                                            <f:selectItem itemValue="1" itemLabel="Oui"  />
+                                            <f:selectItem itemValue="2" itemLabel="Non" />
+                                        </p:selectOneMenu>
+                                    </p:column>
+
+                                    <p:column styleClass="text-font">
+                                        <p:outputLabel value="type Prix" for="typePrix" style="text-align: center;padding-top: 10px;width: 100%"/>
+                                    </p:column>
+
+                                    <p:column>
+                                        <p:selectOneMenu class="form-control" id="typePrix" value="#{workerController.statistiqueGenerale.prix}" style="width: 100%;height: 40px">
+                                            <f:selectItem value="#{null}" itemLabel="-- SELECT --" />
+                                            <f:selectItem itemValue="1" itemLabel="HT"  />
+                                            <f:selectItem itemValue="2" itemLabel="TTC" />
+                                        </p:selectOneMenu>
+                                    </p:column>
+
+                                </p:row>
+                                <f:facet name="footer">
+                                    <p:row>
+                                        <p:column colspan="12" style="text-align: center">
+                                            <p:commandButton id="rechercher" value="RECHERCHER" actionListener="#{workerController.calculStat()}" update="lineChart,workerStats" style="width: 12%;height: 30px;margin-bottom: 5px" />
+                                        </p:column>
+                                    </p:row>
+                                </f:facet>
+
+                            </p:panelGrid>
+
+                            <div style="margin-top: 20px">
+                                <p:chart id="lineChart" type="line"  model="#{workerController.lineCharModel2}" responsive="true"  style="height:600px;width: 100%" />
+                            </div>
+                        </h:form>
+                    </div>
                 </div>
-                
             </div>
+
         </div>
 
         <script src="../resources/js/popper.min.js"></script>

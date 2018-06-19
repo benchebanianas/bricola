@@ -6,6 +6,9 @@
 package service;
 
 import bean.Faq;
+import bean.Service;
+import java.util.ArrayList;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -27,6 +30,20 @@ public class FaqFacade extends AbstractFacade<Faq> {
 
     public FaqFacade() {
         super(Faq.class);
+    }
+
+    public List<Faq> findByService(Service currentService) {
+    
+        String requette = "Select f from Faq f where f.service.id = '"+currentService.getId()+"'";
+        
+        List<Faq> faqs = em.createQuery(requette).getResultList();
+        if(faqs.isEmpty()){
+            return new ArrayList<>();
+        }else{
+            return faqs;
+        }
+    
+    
     }
     
 }

@@ -7,6 +7,7 @@ package service;
 
 import bean.Service;
 import bean.ServicePricing;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -33,8 +34,12 @@ public class ServicePricingFacade extends AbstractFacade<ServicePricing> {
     public ServicePricing findByService(Service service) {
     
         String requette = "select sp from ServicePricing sp where sp.service.id = '"+service.getId()+"'";
-        
-        return (ServicePricing) em.createQuery(requette).getSingleResult();
+        List<ServicePricing> servicePricings = em.createQuery(requette).getResultList();
+        if(servicePricings.isEmpty()){
+            return new ServicePricing();
+        }else{
+            return servicePricings.get(0);
+        }
     
     }
     

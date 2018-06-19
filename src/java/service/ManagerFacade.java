@@ -17,6 +17,7 @@ import java.util.List;
 import controller.util.*;
 import java.math.BigDecimal;
 import java.util.Date;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -27,13 +28,18 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class ManagerFacade extends AbstractFacade<Manager> {
+    
+    @EJB
+    DemandeServiceFacade demandeServiceFacade;
+    @EJB
+    WorkerFacade workerFacade;
 
     @PersistenceContext(unitName = "bricolagePU")
     private EntityManager em;
 
     public int login(Manager manager) {
 
-        Manager m = (Manager) em.createQuery("SELECT m FROM Manager m WHERE m.id='" + manager.getId() + "'").getSingleResult();
+        Manager m = (Manager) em.createQuery("SELECT m FROM Manager m WHERE m.login='" + manager.getLogin() + "'").getSingleResult();
         if (m == null) {
             return -1;
         } else if (m.isBlocked()) {
@@ -41,20 +47,21 @@ public class ManagerFacade extends AbstractFacade<Manager> {
         } else if (!m.getPassword().equals(manager.getPassword())) {
             return -3;
         } else {
-            List<Device> device = em.createQuery("SELECT d FROM Device d WHERE d.manager.id='" + manager.getId() + "'").setMaxResults(1).getResultList();
-            if (device.isEmpty()) {
-                return 0;
-            } else {
                 return 1;
-            }
+            
         }
+    }
+    
+    public void seDeConnnecter() {
+        SessionUtil.getSession().invalidate();
+
     }
 
     public int RepDernConx(Manager manager, Date dernierDate) {
 
         String dernierConex = DateUtil.formateDate("yyyy-MM-dd", dernierDate);
         List<Device> device = em.createQuery("SELECT d FROM Device d WHERE "
-                + " d.manager.id='" + manager.getId() + "' ORDER BY d.dateConnection DESC").getResultList();
+                + " d.manager.login='" + manager.getLogin() + "' ORDER BY d.dateConnection DESC").getResultList();
         if (DateUtil.formateDate("yyyy-MM-dd", device.get(0).getDateConnection()).equals(dernierConex)) {
             return 1;
         }
@@ -64,7 +71,7 @@ public class ManagerFacade extends AbstractFacade<Manager> {
     public int RepDernAction(Manager manager, String action) {
 
         List<DemandeServiceConfirmationDetail> demandes = em.createQuery("SELECT d FROM DemandeServiceConfirmationDetail d WHERE "
-                + " d.manager.id='" + manager.getId() + "' ORDER BY d.dateAction DESC").setMaxResults(1).getResultList();
+                + " d.manager.login='" + manager.getLogin() + "' ORDER BY d.dateAction DESC").setMaxResults(1).getResultList();
         if (demandes.isEmpty()) {
             System.out.println("type empty");
         } else if (demandes.get(0).getTypeAction().getName().equals(action)) {
@@ -78,7 +85,7 @@ public class ManagerFacade extends AbstractFacade<Manager> {
 
         String dernierConfirmation = DateUtil.formateDate("yyyy-MM-dd", dernierDate);
         List<DemandeServiceConfirmationDetail> demandes = em.createQuery("SELECT d FROM DemandeServiceConfirmationDetail d WHERE "
-                + " d.manager.id='" + manager.getId() + "' AND d.typeAction.name='confirmation' ORDER BY d.dateAction DESC").setMaxResults(1).getResultList();
+                + " d.manager.login='" + manager.getLogin() + "' AND d.typeAction.name='confirmation' ORDER BY d.dateAction DESC").setMaxResults(1).getResultList();
         if (demandes.isEmpty()) {
             System.out.println("confir empty");
             return 0;
@@ -125,6 +132,10 @@ public class ManagerFacade extends AbstractFacade<Manager> {
             requette += " AND ds.worker.email = '" + statistiqueGenerale.getWorker().getEmail() + "'";
         }
 
+        if (statistiqueGenerale.getService() != null && statistiqueGenerale.getService().getId() != null) {
+            requette += " AND ds.service.id = '" + statistiqueGenerale.getService().getId() + "'";
+        }
+
         if (statistiqueGenerale.getVille() != null && statistiqueGenerale.getVille().getId() != null) {
             requette += " AND ds.secteur.ville.id='" + statistiqueGenerale.getVille().getId() + "'";
         }
@@ -151,30 +162,48 @@ public class ManagerFacade extends AbstractFacade<Manager> {
         return new BigDecimal(0);
     }
 
-    private String checkCriteriaByService(String service, String type,int equipement, int i ) {
+    private String checkCriteriaByService(String service, String type, int equipement, int i) {
 
         String requette = "SELECT SUM(ds." + type + ") FROM DemandeService ds";
 
-        String requetteComplement = "WHERE ds.service.nom = '" + service + "' AND FUNCTION('MONTH', ds.datedemande) = '" + i + "'";
+        String requetteComplement = "FUNCTION('MONTH', ds.datedemande) = '" + i + "'";
 
-        if (service.equals("nettoyageMaison")) {
+        if (service != null) {
 
-            requette += ", DemandeCleaning dc " + requetteComplement + "";
+            String requetteService = "WHERE ds.service.nom = '" + service + "'";
 
-            if (equipement == 1) {
-                requette += " AND dc.bringEquipement = '1'";
+            if (service.equals("nettoyageMaison")) {
+
+                requette += ", DemandeCleaning dc " + requetteService + " AND " +requetteComplement+ "";
+
+                if (equipement == 1) {
+                    requette += " AND dc.bringEquipement = '1'";
+                }
+                if (equipement == 2) {
+                    requette += " AND dc.bringEquipement = '0'";
+                }
+
             }
-            if (equipement == 2) {
-                requette += " AND dc.bringEquipement = '0'";
-            }
-            
+        }else{
+            requette += " WHERE "+requetteComplement+"";
         }
-
         return requette;
+    }
+    
+    public int numberWorkers() {
+        return workerFacade.findAll().size();
+    }
+
+    public int numberDemandes() {
+        return demandeServiceFacade.findNumberOfNewDemandes();
+    }
+    
+    public BigDecimal profitAnnuelle(){
+        return demandeServiceFacade.profitAnnuelle();
     }
 
     public void changeMdp(Manager manager, String mdp) {
-        Manager m = find(manager.getId());
+        Manager m = find(manager.getLogin());
         m.setPassword(mdp);
         edit(m);
     }

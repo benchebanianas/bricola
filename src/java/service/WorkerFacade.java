@@ -5,9 +5,11 @@
  */
 package service;
 
+import bean.DemandeVoitureItem;
 import bean.Secteur;
 import bean.Service;
 import bean.Worker;
+import bean.WorkerJob;
 import bean.WorkerType;
 import controller.util.EmailUtil;
 import controller.util.SearchUtil;
@@ -75,6 +77,8 @@ public class WorkerFacade extends AbstractFacade<Worker> {
     public int numberDemandes(Worker worker) {
         return demandeServiceFacade.findNumberOfDemandesByWorker(worker);
     }
+    
+    
 
     public List<Service> findServiceByWorker(Worker worker) {
         return workerJobFacade.findServiceByWorker(worker);
@@ -99,7 +103,10 @@ public class WorkerFacade extends AbstractFacade<Worker> {
                 return -3;
             } else if (!worker.getPassword().equals(w.getPassword())) {
                 return -4;
-            } else {
+            } else if(!w.isAccepted()){
+                return -5;
+            } 
+            else {
                 SessionUtil.setAttribute("connectedWorker", w);
                 return 1;
             }
@@ -142,7 +149,9 @@ public class WorkerFacade extends AbstractFacade<Worker> {
         requette += SearchUtil.addConstraint("w", "nom", "=", nom);
         requette += SearchUtil.addConstraintMinMax("w", "nombreEmploye", nombreEmployeMin, nombreEmployeMax);
         requette += SearchUtil.addConstraint("w", "siteWeb", "=", siteWeb);
+        if(workerType!=null){
         requette += SearchUtil.addConstraint("w", "workerType.id", "=", workerType.getId());
+        }
         requette += SearchUtil.addConstraint("w", "siteWeb", "=", siteWeb);
         requette += SearchUtil.addConstraint("w", "phone", "=", phone);
         int i = 0;
@@ -161,6 +170,33 @@ public class WorkerFacade extends AbstractFacade<Worker> {
 
     public WorkerFacade() {
         super(Worker.class);
+    }
+
+    public void seDeConnnecter() {
+        SessionUtil.getSession().invalidate();
+
+    }
+
+    public void inscription(Worker selected, List<WorkerJob> workerJobs) {
+    
+        selected.setAccepted(false);
+        create(selected);
+        workerJobFacade.createList(selected, workerJobs);
+        
+    
+    }
+
+    public List<Worker> rechercher(DemandeVoitureItem demandeVoitureItem) {
+     
+        String requette = "select distinct v.worker from Voiture v, WorkerJob wj where v.worker.email = wj.worker.email";
+        if(demandeVoitureItem.getModele() != null && demandeVoitureItem.getModele().getId() != null){
+            requette += " and v.modele.id = '"+demandeVoitureItem.getModele().getId()+"'";
+        }
+        if(demandeVoitureItem.getCarburant() != null && demandeVoitureItem.getCarburant().getId() != null){
+            requette += " and v.carburant.id = '"+demandeVoitureItem.getCarburant().getId()+"'";
+        }
+    
+        return em.createQuery(requette).getResultList();
     }
 
 }

@@ -22,7 +22,11 @@ public class Manager implements Serializable {
 // bhal admin
     
     @Id
-    private String id;
+    
+    private String login;
+    private String nom;
+    private String prenom;
+    private String phone;
     private String Password;
     private boolean blocked;
     @OneToMany(mappedBy = "manager")
@@ -53,7 +57,7 @@ public class Manager implements Serializable {
     }
 
     public Manager(String id, String Password) {
-        this.id = id;
+        this.login = id;
         this.Password = Password;
     }
 
@@ -65,29 +69,57 @@ public class Manager implements Serializable {
         this.Password = Password;
     }
 
-    public String getId() {
-        return id;
+    public String getLogin() {
+        return login;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setLogin(String login) {
+        this.login = login;
     }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public String getPrenom() {
+        return prenom;
+    }
+
+    public void setPrenom(String prenom) {
+        this.prenom = prenom;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+    
+    
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        hash += (login != null ? login.hashCode() : 0);
         return hash;
     }
+    
+    
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
+        // TODO: Warning - this method won't work in the case the login fields are not set
         if (!(object instanceof Manager)) {
             return false;
         }
         Manager other = (Manager) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if ((this.login == null && other.login != null) || (this.login != null && !this.login.equals(other.login))) {
             return false;
         }
         return true;
@@ -95,7 +127,7 @@ public class Manager implements Serializable {
 
     @Override
     public String toString() {
-        return "bean.Manager[ id=" + id + " ]";
+        return "bean.Manager[ id=" + login + " ]";
     }
 
 }

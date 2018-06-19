@@ -78,7 +78,7 @@ public class VoitureMarque implements Serializable {
 
     @Override
     public String toString() {
-        return "bean.Marque[ id=" + id + " ]";
+        return nom;
     }
 
 }

@@ -37,13 +37,13 @@
                     <p:row>
 
                         <p:column>
-                            <p:outputLabel for="timing" value="Timing :"  style="width: 120px" />
+                            <p:outputLabel for="timing" value="Heure :"  style="width: 120px" />
 
                         </p:column>
 
                         <p:column>
                             <p:selectOneMenu class="form-control" id="timing" value="#{demandeServiceController.planningItem.timing}" style="width: 170px;height: 40px">
-                                <f:selectItem itemValue="#{null}" itemLabel="--SELECT TIMING--"/>
+                                <f:selectItem itemValue="#{null}" itemLabel="--Sélectionner--"/>
                                 <f:selectItems value="#{demandeServiceController.loadTimings()}" 
                                                var="timing"
                                                itemValue="#{timing}" itemLabel="#{timing.name}"
@@ -52,12 +52,12 @@
                         </p:column>
 
                         <p:column>
-                            <p:outputLabel for="repetition" value="Repitition:" style="width: 120px" />
+                            <p:outputLabel for="repetition" value="Répétition:" style="width: 120px" />
                         </p:column>
 
                         <p:column>
                             <p:selectOneMenu class="form-control" id="repetition" value="#{demandeServiceController.planningItem.repetition}" style="width: 170px;height: 40px">
-                                <f:selectItem itemValue="#{null}" itemLabel="--REPETITION MODE--"/>
+                                <f:selectItem itemValue="#{null}" itemLabel="--Sélectionner--"/>
                                 <f:selectItem itemValue="#{1}" itemLabel="Par semaine"/>
                                 <f:selectItem itemValue="#{2}" itemLabel="Par mois"/>
                                 <p:ajax process="grid"  update="grid" />
@@ -74,7 +74,7 @@
 
                         <p:column  rendered="#{demandeServiceController.planningItem.repetition == 1}" style="width: 120px">
                             <p:selectOneMenu class="form-control" id="jour" value="#{demandeServiceController.planningItem.day}" style="width: 170px;height: 40px" >
-                                <f:selectItem itemValue="#{null}" itemLabel="--SELECT JOUR--"/>
+                                <f:selectItem itemValue="#{null}" itemLabel="--Sélectionner--"/>
                                 <f:selectItems value="#{demandeServiceController.loadDays()}" 
                                                var="day"
                                                itemValue="#{day}" itemLabel="#{day.nom}"
@@ -88,7 +88,7 @@
 
                         <p:column rendered="#{demandeServiceController.planningItem.repetition == 2}">
                             <p:selectOneMenu class="form-control" id="numeroJour" value="#{demandeServiceController.planningItem.numeroJour}" style="width: 170px;height: 40px">
-                                <f:selectItem itemValue="#{null}" itemLabel="--NUMERO JOUR--"/>
+                                <f:selectItem itemValue="#{null}" itemLabel="--Sélectionner--"/>
                                 <f:selectItems value="#{demandeServiceController.loadNumeroJour()}" 
                                                var="numeroJour"
                                                itemValue="#{numeroJour}"
@@ -116,9 +116,9 @@
 
             <h:form id="planningListFrom" style="margin-top: 20px">
 
-                <p:panel header="#{bundle.ListPlanningItemTitle}">
+                <p:panel header="Horaires Sélectionnée">
                     <p:dataTable id="datalist" value="#{demandeServiceController.demandeService.planning.planningItems}" var="item"
-                                 
+
                                  paginator="true"
                                  rows="3"
                                  >
@@ -137,7 +137,7 @@
                         </p:column>
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="Timing"/>
+                                <h:outputText value="Heure"/>
                             </f:facet>
                             <h:outputText value="#{item.timing.name}"/>
                         </p:column>
@@ -145,11 +145,11 @@
                             <f:facet name="header">
                                 <h:outputText value="Action"/>
                             </f:facet>
-                            <p:commandButton value="Delete" actionListener="#{demandeServiceController.deletePlanningItem(item)}" style="width: 50%;text-align: center" update="planningListFrom,:growl" />
+                            <p:commandButton value="Supprimer" actionListener="#{demandeServiceController.deletePlanningItem(item)}" style="width: 50%;text-align: center" update="planningListFrom,:growl" />
 
                         </p:column>
                         <f:facet name="footer">
-                            <p:commandButton value="Comfirmer"  style="width: 25%;height: 30px;text-align: center" oncomplete="PF('ServicePlusieursFoisDialog').hide()" />
+                            <p:commandButton value="Confirmer"  style="width: 25%;height: 30px;text-align: center" oncomplete="PF('ServicePlusieursFoisDialog').hide()" />
 
                         </f:facet>
 

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <nav class="sidebar bg-dark" >
+
+            <img src="../resources/images/managers/#{managerController.selected.nom}.jpg" style="border-radius: 70%;" width="200" class="img-rounded" ></img>
+
+            <ul class="nav flex-column" style="margin-top: 30px">
+
+
+                <li class="nav-item">
+                    <a class="nav-link active" href="Dashboard.xhtml">
+                        <span data-feather="home"></span>
+                        Tableau de bord <span class="sr-only">(current)</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link active" href="Profile.xhtml">
+                        <span data-feather="home"></span>
+                        Profil<span class="sr-only">(current)</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="Worker.xhtml">
+                        <span data-feather="shopping-cart"></span>
+                        Employés
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="Operation.xhtml">
+                        <span data-feather="users"></span>
+                        Operations
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="LocationVoiture.xhtml">
+                        <span data-feather="users"></span>
+                        Location Voiture
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="StatistiqueTabs.xhtml">
+                        <span data-feather="bar-chart-2"></span>
+                        Statistiques
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+    </ui:composition>
+</html>

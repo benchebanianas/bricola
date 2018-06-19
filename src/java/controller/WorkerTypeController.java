@@ -28,6 +28,8 @@ public class WorkerTypeController implements Serializable {
     private service.WorkerTypeFacade ejbFacade;
     private List<WorkerType> items = null;
     private WorkerType selected;
+    private WorkerType personnePysique;
+    private WorkerType personneMorale;
 
     public WorkerTypeController() {
     }
@@ -48,6 +50,28 @@ public class WorkerTypeController implements Serializable {
 
     private WorkerTypeFacade getFacade() {
         return ejbFacade;
+    }
+
+    public WorkerType getPersonnePysique() {
+        if(personnePysique == null){
+            personnePysique = ejbFacade.find(new Long(1));
+        }
+        return personnePysique;
+    }
+
+    public void setPersonnePysique(WorkerType personnePysique) {
+        this.personnePysique = personnePysique;
+    }
+
+    public WorkerType getPersonneMorale() {
+        if(personneMorale == null){
+            personneMorale = ejbFacade.find(new Long(2));
+        }
+        return personneMorale;
+    }
+
+    public void setPersonneMorale(WorkerType personneMorale) {
+        this.personneMorale = personneMorale;
     }
 
     public WorkerType prepareCreate() {

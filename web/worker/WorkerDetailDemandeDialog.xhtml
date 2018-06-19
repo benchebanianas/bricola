@@ -11,32 +11,116 @@
 
 
     <ui:composition>
-        <p:dialog id="detailDemandeDialog" widgetVar="detailDemandeDialog" modal="true" resizable="false" appendTo="@(body)" width="400" height="400"  header="Detail demande :">
-                <h:form id="detailDemandeForm" style="margin-top: 30px;margin-bottom: 30px">
-                <p:panelGrid columns="2">
 
-                    <h:outputText value="Datedemande"/>
-                    <h:outputText value="#{workerController.demandeServiceDetail.datedemande}">
-                        <f:convertDateTime pattern="MM/dd/yyyy" />
-                    </h:outputText>
+        <ui:define name="css">
+            <h:outputStylesheet library="css" name="jsfcrud.css"/>
+        </ui:define>
 
-                    <h:outputText value="TypeDemande"/>
-                    <h:outputText value="#{workerController.demandeServiceDetail.typeDemande.id}"/>
 
-                    <h:outputText value="Secteur"/>
-                    <h:outputText value="#{workerController.demandeServiceDetail.secteur.nom}"/>
+        <p:dialog id="detailDemandeDialog" widgetVar="detailDemandeDialog" modal="true" resizable="false" appendTo="@(body)" width="1100" height="500"  header="Detail demande :">
 
-                    <h:outputText value="Client"/>
-                    <h:outputText value="#{workerController.demandeServiceDetail.client.email}"/>
+            <h:form id="detailDemandeForm">
 
-                    <h:outputText value="Worker"/>
-                    <h:outputText value="#{workerController.demandeServiceDetail.worker.nom}"/>
+                <div class="ui-grid-row" style="margin: 0 auto">
+                    <div class="ui-grid-col-6">
 
-                    <h:outputText value="Detail"/>
-                    <h:outputText value="#{workerController.demandeServiceDetail.detail}"/>
-                </p:panelGrid>
-                <p:commandButton value="OK" style="width: 200px;height: 40px"   oncomplete="handleSubmit(args,'detailDemandeDialog');" />
+                    <p:panel header="Info Generale">
+                        <p:panelGrid columns="2" style="width: 100%" >
+
+                            <h:outputText value="Date Demande"/>
+                            <h:outputText value="#{workerController.selectedDemandeService.datedemande}">
+                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                            </h:outputText>
+
+                            <h:outputText value="Adresse"/>
+                            <h:outputText value="#{workerController.selectedDemandeService.client.adresseComplement} - #{workerController.selectedDemandeService.secteur.nom} "/>
+
+                            <h:outputText value="Detail"/>
+                            <h:outputText value="#{workerController.selectedDemandeService.detail}"/>
+                        </p:panelGrid>
+                    </p:panel>
+                </div>
+
+                <div class="ui-grid-col-6">
+                    <h:panelGroup id="ui">
+                        <ui:fragment rendered="#{workerController.selectedDemandeService.service.id == 1}">
+                            <ui:include src="detailDemandeSpecifique/nettoyageMaison.xhtml"/>
+                        </ui:fragment>
+                        <ui:fragment rendered="#{workerController.selectedDemandeService.service.id == 8 or workerController.selectedDemandeService.service.id == 10 or 
+                                                 workerController.selectedDemandeService.service.id == 11 or workerController.selectedDemandeService.service.id == 12}">
+                            <ui:include src="detailDemandeSpecifique/handyMan.xhtml"/>
+                        </ui:fragment>
+                        <ui:fragment rendered="#{workerController.selectedDemandeService.service.id == 22}">
+                            <ui:include src="detailDemandeSpecifique/formationPersonnel.xhtml"/>
+                        </ui:fragment>
+                        <ui:fragment rendered="#{workerController.selectedDemandeService.service.id == 21}">
+                            <ui:include src="detailDemandeSpecifique/voiture.xhtml"/>
+                        </ui:fragment>
+                    </h:panelGroup>
+                </div>
+                </div>
+                <div class="ui-grid-row">
+
+                    <div class="ui-grid-col-12" style="margin: 0 auto;margin-top: 15px">
+
+                        <p:panel header="Planning">
+
+                            <p:panelGrid columns="4" style="width: 100%;text-align: center" >
+
+
+
+                                <h:outputText value="Date Debut" rendered="#{workerController.selectedDemandeService.planning.dateDebut != null}"/>
+                                <h:outputText value="#{workerController.selectedDemandeService.planning.dateDebut}" rendered="#{workerController.selectedDemandeService.planning.dateDebut != null}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                                </h:outputText>
+
+                                <h:outputText value="Date Fin" rendered="#{workerController.selectedDemandeService.planning.dateDebut != null}"/>
+                                <h:outputText value="#{workerController.selectedDemandeService.planning.dateFin}" rendered="#{workerController.selectedDemandeService.planning.dateDebut != null}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                                </h:outputText>
+
+                                <h:outputText value="Date" rendered="#{workerController.selectedDemandeService.planning.dateDebut == null}"/>
+                                <h:outputText value="#{workerController.selectedDemandeService.planning.dateOnce}" rendered="#{workerController.selectedDemandeService.planning.dateDebut == null}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                                </h:outputText>
+
+                                <h:outputText value="Horaire" rendered="#{workerController.selectedDemandeService.planning.dateDebut == null}"/>
+                                <h:outputText value="#{workerController.selectedDemandeService.planning.timing.name}" rendered="#{workerController.selectedDemandeService.planning.dateDebut == null}"/>
+
+                            </p:panelGrid>
+
+                            <p:dataTable  value="#{workerController.selectedDemandeService.planning.planningItems}" var="planningItem"
+                                          paginator="true"
+                                          rows="4"
+                                          rowsPerPageTemplate="4,8,12,16,20"
+                                          rendered="#{workerController.selectedDemandeService.planning.planningItems.size() > 0}" style="margin-top: 10px;text-align: center">
+
+                                <p:column headerText="Jour">
+                                    <h:outputText value="#{planningItem.repetition==1? planningItem.day.nom:'-------'}"/>
+                                </p:column>
+
+                                <p:column headerText="Numero Jour">
+                                    <h:outputText value="#{planningItem.repetition==2? planningItem.numeroJour:'-------'}"/>
+                                </p:column>
+
+                                <p:column headerText="Horaire">
+                                    <h:outputText value="#{planningItem.timing.name}" />
+                                </p:column>
+
+                            </p:dataTable>
+
+
+
+
+                        </p:panel>
+
+                    </div>
+
+                </div>
+
+
             </h:form>
+
         </p:dialog>
     </ui:composition>
 </html>

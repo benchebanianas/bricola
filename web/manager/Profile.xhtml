@@ -6,86 +6,99 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
-    <ui:composition template="/templateAdmin.xhtml">
+    <h:head>
+        <title>Profile</title>
+
+        <meta charset="utf-8"></meta>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"></meta>
+        <link rel="shortcut icon" href="../resources/images/symbol.png" type="image/png" sizes="16x22"/>
+
+        <link rel="stylesheet" href="../resources/bootstrap-4.0.0/css/bootstrap.min.css"></link>
+        <link rel="stylesheet" href="../resources/css/workerProfilecss.css"></link>
 
 
+        <h:outputStylesheet library="css" name="jsfcrud.css"/>
+        <h:outputScript library="js" name="jsfcrud.js"/>
 
-        <ui:define name="title">
-            <h:outputText value="Profile"></h:outputText>
-        </ui:define>
-
-        <ui:define name="body">
-
-            <h:outputStylesheet name="bootstrap-4.0.0/css/bootstrap.min.css"/>
-            <h:outputStylesheet name="css/workerProfilecss.css"/>
+    </h:head>
 
 
+    <h:body>
 
+        <ui:include src="TopNav.xhtml"/>
 
-            <!--   Big container   -->
-            <div class="d-flex image-container set-full-height" style="background-image: url('../resources/images/managerbg.png')">
-               
-                <ui:include src="Navbar.xhtml"/>
+        <div class="d-flex">
 
-                <div class="content p-4">
-                    <h:form id="tableForm">
-                        <hr></hr>
-                        <h1 align="center"> Operations : </h1>
-                        <hr></hr><br></br>
-                        <div class="container">
-                            <div class="row">
-                                <h1><h:outputText value="Votre Operations :"/></h1>
-                                <p:dataTable id="managerTable" value="#{managerController.managerItems}" rowStyleClass="high" class="table table-striped" var="item">
-                                    <p:column>
-                                        <f:facet name="header">
-                                            <h:outputText value="Manager"/>
-                                        </f:facet>
-                                        <h:outputText value="#{item.manager.id}"/>
-                                    </p:column>
-                                    <p:column>
-                                        <f:facet name="header">
-                                            <h:outputText value="Type d'Action"/>
-                                        </f:facet>
-                                        <h:outputText value="#{item.typeAction.name}"/>
-                                    </p:column>
-                                    <p:column>
-                                        <f:facet name="header">
-                                            <h:outputText value="Date d'Action"/>
-                                        </f:facet>
-                                        <h:outputText value="#{item.dateAction}">
-                                            <f:convertDateTime pattern="MM-dd-yyyy" />
-                                        </h:outputText>
-                                    </p:column>
-                                    <p:column>
-                                        <f:facet name="header">
-                                            <h:outputText value="Service"/>
-                                        </f:facet>
-                                        <h:outputText value="#{item.demandeService.service.nom}"/>
-                                    </p:column>
-                                    <p:column>
-                                        <f:facet name="header">
-                                            <h:outputText value="Societe"/>
-                                        </f:facet>
-                                        <h:outputText value="#{item.demandeService.worker.nom}"/>
-                                    </p:column>
-                                    <p:column style="width: 65px;">
-                                        <p:commandLink action="#{demandeServiceController.changeItems(item.demandeService)}" >
-                                            <h:graphicImage value="../resources/images/seeMore.png" alt=">>" />
-                                        </p:commandLink> 
-                                    </p:column>
-                                </p:dataTable>
-                            </div>
-                            <ui:include src="ChangeMdp.xhtml"/>
-                        </div>
-                        <br></br><hr></hr>
-                    </h:form>
+            <ui:include src="SidebarNav.xhtml"/>
+
+            <div class="content p-4">
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-12 " >
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="Dashboard.xhtml">Home</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Profil</li>
+                            </ol>
+                        </nav>   
+
+                    </div>
                 </div>
+
+
+                <h:form id="dataForm">
+
+                    <p:tabView >
+                        <p:tab title="Informations" id="informationsProfil" >
+
+                            <p:outputLabel value="Login:" style="font-size: 20px;color: rgb(0, 113, 133)" />
+                            <br></br>
+                            <h:outputText value="#{managerController.selected.login}" />
+                            <br></br>
+                            <br></br>
+                            <p:outputLabel value="Nom:" style="font-size: 20px;color: rgb(0, 113, 133)" />
+                            <br></br>
+                            <h:outputText value="#{managerController.selected.nom}" />
+                            <br></br>
+                            <br></br>
+                            <p:outputLabel value="Prenom:" style="font-size: 20px;color: rgb(0, 113, 133)"/>
+                            <br></br>
+                            <h:outputText value="#{managerController.selected.prenom}" />
+                            <br></br>
+                            <br></br>
+                            <p:outputLabel  value="Telephone:" style="font-size: 20px; color: rgb(0, 113, 133)"/>
+                            <br></br>
+                            <h:outputText value="#{managerController.selected.phone}" />
+                        </p:tab>
+
+                        <p:tab title="Mises à jour" id="miseAJour">
+                            <div class="form-group">
+
+                                <p:outputLabel value="Mot de Passe:" for="password" style="font-size: 20px;color: rgb(0, 113, 133)"/>
+                                <p:password id="password" value="#{managerController.selected.password}" title="Password" class="form-control" />
+                                <br></br>
+                                <p:outputLabel value="Nom:" for="nom" style="font-size: 20px;color: rgb(0, 113, 133)"/>
+                                <p:inputText id="nom" value="#{managerController.selected.nom}" title="Nom" class="form-control"/>
+                                <br></br>
+                                <p:outputLabel value="Prenom:" for="prenom" style="font-size: 20px;color: rgb(0, 113, 133)"/>
+                                <p:inputText id="prenom" value="#{managerController.selected.prenom}" title="Prenom" class="form-control" />
+                                <br></br>
+                                <p:outputLabel value="Telephone" for="telephone" style="font-size: 20px;color: rgb(0, 113, 133)"/>
+                                <p:inputText id="telephone" value="#{managerController.selected.phone}" title="Telephone" class="form-control" />
+                                <br></br>
+                                <p:commandButton value="Confirmer" actionListener="#{managerController.miseAJourProfil()}" update="dataForm" class="btn btn-block"/>
+                            </div>
+                        </p:tab>
+                    </p:tabView>
+
+                </h:form>
             </div>
+        </div>
 
 
+        <script src="../resources/js/popper.min.js"></script>
+        <script src="../resources/bootstrap-4.0.0/js/bootstrap.min.js"></script>
+        <script src="../resources/js/workerProfileJs.js"></script>
 
-
-        </ui:define>
-    </ui:composition>
+    </h:body>
 
 </html>

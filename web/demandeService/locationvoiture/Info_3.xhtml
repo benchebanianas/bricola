@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <div class="row">
+
+            <h5 class="info-text"> Veuillez choisir une voiture parmis notre catalogue.</h5>
+            <div class="col-sm-12">
+
+                <p:dataTable id="voitureList" var="v" value="#{demandeServiceController.voitures}"
+                             selectionMode="single" selection="#{demandeServiceController.voiture}" 
+                             rowKey="#{v.id}"
+                             paginatorPosition="bottom"
+                             paginator="true"
+                             rows="4" style="text-align: center">
+
+                    <p:column headerText="Modele">
+                        <h:outputText value="#{v.voiture.modele.nom}"/>
+                    </p:column>
+
+                    <p:column headerText="Marque">
+                        <h:outputText value="#{v.voiture.modele.marque.nom}"/>
+                    </p:column>
+
+                    <p:column headerText="Carburant">
+                        <h:outputText value="#{v.carburant.nom}"/>
+                    </p:column>
+
+                    <p:column headerText="Couleur">
+                        <h:outputText value="#{v.couleur.nom}"/>
+                    </p:column>
+
+                    <p:column headerText="Kilometrage">
+                        <h:outputText value="#{v.voiture.kilometrage} (Km)"/>
+                    </p:column>
+
+                    <p:column headerText="Employé">
+                        <h:outputText value="#{v.voiture.worker.nom}"/>
+                    </p:column>
+
+                    <f:facet name="footer">
+                        <p:selectBooleanButton id="plan" class="myBtn" value="#{demandeServiceController.multipleTimes}" onLabel="Periode" offLabel="Periode" style="width: 170px;height: 35px;text-align: center;padding: 4px 0" onchange="PF('ServicePeriodeDialog').show()">
+                            <p:ajax listener="#{demandeServiceController.checkMany()}" update="plan :ServicePeriodeForm"/>
+                        </p:selectBooleanButton>
+                    </f:facet>
+
+                </p:dataTable>
+
+
+
+            </div>
+
+        </div>
+
+    </ui:composition>
+</html>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="reviewDlg" widgetVar="reviewDialog" modal="true" resizable="false" appendTo="@(body)" header="Ajouter un Review">
+            <h:form id="reviewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid styleClass="ui-noborder">
+                        <p:row>
+                            <h:outputText value="Societe : #{clientController.selectedDemandeService.worker.nom}"/> <br></br>
+                            <h:outputText value="Service : #{clientController.selectedDemandeService.service.nom}"/>
+                        </p:row>
+                        <p:row>
+                            <br></br>
+                            <p:rating value="#{clientController.review.stars}"/>
+                        </p:row>
+                        <p:row>
+                            <h:outputText value="Titre :"/>
+                            <p:inputText style="width: 100%" value="#{clientController.review.sujet}"/>
+
+                            <h:outputText value="Commantaire :"/>
+                            <p:inputTextarea rows="6" style="width: 100%" placeholder="Votre Commentaire ici..." value="#{clientController.review.corps}"/>
+                        </p:row>
+                        <p:commandButton value="commenter" action="#{clientController.commenter()}" oncomplete="handleSubmit(args,'reviewDialog');"/>
+                    </p:panelGrid>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

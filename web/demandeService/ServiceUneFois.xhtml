@@ -25,12 +25,12 @@
                         </p:column>
 
                         <p:column>
-                            <p:outputLabel for="timing" value="Timing :" />
+                            <p:outputLabel for="timing" value="Heure :" />
                         </p:column>
 
                         <p:column>
                             <p:selectOneMenu class="form-control" id="timing" value="#{demandeServiceController.demandeService.planning.timing}" style="width: 170px;height: 40px">
-                                <f:selectItem itemValue="#{null}" itemLabel="--SELECT TIMING"/>
+                                <f:selectItem itemValue="#{null}" itemLabel="--Sélectionner--"/>
                                 <f:selectItems value="#{demandeServiceController.loadTimings()}" 
                                                var="timing"
                                                itemValue="#{timing}" itemLabel="#{timing.name}"

@@ -26,14 +26,13 @@ public class Voiture implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String matricule;
-    private String couleur;
-    private String carburant;
-    private String kilometrage;
     @OneToOne
     private VoitureModele modele;
     @ManyToOne
     private Worker worker;
+    @ManyToOne
+    private Carburant carburant;
+    private int quantite;
 
     @OneToMany(mappedBy = "voiture")
     private List<VoitureImage> imageVoitures;
@@ -49,36 +48,15 @@ public class Voiture implements Serializable {
         this.id = id;
     }
 
-    public String getMatricule() {
-        return matricule;
-    }
-
-    public void setMatricule(String matricule) {
-        this.matricule = matricule;
-    }
-
-    public String getCouleur() {
-        return couleur;
-    }
-
-    public void setCouleur(String couleur) {
-        this.couleur = couleur;
-    }
-
-    public String getCarburant() {
+    public Carburant getCarburant() {
+        if(carburant == null){
+            carburant = new Carburant();
+        }
         return carburant;
     }
 
-    public void setCarburant(String carburant) {
+    public void setCarburant(Carburant carburant) {
         this.carburant = carburant;
-    }
-
-    public String getKilometrage() {
-        return kilometrage;
-    }
-
-    public void setKilometrage(String kilometrage) {
-        this.kilometrage = kilometrage;
     }
 
     public VoitureModele getModele() {
@@ -106,6 +84,14 @@ public class Voiture implements Serializable {
 
     public void setImageVoitures(List<VoitureImage> imageVoitures) {
         this.imageVoitures = imageVoitures;
+    }
+
+    public int getQuantite() {
+        return quantite;
+    }
+
+    public void setQuantite(int quantite) {
+        this.quantite = quantite;
     }
 
     @Override

@@ -266,7 +266,13 @@ body{
 }
 
 
-.navbar-nav > li > a {
+.navbar-nav > li > a{
+    color: #00539b;
+    font-size: 15px;
+    margin-top: 5px;
+}
+
+.navbar-nav > li{
     color: #00539b;
     font-size: 15px;
     margin-top: 5px;

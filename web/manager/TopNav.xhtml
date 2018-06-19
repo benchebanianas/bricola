@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <h:form id="navForm">
+
+            <nav class="navbar navbar-expand navbar-dark bg-info bg-dark">
+                <a class="sidebar-toggle text-light mr-3"><i class="fa fa-bars"></i></a>
+
+                <a class="navbar-brand" href="#"> <p:outputLabel value="#{managerController.selected.nom}" style="font-size: 20px"></p:outputLabel></a>
+
+                <div class="navbar-collapse collapse">
+                    <ul class="navbar-nav ml-auto">
+
+
+
+                        <p:commandLink id="logOut" class="nav-link" action="#{workerController.seDeConnnecter()}" style="color:  white;">
+                            <i class="fa fa-fw fa-sign-out"></i> <h:outputText value="Se deconnecter"/> 
+                        </p:commandLink>
+
+
+                    </ul>
+
+                </div>
+
+            </nav>
+        </h:form>
+    </ui:composition>
+</html>

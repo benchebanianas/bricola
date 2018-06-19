@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="WorkerJobEditDlg" widgetVar="WorkerJobEditDialog" modal="true" resizable="false" appendTo="@(body)" header="Modifier">
+            <h:form id="WorkerJobEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2">
+                        <p:outputLabel value="Secteur" for="secteur" />
+                        <p:selectOneMenu id="secteur" value="#{workerController.workerJob.secteur}" >
+                            <f:selectItem itemLabel="--Select--" itemValue="#{null}"/>
+                            <f:selectItems value="#{secteurController.itemsAvailableSelectOne}"
+                                           var="secteur"
+                                           itemValue="#{secteur}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{workerController.updateWorkerJob()}" value="Modifier" update="display,:ServicesForm:datalist" oncomplete="handleSubmit(args, 'WorkerJobEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="WorkerJobEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

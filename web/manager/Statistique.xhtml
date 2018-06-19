@@ -69,10 +69,23 @@
                                                 </p:column>
 
                                                 <p:column>
+                                                    <p:selectOneMenu class="form-control" id="statWorker" value="#{managerController.statWorker}" autoWidth="false" style="width: 100%;height: 40px" >
+                                                        <f:selectItem value="#{null}" itemLabel="-- Worker --" />
+                                                        <f:selectItems value="#{workerController.itemsAvailableSelectOne}" var="item"
+                                                                       itemValue="#{item.nom}" itemLabel="#{item.nom}" />
+                                                    </p:selectOneMenu>
+
+                                                </p:column>
+                                                
+                                                <p:column styleClass="text-font">
+                                                    <p:outputLabel  for="statVille" value="Ville"  style="text-align: center;padding-top: 10px;width: 100%"/>
+                                                </p:column>
+                                                
+                                                <p:column>
                                                     <p:selectOneMenu class="form-control" id="statVille" value="#{managerController.statVille}" autoWidth="false" style="width: 100%;height: 40px" >
                                                         <p:ajax listener="#{managerController.loadStatSecteursAndServices()}" update="statistiqueForm" />
-                                                        <f:selectItem value="#{null}" itemLabel="-- SELECT --" />
-                                                        <f:selectItems value="#{managerController.statVilles}" var="item"
+                                                        <f:selectItem value="#{null}" itemLabel="-- Ville --" />
+                                                        <f:selectItems value="#{villeController.itemsAvailableSelectOne}" var="item"
                                                                        itemValue="#{item}" itemLabel="#{item.nom}" />
                                                     </p:selectOneMenu>
 

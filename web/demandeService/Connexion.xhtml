@@ -12,8 +12,8 @@
 
             <h:form id="ConnexionForm">
 
-                <h1 style="color:#68b3c8;text-align: center">Log in</h1>
-                <h5 style="color: #cfcfcf;text-align: center;width: 400px">Please enter your password in order to log in the platform</h5>
+                <h1 style="color:#68b3c8;text-align: center">S'identifier</h1>
+                <h5 style="color: #cfcfcf;text-align: center;width: 400px">Veuillez entrer votre mot de passe pour vous connecter à la plateforme</h5>
 
                 <p:panelGrid styleClass="ui-noborder" style="margin: 0 auto">
 
@@ -25,14 +25,14 @@
                     <p:row>
                         
                         <p:column style="text-align: center">
-                            <p:password id="password" value="#{demandeServiceController.demandeService.client.password}" placeholder="Enter your password" style="width: 400px;height: 40px;text-align: center"/>
+                            <p:password id="password" value="#{demandeServiceController.demandeService.client.password}" placeholder="Tapez votre mot de passe" style="width: 400px;height: 40px;text-align: center"/>
 
                         </p:column>
                     </p:row>
 
                     <p:row>
                         <p:column style="text-align: center">
-                            <p:commandButton value="Verifier" style="width: 400px;height: 40px;background-color:#68b3c8" update=":growl,:demandeForm:detailGrid" actionListener="#{demandeServiceController.checkPassword()}"/>
+                            <p:commandButton value="Vérifier" style="width: 400px;height: 40px;background-color:#68b3c8" update=":growl,:demandeForm:detailGrid" actionListener="#{demandeServiceController.checkPassword()}"/>
 
                         </p:column>
                     </p:row>

@@ -25,8 +25,6 @@ public class DemandeVoiture implements Serializable {
     private Long id;
     @ManyToOne
     private DemandeService demandeService;
-    @ManyToOne
-    private Voiture voiture;
 
     public DemandeVoiture() {
     }
@@ -40,17 +38,6 @@ public class DemandeVoiture implements Serializable {
 
     public void setDemandeService(DemandeService demandeService) {
         this.demandeService = demandeService;
-    }
-
-    public Voiture getVoiture() {
-        if (voiture == null) {
-            voiture = new Voiture();
-        }
-        return voiture;
-    }
-
-    public void setVoiture(Voiture voiture) {
-        this.voiture = voiture;
     }
 
     public Long getId() {

@@ -22,7 +22,7 @@ public class VoitureModeleFacade extends AbstractFacade<VoitureModele> {
     @PersistenceContext(unitName = "bricolagePU")
     private EntityManager em;
 
-    public List<VoitureModele> SearchByMarque(VoitureMarque marque) {
+    public List<VoitureModele> searchByMarque(VoitureMarque marque) {
         String requette = "SELECT DISTINCT vm FROM VoitureModele vm WHERE vm.marque.id='" + marque.getId() + "'";
         return em.createQuery(requette).getResultList();
     }

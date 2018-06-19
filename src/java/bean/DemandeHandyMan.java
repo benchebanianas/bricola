@@ -6,6 +6,7 @@
 package bean;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -23,6 +24,10 @@ public class DemandeHandyMan implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    private BigDecimal nbrHeures;
+    private BigDecimal nbrHandyMan;
+    @ManyToOne
+    private Service service;
     @ManyToOne
     private DemandeService demandeService;
 
@@ -40,6 +45,36 @@ public class DemandeHandyMan implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public BigDecimal getNbrHeures() {
+        if(nbrHeures == null){
+            nbrHeures = new BigDecimal(0);
+        }
+        return nbrHeures;
+    }
+
+    public void setNbrHeures(BigDecimal nbrHeures) {
+        this.nbrHeures = nbrHeures;
+    }
+
+    public BigDecimal getNbrHandyMan() {
+        if(nbrHandyMan == null){
+            nbrHandyMan = new BigDecimal(0);
+        }
+        return nbrHandyMan;
+    }
+
+    public void setNbrHandyMan(BigDecimal nbrHandyMan) {
+        this.nbrHandyMan = nbrHandyMan;
+    }
+
+    public Service getService() {
+        return service;
+    }
+
+    public void setService(Service service) {
+        this.service = service;
     }
 
     @Override

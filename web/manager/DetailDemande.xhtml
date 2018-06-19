@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+
+
+
+
+    <ui:composition>
+
+        <ui:define name="css">
+            <h:outputStylesheet library="css" name="jsfcrud.css"/>
+        </ui:define>
+
+
+        <p:dialog id="detailDemandeDialog" widgetVar="detailDemandeDialog" modal="true" resizable="false" appendTo="@(body)" width="1200" height="400"  header="Detail demande :">
+
+            <h:form id="detailDemandeForm">
+
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-6">
+
+                        <p:panel header="Info Generale">
+                            <p:panelGrid columns="2" style="width: 100%" >
+
+                                <h:outputText value="Date Demande"/>
+                                <h:outputText value="#{managerController.selectedDemandeService.datedemande}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                                </h:outputText>
+
+                                <h:outputText value="Adresse"/>
+                                <h:outputText value="#{managerController.selectedDemandeService.client.adresseComplement} - #{managerController.selectedDemandeService.secteur.nom} "/>
+
+                                <h:outputText value="Detail"/>
+                                <h:outputText value="#{managerController.selectedDemandeService.detail}"/>
+                            </p:panelGrid>
+                        </p:panel>
+                    </div>
+
+                    <div class="ui-grid-col-6">
+                        <h:panelGroup id="ui">
+                            <ui:fragment rendered="#{managerController.selectedDemandeService.service.id == 1}">
+                                <ui:include src="detailDemandeSpecifique/nettoyageMaison.xhtml"/>
+                            </ui:fragment>
+                            <ui:fragment rendered="#{managerController.selectedDemandeService.service.id == 8 or managerController.selectedDemandeService.service.id == 10 or 
+                                                     managerController.selectedDemandeService.service.id == 11 or managerController.selectedDemandeService.service.id == 12}">
+                                <ui:include src="detailDemandeSpecifique/handyMan.xhtml"/>
+                            </ui:fragment>
+                            <ui:fragment rendered="#{managerController.selectedDemandeService.service.id == 22}">
+                                <ui:include src="detailDemandeSpecifique/formationPersonnel.xhtml"/>
+                            </ui:fragment>
+                        </h:panelGroup>
+                    </div>
+                </div>
+
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-12">
+
+                        <p:panel header="Planning">
+
+                            <p:panelGrid columns="4" style="width: 100%;text-align: center" >
+
+
+
+                                <h:outputText value="Date Debut" rendered="#{managerController.selectedDemandeService.planning.dateDebut != null}"/>
+                                <h:outputText value="#{managerController.selectedDemandeService.planning.dateDebut}" rendered="#{managerController.selectedDemandeService.planning.dateDebut != null}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                                </h:outputText>
+
+                                <h:outputText value="Date Fin" rendered="#{managerController.selectedDemandeService.planning.dateDebut != null}"/>
+                                <h:outputText value="#{managerController.selectedDemandeService.planning.dateFin}" rendered="#{managerController.selectedDemandeService.planning.dateDebut != null}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                                </h:outputText>
+
+                                <h:outputText value="Date" rendered="#{managerController.selectedDemandeService.planning.dateDebut == null}"/>
+                                <h:outputText value="#{managerController.selectedDemandeService.planning.dateOnce}" rendered="#{managerController.selectedDemandeService.planning.dateDebut == null}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                                </h:outputText>
+
+                                <h:outputText value="Horaire" rendered="#{managerController.selectedDemandeService.planning.dateDebut == null}"/>
+                                <h:outputText value="#{managerController.selectedDemandeService.planning.timing.name}" rendered="#{managerController.selectedDemandeService.planning.dateDebut == null}"/>
+
+                            </p:panelGrid>
+
+                            <p:dataTable  value="#{managerController.selectedDemandeService.planning.planningItems}" var="planningItem"
+                                          paginator="true"
+                                          rows="4"
+                                          rowsPerPageTemplate="4,8,12,16,20"
+                                          rendered="#{managerController.selectedDemandeService.planning.planningItems.size() > 0}" style="margin-top: 10px;text-align: center">
+
+                                <p:column headerText="Jour">
+                                    <h:outputText value="#{planningItem.repetition==1? planningItem.day.nom:'-------'}"/>
+                                </p:column>
+
+                                <p:column headerText="Numero Jour">
+                                    <h:outputText value="#{planningItem.repetition==2? planningItem.numeroJour:'-------'}"/>
+                                </p:column>
+
+                                <p:column headerText="Horaire">
+                                    <h:outputText value="#{planningItem.timing.name}" />
+                                </p:column>
+
+                            </p:dataTable>
+
+
+
+
+                        </p:panel>
+
+                    </div>
+
+                </div>
+
+
+            </h:form>
+
+        </p:dialog>
+    </ui:composition>
+</html>

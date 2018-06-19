@@ -6,6 +6,9 @@
 package service;
 
 import bean.Client;
+import bean.Worker;
+import controller.util.HashageUtil;
+import controller.util.SessionUtil;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -49,6 +52,23 @@ public class ClientFacade extends AbstractFacade<Client> {
         }
     }
 
+    public void creatAccount(Client client) {
+        Client c = new Client();
+        c.setEmail(client.getEmail());
+        c.setNom(client.getNom());
+        create(c);
+
+    }
+
+    public void register(Client client) {
+        Client c = find(client.getEmail());
+        String hash = HashageUtil.sha256(client.getPassword());
+        if (c == null) {
+            client.setPassword(hash);
+            create(client);
+        }
+    }
+
     public int seConnecter(Client client) {
         Client test = findByEmail(client.getEmail());
         if (test != null) {
@@ -86,6 +106,18 @@ public class ClientFacade extends AbstractFacade<Client> {
             client.setPassword(client.getEmail());
         }
         edit(client);
+    }
+
+    public List<Client> findByWorker(Worker selected) {
+    
+        String requette = "select distinct(ds.client) from DemandeService ds where ds.worker.email = '"+selected.getEmail()+"'";
+        return em.createQuery(requette).getResultList();
+    
+    }
+
+    public void seDeConnnecter() {
+        SessionUtil.getSession().invalidate();
+
     }
 
 }

@@ -9,21 +9,18 @@
     <ui:composition>
 
         <div class="row">
-            <h5 class="info-text"> Select a company for your service </h5>
+            <h5 class="info-text"> Sélectionnez une société pour votre service </h5>
 
             <div class="col-sm-12">
                 <p:panelGrid id="companyGrid" styleClass="ui-noborder" style="text-align: center;margin: 0 auto">
                     <p:row>
                         <p:column style="width: 100px">
-                            <p:outputLabel value="Choice :" for="choice" style="padding-top: 10px" />
+                            <p:outputLabel value="Choix :" for="choice" style="padding-top: 10px" />
                         </p:column>
 
                         <p:column style="width: 260px">
                             <p:selectOneMenu class="form-control" id="choice" widgetVar="choice" value="#{demandeServiceController.demandeService.workerType}" style="width: 250px;height: 40px" >
-
-
-                                <f:selectItem itemValue="#{null}" itemLabel="-- SELECT A CHOICE --"/>
-                                <f:selectItem itemValue="#{demandeServiceController.workerType}" itemLabel="Choose a company / individual for me"/>
+\\
                                 <f:selectItems value="#{demandeServiceController.loadWorkerType()}" 
                                                var="workerType"
                                                itemValue="#{workerType}"

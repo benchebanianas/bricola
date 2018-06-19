@@ -69,7 +69,7 @@ public class Day implements Serializable {
 
     @Override
     public String toString() {
-        return "bean.Day[ id=" + id + " ]";
+        return nom;
     }
 
 }

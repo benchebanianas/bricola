@@ -30,6 +30,8 @@ public class DemandeFormationPersonnel implements Serializable {
     private DemandeService demandeService;
     @ManyToOne
     private Matiere matiere;
+    @ManyToOne
+    private Filiere filiere;
 
     public DemandeFormationPersonnel() {
     }
@@ -90,6 +92,17 @@ public class DemandeFormationPersonnel implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Filiere getFiliere() {
+        if(filiere == null){
+            filiere = new Filiere();
+        }
+        return filiere;
+    }
+
+    public void setFiliere(Filiere filiere) {
+        this.filiere = filiere;
     }
 
     @Override

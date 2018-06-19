@@ -89,4 +89,27 @@ public class WorkerJobFacade extends AbstractFacade<WorkerJob> {
 
     }
 
+    public void createWithService(Worker selected, List<Service> selectedServices) {
+        
+    
+        for (Service selectedService : selectedServices) {
+            WorkerJob wj = new WorkerJob();
+            wj.setId(generateId("WorkerJob", "id"));
+            wj.setService(selectedService);
+            wj.setWorker(selected);
+            create(wj);
+        }
+    
+    }
+
+    public void createList(Worker selected, List<WorkerJob> workerJobs) {
+     
+        for (WorkerJob item : workerJobs) {
+            item.setId(generateId("WorkerJob", "id"));
+            item.setWorker(selected);
+            create(item);
+        }
+    
+    }
+
 }

@@ -29,7 +29,7 @@ import javax.faces.event.AjaxBehaviorEvent;
 import static org.primefaces.component.focus.Focus.PropertyKeys.context;
 import service.SecteurFacade;
 import service.TimingFacade;
-import service.VoitureModeleFacade;
+import service.VoitureCarburantCouleurFacade;
 import service.WorkerJobFacade;
 
 @Named("demandeVoitureController")
@@ -39,7 +39,7 @@ public class DemandeVoitureController implements Serializable {
     @EJB
     private service.DemandeVoitureFacade ejbFacade;
     @EJB
-    private VoitureModeleFacade modeleFacade;
+    private VoitureCarburantCouleurFacade modeleFacade;
     @EJB
     private SecteurFacade secteurFacade;
     @EJB
@@ -72,9 +72,9 @@ public class DemandeVoitureController implements Serializable {
 
     }
 
-    public void loadModeles(final AjaxBehaviorEvent event) {
-        modeles = modeleFacade.SearchByMarque(voitureMarque);
-    }
+//    public void loadModeles(final AjaxBehaviorEvent event) {
+//        modeles = modeleFacade.searchByMarque(voitureMarque);
+//    }
 
     public void loadSectors(final AjaxBehaviorEvent event) {
         secteurs = secteurFacade.findByVille(ville);
@@ -140,11 +140,11 @@ public class DemandeVoitureController implements Serializable {
         this.ville = ville;
     }
 
-    public VoitureModeleFacade getModeleFacade() {
+    public VoitureCarburantCouleurFacade getModeleFacade() {
         return modeleFacade;
     }
 
-    public void setModeleFacade(VoitureModeleFacade modeleFacade) {
+    public void setModeleFacade(VoitureCarburantCouleurFacade modeleFacade) {
         this.modeleFacade = modeleFacade;
     }
 

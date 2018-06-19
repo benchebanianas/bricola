@@ -31,6 +31,9 @@ public class DemandeCleaning implements Serializable {
     private BigDecimal nbrCleaner;
 
     public BigDecimal getNbrCleaner() {
+        if(nbrCleaner == null){
+            nbrCleaner = new BigDecimal(0);
+        }
         return nbrCleaner;
     }
 
@@ -60,6 +63,9 @@ public class DemandeCleaning implements Serializable {
     }
 
     public BigDecimal getNbrHeures() {
+        if(nbrHeures == null){
+            nbrHeures = new BigDecimal(0);
+        }
         return nbrHeures;
     }
 

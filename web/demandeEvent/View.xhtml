@@ -17,7 +17,7 @@
                 <h:form id="DemandeEventForm" style="margin-top: 10px;margin-bottom: 10px">
                     <div align="center">
                         <p:panelGrid columns="1" styleClass="ui-noborder">
-                            <p:outputLabel value="Type D'evenement : #{demandeServiceController.demandeEvent.event.nom}" />
+                            <p:outputLabel value="Type D'evenement : #{demandeServiceController.demandeEvent.eventType.nom}" />
                             <c:if test="#{not empty demandeServiceController.demandeEvent.cuisineDemandeEvents}">
                                 <p:dataList value="#{demandeServiceController.demandeEvent.cuisineDemandeEvents}" var="cuisine" >
                                     <f:facet name="header">
@@ -35,7 +35,6 @@
                                 </p:dataList>
                             </c:if>
                             <p:outputLabel value="Nombre D'Invités : #{demandeServiceController.demandeEvent.nbrInvites}"/>
-                            <p:outputLabel value="Detail : #{demandeServiceController.demandeEvent.detail}"/>
                             <ui:include src="/manager/DemandeView.xhtml"/>
                         </p:panelGrid>
 

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <div class="row">
+
+            <h5 class="info-text">Veuillez remplir le formulaire ci-dessous afin que nous puissions vous proposer les meilleurs menuisiers</h5>
+            <div class="col-sm-12">
+                <p:panelGrid id="infoGrid" styleClass="ui-noborder" style="margin: 0 auto;width: 100%">
+                    <p:row>
+
+                        <p:column>
+                            <p:outputLabel value="Nombre de Menuisier?" for="numberOfCarpernters" style="text-align: left;padding-top: 10px;width: 200px"/><br></br>
+                            <h:outputText id="pricing" value="(Prix : #{demandeServiceController.findPricing()} Dh)" />
+                        </p:column>
+
+                        <p:column>
+                            <p:selectOneMenu class="form-control" id="numberOfCarpernters" value="#{demandeServiceController.demandeHandyMan.nbrHandyMan}" style="width: 242px;height: 40px">
+                                <p:ajax update="infoGrid" />
+                                <f:selectItem itemValue="#{1}" itemLabel="1"/>
+                                <f:selectItem itemValue="#{2}" itemLabel="2"/>
+                                <f:selectItem itemValue="#{3}" itemLabel="3"/>
+                                <f:selectItem itemValue="#{4}" itemLabel="4"/>
+                                <f:selectItem itemValue="#{5}" itemLabel="5"/>
+                            </p:selectOneMenu>
+                        </p:column>
+
+                        <p:column>
+                            <p:outputLabel for="hours" value="Pour combien de temps:" style="text-align: left;padding-top: 10px" /><br></br>
+                            <h:outputText id="pricingTotale" value="(Totale : #{demandeServiceController.pricingTotaleHandyMan()} Dh)"/>
+                        </p:column>
+
+                        <p:column>
+                            <p:selectOneMenu class="form-control" id="hours" value="#{demandeServiceController.demandeHandyMan.nbrHeures}" style="width: 170px;height: 40px">
+                                <p:ajax update="infoGrid" />
+                                <f:selectItem itemValue="#{1}" itemLabel="1 Heures"/>
+                                <f:selectItem itemValue="#{2}" itemLabel="2 Heures"/>
+                                <f:selectItem itemValue="#{3}" itemLabel="3 Heures"/>
+                                <f:selectItem itemValue="#{4}" itemLabel="4 Heures"/>
+                                <f:selectItem itemValue="#{5}" itemLabel="5 Heures"/>
+                            </p:selectOneMenu>
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+
+                        <p:column>
+                            <p:outputLabel value="À quelle fréquence?" for="oftenOnce" style="text-align: left;padding-top: 10px;width: 200px" />
+                        </p:column>
+
+                        <p:column>
+                            <p:selectBooleanButton id="oftenOnce" class="myBtn" value="#{demandeServiceController.oneTime}" onLabel="Une Fois" offLabel="Une Fois" style="width:120px;height: 40px;text-align: center;padding: 8px 0;" onchange="PF('ServiceUneFoisDialog').show()" >
+                                <p:ajax listener="#{demandeServiceController.checkOnce()}" update="oftenOnce oftenManyTimes :ServiceUneFoisForm :ServicePlusieursFoisForm"/>
+                            </p:selectBooleanButton>
+
+                            <p:selectBooleanButton id="oftenManyTimes" class="myBtn" value="#{demandeServiceController.multipleTimes}" onLabel="Plusieurs Fois" offLabel="Plusieurs Fois" style="width:120px;height: 40px;text-align: center;padding: 8px 0;" onchange="PF('ServicePlusieursFoisDialog').show()">
+                                <p:ajax listener="#{demandeServiceController.checkMany()}" update="oftenOnce oftenManyTimes :ServiceUneFoisForm :ServicePlusieursFoisForm"/>
+                            </p:selectBooleanButton>
+                        </p:column>
+
+
+                    </p:row>
+
+                    <p:column>
+                        <p:outputLabel value="Des instructions spéciales?" for="instructions" style="text-align: left;padding-top: 10px;width: 200px" />
+                    </p:column>
+                    <p:column colspan="3">
+                        <p:inputTextarea rows="6" style="width: 100%"   id="instructions" placeholder="Exemple: Les clés sont sous le paillasson, et l'argent est sur le comptoir de la cuisine." value="#{demandeServiceController.demandeService.detail}" />
+                    </p:column>
+
+                    <p:row>
+
+
+                    </p:row>
+
+
+
+                </p:panelGrid>
+            </div>
+
+        </div>
+
+    </ui:composition>
+</html>

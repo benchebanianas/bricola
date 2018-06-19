@@ -27,7 +27,8 @@ public class Review implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private int stars;
-    private String text;
+    private String corps;
+    private String sujet;
     @OneToOne
     private Client client;
     @Temporal(javax.persistence.TemporalType.DATE)
@@ -35,26 +36,26 @@ public class Review implements Serializable {
     @ManyToOne
     private Worker worker;
     @OneToOne
-    private Service service;
+    private DemandeService demandeService;
 
     public Review() {
     }
 
-    public Review(int stars, String text, Client client, Date dateReview, Worker worker, Service service) {
+    public Review(int stars, String text, Client client, Date dateReview, Worker worker, DemandeService demandeService) {
         this.stars = stars;
-        this.text = text;
+        this.corps = text;
         this.client = client;
         this.dateReview = dateReview;
         this.worker = worker;
-        this.service = service;
+        this.demandeService = demandeService;
     }
 
-    public Service getService() {
-        return service;
+    public DemandeService getDemandeService() {
+        return demandeService;
     }
 
-    public void setService(Service service) {
-        this.service = service;
+    public void setDemandeService(DemandeService demandeService) {
+        this.demandeService = demandeService;
     }
 
     public int getStars() {
@@ -65,12 +66,12 @@ public class Review implements Serializable {
         this.stars = stars;
     }
 
-    public String getText() {
-        return text;
+    public String getCorps() {
+        return corps;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setCorps(String corps) {
+        this.corps = corps;
     }
 
     public Client getClient() {
@@ -103,6 +104,14 @@ public class Review implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getSujet() {
+        return sujet;
+    }
+
+    public void setSujet(String sujet) {
+        this.sujet = sujet;
     }
 
     @Override

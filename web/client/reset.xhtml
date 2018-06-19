@@ -22,10 +22,18 @@
                 <br></br>
                 <p>Email</p>
                 <p:inputText id="email" value="#{clientController.selected.email}" title="Email" class="input"/>
-                <p:commandButton class="btn-login " action="#{clientController.resetPassword()}" value="recuperer Mot de passe"  ></p:commandButton>
-                <br></br>
+                <p:commandButton class="btn-login " action="#{clientController.resetPassword()}" value="reset Password" update="form-reset" onclick="PF('Reset-Dialog').show()"></p:commandButton>
+               
             </h:form>
         </div>
+        <p:dialog id="dialog-id" widgetVar="Reset-Dialog" appendTo="@(body)" modal="true" >
+            <h:form id="form-reset">
+                <p>un code a était envoyer a votre email </p>
+                <p>Token</p>
+                <p:inputText value="#{clientController.selected.token}"></p:inputText>
+                <p:commandButton action="#{clientController.connect()}"></p:commandButton>
+            </h:form>
+        </p:dialog>
     </h:body> 
 </html>
 

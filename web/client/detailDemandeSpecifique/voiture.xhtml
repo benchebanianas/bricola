@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+
+
+
+
+    <ui:composition>
+
+        <p:panel header="Info Specifique">
+
+
+            <p:dataTable id="datalist" value="#{clientController.detailDemandeVoitureItems}" var="demande"
+                         paginator="true"
+                         rows="3">
+                <p:ajax event="rowSelect"   />
+                <p:ajax event="rowUnselect" />
+
+                <p:column headerText="Modele (Annee)">
+                    <h:outputText value="#{demande.modele.nom} (#{demande.modele.annee})"/>
+                </p:column>
+
+                <p:column headerText="Carburant">
+                    <h:outputText value="#{demande.carburant.nom}"/>
+                </p:column>
+
+                <p:column headerText="Quantite">
+                    <h:outputText value="#{demande.quantite}"/>
+                </p:column>
+
+                <p:column headerText="Employe">
+                    <h:outputText value="#{demande.worker.nom}"/>
+                </p:column>
+
+                <p:column headerText="Date Debut">
+                    <h:outputText value="#{demande.dateDebut}">
+                        <f:convertDateTime pattern="dd/MM/yyyy" />
+                    </h:outputText>
+                </p:column>
+
+                <p:column headerText="Date Fin">
+                    <h:outputText value="#{demande.dateFin}">
+                        <f:convertDateTime pattern="dd/MM/yyyy" />
+                    </h:outputText>
+                </p:column>
+
+            </p:dataTable>
+        </p:panel>
+    </ui:composition>
+</html>

@@ -1,0 +1,133 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>Table</title>
+
+        <meta charset="utf-8"></meta>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"></meta>
+        <link rel="shortcut icon" href="../resources/images/symbol.png" type="image/png" sizes="16x22"/>
+
+        <link rel="stylesheet" href="../resources/bootstrap-4.0.0/css/bootstrap.min.css"></link>
+        <link rel="stylesheet" href="../resources/css/workerProfilecss.css"></link>
+
+        <h:outputStylesheet library="css" name="jsfcrud.css"/>
+        <h:outputScript library="js" name="jsfcrud.js"/>
+
+    </h:head>
+
+    <h:body>
+
+        <ui:include src="TopNav.xhtml"/>
+
+        <div class="d-flex">
+
+            <ui:include src="SidebarNav.xhtml"/>
+
+            <div class="content p-4">
+
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-12 " >
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="Profil.xhtml">Home</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Tableau de donnees</li>
+                            </ol>
+                        </nav>   
+
+                    </div>
+                </div>
+
+                <h:form id="DemandeForm">
+
+                    <p:panel header="Ensembles des Demandes" style="text-align: center">
+
+
+                        <p:panelGrid columns="8" style="width: 100%" >
+
+
+                            <p:outputLabel  for="service" value="Service"/>
+                            <p:selectOneMenu class="form-control" id="service" value="#{clientController.serviceRecherche}" filter="true" filterMatchMode="contains">
+                                <f:selectItem value="#{null}" itemLabel="-- SELECT --" />
+                                <f:selectItems value="#{serviceController.itemsAvailableSelectOne}"
+                                               var="service"
+                                               itemValue="#{service}" itemLabel="#{service.nom}"/>
+                            </p:selectOneMenu>
+
+                            <p:outputLabel  for="etat" value="Etat"/>
+                            <p:selectOneMenu class="form-control" id="etat" value="#{clientController.etatRecherche}">
+                                <f:selectItem value="#{null}" itemLabel="-- SELECT --" />
+                                <f:selectItem itemValue="#{1}" itemLabel="Valider"/>
+                                <f:selectItem itemValue="#{2}" itemLabel="Non Valider"/>
+                            </p:selectOneMenu>
+
+                            <p:outputLabel value="Date Min" for="dateMin"/>
+                            <p:calendar id="dateMin" pattern="dd/MM/yyyy" value="#{clientController.dateMin}" inputStyle="width: 100%;height: 40px"/>
+
+                            <p:outputLabel value="Date Max" for="dateMax"/>
+                            <p:calendar id="dateMax" pattern="dd/MM/yyyy" value="#{clientController.dateMax}" inputStyle="width: 100%;height: 40px"/>
+
+
+                            <f:facet name="footer">
+                                <p:commandButton id="rechercher" value="RECHERCHER" actionListener="#{clientController.rechercheDemande()}" update="datalist" style="width: 12%;height: 30px;margin-bottom: 5px" />
+
+                            </f:facet>
+
+                        </p:panelGrid>
+
+
+
+
+
+                        <p:dataTable id="datalist" value="#{clientController.demandeServices}" var="demande"
+                                     paginator="true"
+                                     rows="4"
+                                     rowsPerPageTemplate="4,8,12,16,20"
+                                     style="margin-top: 15px">
+                            <p:ajax event="rowSelect"   />
+                            <p:ajax event="rowUnselect" />
+
+                            <p:column headerText="Employé">
+                                <p:commandLink value="#{demande.worker.nom}" actionListener="#{clientController.initWorkerInfo(demande)}" onclick="PF('workerInfoDialog').show()" update=":workerInfoForm" style="color: #06afb5"/>
+                            </p:column>
+
+                            <p:column headerText="Service">
+                                <h:outputText value="#{demande.service.nom}" />
+                            </p:column>
+
+                            <p:column headerText="Etat">
+                                <h:outputText value="#{demande.dateConfirmation == null ? 'Non Valider' : 'Valider'}" style="color:#{demande.dateConfirmation == null ? 'red' : 'green'}" >
+                                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                                </h:outputText>
+                            </p:column>
+
+                            <p:column headerText="Action">
+                                <p:commandButton icon="fa fa-info-circle" title="Details" actionListener="#{clientController.prepareDetail(demande)}" oncomplete="PF('detailDemandeDialog').show()" update=":detailDemandeForm"/>
+                                <p:commandButton title="Exporter PDF" icon="fa fa-file-pdf-o"  action="#{clientController.genererPdf(demande)}" ajax="false" style="color: red"/>
+                                <p:commandButton title="Ajouter Avis" icon="fa fa-commenting-o"  actionListener="#{clientController.initAvis(demande)}"  oncomplete="PF('reviewDialog').show()" update=":reviewForm" style="color: blue"/>
+
+                            </p:column>
+
+                        </p:dataTable>
+
+
+                    </p:panel>
+                </h:form>
+
+            </div>
+        </div>
+
+        <ui:include src="DetailDemandeDialog.xhtml"/>
+        <ui:include src="WorkerInfo.xhtml"/>
+        <ui:include src="Review.xhtml"/>
+        <script src="../resources/js/popper.min.js"></script>
+        <script src="../resources/bootstrap-4.0.0/js/bootstrap.min.js"></script>
+        <script src="../resources/js/workerProfileJs.js"></script>
+
+    </h:body>
+</html>
+

@@ -160,7 +160,7 @@ public class Worker implements Serializable {
 
     @Override
     public String toString() {
-        return email;
+        return nom;
     }
 
 }
